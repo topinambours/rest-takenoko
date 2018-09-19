@@ -11,6 +11,19 @@
     <build>
         <sourceDirectory>src/main/</sourceDirectory>
         <testSourceDirectory>src/test/</testSourceDirectory>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <source>10</source> <!-- éventuellement à changer : version de java -->
+                    <target>10</target> <!-- éventuellement à changer : version de java -->
+                </configuration>
+            </plugin>
+        </plugins>
+
     </build>
 
     <dependencies>
