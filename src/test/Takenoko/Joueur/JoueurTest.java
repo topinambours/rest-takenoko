@@ -34,8 +34,12 @@ public class JoueurTest {
 
     @Test
     public void getHand(){
-        assertEquals(new Deck(), joueur1.getHand());
-        assertEquals(new Deck(), joueur2.getHand());
+        assertEquals(0, joueur1.getHand().getSize());
+        assertEquals(0, joueur2.getHand().getSize());
+        for(int i = 0; i < 100; i++){
+            joueur1.draw(dtest);
+        }
+        assertEquals(100, joueur1.getHand().getSize());
     }
 
     @Test
