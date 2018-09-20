@@ -90,6 +90,13 @@ public class Deck {
         return deck.size();
     }
 
+    public boolean isEmpty(){
+        if(getSize()==0){
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return super.toString();

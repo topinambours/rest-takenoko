@@ -36,9 +36,7 @@ public class JoueurTest {
     public void getHand(){
         assertEquals(0, joueur1.getHand().getSize());
         assertEquals(0, joueur2.getHand().getSize());
-        for(int i = 0; i < 100; i++){
-            joueur1.draw(dtest);
-        }
+        joueur1.multiDraw(dtest, 50);
         assertEquals(100, joueur1.getHand().getSize());
     }
 

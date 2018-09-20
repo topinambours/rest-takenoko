@@ -33,6 +33,32 @@ public class Joueur {
         return parcel;
     }
 
+    public boolean multiDraw(Deck deck, int n){
+        if(deck.getSize()>2){
+            Parcel parcel = deck.popLast();
+            hand.addLast(parcel);
+            parcel = deck.popLast();
+            hand.addLast(parcel);
+            parcel = deck.popLast();
+            hand.addLast(parcel);
+            return true;
+        }
+        else if(deck.getSize() == 2){
+            Parcel parcel = deck.popLast();
+            hand.addLast(parcel);
+            parcel = deck.popLast();
+            hand.addLast(parcel);
+            return true;
+        }
+        else if(deck.getSize() == 1){
+            draw(deck);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public Parcel replaceInDeck(Deck deck, Parcel parcel){
         hand.remove(parcel);
         deck.addFirst(parcel);
