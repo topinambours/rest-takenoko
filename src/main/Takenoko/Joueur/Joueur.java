@@ -33,29 +33,11 @@ public class Joueur {
         return parcel;
     }
 
-    public boolean multiDraw(Deck deck, int n){
-        if(deck.getSize()>2){
-            Parcel parcel = deck.popLast();
-            hand.addLast(parcel);
-            parcel = deck.popLast();
-            hand.addLast(parcel);
-            parcel = deck.popLast();
-            hand.addLast(parcel);
-            return true;
-        }
-        else if(deck.getSize() == 2){
-            Parcel parcel = deck.popLast();
-            hand.addLast(parcel);
-            parcel = deck.popLast();
-            hand.addLast(parcel);
-            return true;
-        }
-        else if(deck.getSize() == 1){
+    public void multiDraw(Deck deck, int n){
+        int i = n;
+        while(!deck.isEmpty() && i > 0){
             draw(deck);
-            return true;
-        }
-        else{
-            return false;
+            i--;
         }
     }
 

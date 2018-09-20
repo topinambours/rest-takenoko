@@ -37,7 +37,7 @@ public class JoueurTest {
         assertEquals(0, joueur1.getHand().getSize());
         assertEquals(0, joueur2.getHand().getSize());
         joueur1.multiDraw(dtest, 50);
-        assertEquals(100, joueur1.getHand().getSize());
+        assertEquals(50, joueur1.getHand().getSize());
     }
 
     @Test
@@ -46,6 +46,12 @@ public class JoueurTest {
         assertEquals(parcel, joueur1.getHand().getLast());
         Parcel parcel2 = joueur1.draw(dtest);
         assertEquals(parcel2, joueur1.getHand().getLast());
+    }
+
+    @Test
+    public void multiDraw(){
+        joueur1.multiDraw(dtest, 49);
+        assertEquals(49, joueur1.getHand().getSize());
     }
 
     @Test
