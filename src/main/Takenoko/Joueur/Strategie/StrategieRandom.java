@@ -10,4 +10,8 @@ public class StrategieRandom implements Strategie{
         Random random = new Random();
         return new CoordAxial(random.nextInt(),random.nextInt());
     }
+
+    public StrategieRandom() {
+
+    }
 }

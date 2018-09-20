@@ -2,6 +2,7 @@ package Takenoko;
 
 import Takenoko.Deque.Deck;
 import Takenoko.Joueur.Joueur;
+import Takenoko.Joueur.Strategie.StrategieRandom;
 import Takenoko.Parcel.CoordAxial;
 import Takenoko.Parcel.Parcel;
 
@@ -18,7 +19,12 @@ public class Game {
 
     public Game() {
         this.deck = new Deck();
+        Parcel parc = new Parcel();
+        for (int i = 0; i < 28; i++) {
+            deck.addFirst(parc);
+        }
         this.plateau = new Plateau();
+        this.joueur = new Joueur(1, new StrategieRandom());
         //Todo: Création d'un ou plusieurs robot
 
     }
