@@ -23,14 +23,20 @@ public class Joueur {
         return number;
     }
 
-    public void draw(Deck deck){
-        Parcel parcel = deck.popFirst();
-        hand.addLast(parcel);
+    public Deck getHand(){
+        return hand;
     }
 
-    public void replaceInDeck(Deck deck, Parcel parcel){
+    public Parcel draw(Deck deck){
+        Parcel parcel = deck.popLast();
+        hand.addLast(parcel);
+        return parcel;
+    }
+
+    public Parcel replaceInDeck(Deck deck, Parcel parcel){
         hand.remove(parcel);
-        deck.addLast(parcel);
+        deck.addFirst(parcel);
+        return parcel;
     }
 
     public void putParcel(Parcel parcel, int q, int r, Plateau board){
