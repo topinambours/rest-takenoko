@@ -2,6 +2,8 @@ package Takenoko;
 
 public class Main {
     public static void main(String[] args){
-        System.out.println("HELLO TAKEN⬢K⬢ !");
+        Game partie = new Game();
+
+        partie.play();
     }
 }
