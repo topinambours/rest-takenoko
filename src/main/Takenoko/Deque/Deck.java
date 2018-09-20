@@ -3,7 +3,7 @@ package Takenoko.Deque;
 import Takenoko.Parcel.Parcel;
 
 import java.util.Deque;
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 
 
 /**
@@ -16,12 +16,9 @@ import java.util.LinkedList;
 public class Deck {
 
     private Deque<Parcel> deck;
-    private int size;
 
     public Deck(){
-
-        deck = new LinkedList();
-        size = 0;
+        deck = new ArrayDeque<>();
     }
 
     /**
@@ -42,56 +39,38 @@ public class Deck {
 
     /**
      * Add an element at the top of the deck.
-     * @param parcels
+     * @param parcel
      * @return
      */
-    public boolean addFirst(Parcel parcels){
-        boolean res = deck.offerFirst(parcels);
-        size = size + 1;
+    public boolean addFirst(Parcel parcel){
+        boolean res = deck.offerFirst(parcel);
         return res;
     }
 
     /**
      * Add an element at the end of the deck.
-     * @param parcels
+     * @param parcel
      * @return
      */
-    public boolean addLast(Parcel parcels){
-        boolean res = deck.offerLast(parcels);
-        size = size + 1;
+    public boolean addLast(Parcel parcel){
+        boolean res = deck.offerLast(parcel);
         return res;
     }
 
     /**
      * Delete the first element of the deck.
-     * @param parcels
      * @return
      */
-    public Parcel popFirst(Parcel parcels){
-        Parcel parcels1 = deck.pollFirst();
-        if(parcels1==null){
-            return null;
-        }
-        else{
-            size = size - 1;
-            return parcels1;
-        }
+    public Parcel popFirst(){
+        return deck.pollFirst();
     }
 
     /**
      * Delete the last element of the deck.
-     * @param parcels
      * @return
      */
-    public Parcel popLast(Parcel parcels){
-        Parcel parcels1 = deck.pollLast();
-        if(parcels1==null){
-            return null;
-        }
-        else{
-            size = size - 1;
-            return parcels1;
-        }
+    public Parcel popLast(){
+        return deck.pollLast();
     }
 
     /**
@@ -99,7 +78,7 @@ public class Deck {
      * @return
      */
     public int getSize(){
-        return size;
+        return deck.size();
     }
 
     @Override
