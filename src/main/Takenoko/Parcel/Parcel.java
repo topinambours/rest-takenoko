@@ -1,4 +1,4 @@
-package Takenoko;
+package Takenoko.Parcel;
 
 import java.util.Vector;
 

@@ -1,5 +1,6 @@
 package Takenoko;
 
+import Takenoko.Parcel.Parcel;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
