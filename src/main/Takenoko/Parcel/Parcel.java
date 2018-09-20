@@ -1,18 +1,11 @@
 package Takenoko.Parcel;
 
-import java.util.Vector;
-
 public class Parcel {
 
-    /**
-     * coord must be a class
-     */
-    private Vector<Integer> coord;
+    private CoordAxial coord;
 
     public Parcel(int q, int r){
-        this.coord = new Vector<>();
-        this.coord.add(0,q);
-        this.coord.add(1,r);
+        this.coord = new CoordAxial(q,r);
     }
 
     public Parcel(){
@@ -20,16 +13,16 @@ public class Parcel {
     }
 
     public int getq(){
-        return coord.get(0);
+        return coord.getQ();
     }
 
     public int getr(){
-        return coord.get(1);
+        return coord.getR();
     }
 
     public void setCoord(int q, int r){
-        this.coord.set(0,q);
-        this.coord.set(1,r);
+        coord.setQ(q);
+        coord.setR(r);
     }
 
 }

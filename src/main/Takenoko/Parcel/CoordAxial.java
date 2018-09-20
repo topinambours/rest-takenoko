@@ -3,28 +3,28 @@ package Takenoko.Parcel;
 /** La classe CoordAxial permet de nous créer une coordonnée
  */
 public class CoordAxial {
-    private int x;
-    private int y;
+    private int q;
+    private int r;
 
-    public CoordAxial(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public CoordAxial(int q, int r) {
+        this.q = q;
+        this.r = r;
     }
 
-    public int getX() {
-        return x;
+    public int getQ() {
+        return q;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setQ(int q) {
+        this.q = q;
     }
 
-    public int getY() {
-        return y;
+    public int getR() {
+        return r;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setR(int r) {
+        this.r = r;
     }
 
 
@@ -35,14 +35,14 @@ public class CoordAxial {
 
         CoordAxial that = (CoordAxial) o;
 
-        if (x != that.x) return false;
-        return y == that.y;
+        if (q != that.q) return false;
+        return r == that.r;
     }
 
     @Override
     public int hashCode() {
-        int result = x;
-        result = 31 * result + y;
+        int result = q;
+        result = 31 * result + r;
         return result;
     }
 }

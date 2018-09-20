@@ -1,6 +1,6 @@
 package Takenoko.Deque;
 
-import Takenoko.Parcel;
+import Takenoko.Parcel.Parcel;
 
 import java.util.Deque;
 import java.util.LinkedList;
