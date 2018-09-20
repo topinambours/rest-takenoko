@@ -1,6 +1,6 @@
 package Takenoko.Joueur.Strategie;
 
-import Takenoko.Parcel.CoordAxial;
+import Takenoko.Plot.CoordAxial;
 
 public interface Strategie {
     public CoordAxial getCoord();

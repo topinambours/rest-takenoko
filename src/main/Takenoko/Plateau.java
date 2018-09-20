@@ -1,7 +1,7 @@
 package Takenoko;
 
-import Takenoko.Parcel.CoordAxial;
-import Takenoko.Parcel.Parcel;
+import Takenoko.Plot.CoordAxial;
+import Takenoko.Plot.Plot;
 
 import java.util.HashMap;
 
@@ -9,13 +9,15 @@ import java.util.HashMap;
  * Classe plateau, utilise un HashMap, stocke les parcelles en jeu avec leurs coordonnées axiales en clé
  */
 public class Plateau {
-    private HashMap<CoordAxial, Parcel> parcels;
+    private final CoordAxial _STARTING_COORDINATE_ = new CoordAxial(0,0);
+
+    private HashMap<CoordAxial, Plot> plots;
 
     /**
      * Constructeur par défaut, instancie un plateau vide
      */
     public Plateau() {
-        parcels = new HashMap<>();
+        plots = new HashMap<>();
     }
 
     /**
@@ -24,8 +26,8 @@ public class Plateau {
      * @param r coord en axe r de la parcelle
      * @return la parcelle placée en (q, r)
      */
-    public Parcel getParcel(int q, int r) {
-        return parcels.get(new CoordAxial(q, r));
+    public Plot getPlot(int q, int r) {
+        return plots.get(new CoordAxial(q, r));
     }
 
     /**
@@ -33,30 +35,34 @@ public class Plateau {
      * @param coord coordonnées axiales de la parcelle
      * @return la parcelle placée en (coord)
      */
-    public Parcel getParcel(CoordAxial coord) {
-        return parcels.get(coord);
+    public Plot getPlot(CoordAxial coord) {
+        return plots.get(coord);
     }
 
     /**
      * placeur de parcelle, prend les coordonnées séparément
-     * @param parcel une parcelle à placer
+     * @param plot une parcelle à placer
      * @param q coord en axe q où placer la parcelle
      * @param r coord en axe r où placer la parcelle
      */
-    public void putParcel(Parcel parcel, int q, int r) {
-        parcels.put(new CoordAxial(q, r), parcel);
+    public void putPlot(Plot plot, int q, int r) {
+        plots.put(new CoordAxial(q, r), plot);
     }
 
     /**
      * placeur de parcelle, prend les coordonnées mises ensemble
-     * @param parcel une parcelle à placer
+     * @param plot une parcelle à placer
      * @param coord le couple de coordonnées où la placer
      */
-    public void putParcel(Parcel parcel, CoordAxial coord) {
-        parcels.put(coord, parcel);
+    public void putPlot(Plot plot, CoordAxial coord) {
+        plots.put(coord, plot);
     }
 
-    public void putParcel(Parcel parcel){
-        parcels.put(parcel.getCoord(), parcel);
+    public void putPlot(Plot plot){
+        putPlot(plot, plot.getCoord());
+    }
+
+    public void addStartingPlot(Plot plot){
+        putPlot(plot, _STARTING_COORDINATE_);
     }
 }

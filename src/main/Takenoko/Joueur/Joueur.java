@@ -2,8 +2,8 @@ package Takenoko.Joueur;
 
 import Takenoko.Deque.Deck;
 import Takenoko.Joueur.Strategie.Strategie;
-import Takenoko.Parcel.CoordAxial;
-import Takenoko.Parcel.Parcel;
+import Takenoko.Plot.CoordAxial;
+import Takenoko.Plot.Plot;
 import Takenoko.Plateau;
 
 public class Joueur {
@@ -27,10 +27,10 @@ public class Joueur {
         return hand;
     }
 
-    public Parcel draw(Deck deck){
-        Parcel parcel = deck.popLast();
-        hand.addLast(parcel);
-        return parcel;
+    public Plot draw(Deck deck){
+        Plot plot = deck.popLast();
+        hand.addLast(plot);
+        return plot;
     }
 
     public void multiDraw(Deck deck, int n){
@@ -41,17 +41,17 @@ public class Joueur {
         }
     }
 
-    public Parcel replaceInDeck(Deck deck, Parcel parcel){
-        hand.remove(parcel);
-        deck.addFirst(parcel);
-        return parcel;
+    public Plot replaceInDeck(Deck deck, Plot plot){
+        hand.remove(plot);
+        deck.addFirst(plot);
+        return plot;
     }
 
-    public CoordAxial putParcel(Parcel parcel, Plateau board){
-        hand.remove(parcel);
+    public CoordAxial putPlot(Plot plot, Plateau board){
+        hand.remove(plot);
         CoordAxial coor = strategie.getCoord();
-        parcel.setCoord(coor.getQ(),coor.getR());
-        board.putParcel(parcel);
+        plot.setCoord(coor.getQ(),coor.getR());
+        board.putPlot(plot);
         return coor;
     }
 

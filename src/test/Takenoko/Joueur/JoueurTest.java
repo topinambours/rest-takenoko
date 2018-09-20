@@ -2,7 +2,7 @@ package Takenoko.Joueur;
 
 import Takenoko.Deque.Deck;
 import Takenoko.Joueur.Strategie.StrategieRandom;
-import Takenoko.Parcel.Parcel;
+import Takenoko.Plot.Plot;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,7 +22,7 @@ public class JoueurTest {
         joueur2 = new Joueur(2, new StrategieRandom());
 
         for (int i = 0; i <= DECK_SIZE; i++){
-            dtest.addFirst(new Parcel(i,0));
+            dtest.addFirst(new Plot(i,0));
         }
     }
 
@@ -42,10 +42,10 @@ public class JoueurTest {
 
     @Test
     public void draw(){
-        Parcel parcel = joueur1.draw(dtest);
-        assertEquals(parcel, joueur1.getHand().getLast());
-        Parcel parcel2 = joueur1.draw(dtest);
-        assertEquals(parcel2, joueur1.getHand().getLast());
+        Plot plot = joueur1.draw(dtest);
+        assertEquals(plot, joueur1.getHand().getLast());
+        Plot plot2 = joueur1.draw(dtest);
+        assertEquals(plot2, joueur1.getHand().getLast());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class JoueurTest {
     }
 
     @Test
-    public void putParcel(){
+    public void putPlot(){
         //todo
     }
 }

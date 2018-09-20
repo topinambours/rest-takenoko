@@ -3,14 +3,13 @@ package Takenoko;
 import Takenoko.Deque.Deck;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieRandom;
-import Takenoko.Parcel.CoordAxial;
-import Takenoko.Parcel.Parcel;
+import Takenoko.Plot.CoordAxial;
+import Takenoko.Plot.Plot;
 
 /**
  * La classe Game permet de créer une partie
  */
 public class Game {
-
 
     private Plateau gameBoard;
     private Deck deck;
@@ -19,11 +18,14 @@ public class Game {
 
     public Game() {
         this.deck = new Deck();
-        Parcel parc = new Parcel();
+        Plot parc = new Plot();
         for (int i = 0; i < 28; i++) {
             deck.addFirst(parc);
         }
+
         this.plateau = new Plateau();
+        this.plateau.addStartingPlot(new Plot());
+
         this.joueur = new Joueur(1, new StrategieRandom());
         //Todo: Création d'un ou plusieurs robot
 
@@ -43,9 +45,9 @@ public class Game {
      */
     public void play(){
         while(!end()){ //Tant que la partie n'est pas terminée
-            Parcel current = deck.popFirst();
-            CoordAxial coord = joueur.putParcel(current,plateau);
-            System.out.println("Le joueur pose une Parcel ici : "+coord);
+            Plot current = deck.popFirst();
+            CoordAxial coord = joueur.putPlot(current,plateau);
+            System.out.println("Le joueur pose une parcelle ici : "+coord);
 
             //Todo : faire piocher -> faire poser
         }

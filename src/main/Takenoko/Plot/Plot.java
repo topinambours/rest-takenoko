@@ -1,14 +1,14 @@
-package Takenoko.Parcel;
+package Takenoko.Plot;
 
-public class Parcel {
+public class Plot {
 
     private CoordAxial coord;
 
-    public Parcel(int q, int r){
+    public Plot(int q, int r){
         this.coord = new CoordAxial(q,r);
     }
 
-    public Parcel(){
+    public Plot(){
         this(0,0);
     }
 
@@ -27,6 +27,11 @@ public class Parcel {
     public void setCoord(int q, int r){
         coord.setQ(q);
         coord.setR(r);
+    }
+
+    @Override
+    public String toString(){
+        return "Parcelle";
     }
 
 }

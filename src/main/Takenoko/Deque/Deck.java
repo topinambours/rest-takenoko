@@ -1,6 +1,6 @@
 package Takenoko.Deque;
 
-import Takenoko.Parcel.Parcel;
+import Takenoko.Plot.Plot;
 
 import java.util.Deque;
 import java.util.ArrayDeque;
@@ -15,7 +15,7 @@ import java.util.ArrayDeque;
  */
 public class Deck {
 
-    private Deque<Parcel> deck;
+    private Deque<Plot> deck;
 
     public Deck(){
         deck = new ArrayDeque<>();
@@ -25,7 +25,7 @@ public class Deck {
      * Get the first element of the deck.
      * @return
      */
-    public Parcel getFirst(){
+    public Plot getFirst(){
         return deck.peekFirst();
     }
 
@@ -33,27 +33,27 @@ public class Deck {
      * Get the last element of the deck.
      * @return
      */
-    public Parcel getLast(){
+    public Plot getLast(){
         return deck.peekLast();
     }
 
     /**
      * Add an element at the top of the deck.
-     * @param parcel
+     * @param plot
      * @return
      */
-    public boolean addFirst(Parcel parcel){
-        boolean res = deck.offerFirst(parcel);
+    public boolean addFirst(Plot plot){
+        boolean res = deck.offerFirst(plot);
         return res;
     }
 
     /**
      * Add an element at the end of the deck.
-     * @param parcel
+     * @param plot
      * @return
      */
-    public boolean addLast(Parcel parcel){
-        boolean res = deck.offerLast(parcel);
+    public boolean addLast(Plot plot){
+        boolean res = deck.offerLast(plot);
         return res;
     }
 
@@ -61,7 +61,7 @@ public class Deck {
      * Delete the first element of the deck.
      * @return
      */
-    public Parcel popFirst(){
+    public Plot popFirst(){
         return deck.pollFirst();
     }
 
@@ -69,7 +69,7 @@ public class Deck {
      * Delete the last element of the deck.
      * @return
      */
-    public Parcel popLast(){
+    public Plot popLast(){
         return deck.pollLast();
     }
 

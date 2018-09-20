@@ -1,6 +1,6 @@
 package Takenoko.Deque;
 
-import Takenoko.Parcel.Parcel;
+import Takenoko.Plot.Plot;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +16,7 @@ public class DeckTest {
         dtest = new Deck();
 
         for (int i = 0; i <= DECK_SIZE; i++){
-            dtest.addFirst(new Parcel(i,0));
+            dtest.addFirst(new Plot(i,0));
         }
     }
 
@@ -39,7 +39,7 @@ public class DeckTest {
     @Test
     public void addFirst() {
         for (int i = DECK_SIZE + 1; i <= DECK_SIZE * 2; i++){
-            dtest.addFirst(new Parcel(i, 1));
+            dtest.addFirst(new Plot(i, 1));
         }
 
         for (int i = DECK_SIZE * 2; i >= 0; i--){
@@ -54,7 +54,7 @@ public class DeckTest {
     @Test
     public void addLast() {
         for (int i = -1; i >= DECK_SIZE * -1 ; i--){
-            dtest.addLast(new Parcel(i, 1));
+            dtest.addLast(new Plot(i, 1));
         }
 
         for (int i = DECK_SIZE * -1; i <= DECK_SIZE; i++){

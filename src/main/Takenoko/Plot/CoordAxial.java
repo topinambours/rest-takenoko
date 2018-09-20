@@ -1,4 +1,4 @@
-package Takenoko.Parcel;
+package Takenoko.Plot;
 
 /** La classe CoordAxial permet de nous créer une coordonnée
  */
