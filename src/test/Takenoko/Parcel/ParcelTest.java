@@ -1,4 +1,4 @@
-package Takenoko;
+package Takenoko.Parcel;
 
 import Takenoko.Parcel.Parcel;
 import org.junit.Test;
