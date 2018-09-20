@@ -9,6 +9,9 @@ import Takenoko.Parcel.Parcel;
  * La classe Game permet de créer une partie
  */
 public class Game {
+
+
+    private Plateau gameBoard;
     private Deck deck;
     private Joueur joueur;
     private Plateau plateau;
