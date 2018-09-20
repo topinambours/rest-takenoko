@@ -91,10 +91,7 @@ public class Deck {
     }
 
     public boolean isEmpty(){
-        if(getSize()==0){
-            return true;
-        }
-        return false;
+        return getSize() == 0;
     }
 
     @Override
