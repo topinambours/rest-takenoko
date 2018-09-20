@@ -74,6 +74,15 @@ public class Deck {
     }
 
     /**
+     * Delete an object o in the deck.
+     * @param o
+     * @return
+     */
+    public boolean remove(Object o){
+        return deck.remove(o);
+    }
+
+    /**
      * Get the size of the deck.
      * @return
      */
