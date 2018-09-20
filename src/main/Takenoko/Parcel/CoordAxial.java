@@ -45,4 +45,11 @@ public class CoordAxial {
         result = 31 * result + r;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "(" + q +
+                "," + r +
+                ')';
+    }
 }

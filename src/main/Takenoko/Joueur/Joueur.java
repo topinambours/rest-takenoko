@@ -39,10 +39,12 @@ public class Joueur {
         return parcel;
     }
 
-    public void putParcel(Parcel parcel, int q, int r, Plateau board){
+    public CoordAxial putParcel(Parcel parcel, Plateau board){
         hand.remove(parcel);
         CoordAxial coor = strategie.getCoord();
-        board.putParcel(parcel, coor.getQ(), coor.getR());
+        parcel.setCoord(coor.getQ(),coor.getR());
+        board.putParcel(parcel);
+        return coor;
     }
 
 }

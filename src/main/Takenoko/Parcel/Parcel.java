@@ -20,6 +20,10 @@ public class Parcel {
         return coord.getR();
     }
 
+    public CoordAxial getCoord() {
+        return coord;
+    }
+
     public void setCoord(int q, int r){
         coord.setQ(q);
         coord.setR(r);

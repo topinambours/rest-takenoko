@@ -55,4 +55,8 @@ public class Plateau {
     public void putParcel(Parcel parcel, CoordAxial coord) {
         parcels.put(coord, parcel);
     }
+
+    public void putParcel(Parcel parcel){
+        parcels.put(parcel.getCoord(), parcel);
+    }
 }
