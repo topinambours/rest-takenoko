@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
  */
 public class Plateau {
     private final CoordAxial _STARTING_COORDINATE_ = new CoordAxial(0,0);
+    private final List<CoordAxial> posInit = _STARTING_COORDINATE_.getNeighborCoords();
 
     private HashMap<CoordAxial, Plot> plots;
     private Plot lastPlop;
@@ -83,7 +84,14 @@ public class Plateau {
     }
 
     public List<CoordAxial> legalPositions() {
-        return positionsToTest().stream().filter(c -> isPositionLegal(c)).collect(Collectors.toList());
+        //return positionsToTest().stream().filter(c -> isPositionLegal(c)).collect(Collectors.toList());
+        List<CoordAxial> res = new ArrayList<>();
+        for (CoordAxial c : positionsToTest()) {
+            if (isPositionLegal(c)) {
+                res.add(c);
+            }
+        }
+        return res;
     }
 
     public boolean isPositionLegal(CoordAxial coo) {
@@ -93,8 +101,10 @@ public class Plateau {
         if (coo.getQ() == 0 && coo.getR() == 0) {
             return false;
         }
-        if (Math.max(Math.abs(coo.getQ()), Math.abs(coo.getR())) == 1) {
-            return true;
+        for (CoordAxial oc : posInit) {
+            if (coo.equals(oc)) {
+                return true;
+            }
         }
         int v = 0;
         for (CoordAxial nbc : coo.getNeighborCoords()) {
@@ -108,10 +118,14 @@ public class Plateau {
     private List<CoordAxial> positionsToTest() {
         CoordAxial origin = new CoordAxial(0, 0);
         Set<CoordAxial> res = new HashSet<>();
+        for (CoordAxial c : origin.getNeighborCoords()) {
+            res.add(c);
+        }
         Iterator it = plots.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
-            CoordAxial coo = (CoordAxial)pair.getValue();
+            Plot plot = (Plot) pair.getValue();
+            CoordAxial coo = plot.getCoord();
             for (CoordAxial nbc : coo.getNeighborCoords()) {
                 if (nbc != origin && getPlot(nbc) == null) {
                     res.add(nbc);

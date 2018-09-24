@@ -11,14 +11,9 @@ public class StrategieRandom implements Strategie{
     public CoordAxial getCoord(Plateau plateau) {
 
         List<CoordAxial> listOfPos = plateau.legalPositions();
-
-        //TEMPORAIRE A DELETE APRES LE COMMIT DE MATHIAS !!!!!!!
-        if(listOfPos==null){
-            Random random = new Random();
-            return new CoordAxial(random.nextInt(100),random.nextInt(100));
-        }
-
-        return listOfPos.get(0);
+        Random random = new Random();
+        int a = random.nextInt(listOfPos.size());
+        return listOfPos.get(a);
 
     }
 
