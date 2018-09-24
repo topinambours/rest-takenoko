@@ -18,9 +18,8 @@ public class Game {
 
     public Game() {
         this.deck = new Deck();
-        Plot parc = new Plot();
         for (int i = 0; i < 28; i++) {
-            deck.addFirst(parc);
+            deck.addFirst(new Plot());
         }
 
         this.plateau = new Plateau();
