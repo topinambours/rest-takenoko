@@ -75,7 +75,6 @@ public class Plateau {
         for (CoordAxial c : positionsToTest()) {
             if (isPositionLegal(c)) {
                 res.add(c);
-                System.out.println("l : " + c);
             }
         }
         return res;
@@ -85,9 +84,6 @@ public class Plateau {
         if (getPlot(coo) != null) {
             return false;
         }
-        /*if (plots.containsKey(coo)) {
-            return false;
-        }*/
         if (coo.getQ() == 0 && coo.getR() == 0) {
             return false;
         }
@@ -96,7 +92,6 @@ public class Plateau {
                 return true;
             }
         }
-
         int v = 0;
         for (CoordAxial nbc : coo.getNeighborCoords()) {
             if (getPlot(nbc) != null) {
@@ -122,10 +117,6 @@ public class Plateau {
                     res.add(nbc);
                 }
             }
-        }
-        var ret = new ArrayList<>(res);
-        for (CoordAxial ca : ret) {
-            System.out.println("c : " + ca);
         }
         return new ArrayList<>(res);
     }
