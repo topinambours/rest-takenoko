@@ -39,7 +39,13 @@ public class Plot {
         coord.setR(r);
     }
 
+    public Couleur getCouleur() {
+        return couleur;
+    }
 
+    public void setCouleur(Couleur couleur) {
+        this.couleur = couleur;
+    }
 
     @Override
     public String toString(){
