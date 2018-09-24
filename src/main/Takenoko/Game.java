@@ -113,9 +113,9 @@ public class Game {
 
         return couleurs;
 
-    }
-
-    protected Plateau getPlateau() {
-        return plateau;
     }*/
+
+    public Plateau getPlateau() {
+        return plateau;
+    }
 }
