@@ -50,9 +50,15 @@ public class Joueur implements Comparable{
         return plot;
     }
 
+    /**
+     * Fonction qui permet au joueur de poser un plot sur le board.
+     * @param plot
+     * @param board
+     * @return
+     */
     public CoordAxial putPlot(Plot plot, Plateau board){
         hand.remove(plot);
-        CoordAxial coor = strategie.getCoord();
+        CoordAxial coor = strategie.getCoord(board);
         plot.setCoord(coor.getQ(),coor.getR());
         board.putPlot(plot);
         return coor;

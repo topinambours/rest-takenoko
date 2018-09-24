@@ -1,5 +1,8 @@
 package Takenoko.Plot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /** La classe CoordAxial permet de nous créer une coordonnée
  */
 public class CoordAxial {
@@ -27,6 +30,16 @@ public class CoordAxial {
         this.r = r;
     }
 
+    public List<CoordAxial> getNeighborCoords() {
+        ArrayList<CoordAxial> res = new ArrayList<>();
+        res.add(new CoordAxial(q + 1, r - 1));
+        res.add(new CoordAxial(q + 1, r));
+        res.add(new CoordAxial(q, r - 1));
+        res.add(new CoordAxial(q, r + 1));
+        res.add(new CoordAxial(q - 1, r));
+        res.add(new CoordAxial(q - 1, r + 1));
+        return res;
+    }
 
     @Override
     public boolean equals(Object o) {

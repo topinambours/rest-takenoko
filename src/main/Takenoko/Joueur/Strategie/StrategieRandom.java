@@ -1,14 +1,20 @@
 package Takenoko.Joueur.Strategie;
 
+import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 
+import java.util.List;
 import java.util.Random;
 
 public class StrategieRandom implements Strategie{
 
-    public CoordAxial getCoord() {
+    public CoordAxial getCoord(Plateau plateau) {
+
+        List<CoordAxial> listOfPos = plateau.legalPositions();
         Random random = new Random();
-        return new CoordAxial(random.nextInt(100),random.nextInt(100));
+        int a = random.nextInt(listOfPos.size());
+        return listOfPos.get(a);
+
     }
 
     public StrategieRandom() {

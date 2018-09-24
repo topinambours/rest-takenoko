@@ -3,21 +3,26 @@ package Takenoko;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 
-import java.util.HashMap;
+import java.util.*;
+import java.lang.Math;
+import java.util.stream.Collectors;
 
 /**
  * Classe plateau, utilise un HashMap, stocke les parcelles en jeu avec leurs coordonnées axiales en clé
  */
 public class Plateau {
     private final CoordAxial _STARTING_COORDINATE_ = new CoordAxial(0,0);
+    private final List<CoordAxial> posInit = _STARTING_COORDINATE_.getNeighborCoords();
 
     private HashMap<CoordAxial, Plot> plots;
+    private Plot lastPlop;
 
     /**
      * Constructeur par défaut, instancie un plateau vide
      */
     public Plateau() {
         plots = new HashMap<>();
+        lastPlop = null;
     }
 
     /**
@@ -39,6 +44,14 @@ public class Plateau {
         return plots.get(coord);
     }
 
+    public Plot getLastPlop() {
+        return lastPlop;
+    }
+
+    private void setLastPlop(Plot lastPlop) {
+        this.lastPlop = lastPlop;
+    }
+
     /**
      * placeur de parcelle, prend les coordonnées séparément
      * @param plot une parcelle à placer
@@ -47,7 +60,11 @@ public class Plateau {
      */
     public void putPlot(Plot plot, int q, int r) {
         plots.put(new CoordAxial(q, r), plot);
+        setLastPlop(plot);
+
     }
+
+
 
     /**
      * placeur de parcelle, prend les coordonnées mises ensemble
@@ -64,5 +81,57 @@ public class Plateau {
 
     public void addStartingPlot(Plot plot){
         putPlot(plot, _STARTING_COORDINATE_);
+    }
+
+    public List<CoordAxial> legalPositions() {
+        //return positionsToTest().stream().filter(c -> isPositionLegal(c)).collect(Collectors.toList());
+        List<CoordAxial> res = new ArrayList<>();
+        for (CoordAxial c : positionsToTest()) {
+            if (isPositionLegal(c)) {
+                res.add(c);
+            }
+        }
+        return res;
+    }
+
+    public boolean isPositionLegal(CoordAxial coo) {
+        if (getPlot(coo) != null) {
+            return false;
+        }
+        if (coo.getQ() == 0 && coo.getR() == 0) {
+            return false;
+        }
+        for (CoordAxial oc : posInit) {
+            if (coo.equals(oc)) {
+                return true;
+            }
+        }
+        int v = 0;
+        for (CoordAxial nbc : coo.getNeighborCoords()) {
+            if (getPlot(nbc) != null) {
+                v++;
+            }
+        }
+        return (v >= 2);
+    }
+
+    private List<CoordAxial> positionsToTest() {
+        CoordAxial origin = new CoordAxial(0, 0);
+        Set<CoordAxial> res = new HashSet<>();
+        for (CoordAxial c : origin.getNeighborCoords()) {
+            res.add(c);
+        }
+        Iterator it = plots.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            Plot plot = (Plot) pair.getValue();
+            CoordAxial coo = plot.getCoord();
+            for (CoordAxial nbc : coo.getNeighborCoords()) {
+                if (nbc != origin && getPlot(nbc) == null) {
+                    res.add(nbc);
+                }
+            }
+        }
+        return new ArrayList<>(res);
     }
 }
