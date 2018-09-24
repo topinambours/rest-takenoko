@@ -15,7 +15,6 @@ import java.util.HashSet;
  */
 public class Game {
 
-    private Plateau gameBoard;
     private Deck deck;
     private Joueur joueur;
     private Plateau plateau;

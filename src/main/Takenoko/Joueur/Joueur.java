@@ -2,7 +2,6 @@ package Takenoko.Joueur;
 
 import Takenoko.Deque.Deck;
 import Takenoko.Joueur.Strategie.Strategie;
-import Takenoko.Joueur.Strategie.StrategieRandom;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import Takenoko.Plateau;
@@ -58,7 +57,7 @@ public class Joueur implements Comparable{
      */
     public CoordAxial putPlot(Plot plot, Plateau board){
         hand.remove(plot);
-        CoordAxial coor = strategie.getCoord(board, plot);
+        CoordAxial coor = strategie.getCoord(board);
         plot.setCoord(coor.getQ(),coor.getR());
         board.putPlot(plot);
         return coor;

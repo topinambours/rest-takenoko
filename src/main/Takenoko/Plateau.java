@@ -126,6 +126,10 @@ public class Plateau {
         return (v >= 2);
     }
 
+    public int nbAdajcent(CoordAxial coo){
+        return coo.getNeighborCoords().size();
+    }
+
     private List<CoordAxial> positionsToTest() {
         CoordAxial origin = new CoordAxial(0, 0);
         Set<CoordAxial> res = new HashSet<>();
