@@ -5,9 +5,11 @@ import Takenoko.Plot.Plot;
 
 import java.util.List;
 
-
-public class StrategieColor implements Strategie{
-
+/**
+ * Classe en prévision de la suite !
+ */
+public class StrategieColor {
+    /*
     public CoordAxial getCoord(Plateau plateau, Plot plot) {
 
         List<CoordAxial> listOfPos = plateau.legalPositions();
@@ -15,7 +17,8 @@ public class StrategieColor implements Strategie{
         int i = 0;
         while(!listOfPos.isEmpty()){
             for(int j =0; j<listOfPos.get(i).getNeighborCoords().size(); j++){
-                if(plateau.getPlot(listOfPos.get(i).getNeighborCoords().get(j)).getCouleur() == plot.getCouleur()){
+                Plot plot2 = plateau.getPlot(listOfPos.get(i).getNeighborCoords().get(j));
+                if(plot2.getCouleur() == plot.getCouleur()){
                     return listOfPos.get(i).getNeighborCoords().get(j);
                 }
             }
@@ -24,9 +27,8 @@ public class StrategieColor implements Strategie{
         return listOfPos.get(0);
 
     }
-
+    */
 
     public StrategieColor() {
     }
-
 }
