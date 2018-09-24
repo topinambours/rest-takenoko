@@ -14,6 +14,14 @@ public class Plot {
         this(0,0,couleur);
     }
 
+    public Plot(int q,int r){
+        this(q,r,Couleur.ROUGE);
+    }
+
+    public Plot(){
+        this(0,0,Couleur.ROUGE);
+    }
+
     public int getq(){
         return coord.getQ();
     }
