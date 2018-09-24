@@ -20,4 +20,9 @@ public class StrategieRandom implements Strategie{
     public StrategieRandom() {
 
     }
+
+    @Override
+    public String getStrategieLabel() {
+        return "Stratégie aléatoire";
+    }
 }

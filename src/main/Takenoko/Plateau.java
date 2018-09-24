@@ -127,7 +127,7 @@ public class Plateau {
     }
 
     public int nbAdajcent(CoordAxial coo){
-        return coo.getNeighborCoords().size();
+        return getNeighbors(coo).size();
     }
 
     private List<CoordAxial> positionsToTest() {

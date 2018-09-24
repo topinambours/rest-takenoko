@@ -2,12 +2,14 @@ package Takenoko;
 
 import Takenoko.Deque.Deck;
 import Takenoko.Joueur.Joueur;
+import Takenoko.Joueur.Strategie.StrategieAdjacent;
 import Takenoko.Joueur.Strategie.StrategieRandom;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Couleur;
 import Takenoko.Plot.Plot;
 import Takenoko.Util.Console;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -16,11 +18,12 @@ import java.util.HashSet;
 public class Game {
 
     private Deck deck;
-    private Joueur joueur;
+    private ArrayList<Joueur> joueurs;
     private Plateau plateau;
 
     public Game() {
         this.deck = new Deck();
+        this.joueurs = new ArrayList<>();
         for (int i = 0; i < 28; i++) {
             deck.addFirst(new Plot());
         }
@@ -28,7 +31,12 @@ public class Game {
         this.plateau = new Plateau();
         this.plateau.addStartingPlot(new Plot());
 
-        this.joueur = new Joueur(1, new StrategieRandom());
+        Joueur j1 = new Joueur(1, new StrategieAdjacent());
+        Joueur j2 = new Joueur(2, new StrategieRandom());
+
+        joueurs.add(j1);
+        joueurs.add(j2);
+
         //Todo: Création d'un ou plusieurs robot
 
     }
@@ -47,16 +55,21 @@ public class Game {
      */
     public void play(){
         while(!end()){ //Tant que la partie n'est pas terminée
-            Plot current = deck.popFirst();
-            CoordAxial coord = joueur.putPlot(current,plateau);
+            for (Joueur j : joueurs){
+                if (end()){
+                    break;
+                }
+                Plot current = deck.popFirst();
+                CoordAxial coord = j.putPlot(current,plateau);
+                Console.Log.println(String.format("Le joueur %d pose une parcelle ici : %s", j.number, coord));
 
-            Console.Log.println("Le joueur pose une parcelle ici : "+coord);
-
-
-            //Todo : faire piocher -> faire poser
+                graduate(j, coord);
+            }//Todo : faire piocher -> faire poser
         }
         Console.Log.println("La partie est terminée");
-        Console.Log.debugPrintln("Ceci est une ligne de debug");
+        for (Joueur j : joueurs){
+            Console.Log.println(String.format("Le joueur %d a marqué %d points avec une %s", j.number, j.getScore(), j.getStrategieLabel()));
+        }
     }
 
     public Deck getDeck(){
@@ -70,10 +83,11 @@ public class Game {
     /**
      * Graduate permet d'évaluer les points à chaque tour
      */
-    protected void graduate(){
+    protected void graduate(Joueur j, CoordAxial coord){
         //CHECK NeighborColor
-        joueur.addScore1();
-        Console.Log.println("Le joueur gagne 1 point car il a poser une parcelle");
+        int n = plateau.getNeighbors(coord).size();
+        j.addScore(n);
+        Console.Log.println(String.format("Le joueur %d gagne %d point car il a posé une parcelle", j.number ,n));
 
         /*HashSet<Couleur> couleurs = getNeighborColor(plateau.getLastPlop(),plateau);
         if(couleurs.contains(plateau.getLastPlop().getCouleur())){

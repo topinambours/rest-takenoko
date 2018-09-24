@@ -22,6 +22,11 @@ public class StrategieAdjacent implements Strategie{
         return c;
     }
 
+    @Override
+    public String getStrategieLabel() {
+        return "Stratégie des adjacents";
+    }
+
     public StrategieAdjacent() {
 
     }

@@ -5,4 +5,6 @@ import Takenoko.Plot.CoordAxial;
 
 public interface Strategie {
     public CoordAxial getCoord(Plateau P);
+
+    public String getStrategieLabel();
 }

@@ -10,7 +10,7 @@ import Takenoko.Plateau;
 public class Joueur implements Comparable{
 
     private Deck hand;
-    private int number;
+    public int number;
     private Strategie strategie;
     private int score;
 
@@ -47,6 +47,10 @@ public class Joueur implements Comparable{
         hand.remove(plot);
         deck.addFirst(plot);
         return plot;
+    }
+
+    public String getStrategieLabel(){
+        return strategie.getStrategieLabel();
     }
 
     /**
