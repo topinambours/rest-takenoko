@@ -58,7 +58,7 @@ public class Joueur implements Comparable{
      */
     public CoordAxial putPlot(Plot plot, Plateau board){
         hand.remove(plot);
-        CoordAxial coor = strategie.getCoord(board);
+        CoordAxial coor = strategie.getCoord(board, plot);
         plot.setCoord(coor.getQ(),coor.getR());
         board.putPlot(plot);
         return coor;
