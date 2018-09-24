@@ -4,6 +4,7 @@ import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Classe plateau, utilise un HashMap, stocke les parcelles en jeu avec leurs coordonnées axiales en clé
@@ -64,5 +65,13 @@ public class Plateau {
 
     public void addStartingPlot(Plot plot){
         putPlot(plot, _STARTING_COORDINATE_);
+    }
+
+    public List<CoordAxial> legalPositions() {
+        return null;
+    }
+
+    public boolean isPositionLegal(CoordAxial coo) {
+        return true;
     }
 }
