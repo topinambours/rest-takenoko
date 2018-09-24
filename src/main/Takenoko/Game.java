@@ -5,6 +5,7 @@ import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieRandom;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
+import Takenoko.Util.Console;
 
 /**
  * La classe Game permet de créer une partie
@@ -47,12 +48,13 @@ public class Game {
         while(!end()){ //Tant que la partie n'est pas terminée
             Plot current = deck.popFirst();
             CoordAxial coord = joueur.putPlot(current,plateau);
-            System.out.println("Le joueur pose une parcelle ici : "+coord);
+
+            Console.Log.println("Le joueur pose une parcelle ici : "+coord);
 
             //Todo : faire piocher -> faire poser
         }
-
-        System.out.println("La partie est terminée");
+        Console.Log.println("La partie est terminée");
+        Console.Log.debugPrintln("Ceci est une ligne de debug");
     }
 
     public Deck getDeck(){
