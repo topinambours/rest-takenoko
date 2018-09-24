@@ -2,11 +2,13 @@ package Takenoko.Joueur;
 
 import Takenoko.Deque.Deck;
 import Takenoko.Joueur.Strategie.Strategie;
+import Takenoko.Joueur.Strategie.StrategieRandom;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import Takenoko.Plateau;
 
-public class Joueur {
+
+public class Joueur implements Comparable{
 
     private Deck hand;
     private int number;
@@ -85,6 +87,31 @@ public class Joueur {
      */
     public void addScore1(){
         addScore(1);
+    }
+
+    /**
+     * Le comparateur permet de comparer le nombre de point de differeence entre 2 bots
+     * @param o Joueur
+     * @return int resultat
+     */
+    @Override
+    public int compareTo(Object o) {
+        if(o.getClass().equals(Joueur.class)){
+            //Nous allons trier sur le nom d'artiste
+            Joueur joueur = (Joueur) o;
+            return ((Integer) this.score).compareTo(joueur.getScore());
+
+        }
+        return -1;
+    }
+
+    /**
+     * Permet de savoir si un joueur a plus de points qu'un autre
+     * @param joueur Joueur un joueur
+     * @return boolean true|false
+     */
+    public boolean isUpper(Joueur joueur){
+        return this.compareTo(joueur) > 0;
     }
 
 
