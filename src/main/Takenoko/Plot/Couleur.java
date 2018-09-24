@@ -1,5 +1,8 @@
 package Takenoko.Plot;
 
+/**
+ * en prévision ...
+ */
 public enum Couleur {
     ROUGE("Rouge"),VERT("Vert"),BLEU("Bleu"),JAUNE("Jaune");
 

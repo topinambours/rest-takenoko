@@ -71,23 +71,21 @@ public class Game {
     /**
      * Graduate permet d'évaluer les points à chaque tour
      */
-    public void graduate(){
+    protected void graduate(){
         //CHECK NeighborColor
-        HashSet<Couleur> couleurs = getNeighborColor(plateau.getLastPlop(),plateau);
+        joueur.addScore1();
+        Console.Log.println("Le joueur gagne 1 point car il a poser une parcelle");
+
+        /*HashSet<Couleur> couleurs = getNeighborColor(plateau.getLastPlop(),plateau);
         if(couleurs.contains(plateau.getLastPlop().getCouleur())){
             joueur.addScore1();
             Console.Log.println("Le joueur gagne 1 point la parcelle posée à la même couleur que la parcelle adjacente");
-        }
+        }*/
     }
 
 
-    /**
-     * Permet d'avoir les couleurs des adjacents
-     * @param plot Plot
-     * @param plateau Plateau
-     * @return HashSet le set de couleurs adjacentes
-     */
-    private HashSet<Couleur> getNeighborColor(Plot plot,Plateau plateau){
+
+   /* private HashSet<Couleur> getNeighborColor(Plot plot,Plateau plateau){
         HashSet<Couleur> couleurs = new HashSet<>();
 
         int q = plot.getq();
@@ -104,6 +102,7 @@ public class Game {
 
     }
 
-
-
+    protected Plateau getPlateau() {
+        return plateau;
+    }*/
 }

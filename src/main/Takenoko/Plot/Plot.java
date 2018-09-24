@@ -7,9 +7,9 @@ public class Plot {
 
     public Plot(int q, int r,Couleur couleur){
         this.coord = new CoordAxial(q,r);
-        this.couleur = couleur;
+        //this.couleur = couleur;
     }
-
+/*
     public Plot(Couleur couleur){
         this(0,0,couleur);
     }
@@ -21,6 +21,7 @@ public class Plot {
     public Plot(){
         this(0,0,Couleur.ROUGE);
     }
+    */
 
     public int getq(){
         return coord.getQ();
@@ -39,6 +40,7 @@ public class Plot {
         coord.setR(r);
     }
 
+    /*
     public Couleur getCouleur() {
         return couleur;
     }
@@ -46,6 +48,7 @@ public class Plot {
     public void setCouleur(Couleur couleur) {
         this.couleur = couleur;
     }
+    */
 
     @Override
     public String toString(){
