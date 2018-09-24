@@ -83,6 +83,17 @@ public class Plateau {
         putPlot(plot, _STARTING_COORDINATE_);
     }
 
+    public List<Plot> getNeighbors(CoordAxial coo) {
+        ArrayList<Plot> res = new ArrayList<>();
+        for (CoordAxial nbc : coo.getNeighborCoords()) {
+            var myPlot = getPlot(nbc);
+            if (myPlot != null) {
+                res.add(myPlot);
+            }
+        }
+        return res;
+    }
+
     public List<CoordAxial> legalPositions() {
         //return positionsToTest().stream().filter(c -> isPositionLegal(c)).collect(Collectors.toList());
         List<CoordAxial> res = new ArrayList<>();
