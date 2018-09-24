@@ -3,13 +3,15 @@ package Takenoko.Plot;
 public class Plot {
 
     private CoordAxial coord;
+    private Couleur couleur;
 
-    public Plot(int q, int r){
+    public Plot(int q, int r,Couleur couleur){
         this.coord = new CoordAxial(q,r);
+        this.couleur = couleur;
     }
 
-    public Plot(){
-        this(0,0);
+    public Plot(Couleur couleur){
+        this(0,0,couleur);
     }
 
     public int getq(){
@@ -28,6 +30,8 @@ public class Plot {
         coord.setQ(q);
         coord.setR(r);
     }
+
+
 
     @Override
     public String toString(){
