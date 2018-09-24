@@ -14,12 +14,14 @@ public class Plateau {
     private final CoordAxial _STARTING_COORDINATE_ = new CoordAxial(0,0);
 
     private HashMap<CoordAxial, Plot> plots;
+    private Plot lastPlop;
 
     /**
      * Constructeur par défaut, instancie un plateau vide
      */
     public Plateau() {
         plots = new HashMap<>();
+        lastPlop = null;
     }
 
     /**
@@ -41,6 +43,14 @@ public class Plateau {
         return plots.get(coord);
     }
 
+    public Plot getLastPlop() {
+        return lastPlop;
+    }
+
+    private void setLastPlop(Plot lastPlop) {
+        this.lastPlop = lastPlop;
+    }
+
     /**
      * placeur de parcelle, prend les coordonnées séparément
      * @param plot une parcelle à placer
@@ -49,7 +59,11 @@ public class Plateau {
      */
     public void putPlot(Plot plot, int q, int r) {
         plots.put(new CoordAxial(q, r), plot);
+        setLastPlop(plot);
+
     }
+
+
 
     /**
      * placeur de parcelle, prend les coordonnées mises ensemble
