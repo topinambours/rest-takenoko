@@ -11,6 +11,7 @@ public class Joueur {
     private Deck hand;
     private int number;
     private Strategie strategie;
+    private int score;
 
 
     public Joueur(int n,Strategie strategie){
@@ -54,5 +55,37 @@ public class Joueur {
         board.putPlot(plot);
         return coor;
     }
+
+    /**
+     * Getter score
+     * @return int score
+     */
+    public int getScore() {
+        return score;
+    }
+
+    /**
+     * fonction privée Setter score
+     * @param score int le score
+     */
+    private void setScore(int score) {
+        this.score = score;
+    }
+
+    /**
+     * addScore permet d'ajouter n points
+     * @param number int nombre de points
+     */
+    public void addScore(int number){
+        setScore(getScore()+number);
+    }
+
+    /**
+     * addScore1 ajoute 1 point
+     */
+    public void addScore1(){
+        addScore(1);
+    }
+
 
 }
