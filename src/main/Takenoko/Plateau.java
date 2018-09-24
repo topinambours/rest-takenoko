@@ -3,8 +3,9 @@ package Takenoko;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.lang.Math;
+import java.util.stream.Collectors;
 
 /**
  * Classe plateau, utilise un HashMap, stocke les parcelles en jeu avec leurs coordonnées axiales en clé
@@ -68,10 +69,41 @@ public class Plateau {
     }
 
     public List<CoordAxial> legalPositions() {
-        return null;
+        return positionsToTest().stream().filter(c -> isPositionLegal(c)).collect(Collectors.toList());
     }
 
     public boolean isPositionLegal(CoordAxial coo) {
-        return true;
+        if (getPlot(coo) != null) {
+            return false;
+        }
+        if (coo.getQ() == 0 && coo.getR() == 0) {
+            return false;
+        }
+        if (Math.max(Math.abs(coo.getQ()), Math.abs(coo.getR())) == 1) {
+            return true;
+        }
+        int v = 0;
+        for (CoordAxial nbc : coo.getNeighborCoords()) {
+            if (getPlot(nbc) != null) {
+                v++;
+            }
+        }
+        return (v >= 2);
+    }
+
+    private List<CoordAxial> positionsToTest() {
+        CoordAxial origin = new CoordAxial(0, 0);
+        Set<CoordAxial> res = new HashSet<>();
+        Iterator it = plots.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            CoordAxial coo = (CoordAxial)pair.getValue();
+            for (CoordAxial nbc : coo.getNeighborCoords()) {
+                if (nbc != origin && getPlot(nbc) == null) {
+                    res.add(nbc);
+                }
+            }
+        }
+        return new ArrayList<>(res);
     }
 }
