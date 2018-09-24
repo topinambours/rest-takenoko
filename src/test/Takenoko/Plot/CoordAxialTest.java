@@ -1,4 +1,4 @@
-package Takenoko.Parcel;
+package Takenoko.Plot;
 
 import org.junit.Test;
 

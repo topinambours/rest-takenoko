@@ -1,27 +1,26 @@
-package Takenoko.Parcel;
+package Takenoko.Plot;
 
-import Takenoko.Parcel.Parcel;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class ParcelTest {
+public class PlotTest {
 
     @Test
     public void getq() {
-        Parcel p = new Parcel(10,15);
+        Plot p = new Plot(10,15);
         assertEquals(10, p.getq());
     }
 
     @Test
     public void getr() {
-        Parcel p = new Parcel(10,15);
+        Plot p = new Plot(10,15);
         assertEquals(15, p.getr());
     }
 
     @Test
     public void setCoord() {
-        Parcel p = new Parcel(10,15);
+        Plot p = new Plot(10,15);
         assertEquals(10, p.getq());
         assertEquals(15, p.getr());
 

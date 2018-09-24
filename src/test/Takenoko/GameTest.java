@@ -1,5 +1,6 @@
 package Takenoko;
 
+import Takenoko.Util.Console;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,6 +17,7 @@ public class GameTest {
     }
 
     @Test public void testGame(){
+        Console.Log.init(Console.Mode.TEST);
         game.play();
         assertTrue(game.end());
     }
