@@ -24,6 +24,10 @@ public class CoordIrrig {
         this.o = o;
     }
 
+    /**
+     * prend les coordonnées d'une arête et rend les coordonnées des 2 espaces adjacents
+     * @return
+     */
     public List<CoordAxial> borders() {
         var res = new ArrayList<CoordAxial>();
         switch (o) {
@@ -43,6 +47,13 @@ public class CoordIrrig {
         return res;
     }
 
+    /**
+     * prend 2 coordonnées hexagonales et rend les coordonnées de l'arête qu'elles partagent
+     * renvoie null si les 2 hexagones ne sont pas adjacents
+     * @param a
+     * @param b
+     * @return
+     */
     public static CoordIrrig join(CoordAxial a, CoordAxial b) {
         int du = abs(a.getQ() - b.getQ());
         int dv = abs(a.getR() - b.getR());
@@ -70,6 +81,10 @@ public class CoordIrrig {
         }
     }
 
+    /**
+     * prend les coordonnées d'une arête et rend les coordonnées des 4 arêtes qui y sont connectées bout à bout
+     * @return
+     */
     public List<CoordIrrig> continues() {
         var res = new ArrayList<CoordIrrig>();
         switch (o) {
