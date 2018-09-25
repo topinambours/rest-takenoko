@@ -13,9 +13,7 @@ public class Plot {
     }
 
     public Plot(CoordAxial coordAxial){
-        this.coord = coordAxial;
-        this.bambou = 0;
-        this.water=false;
+        this(coordAxial.getQ(),coordAxial.getR());
     }
 
     public Plot(){

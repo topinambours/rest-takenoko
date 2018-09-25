@@ -61,7 +61,9 @@ public class Game {
                 }
                 Plot current = deck.popFirst();
                 CoordAxial coord = j.putPlot(current,plateau);
+                current.setWater(getPlateau().checkPlotWater(coord)); //Check if have water
                 Console.Log.println(String.format("Le joueur %d pose une parcelle ici : %s", j.number, coord));
+                Console.Log.debugPrint("La parcelle "+current.toString()+"a water a : "+getPlateau().checkPlotWater(coord));
                 //Console.Log.println(String.format("Le joueur %d pose un bambou ici : %s", j.number, coord));
 
                 evaluate(j, coord);

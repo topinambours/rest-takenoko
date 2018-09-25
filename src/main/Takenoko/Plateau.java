@@ -164,4 +164,8 @@ public class Plateau {
     public HashMap<CoordAxial, Plot> getPlots() {
         return plots;
     }
+
+    public boolean checkPlotWater(CoordAxial coordAxial){
+        return this.getIrrigations().contains(coordAxial.getBorderCoords());
+    }
 }
