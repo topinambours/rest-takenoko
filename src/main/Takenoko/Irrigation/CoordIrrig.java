@@ -4,6 +4,7 @@ import Takenoko.Plot.CoordAxial;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static java.lang.Math.*;
 
@@ -108,5 +109,20 @@ public class CoordIrrig {
             }
         }
         return res;
+    }
+
+    @Override
+    public boolean equals(Object o1) {
+        if (this == o1) return true;
+        if (o1 == null || getClass() != o1.getClass()) return false;
+        CoordIrrig that = (CoordIrrig) o1;
+        return u == that.u &&
+                v == that.v &&
+                o == that.o;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(u, v, o);
     }
 }
