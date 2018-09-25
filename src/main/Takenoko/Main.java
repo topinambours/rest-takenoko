@@ -4,7 +4,8 @@ import Takenoko.Util.Console;
 
 public class Main {
     public static void main(String[] args){
-        Console.Log.init(Console.Mode.DEBUG);
+        Console.Mode m = Console.Log.getModeFromLabel(args[0]);
+        Console.Log.init(m);
 
         Game partie = new Game();
 
