@@ -232,6 +232,11 @@ public class Plateau {
     }
 
     public boolean checkPlotWater(CoordAxial coordAxial){
-        return this.getIrrigations().contains(coordAxial.getBorderCoords());
+        for (CoordIrrig c : coordAxial.getBorderCoords()){
+            if (this.getIrrigations().contains(c)){
+                return true;
+            }
+        }
+        return false;
     }
 }

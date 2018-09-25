@@ -63,6 +63,7 @@ public class Joueur implements Comparable{
         hand.remove(plot);
         CoordAxial coor = strategie.getCoord(board);
         plot.setCoord(coor.getQ(),coor.getR());
+        //plot.setWater(board.checkPlotWater(plot.getCoord())); //Check if have water
         board.putPlot(plot);
         return coor;
     }

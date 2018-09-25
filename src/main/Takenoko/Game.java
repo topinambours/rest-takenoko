@@ -58,9 +58,8 @@ public class Game {
                 if (end()){
                     break;
                 }
-                Plot current = deck.popFirst();
-                CoordAxial coord = j.putPlot(current,plateau);
-                current.setWater(getPlateau().checkPlotWater(coord)); //Check if have water
+                Plot current = turn(j);
+                CoordAxial coord = current.getCoord();
                 Console.Log.println(String.format("Le joueur %d pose une parcelle ici : %s", j.number, coord));
                 Console.Log.debugPrint("La parcelle "+current.toString()+"a water a : "+getPlateau().checkPlotWater(coord));
                 //Console.Log.println(String.format("Le joueur %d pose un bambou ici : %s", j.number, coord));
@@ -80,6 +79,13 @@ public class Game {
         return deck;
     }
 
+    public Plot turn(Joueur joueur){
+        Plot current = deck.popFirst();
+        CoordAxial coord = joueur.putPlot(current,plateau);
+        current.setWater(getPlateau().checkPlotWater(coord)); //dans le joueur maintenant
+
+        return current;
+    }
 
 
     //GRADUATE
