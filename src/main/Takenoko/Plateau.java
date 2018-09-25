@@ -1,5 +1,6 @@
 package Takenoko;
 
+import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 
@@ -17,12 +18,15 @@ public class Plateau {
     private HashMap<CoordAxial, Plot> plots;
     private Plot lastPlop;
 
+    private HashSet<CoordIrrig> irrigations;
+
     /**
      * Constructeur par défaut, instancie un plateau vide
      */
     public Plateau() {
         plots = new HashMap<>();
         lastPlop = null;
+        irrigations = new HashSet<CoordIrrig>();
     }
 
     /**
@@ -64,7 +68,13 @@ public class Plateau {
 
     }
 
+    public HashSet<CoordIrrig> getIrrigations() {
+        return irrigations;
+    }
 
+    public void setIrrigations(HashSet<CoordIrrig> irrigations) {
+        this.irrigations = irrigations;
+    }
 
     /**
      * placeur de parcelle, prend les coordonnées mises ensemble
