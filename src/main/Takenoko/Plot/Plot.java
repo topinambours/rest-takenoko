@@ -43,10 +43,18 @@ public class Plot {
         coord.setR(r);
     }
 
-    public boolean isWater() {
+    /**
+     * Permet de savoir si la parcelle est irriguée, utile pour le bambou
+     * @return boolean true|false
+     */
+    public boolean haveWater() {
         return water;
     }
 
+    /**
+     * Permet de mettre à jour la parcelle pour pouvoir faire pousser un bambou
+     * @param water boolean true|false
+     */
     public void setWater(boolean water) {
         this.water = water;
     }
@@ -79,11 +87,18 @@ public class Plot {
      * si le plot est irrigué.
      */
     public void pousserBambou(){
+<<<<<<< Updated upstream
         if(isIrriguee()){
             bambou++;
         }
         //pour l'instant, tant que nous n'avons pas encore l'irrigation
         bambou++;
+=======
+        if(haveWater()){
+            bambou++;
+        }
+
+>>>>>>> Stashed changes
     }
 
     /**
