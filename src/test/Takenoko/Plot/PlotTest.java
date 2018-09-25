@@ -58,6 +58,8 @@ public class PlotTest {
         Plot p = new Plot();
         assertFalse(p.haveBambou());
 
+        p.setWater(true);
+
         p.pousserBambou();
 
         assertTrue(p.haveBambou());
@@ -79,6 +81,7 @@ public class PlotTest {
     @Test public void getBambou(){
         Plot p = new Plot();
         assertEquals(0, p.getBambou());
+        p.setWater(true);
         p.pousserBambou();
         assertEquals(1,p.getBambou());
     }
@@ -94,10 +97,11 @@ public class PlotTest {
     @Test public void pousserBambou(){
         Plot p = new Plot();
         p.pousserBambou();
+        p.setWater(true);
         p.pousserBambou();
-        assertEquals(2, p.getBambou());
+        assertEquals(1, p.getBambou());
         p.pousserBambou();
         p.pousserBambou();
-        assertEquals(4, p.getBambou());
+        assertEquals(3, p.getBambou());
     }
 }

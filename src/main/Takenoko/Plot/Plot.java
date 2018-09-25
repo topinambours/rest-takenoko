@@ -104,7 +104,6 @@ public class Plot {
         if(haveWater()){
             bambou++;
         }
-        bambou++;
 
     }
 
