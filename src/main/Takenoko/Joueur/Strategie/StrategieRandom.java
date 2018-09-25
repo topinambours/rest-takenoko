@@ -10,9 +10,14 @@ import java.util.Random;
 
 public class StrategieRandom implements Strategie{
 
-    public CoordAxial getCoord(Plateau plateau) {
+    @Override
+    public List<CoordAxial> getCoords(Plateau p) {
+        return p.legalPositions();
+    }
 
-        List<CoordAxial> listOfPos = plateau.legalPositions();
+    public CoordAxial getCoord(Plateau p) {
+
+        List<CoordAxial> listOfPos = p.legalPositions();
         Random random = new Random();
         int a = random.nextInt(listOfPos.size());
         return listOfPos.get(a);
@@ -24,7 +29,6 @@ public class StrategieRandom implements Strategie{
     }
 
     public StrategieRandom() {
-
     }
 
     @Override

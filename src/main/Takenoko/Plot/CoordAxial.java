@@ -3,11 +3,15 @@ package Takenoko.Plot;
 import Takenoko.Irrigation.CoordIrrig;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /** La classe CoordAxial permet de nous créer une coordonnée
  */
 public class CoordAxial {
+
+
+
     private int q;
     private int r;
 

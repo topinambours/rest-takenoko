@@ -24,7 +24,7 @@ public class Game {
     public Game() {
         this.deck = new Deck();
         this.joueurs = new ArrayList<>();
-        for (int i = 0; i < 28; i++) {
+        for (int i = 0; i < 500; i++) {
             deck.addFirst(new Plot());
         }
 
@@ -33,7 +33,6 @@ public class Game {
 
         Joueur j1 = new Joueur(1, new StrategieAdjacent());
         Joueur j2 = new Joueur(2, new StrategieBamboo());
-
         joueurs.add(j1);
         joueurs.add(j2);
 
