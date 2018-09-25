@@ -70,6 +70,17 @@ public class DeckTest {
 
     @Test
     public void getSize() {
-        //@ToDo
+        assertEquals(101, dtest.getSize());
+        for(int i = 0 ; i<50; i++){
+            dtest.popLast();
+        }
+        assertEquals(51, dtest.getSize());
+    }
+
+    @Test
+    public void isEmpty(){
+        assertFalse(dtest.isEmpty());
+        Deck d = new Deck();
+        assertTrue(d.isEmpty());
     }
 }

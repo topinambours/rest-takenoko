@@ -1,11 +1,17 @@
 package Takenoko.Plot;
 
+import Takenoko.Irrigation.CoordIrrig;
+
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /** La classe CoordAxial permet de nous créer une coordonnée
  */
 public class CoordAxial {
+
+
+
     private int q;
     private int r;
 
@@ -30,6 +36,10 @@ public class CoordAxial {
         this.r = r;
     }
 
+    /**
+     * rend les 6 coordonnées des hexagones voisins
+     * @return
+     */
     public List<CoordAxial> getNeighborCoords() {
         ArrayList<CoordAxial> res = new ArrayList<>();
         res.add(new CoordAxial(q + 1, r - 1));
@@ -38,6 +48,18 @@ public class CoordAxial {
         res.add(new CoordAxial(q, r + 1));
         res.add(new CoordAxial(q - 1, r));
         res.add(new CoordAxial(q - 1, r + 1));
+        return res;
+    }
+
+    /**
+     * rend les coordonnées des 6 arêtes du pourtour de l'hexagone
+     * @return
+     */
+    public List<CoordIrrig> getBorderCoords() {
+        var res = new ArrayList<CoordIrrig>();
+        for (CoordAxial coo : getNeighborCoords()) {
+            res.add(CoordIrrig.join(this, coo));
+        }
         return res;
     }
 

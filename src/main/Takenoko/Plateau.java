@@ -1,5 +1,6 @@
 package Takenoko;
 
+import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 
@@ -17,12 +18,21 @@ public class Plateau {
     private HashMap<CoordAxial, Plot> plots;
     private Plot lastPlop;
 
+    private HashSet<CoordIrrig> irrigations;
+
     /**
      * Constructeur par défaut, instancie un plateau vide
      */
     public Plateau() {
         plots = new HashMap<>();
         lastPlop = null;
+        irrigations = new HashSet<CoordIrrig>();
+
+        List<CoordIrrig> borderCoords = _STARTING_COORDINATE_.getBorderCoords();
+        for(CoordIrrig coordIrrig : borderCoords){
+            irrigations.add(coordIrrig);
+        }
+
     }
 
     /**
@@ -64,7 +74,13 @@ public class Plateau {
 
     }
 
+    public HashSet<CoordIrrig> getIrrigations() {
+        return irrigations;
+    }
 
+    public void setIrrigations(HashSet<CoordIrrig> irrigations) {
+        this.irrigations = irrigations;
+    }
 
     /**
      * placeur de parcelle, prend les coordonnées mises ensemble
@@ -80,9 +96,15 @@ public class Plateau {
     }
 
     public void addStartingPlot(Plot plot){
+        plot.setWater(true);
         putPlot(plot, _STARTING_COORDINATE_);
     }
 
+    /**
+     * rend la liste des parcelles adjacentes
+     * @param coo
+     * @return
+     */
     public List<Plot> getNeighbors(CoordAxial coo) {
         ArrayList<Plot> res = new ArrayList<>();
         for (CoordAxial nbc : coo.getNeighborCoords()) {
@@ -94,6 +116,10 @@ public class Plateau {
         return res;
     }
 
+    /**
+     * rend la liste des positions légales pour jouer
+     * @return
+     */
     public List<CoordAxial> legalPositions() {
         //return positionsToTest().stream().filter(c -> isPositionLegal(c)).collect(Collectors.toList());
         List<CoordAxial> res = new ArrayList<>();
@@ -105,6 +131,11 @@ public class Plateau {
         return res;
     }
 
+    /**
+     * vérifie si une position est jouable
+     * @param coo
+     * @return
+     */
     public boolean isPositionLegal(CoordAxial coo) {
         if (getPlot(coo) != null) {
             return false;
@@ -126,10 +157,19 @@ public class Plateau {
         return (v >= 2);
     }
 
+    /**
+     * rend le nombre de parcelles adjacentes
+     * @param coo
+     * @return
+     */
     public int nbAdajcent(CoordAxial coo){
         return getNeighbors(coo).size();
     }
 
+    /**
+     * méthode utilitaire qui donne une liste de coordonnées à tester pour legalPositions
+     * @return
+     */
     private List<CoordAxial> positionsToTest() {
         CoordAxial origin = new CoordAxial(0, 0);
         Set<CoordAxial> res = new HashSet<>();
@@ -148,5 +188,55 @@ public class Plateau {
             }
         }
         return new ArrayList<>(res);
+    }
+
+    /**
+     * rend la liste des endroits où on peut placer des irrigations
+     * @return
+     */
+    public List<CoordIrrig> legalIrrigPositions() {
+        return irrigPositionsToTest().stream().filter(c -> isIrrigPositionLegal(c)).collect(Collectors.toList());
+    }
+
+    /**
+     * renvoie si on peut placer
+     * @param coo
+     * @return
+     */
+    private boolean isIrrigPositionLegal(CoordIrrig coo) {
+        for (CoordIrrig nbc : coo.continues()) {
+            if (!irrigations.contains(coo) && irrigations.contains(nbc)) {
+                var hexes = nbc.borders();
+                if (getPlot(hexes.get(0)) != null && getPlot(hexes.get(1)) != null) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * fonction utilitaire pour legalIrrigPositions
+     * @return
+     */
+    private List<CoordIrrig> irrigPositionsToTest() {
+        var mySet = new HashSet<CoordIrrig>();
+        for (CoordIrrig irrig : irrigations) {
+            mySet.addAll(irrig.continues());
+        }
+        return new ArrayList<>(mySet);
+    }
+
+    public HashMap<CoordAxial, Plot> getPlots() {
+        return plots;
+    }
+
+    public boolean checkPlotWater(CoordAxial coordAxial){
+        for (CoordIrrig c : coordAxial.getBorderCoords()){
+            if (this.getIrrigations().contains(c)){
+                return true;
+            }
+        }
+        return false;
     }
 }

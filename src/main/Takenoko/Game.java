@@ -3,14 +3,14 @@ package Takenoko;
 import Takenoko.Deque.Deck;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieAdjacent;
+import Takenoko.Joueur.Strategie.StrategieBamboo;
 import Takenoko.Joueur.Strategie.StrategieRandom;
 import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Couleur;
 import Takenoko.Plot.Plot;
 import Takenoko.Util.Console;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
+import java.util.function.Function;
 
 /**
  * La classe Game permet de créer une partie
@@ -24,7 +24,7 @@ public class Game {
     public Game() {
         this.deck = new Deck();
         this.joueurs = new ArrayList<>();
-        for (int i = 0; i < 28; i++) {
+        for (int i = 0; i < 500; i++) {
             deck.addFirst(new Plot());
         }
 
@@ -32,8 +32,7 @@ public class Game {
         this.plateau.addStartingPlot(new Plot());
 
         Joueur j1 = new Joueur(1, new StrategieAdjacent());
-        Joueur j2 = new Joueur(2, new StrategieRandom());
-
+        Joueur j2 = new Joueur(2, new StrategieBamboo());
         joueurs.add(j1);
         joueurs.add(j2);
 
@@ -59,12 +58,16 @@ public class Game {
                 if (end()){
                     break;
                 }
-                Plot current = deck.popFirst();
-                CoordAxial coord = j.putPlot(current,plateau);
+                Plot current = turn(j);
+                CoordAxial coord = current.getCoord();
                 Console.Log.println(String.format("Le joueur %d pose une parcelle ici : %s", j.number, coord));
+                Console.Log.debugPrint("La parcelle "+current.toString()+"a water a : "+getPlateau().checkPlotWater(coord));
+                //Console.Log.println(String.format("Le joueur %d pose un bambou ici : %s", j.number, coord));
 
-                graduate(j, coord);
+                evaluate(j, coord);
             }//Todo : faire piocher -> faire poser
+
+            grow();
         }
         Console.Log.println("La partie est terminée");
         for (Joueur j : joueurs){
@@ -76,6 +79,13 @@ public class Game {
         return deck;
     }
 
+    public Plot turn(Joueur joueur){
+        Plot current = deck.popFirst();
+        CoordAxial coord = joueur.putPlot(current,plateau);
+        current.setWater(getPlateau().checkPlotWater(coord)); //dans le joueur maintenant
+
+        return current;
+    }
 
 
     //GRADUATE
@@ -83,10 +93,14 @@ public class Game {
     /**
      * Graduate permet d'évaluer les points à chaque tour
      */
-    protected void graduate(Joueur j, CoordAxial coord){
+    protected void evaluate(Joueur j, CoordAxial coord){
         //CHECK NeighborColor
-        int n = plateau.getNeighbors(coord).size();
+        //int n = plateau.getNeighbors(coord).size();
+        int n = plateau.getNeighbors(coord).stream().mapToInt(parcel -> parcel.getBambou()).sum();
         j.addScore(n);
+        for (Plot nei : plateau.getNeighbors(coord)){
+            nei.removeBamboo();
+        }
         Console.Log.println(String.format("Le joueur %d gagne %d point car il a posé une parcelle", j.number ,n));
 
         /*HashSet<Couleur> couleurs = getNeighborColor(plateau.getLastPlop(),plateau);
@@ -113,9 +127,28 @@ public class Game {
 
         return couleurs;
 
-    }
-
-    protected Plateau getPlateau() {
-        return plateau;
     }*/
+
+   private void grow(Plateau plateau){
+       HashMap<CoordAxial, Plot> hashMap = plateau.getPlots();
+       Iterator iterator = hashMap.entrySet().iterator();
+       while (iterator.hasNext()){
+           Map.Entry<CoordAxial, Plot> pair = (Map.Entry<CoordAxial, Plot>) iterator.next();
+           Console.Log.debugPrint(pair.getKey() +"=" +pair.getValue()+"\n");
+           Plot current = pair.getValue();
+
+           if (!current.getCoord().equals(new CoordAxial(0, 0))) {
+               current.pousserBambou();
+           }
+       }
+
+   }
+
+   protected void grow(){
+       grow(this.plateau);
+   }
+
+    public Plateau getPlateau() {
+        return plateau;
+    }
 }

@@ -28,4 +28,10 @@ public class PlateauTest {
         assertEquals(coo.getQ(), parc.getq());
         assertEquals(coo.getR(), parc.getr());
     }
+
+    @Test public void irrigationInit(){
+        Plateau plateau = new Plateau();
+        assertEquals(6,plateau.getIrrigations().size());
+    }
+
 }

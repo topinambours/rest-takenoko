@@ -1,4 +1,6 @@
 package Takenoko.Joueur.Strategie;
+import Takenoko.Irrigation.CoordIrrig;
+import Takenoko.Irrigation.Orient;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
@@ -28,6 +30,10 @@ public class StrategieColor {
 
     }
     */
+
+    public CoordIrrig getIrrig(Plateau plateau) {
+        return new CoordIrrig(0, 0, Orient.W);
+    }
 
     public StrategieColor() {
     }

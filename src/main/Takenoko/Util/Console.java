@@ -13,6 +13,15 @@ public enum Console {
         PROD, DEBUG, TEST;
     }
 
+    public Mode getModeFromLabel(String str){
+        switch (str){
+            case "release" : return Mode.PROD;
+            case "debug" : return Mode.DEBUG;
+            case "test" : return Mode.TEST;
+            default: return Mode.PROD;
+        }
+    }
+
     public void init(Mode mode){
         this.mode = mode;
         this.out = new OutputStreamWriter(System.out);
