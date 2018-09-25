@@ -60,9 +60,20 @@ public class PlotTest {
 
         p.pousserBambou();
 
+        assertFalse(p.haveBambou());
+        assertEquals(0,p.getBambou());
+
+    }
+
+    @Test public void haveBambouWater(){
+        Plot p = new Plot();
+        assertFalse(p.haveBambou());
+        p.setWater(true);
+
+        p.pousserBambou();
+
         assertTrue(p.haveBambou());
         assertEquals(1,p.getBambou());
-
     }
 
     @Test public void getBambou(){

@@ -58,17 +58,16 @@ public class Plot {
     }
 
     /**
-     * Permet de savoir si le plot est le plot Lac.
-     * @return
+     * Permet de savoir si la parcelle est irriguée, utile pour le bambou
+     * @return boolean true|false
      */
-    public boolean isWater() {
+    public boolean haveWater() {
         return water;
     }
 
     /**
-     * Permet de modifier un plot pour le transformer
-     * en lac.
-     * @param water
+     * Permet de mettre à jour la parcelle pour pouvoir faire pousser un bambou
+     * @param water boolean true|false
      */
     public void setWater(boolean water) {
         this.water = water;
@@ -107,6 +106,12 @@ public class Plot {
         }
         //pour l'instant, tant que nous n'avons pas encore l'irrigation
         bambou++;
+=======
+        if(haveWater()){
+            bambou++;
+        }
+
+>>>>>>> Stashed changes
     }
 
     @Override
