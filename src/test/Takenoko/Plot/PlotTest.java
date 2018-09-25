@@ -28,4 +28,15 @@ public class PlotTest {
         assertEquals(15, p.getq());
         assertEquals(10, p.getr());
     }
+
+    @Test public void haveBambou(){
+        Plot p = new Plot();
+        assertFalse(p.haveBambou());
+
+        p.addBambou();
+
+        assertTrue(p.haveBambou());
+        assertEquals(1,p.getBambou().getHauteur());
+
+    }
 }
