@@ -3,16 +3,16 @@ package Takenoko.Plot;
 public class Plot {
 
     private CoordAxial coord;
-    private Bambou bambou;
+    private int bambou;
 
     public Plot(int q, int r){
         this.coord = new CoordAxial(q,r);
-        this.bambou = null;
+        this.bambou = 0;
     }
 
     public Plot(CoordAxial coordAxial){
         this.coord = coordAxial;
-        this.bambou = null;
+        this.bambou = 0;
     }
 
     public Plot(){
@@ -42,44 +42,19 @@ public class Plot {
      * @return boolean true|false
      */
     public boolean haveBambou(){
-        return bambou != null;
-    }
-
-    /**
-     * Permet d'ajouter un Bambou
-     * @return boolean true|false
-     */
-    public boolean addBambou(){
-        if(!haveBambou()){
-            bambou = new Bambou(this);
-        }
-        return haveBambou();
+        return bambou != 0;
     }
 
     /**
      * Permet d'avoir le bambou du plot
-     * @return Bambou
+     * @return int
      */
-    public Bambou getBambou(){
-        if(this.haveBambou()){
-            return bambou;
-        }else{
-            return null;
-        }
-    }
-
-    public int getHauteurBambou(){
-        if(this.haveBambou()){
-            return this.getBambou().getHauteur();
-        }else{
-            return 0;
-        }
+    public int getBambou(){
+        return bambou;
     }
 
     public void pousserBambou(){
-        if(this.haveBambou()){
-            this.getBambou().addHauteur1();
-        }
+        bambou++;
     }
 
     @Override

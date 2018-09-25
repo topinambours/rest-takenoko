@@ -5,7 +5,6 @@ import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieAdjacent;
 import Takenoko.Joueur.Strategie.StrategieRandom;
 import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Couleur;
 import Takenoko.Plot.Plot;
 import Takenoko.Util.Console;
 
@@ -59,15 +58,14 @@ public class Game {
                     break;
                 }
                 Plot current = deck.popFirst();
-                current.addBambou();
                 CoordAxial coord = j.putPlot(current,plateau);
                 Console.Log.println(String.format("Le joueur %d pose une parcelle ici : %s", j.number, coord));
                 Console.Log.println(String.format("Le joueur %d pose un bambou ici : %s", j.number, coord));
 
-                graduate(j, coord);
+                evaluate(j, coord);
             }//Todo : faire piocher -> faire poser
 
-            push();
+            grow();
         }
         Console.Log.println("La partie est terminée");
         for (Joueur j : joueurs){
@@ -86,7 +84,7 @@ public class Game {
     /**
      * Graduate permet d'évaluer les points à chaque tour
      */
-    protected void graduate(Joueur j, CoordAxial coord){
+    protected void evaluate(Joueur j, CoordAxial coord){
         //CHECK NeighborColor
         int n = plateau.getNeighbors(coord).size();
         j.addScore(n);
@@ -118,7 +116,7 @@ public class Game {
 
     }*/
 
-   private void push(Plateau plateau){
+   private void grow(Plateau plateau){
        HashMap<CoordAxial, Plot> hashMap = plateau.getPlots();
        Iterator iterator = hashMap.entrySet().iterator();
        while (iterator.hasNext()){
@@ -126,15 +124,15 @@ public class Game {
            Console.Log.debugPrint(pair.getKey() +"=" +pair.getValue()+"\n");
            Plot current = pair.getValue();
 
-            if(current.haveBambou()){
-                current.getBambou().addHauteur1();
-            }
+           if (!current.getCoord().equals(new CoordAxial(0, 0))) {
+               current.pousserBambou();
+           }
        }
 
    }
 
-   protected void push(){
-       push(this.plateau);
+   protected void grow(){
+       grow(this.plateau);
    }
 
     public Plateau getPlateau() {

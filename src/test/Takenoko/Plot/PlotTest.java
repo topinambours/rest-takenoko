@@ -33,10 +33,10 @@ public class PlotTest {
         Plot p = new Plot();
         assertFalse(p.haveBambou());
 
-        p.addBambou();
+        p.pousserBambou();
 
         assertTrue(p.haveBambou());
-        assertEquals(1,p.getBambou().getHauteur());
+        assertEquals(1,p.getBambou());
 
     }
 }
