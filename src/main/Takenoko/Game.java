@@ -3,6 +3,7 @@ package Takenoko;
 import Takenoko.Deque.Deck;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieAdjacent;
+import Takenoko.Joueur.Strategie.StrategieBamboo;
 import Takenoko.Joueur.Strategie.StrategieRandom;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
@@ -30,7 +31,7 @@ public class Game {
         this.plateau.addStartingPlot(new Plot());
 
         Joueur j1 = new Joueur(1, new StrategieAdjacent());
-        Joueur j2 = new Joueur(2, new StrategieRandom());
+        Joueur j2 = new Joueur(2, new StrategieBamboo());
 
         joueurs.add(j1);
         joueurs.add(j2);
@@ -86,7 +87,8 @@ public class Game {
      */
     protected void evaluate(Joueur j, CoordAxial coord){
         //CHECK NeighborColor
-        int n = plateau.getNeighbors(coord).size();
+        //int n = plateau.getNeighbors(coord).size();
+        int n = plateau.getNeighbors(coord).stream().mapToInt(parcel -> parcel.getBambou()).sum();
         j.addScore(n);
         Console.Log.println(String.format("Le joueur %d gagne %d point car il a posé une parcelle", j.number ,n));
 
