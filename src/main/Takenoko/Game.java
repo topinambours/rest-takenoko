@@ -133,7 +133,7 @@ public class Game {
 
    }
 
-   private void push(){
+   protected void push(){
        push(this.plateau);
    }
 

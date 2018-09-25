@@ -10,6 +10,11 @@ public class Plot {
         this.bambou = null;
     }
 
+    public Plot(CoordAxial coordAxial){
+        this.coord = coordAxial;
+        this.bambou = null;
+    }
+
     public Plot(){
         this(0,0);
     }
