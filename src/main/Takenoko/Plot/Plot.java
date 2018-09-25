@@ -64,7 +64,7 @@ public class Plot {
 
     @Override
     public String toString(){
-        return "Parcelle";
+        return "Parcelle("+getq()+","+getr()+")";
     }
 
 }

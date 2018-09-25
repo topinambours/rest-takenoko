@@ -149,4 +149,8 @@ public class Plateau {
         }
         return new ArrayList<>(res);
     }
+
+    public HashMap<CoordAxial, Plot> getPlots() {
+        return plots;
+    }
 }

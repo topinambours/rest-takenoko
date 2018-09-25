@@ -9,8 +9,7 @@ import Takenoko.Plot.Couleur;
 import Takenoko.Plot.Plot;
 import Takenoko.Util.Console;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * La classe Game permet de créer une partie
@@ -60,11 +59,15 @@ public class Game {
                     break;
                 }
                 Plot current = deck.popFirst();
+                current.addBambou();
                 CoordAxial coord = j.putPlot(current,plateau);
                 Console.Log.println(String.format("Le joueur %d pose une parcelle ici : %s", j.number, coord));
+                Console.Log.println(String.format("Le joueur %d pose un bambou ici : %s", j.number, coord));
 
                 graduate(j, coord);
             }//Todo : faire piocher -> faire poser
+
+            push();
         }
         Console.Log.println("La partie est terminée");
         for (Joueur j : joueurs){
@@ -114,6 +117,25 @@ public class Game {
         return couleurs;
 
     }*/
+
+   private void push(Plateau plateau){
+       HashMap<CoordAxial, Plot> hashMap = plateau.getPlots();
+       Iterator iterator = hashMap.entrySet().iterator();
+       while (iterator.hasNext()){
+           Map.Entry<CoordAxial, Plot> pair = (Map.Entry<CoordAxial, Plot>) iterator.next();
+           Console.Log.debugPrint(pair.getKey() +"=" +pair.getValue()+"\n");
+           Plot current = pair.getValue();
+
+            if(current.haveBambou()){
+                current.getBambou().addHauteur1();
+            }
+       }
+
+   }
+
+   private void push(){
+       push(this.plateau);
+   }
 
     public Plateau getPlateau() {
         return plateau;

@@ -1,5 +1,7 @@
 package Takenoko.Plot;
 
+import Takenoko.Util.Console;
+
 public class Bambou {
     private Plot plot;
     private int hauteur;
@@ -44,6 +46,8 @@ public class Bambou {
      */
     public void addHauteur(int hauteur){
         this.hauteur = this.hauteur + hauteur;
+        Console.Log.debugPrint("Le bambou de la parcelle "+this.plot.toString()+" pousse de "+hauteur+"\n");
+        Console.Log.debugPrint("Le bambou de la parcelle "+this.plot.toString()+" a maintenant une hauteur de "+this.hauteur+"\n");
     }
 
     /**
