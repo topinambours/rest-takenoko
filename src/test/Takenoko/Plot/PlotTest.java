@@ -38,20 +38,20 @@ public class PlotTest {
     }
 
     @Test
-    public void isWater(){
+    public void haveWater(){
         Plot p = new Plot(0, 0);
-        assertEquals(false, p.isWater());
+        assertEquals(false, p.haveWater());
         p.setWater(true);
-        assertEquals(true, p.isWater());
+        assertEquals(true, p.haveWater());
     }
 
     @Test
     public void setWater(){
         Plot p = new Plot(0, 0);
         p.setWater(true);
-        assertEquals(true, p.isWater());
+        assertEquals(true, p.haveWater());
         p.setWater(false);
-        assertEquals(false, p.isWater());
+        assertEquals(false, p.haveWater());
     }
 
     @Test public void haveBambou(){
@@ -60,8 +60,8 @@ public class PlotTest {
 
         p.pousserBambou();
 
-        assertFalse(p.haveBambou());
-        assertEquals(0,p.getBambou());
+        assertTrue(p.haveBambou());
+        assertEquals(1,p.getBambou());
 
     }
 

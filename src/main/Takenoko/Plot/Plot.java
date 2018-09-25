@@ -101,17 +101,11 @@ public class Plot {
      * si le plot est irrigué.
      */
     public void pousserBambou(){
-        if(isWater()){
-            bambou++;
-        }
-        //pour l'instant, tant que nous n'avons pas encore l'irrigation
-        bambou++;
-=======
         if(haveWater()){
             bambou++;
         }
+        bambou++;
 
->>>>>>> Stashed changes
     }
 
     @Override
