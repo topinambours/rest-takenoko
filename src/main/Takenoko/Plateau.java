@@ -80,6 +80,7 @@ public class Plateau {
     }
 
     public void addStartingPlot(Plot plot){
+        plot.setWater(true);
         putPlot(plot, _STARTING_COORDINATE_);
     }
 

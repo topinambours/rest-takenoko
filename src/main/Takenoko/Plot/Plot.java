@@ -4,15 +4,16 @@ public class Plot {
 
     private CoordAxial coord;
     private int bambou;
+    private boolean water;
 
     public Plot(int q, int r){
         this.coord = new CoordAxial(q,r);
         this.bambou = 0;
+        this.water = false;
     }
 
     public Plot(CoordAxial coordAxial){
-        this.coord = coordAxial;
-        this.bambou = 0;
+       this(coordAxial.getQ(),coordAxial.getR());
     }
 
     public Plot(){
@@ -35,6 +36,14 @@ public class Plot {
     public void setCoord(int q, int r){
         coord.setQ(q);
         coord.setR(r);
+    }
+
+    public boolean isWater() {
+        return water;
+    }
+
+    public void setWater(boolean water) {
+        this.water = water;
     }
 
     /**
