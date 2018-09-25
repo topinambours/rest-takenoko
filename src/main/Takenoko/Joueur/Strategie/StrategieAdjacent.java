@@ -4,29 +4,37 @@ import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Irrigation.Orient;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
+import Takenoko.Plot.Plot;
 
 import java.util.List;
 import java.util.zip.CheckedInputStream;
+import java.util.Random;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 public class StrategieAdjacent implements Strategie{
 
-    public CoordAxial getCoord(Plateau plateau) {
+    @Override
+    public List<CoordAxial> getCoords(Plateau p) {
+        List<CoordAxial> legPos = p.legalPositions();
 
-        List<CoordAxial> listOfPos = plateau.legalPositions();
-        int max=0;
-        CoordAxial c = new CoordAxial(0, 0);
-        for(int i = 0; i<listOfPos.size(); i++){
-            int res = plateau.nbAdajcent(listOfPos.get(i));
-            if(res > max){
-                max = res;
-                c = listOfPos.get(i);
-            }
-        }
-        return c;
+        return legPos.stream().collect(Collectors.groupingBy
+                (pos -> p.getNeighbors(pos).size(),
+                        TreeMap::new, toList())).lastEntry().getValue();
     }
 
     public CoordIrrig getIrrig(Plateau plateau) {
         return plateau.legalIrrigPositions().get(0);
+    }
+
+    public CoordAxial getCoord(Plateau p) {
+        List<CoordAxial> posMaxBamboo = getCoords(p);
+
+
+        Random rand = new Random();
+        return posMaxBamboo.get(rand.nextInt(posMaxBamboo.size()));
     }
 
     @Override

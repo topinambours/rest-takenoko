@@ -4,9 +4,14 @@ import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 
+import java.util.List;
+
 public interface Strategie {
     public CoordAxial getCoord(Plateau P);
     public CoordIrrig getIrrig(Plateau P);
+    public List<CoordAxial> getCoords(Plateau p);
+
+    public CoordAxial getCoord(Plateau p);
 
     public String getStrategieLabel();
 }
