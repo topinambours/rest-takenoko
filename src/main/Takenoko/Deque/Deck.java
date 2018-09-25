@@ -90,6 +90,10 @@ public class Deck {
         return deck.size();
     }
 
+    /**
+     * Permet de tester si le deck est vide.
+     * @return
+     */
     public boolean isEmpty(){
         return getSize() == 0;
     }
