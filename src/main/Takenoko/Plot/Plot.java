@@ -53,6 +53,10 @@ public class Plot {
         return bambou;
     }
 
+    public void removeBamboo(){
+        this.bambou = 0;
+    }
+
     public void pousserBambou(){
         bambou++;
     }

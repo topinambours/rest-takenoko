@@ -10,6 +10,7 @@ import Takenoko.Plot.Plot;
 import Takenoko.Util.Console;
 
 import java.util.*;
+import java.util.function.Function;
 
 /**
  * La classe Game permet de créer une partie
@@ -90,6 +91,9 @@ public class Game {
         //int n = plateau.getNeighbors(coord).size();
         int n = plateau.getNeighbors(coord).stream().mapToInt(parcel -> parcel.getBambou()).sum();
         j.addScore(n);
+        for (Plot nei : plateau.getNeighbors(coord)){
+            nei.removeBamboo();
+        }
         Console.Log.println(String.format("Le joueur %d gagne %d point car il a posé une parcelle", j.number ,n));
 
         /*HashSet<Couleur> couleurs = getNeighborColor(plateau.getLastPlop(),plateau);
