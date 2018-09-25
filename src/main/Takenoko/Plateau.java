@@ -94,6 +94,11 @@ public class Plateau {
         putPlot(plot, _STARTING_COORDINATE_);
     }
 
+    /**
+     * rend la liste des parcelles adjacentes
+     * @param coo
+     * @return
+     */
     public List<Plot> getNeighbors(CoordAxial coo) {
         ArrayList<Plot> res = new ArrayList<>();
         for (CoordAxial nbc : coo.getNeighborCoords()) {
@@ -105,6 +110,10 @@ public class Plateau {
         return res;
     }
 
+    /**
+     * rend la liste des positions légales pour jouer
+     * @return
+     */
     public List<CoordAxial> legalPositions() {
         //return positionsToTest().stream().filter(c -> isPositionLegal(c)).collect(Collectors.toList());
         List<CoordAxial> res = new ArrayList<>();
@@ -116,6 +125,11 @@ public class Plateau {
         return res;
     }
 
+    /**
+     * vérifie si une position est jouable
+     * @param coo
+     * @return
+     */
     public boolean isPositionLegal(CoordAxial coo) {
         if (getPlot(coo) != null) {
             return false;
@@ -137,10 +151,19 @@ public class Plateau {
         return (v >= 2);
     }
 
+    /**
+     * rend le nombre de parcelles adjacentes
+     * @param coo
+     * @return
+     */
     public int nbAdajcent(CoordAxial coo){
         return getNeighbors(coo).size();
     }
 
+    /**
+     * méthode utilitaire qui donne une liste de coordonnées à tester pour legalPositions
+     * @return
+     */
     private List<CoordAxial> positionsToTest() {
         CoordAxial origin = new CoordAxial(0, 0);
         Set<CoordAxial> res = new HashSet<>();
