@@ -4,15 +4,20 @@ public class Plot {
 
     private CoordAxial coord;
     private int bambou;
+    private boolean irriguee;
     private boolean water;
 
     public Plot(int q, int r){
         this.coord = new CoordAxial(q,r);
         this.bambou = 0;
+        this.irriguee = false;
         this.water = false;
     }
 
     public Plot(CoordAxial coordAxial){
+        this.coord = coordAxial;
+        this.bambou = 0;
+        this.irriguee = false;
        this(coordAxial.getQ(),coordAxial.getR());
     }
 
@@ -62,12 +67,32 @@ public class Plot {
         return bambou;
     }
 
+    /**
+     * Permet de supprimer le bambou du plot
+     */
     public void removeBamboo(){
         this.bambou = 0;
     }
 
+    /**
+     * Fait pousser de 1 le bambou sur le plot
+     * si le plot est irrigué.
+     */
     public void pousserBambou(){
+        if(isIrriguee()){
+            bambou++;
+        }
+        //pour l'instant, tant que nous n'avons pas encore l'irrigation
         bambou++;
+    }
+
+    /**
+     * Permet de savoir si le plot contient une irrigation sur au moins 1
+     * de ses adjacences.
+     * @return
+     */
+    public boolean isIrriguee(){
+        return irriguee;
     }
 
     @Override
