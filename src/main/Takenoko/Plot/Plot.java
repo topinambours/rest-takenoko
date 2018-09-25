@@ -68,6 +68,19 @@ public class Plot {
         }
     }
 
+    public int getHauteurBambou(){
+        if(this.haveBambou()){
+            return this.getBambou().getHauteur();
+        }else{
+            return 0;
+        }
+    }
+
+    public void pousserBambou(){
+        if(this.haveBambou()){
+            this.getBambou().addHauteur1();
+        }
+    }
 
     @Override
     public String toString(){
