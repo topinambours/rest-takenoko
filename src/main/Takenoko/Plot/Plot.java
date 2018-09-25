@@ -18,7 +18,7 @@ public class Plot {
         this.coord = coordAxial;
         this.bambou = 0;
         this.irriguee = false;
-       this(coordAxial.getQ(),coordAxial.getR());
+        this.water=false;
     }
 
     public Plot(){
