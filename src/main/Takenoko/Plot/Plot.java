@@ -50,7 +50,9 @@ public class Plot {
      * @return boolean true|false
      */
     public boolean addBambou(){
-        bambou = new Bambou(this);
+        if(!haveBambou()){
+            bambou = new Bambou(this);
+        }
         return haveBambou();
     }
 
