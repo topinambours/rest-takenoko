@@ -43,7 +43,7 @@ public class StrategieBamboo implements Strategie {
     }
 
     public CoordIrrig getIrrig(Plateau plateau) {
-        return new CoordIrrig(0, 0, Orient.W);
+        return plateau.legalIrrigPositions().get(0);
     }
 
     @Override

@@ -26,7 +26,7 @@ public class StrategieAdjacent implements Strategie{
     }
 
     public CoordIrrig getIrrig(Plateau plateau) {
-        return new CoordIrrig(0, 0, Orient.N);
+        return plateau.legalIrrigPositions().get(0);
     }
 
     @Override

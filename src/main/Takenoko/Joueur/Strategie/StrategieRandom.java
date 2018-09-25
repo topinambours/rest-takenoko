@@ -20,7 +20,7 @@ public class StrategieRandom implements Strategie{
     }
 
     public CoordIrrig getIrrig(Plateau plateau) {
-        return new CoordIrrig(0, 0, Orient.W);
+        return plateau.legalIrrigPositions().get(0);
     }
 
     public StrategieRandom() {
