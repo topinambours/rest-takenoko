@@ -1,9 +1,12 @@
 package Takenoko.Joueur.Strategie;
 
+import Takenoko.Irrigation.CoordIrrig;
+import Takenoko.Irrigation.Orient;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 
 import java.util.List;
+import java.util.zip.CheckedInputStream;
 
 public class StrategieAdjacent implements Strategie{
 
@@ -20,6 +23,10 @@ public class StrategieAdjacent implements Strategie{
             }
         }
         return c;
+    }
+
+    public CoordIrrig getIrrig(Plateau plateau) {
+        return new CoordIrrig(0, 0, Orient.N);
     }
 
     @Override

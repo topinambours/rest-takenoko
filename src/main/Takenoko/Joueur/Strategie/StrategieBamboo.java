@@ -1,5 +1,7 @@
 package Takenoko.Joueur.Strategie;
 
+import Takenoko.Irrigation.CoordIrrig;
+import Takenoko.Irrigation.Orient;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
@@ -38,6 +40,10 @@ public class StrategieBamboo implements Strategie {
 
         return legPos.stream().max(new ComparateurPosBambooAdj(P)).get();
 
+    }
+
+    public CoordIrrig getIrrig(Plateau plateau) {
+        return new CoordIrrig(0, 0, Orient.W);
     }
 
     @Override

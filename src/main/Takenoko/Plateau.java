@@ -190,6 +190,43 @@ public class Plateau {
         return new ArrayList<>(res);
     }
 
+    /**
+     * rend la liste des endroits où on peut placer des irrigations
+     * @return
+     */
+    public List<CoordIrrig> legalIrrigPositions() {
+        return irrigPositionsToTest().stream().filter(c -> isIrrigPositionLegal(c)).collect(Collectors.toList());
+    }
+
+    /**
+     * renvoie si on peut placer
+     * @param coo
+     * @return
+     */
+    private boolean isIrrigPositionLegal(CoordIrrig coo) {
+        for (CoordIrrig nbc : coo.continues()) {
+            if (!irrigations.contains(coo) && irrigations.contains(nbc)) {
+                var hexes = nbc.borders();
+                if (getPlot(hexes.get(0)) != null && getPlot(hexes.get(1)) != null) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * fonction utilitaire pour legalIrrigPositions
+     * @return
+     */
+    private List<CoordIrrig> irrigPositionsToTest() {
+        var mySet = new HashSet<CoordIrrig>();
+        for (CoordIrrig irrig : irrigations) {
+            mySet.addAll(irrig.continues());
+        }
+        return new ArrayList<>(mySet);
+    }
+
     public HashMap<CoordAxial, Plot> getPlots() {
         return plots;
     }
