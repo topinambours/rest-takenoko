@@ -60,7 +60,7 @@ public class Game {
                 Plot current = deck.popFirst();
                 CoordAxial coord = j.putPlot(current,plateau);
                 Console.Log.println(String.format("Le joueur %d pose une parcelle ici : %s", j.number, coord));
-                Console.Log.println(String.format("Le joueur %d pose un bambou ici : %s", j.number, coord));
+                //Console.Log.println(String.format("Le joueur %d pose un bambou ici : %s", j.number, coord));
 
                 evaluate(j, coord);
             }//Todo : faire piocher -> faire poser

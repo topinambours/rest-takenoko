@@ -10,6 +10,7 @@
           </option>
           <option name="goals">
             <list>
+              <option value="compile" />
               <option value="exec:java@debug" />
             </list>
           </option>
