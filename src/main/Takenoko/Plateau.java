@@ -27,6 +27,12 @@ public class Plateau {
         plots = new HashMap<>();
         lastPlop = null;
         irrigations = new HashSet<CoordIrrig>();
+
+        List<CoordIrrig> borderCoords = _STARTING_COORDINATE_.getBorderCoords();
+        for(CoordIrrig coordIrrig : borderCoords){
+            irrigations.add(coordIrrig);
+        }
+
     }
 
     /**
