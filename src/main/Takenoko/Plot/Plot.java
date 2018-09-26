@@ -19,11 +19,11 @@ public class Plot {
     }
 
     public Plot(int q, int r){
-        this(q,r,Couleur.ROUGE);
+        this(q,r,Couleur.JAUNE);
     }
 
     public Plot(CoordAxial coordAxial){
-        this(coordAxial.getQ(),coordAxial.getR(),Couleur.ROUGE);
+        this(coordAxial.getQ(),coordAxial.getR(),Couleur.JAUNE);
     }
 
     public Plot(Couleur couleur){
@@ -31,7 +31,7 @@ public class Plot {
     }
 
     public Plot(){
-        this(0,0,Couleur.ROUGE);
+        this(0,0,Couleur.JAUNE);
     }
 
 
