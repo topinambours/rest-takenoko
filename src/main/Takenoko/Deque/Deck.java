@@ -3,6 +3,7 @@ package Takenoko.Deque;
 import Takenoko.Plot.Couleur;
 import Takenoko.Plot.Plot;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.ArrayDeque;
@@ -20,6 +21,7 @@ public class Deck {
 
     private Deque<Plot> deck;
     private final int NB_PARCELLE = 27;
+    private final int NB_COLOR = 3;
 
     private final int NB_VERTE = 11;
     private final int NB_ROSE = 7;
@@ -44,9 +46,9 @@ public class Deck {
      */
     public boolean init() {
 
-        for (Couleur c : Couleur.values()){
-            for (int i = 0; i < nbPlotByColor.get(c); i++){
-                deck.addFirst(new Plot(c));
+        for (int i = 0;i < NB_COLOR; i++){
+            for (int j = 0; j < nbPlotByColor.get(Couleur.getById(i)); j++){
+                deck.addFirst(new Plot(Couleur.getById(i)));
             }
         }
 

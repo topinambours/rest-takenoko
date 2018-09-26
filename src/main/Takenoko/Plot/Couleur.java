@@ -4,7 +4,7 @@ package Takenoko.Plot;
  * La classe couleur est une enumeration qui permet de savoir quel est la bonne couleur
  */
 public enum Couleur {
-    VERT("Vert",0,11),ROSE("Rose",1,7),JAUNE("Jaune",2,9);
+    VERT("Vert",0,11),ROSE("Rose",1,7),JAUNE("Jaune",2,9),BLEU("Bleu(Lac)",3,1);
     //BLANC("Blanc"),NOIR("Noir");
 
     private String name ="";

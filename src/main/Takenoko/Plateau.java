@@ -2,6 +2,7 @@ package Takenoko;
 
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plot.CoordAxial;
+import Takenoko.Plot.Couleur;
 import Takenoko.Plot.Plot;
 
 import java.util.*;
@@ -25,7 +26,7 @@ public class Plateau {
      */
     public Plateau() {
         plots = new HashMap<>();
-        lastPlop = new Plot(_STARTING_COORDINATE_);
+        lastPlop = new Plot(_STARTING_COORDINATE_, Couleur.BLEU);
         irrigations = new HashSet<CoordIrrig>();
 
         List<CoordIrrig> borderCoords = _STARTING_COORDINATE_.getBorderCoords();
