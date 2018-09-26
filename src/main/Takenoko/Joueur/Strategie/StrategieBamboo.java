@@ -34,8 +34,13 @@ public class StrategieBamboo implements Strategie {
         return posMaxBamboo.get(rand.nextInt(posMaxBamboo.size()));
     }
 
-    public CoordIrrig getIrrig(Plateau plateau) {
-        return plateau.legalIrrigPositions().get(0);
+    public Optional<CoordIrrig> getIrrig(Plateau plateau) {
+        var res = plateau.legalIrrigPositions();
+        if (res.size() >= 1) {
+            return Optional.of(res.get(0));
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override

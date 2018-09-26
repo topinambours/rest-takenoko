@@ -1,6 +1,7 @@
 package Takenoko;
 
 import Takenoko.Deque.Deck;
+import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieAdjacent;
 import Takenoko.Joueur.Strategie.StrategieBamboo;
@@ -59,8 +60,12 @@ public class Game {
                     break;
                 }
                 Plot current = turn(j);
+                Optional<CoordIrrig> newIrrig = irrigTurn(j);
                 CoordAxial coord = current.getCoord();
                 Console.Log.println(String.format("Le joueur %d pose une parcelle ici : %s", j.number, coord));
+                if (newIrrig.isPresent()) {
+                    Console.Log.println(String.format("Le joueur %d pose une section d'irrigation ici : %s",j.number, newIrrig.get()));
+                }
                 Console.Log.debugPrint("La parcelle "+current.toString()+"a water a : "+getPlateau().checkPlotWater(coord));
                 //Console.Log.println(String.format("Le joueur %d pose un bambou ici : %s", j.number, coord));
 
@@ -87,6 +92,10 @@ public class Game {
         return current;
     }
 
+    public Optional<CoordIrrig> irrigTurn(Joueur joueur) {
+        var coo = joueur.putIrrig(plateau);
+        return coo;
+    }
 
     //GRADUATE
 
@@ -98,6 +107,7 @@ public class Game {
         //int n = plateau.getNeighbors(coord).size();
         int n = plateau.getNeighbors(coord).stream().mapToInt(parcel -> parcel.getBambou()).sum();
         j.addScore(n);
+        //Console.Log.println(String.format("Le joueur %d gagne %d points en récoltant du bambou", j.number, n));
         for (Plot nei : plateau.getNeighbors(coord)){
             nei.removeBamboo();
         }

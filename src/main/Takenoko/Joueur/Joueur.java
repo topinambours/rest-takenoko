@@ -1,10 +1,13 @@
 package Takenoko.Joueur;
 
 import Takenoko.Deque.Deck;
+import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Strategie.Strategie;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import Takenoko.Plateau;
+
+import java.util.Optional;
 
 
 public class Joueur implements Comparable{
@@ -66,6 +69,22 @@ public class Joueur implements Comparable{
         //plot.setWater(board.checkPlotWater(plot.getCoord())); //Check if have water
         board.putPlot(plot);
         return coor;
+    }
+
+    public Optional<CoordIrrig> putIrrig(Plateau plateau) {
+        Optional<CoordIrrig> strat = strategie.getIrrig(plateau);
+        if (strat.isPresent()) {
+            var coo = strat.get();
+            var borders = coo.borders();
+            Plot plot = plateau.getPlot(borders.get(0));
+            if (plot != null) plot.setWater(true);
+            Plot plot2 = plateau.getPlot(borders.get(1));
+            if (plot2 != null ) plot2.setWater(true);
+            plateau.putIrrigation(coo);
+            return Optional.of(coo);
+        } else {
+            return Optional.empty();
+        }
     }
 
     /**

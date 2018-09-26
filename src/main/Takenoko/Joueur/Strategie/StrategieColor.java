@@ -6,6 +6,7 @@ import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Classe en prévision de la suite !
@@ -31,10 +32,14 @@ public class StrategieColor {
     }
     */
 
-    public CoordIrrig getIrrig(Plateau plateau) {
-        return new CoordIrrig(0, 0, Orient.W);
+    public Optional<CoordIrrig> getIrrig(Plateau plateau) {
+        var res = plateau.legalIrrigPositions();
+        if (res.size() >= 1) {
+            return Optional.of(res.get(0));
+        } else {
+            return Optional.empty();
+        }
     }
-
     public StrategieColor() {
     }
 }

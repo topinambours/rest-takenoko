@@ -125,4 +125,13 @@ public class CoordIrrig {
     public int hashCode() {
         return Objects.hash(u, v, o);
     }
+
+    @Override
+    public String toString() {
+        return "(" +
+                "u=" + u +
+                ", v=" + v +
+                ", o=" + o +
+                ')';
+    }
 }

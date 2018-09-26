@@ -82,6 +82,10 @@ public class Plateau {
         this.irrigations = irrigations;
     }
 
+    public void putIrrigation(CoordIrrig coo) {
+        irrigations.add(coo);
+    }
+
     /**
      * placeur de parcelle, prend les coordonnées mises ensemble
      * @param plot une parcelle à placer
