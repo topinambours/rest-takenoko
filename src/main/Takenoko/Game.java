@@ -27,7 +27,7 @@ public class Game {
         this.deck = new Deck();
         this.joueurs = new ArrayList<>();
         this.plateau = new Plateau();
-        this.plateau.addStartingPlot(new Plot());
+        this.plateau.addStartingPlot(new Plot(Couleur.BLEU));
 
         Boolean deckBool = deck.init();
         Console.Log.debugPrint("Deck init : "+ deckBool+"\n");
