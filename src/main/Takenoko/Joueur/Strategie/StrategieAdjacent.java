@@ -1,14 +1,12 @@
 package Takenoko.Joueur.Strategie;
 
 import Takenoko.Irrigation.CoordIrrig;
-import Takenoko.Irrigation.Orient;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.zip.CheckedInputStream;
 import java.util.Random;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -19,6 +17,11 @@ public class StrategieAdjacent implements Strategie{
 
     @Override
     public List<CoordAxial> getCoords(Plateau p, Plot plot) {
+        return getCoords(p);
+    }
+
+    @Override
+    public List<CoordAxial> getCoords(Plateau p) {
         List<CoordAxial> legPos = p.legalPositions();
 
         return legPos.stream().collect(Collectors.groupingBy
@@ -36,7 +39,11 @@ public class StrategieAdjacent implements Strategie{
     }
 
     public CoordAxial getCoord(Plateau p, Plot plot) {
-        List<CoordAxial> posMaxBamboo = getCoords(p, plot);
+        return getCoord(p);
+    }
+
+    public CoordAxial getCoord(Plateau p) {
+        List<CoordAxial> posMaxBamboo = getCoords(p);
 
 
         Random rand = new Random();

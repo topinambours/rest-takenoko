@@ -1,6 +1,5 @@
 package Takenoko.Joueur.Strategie;
 import Takenoko.Irrigation.CoordIrrig;
-import Takenoko.Irrigation.Orient;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
@@ -25,6 +24,11 @@ public class StrategieColor implements Strategie{
 
     }
 
+    public CoordAxial getCoord(Plateau plateau) {
+        return null;
+
+    }
+
     /**
      * Renvoie la liste trier par nombre d'adjacence de même couleur que
      * le plot que le robot veut poser, des positions légales de poses.
@@ -41,6 +45,10 @@ public class StrategieColor implements Strategie{
         Collections.reverse(legPos);
 
         return legPos;
+    }
+
+    public List<CoordAxial> getCoords(Plateau p) {
+        return null;
     }
 
     public Optional<CoordIrrig> getIrrig(Plateau plateau) {

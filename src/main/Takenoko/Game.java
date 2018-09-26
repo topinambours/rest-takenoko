@@ -5,6 +5,7 @@ import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieAdjacent;
 import Takenoko.Joueur.Strategie.StrategieBamboo;
+import Takenoko.Joueur.Strategie.StrategieColor;
 import Takenoko.Joueur.Strategie.StrategieRandom;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Couleur;
@@ -34,8 +35,10 @@ public class Game {
 
         Joueur j1 = new Joueur(1, new StrategieAdjacent());
         Joueur j2 = new Joueur(2, new StrategieBamboo());
+        Joueur j3 = new Joueur(3, new StrategieColor());
         joueurs.add(j1);
         joueurs.add(j2);
+        joueurs.add(j3);
 
         //Todo: Création d'un ou plusieurs robot
 
