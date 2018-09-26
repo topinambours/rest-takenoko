@@ -19,15 +19,19 @@ public class Plot {
     }
 
     public Plot(int q, int r){
-        this(q,r,Couleur.BLANC);
+        this(q,r,Couleur.ROUGE);
     }
 
     public Plot(CoordAxial coordAxial){
-        this(coordAxial.getQ(),coordAxial.getR(),Couleur.BLANC);
+        this(coordAxial.getQ(),coordAxial.getR(),Couleur.ROUGE);
+    }
+
+    public Plot(Couleur couleur){
+        this(0,0,couleur);
     }
 
     public Plot(){
-        this(0,0,Couleur.BLANC);
+        this(0,0,Couleur.ROUGE);
     }
 
 

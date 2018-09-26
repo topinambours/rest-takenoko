@@ -25,12 +25,11 @@ public class Game {
     public Game() {
         this.deck = new Deck();
         this.joueurs = new ArrayList<>();
-        for (int i = 0; i < 500; i++) {
-            deck.addFirst(new Plot());
-        }
-
         this.plateau = new Plateau();
         this.plateau.addStartingPlot(new Plot());
+
+        Boolean deckBool = deck.init();
+        Console.Log.debugPrint("Deck init : "+ deckBool+"\n");
 
         Joueur j1 = new Joueur(1, new StrategieAdjacent());
         Joueur j2 = new Joueur(2, new StrategieBamboo());

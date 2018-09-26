@@ -1,5 +1,6 @@
 package Takenoko.Deque;
 
+import Takenoko.Plot.Couleur;
 import Takenoko.Plot.Plot;
 
 import java.util.Deque;
@@ -16,10 +17,26 @@ import java.util.ArrayDeque;
 public class Deck {
 
     private Deque<Plot> deck;
+    private final int NB_PARCELLE = 24;
+    private final int NB_COULEUR = 4;
+    private final int NB_PARCELLE_PAR_COULEUR = 6;
+
+
 
     public Deck(){
         deck = new ArrayDeque<>();
     }
+
+    public boolean init(){
+
+        for(int i = 0; i < NB_COULEUR; i++){
+            for (int j = 0; j < NB_PARCELLE_PAR_COULEUR; j++){
+                deck.addFirst(new Plot(Couleur.getById(i)));
+            }
+        }
+
+        return NB_PARCELLE == this.getSize();
+     }
 
     /**
      * Get the first element of the deck.

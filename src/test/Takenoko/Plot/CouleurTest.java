@@ -12,8 +12,8 @@ public class CouleurTest {
 
     @Before public void CouleurTest(){
         CoordAxial coordAxial = new CoordAxial(1,0);
-        couleur1 = Couleur.BLANC;
-        couleur2 = Couleur.NOIR;
+        couleur1 = Couleur.ROUGE;
+        couleur2 = Couleur.BLEU;
 
         plot = new Plot(coordAxial,couleur1);
     }
