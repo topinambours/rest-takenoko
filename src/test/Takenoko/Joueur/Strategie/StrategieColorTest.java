@@ -29,7 +29,7 @@ public class StrategieColorTest {
 
     @Test
     public void getCoord(){
-        p.addStartingPlot(new Plot(0, 0, Couleur.NOIR));
+        p.addStartingPlot(new Plot(0, 0, Couleur.VERT));
 
         p.putPlot(new Plot(1,0));
         p.putPlot(new Plot(1,1));
@@ -51,7 +51,7 @@ public class StrategieColorTest {
 
     @Test
     public void getCoords(){
-        p.addStartingPlot(new Plot(0, 0, Couleur.NOIR));
+        p.addStartingPlot(new Plot(0, 0, Couleur.VERT));
 
         p.putPlot(new Plot(1,0));
         p.putPlot(new Plot(1,1));
