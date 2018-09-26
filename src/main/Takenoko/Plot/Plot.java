@@ -111,20 +111,25 @@ public class Plot {
 
     /**
      * Permet de supprimer le bambou du plot
+     * @return le nombre de bambous enlevés de la parcelle
      */
-    public void removeBamboo(){
+    public int removeBamboo(){
+        int out = this.bambou;
         this.bambou = 0;
+        return out;
     }
 
     /**
      * Fait pousser de 1 le bambou sur le plot
      * si le plot est irrigué.
+     * @return true si un nouveau bambou a été ajouté false sinon.
      */
-    public void pousserBambou(){
-        if(haveWater()){
+    public boolean pousserBambou(){
+        if(haveWater() && bambou < 4){
             bambou++;
+            return true;
         }
-
+        return false;
     }
 
     @Override

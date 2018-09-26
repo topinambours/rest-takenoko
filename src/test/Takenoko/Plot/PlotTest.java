@@ -2,6 +2,8 @@ package Takenoko.Plot;
 
 import org.junit.Test;
 
+import java.util.Random;
+
 import static org.junit.Assert.*;
 
 public class PlotTest {
@@ -40,31 +42,18 @@ public class PlotTest {
     @Test
     public void haveWater(){
         Plot p = new Plot(0, 0);
-        assertEquals(false, p.haveWater());
+        assertFalse(p.haveWater());
         p.setWater(true);
-        assertEquals(true, p.haveWater());
+        assertTrue(p.haveWater());
     }
 
     @Test
     public void setWater(){
         Plot p = new Plot(0, 0);
         p.setWater(true);
-        assertEquals(true, p.haveWater());
+        assertTrue(p.haveWater());
         p.setWater(false);
-        assertEquals(false, p.haveWater());
-    }
-
-    @Test public void haveBambou(){
-        Plot p = new Plot();
-        assertFalse(p.haveBambou());
-
-        p.setWater(true);
-
-        p.pousserBambou();
-
-        assertTrue(p.haveBambou());
-        assertEquals(1,p.getBambou());
-
+        assertFalse(p.haveWater());
     }
 
     @Test public void haveBambouWater(){
@@ -86,22 +75,44 @@ public class PlotTest {
         assertEquals(1,p.getBambou());
     }
 
+    /**
+     * On test 1000 fois avec un nombre aléatoire de bambous à placer
+     * Placement des bambous, suppression des bambous.
+     * On vérifie le nombre de bambous collectés
+     */
     @Test public void removeBambou(){
         Plot p = new Plot();
-        p.pousserBambou();
-        p.pousserBambou();
-        p.removeBamboo();
-        assertEquals(0, p.getBambou());
+        p.setWater(true);
+        Random rd = new Random();
+        for (int i = 0; i < 1000; i++){
+            int amount = rd.nextInt(4);
+            for (int j = 0; j < amount; j++){
+                assertTrue(p.pousserBambou());
+            }
+            assertEquals(amount, p.getBambou());
+            assertEquals(amount, p.removeBamboo());
+            assertEquals(0, p.removeBamboo());
+            assertFalse(p.haveBambou());
+        }
     }
 
+    /**
+     * Sachant qu'une parcelle ne peut contenir que 4 sections de bambous maximum si irriguée,
+     * on test la pousse sur une parcelle non iriguée. On irrigue et on ajoute des sections jusqu'au maximum admis.
+     * On essaye alors d'ajouter une section sur une parcelle pleine.
+     */
     @Test public void pousserBambou(){
         Plot p = new Plot();
-        p.pousserBambou();
+        // pas de pousse si non irrigué
+        assertFalse(p.pousserBambou());
+
+        // On irrigue et on fait pousser 4 bambous
         p.setWater(true);
-        p.pousserBambou();
-        assertEquals(1, p.getBambou());
-        p.pousserBambou();
-        p.pousserBambou();
-        assertEquals(3, p.getBambou());
+        for (int i = 1; i <= 4 ; i++){
+            assertTrue(p.pousserBambou());
+            assertEquals(i, p.getBambou());
+        }
+        // impossible de faire pousser sur une parcelle pleine.
+        assertFalse(p.pousserBambou());
     }
 }
