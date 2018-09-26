@@ -105,9 +105,30 @@ public class Game {
     protected void evaluate(Joueur j, CoordAxial coord){
         //CHECK NeighborColor
         //int n = plateau.getNeighbors(coord).size();
-        int n = plateau.getNeighbors(coord).stream().mapToInt(parcel -> parcel.getBambou()).sum();
+        /*int n = plateau.getNeighbors(coord).stream().mapToInt(parcel -> parcel.getBambou()).sum();
+        j.addScore(n);*/
+
+        int vert = plateau.getNeighbors(coord)
+                .stream()
+                .filter(p -> p.getCouleur() == Couleur.VERT)
+                .mapToInt(p -> p.getBambou())
+                .sum();
+        int jaune = plateau.getNeighbors(coord)
+                .stream()
+                .filter(p -> p.getCouleur() == Couleur.JAUNE)
+                .mapToInt(p -> p.getBambou())
+                .sum();
+        int rose = plateau.getNeighbors(coord)
+                .stream()
+                .filter(p -> p.getCouleur() == Couleur.ROSE)
+                .mapToInt(p -> p.getBambou())
+                .sum();
+        int n = vert + jaune + rose;
         j.addScore(n);
-        //Console.Log.println(String.format("Le joueur %d gagne %d points en récoltant du bambou", j.number, n));
+        j.setBambousVerts(j.getBambousVerts() + vert);
+        j.setBambousJaunes(j.getBambousJaunes() + jaune);
+        j.setBambousRoses(j.getBambousRoses() + rose);
+
         for (Plot nei : plateau.getNeighbors(coord)){
             nei.removeBamboo();
         }

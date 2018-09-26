@@ -17,6 +17,10 @@ public class Joueur implements Comparable{
     private Strategie strategie;
     private int score;
 
+    private int bambousVerts;
+    private int bambousJaunes;
+    private int bambousRoses;
+
 
     public Joueur(int n,Strategie strategie){
         hand = new Deck();
@@ -143,5 +147,27 @@ public class Joueur implements Comparable{
         return this.compareTo(joueur) > 0;
     }
 
+    public int getBambousVerts() {
+        return bambousVerts;
+    }
 
+    public void setBambousVerts(int bambousVerts) {
+        this.bambousVerts = bambousVerts;
+    }
+
+    public int getBambousJaunes() {
+        return bambousJaunes;
+    }
+
+    public void setBambousJaunes(int bambousJaunes) {
+        this.bambousJaunes = bambousJaunes;
+    }
+
+    public int getBambousRoses() {
+        return bambousRoses;
+    }
+
+    public void setBambousRoses(int bambousRoses) {
+        this.bambousRoses = bambousRoses;
+    }
 }
