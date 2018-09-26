@@ -29,8 +29,6 @@ public class Deck {
     private HashMap<Couleur, Integer> nbPlotByColor;
 
 
-
-
     public Deck(){
         deck = new ArrayDeque<>();
         nbPlotByColor = new HashMap<>();
