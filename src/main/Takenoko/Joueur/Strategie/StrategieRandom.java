@@ -1,7 +1,6 @@
 package Takenoko.Joueur.Strategie;
 
 import Takenoko.Irrigation.CoordIrrig;
-import Takenoko.Irrigation.Orient;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
@@ -14,11 +13,20 @@ public class StrategieRandom implements Strategie{
 
     @Override
     public List<CoordAxial> getCoords(Plateau p, Plot plot) {
+        return getCoords(p);
+    }
+
+    @Override
+    public List<CoordAxial> getCoords(Plateau p) {
         return p.legalPositions();
     }
 
     public CoordAxial getCoord(Plateau p, Plot plot) {
+        return getCoord(p);
 
+    }
+
+    public CoordAxial getCoord(Plateau p) {
         List<CoordAxial> listOfPos = p.legalPositions();
         Random random = new Random();
         int a = random.nextInt(listOfPos.size());

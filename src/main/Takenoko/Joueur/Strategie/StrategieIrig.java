@@ -23,6 +23,11 @@ public class StrategieIrig implements Strategie{
     }
 
     @Override
+    public List<CoordAxial> getCoords(Plateau p) {
+        return null;
+    }
+
+    @Override
     public Optional<CoordIrrig> getIrrig(Plateau P) {
         List<CoordIrrig> legalPos = p.legalIrrigPositions();
 
@@ -37,6 +42,11 @@ public class StrategieIrig implements Strategie{
 
     @Override
     public CoordAxial getCoord(Plateau p, Plot plot) {
+        return null;
+    }
+
+    @Override
+    public CoordAxial getCoord(Plateau p) {
         return null;
     }
 
