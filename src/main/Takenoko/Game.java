@@ -6,6 +6,7 @@ import Takenoko.Joueur.Strategie.StrategieAdjacent;
 import Takenoko.Joueur.Strategie.StrategieBamboo;
 import Takenoko.Joueur.Strategie.StrategieRandom;
 import Takenoko.Plot.CoordAxial;
+import Takenoko.Plot.Couleur;
 import Takenoko.Plot.Plot;
 import Takenoko.Util.Console;
 
@@ -102,32 +103,30 @@ public class Game {
             nei.removeBamboo();
         }
         Console.Log.println(String.format("Le joueur %d gagne %d point car il a posé une parcelle", j.number ,n));
-
-        /*HashSet<Couleur> couleurs = getNeighborColor(plateau.getLastPlop(),plateau);
+    /*
+        HashSet<Couleur> couleurs = getNeighborColor(plateau.getLastPlop(),plateau);
         if(couleurs.contains(plateau.getLastPlop().getCouleur())){
-            joueur.addScore1();
+            j.addScore1();
             Console.Log.println("Le joueur gagne 1 point la parcelle posée à la même couleur que la parcelle adjacente");
-        }*/
+        }
+        */
     }
 
 
-
-   /* private HashSet<Couleur> getNeighborColor(Plot plot,Plateau plateau){
+/*
+    private HashSet<Couleur> getNeighborColor(Plot plot,Plateau plateau){
         HashSet<Couleur> couleurs = new HashSet<>();
 
-        int q = plot.getq();
-        int r = plot.getr();
+        List<Plot> neighbors = plateau.getNeighbors(plot.getCoord());
 
-        couleurs.add(plateau.getPlot(new CoordAxial(q-1,r)).getCouleur());
-        couleurs.add(plateau.getPlot(new CoordAxial(q,r-1)).getCouleur());
-        couleurs.add(plateau.getPlot(new CoordAxial(q+1,r-1)).getCouleur());
-        couleurs.add(plateau.getPlot(new CoordAxial(q+1,r)).getCouleur());
-        couleurs.add(plateau.getPlot(new CoordAxial(q,r+1)).getCouleur());
-        couleurs.add(plateau.getPlot(new CoordAxial(q-1,r+1)).getCouleur());
+        for (Plot current : neighbors){
+                couleurs.add(current.getCouleur());
 
+        }
         return couleurs;
 
-    }*/
+    }
+    */
 
    private void grow(Plateau plateau){
        HashMap<CoordAxial, Plot> hashMap = plateau.getPlots();

@@ -5,19 +5,29 @@ public class Plot {
     private CoordAxial coord;
     private int bambou;
     private boolean water;
+    private Couleur couleur;
 
-    public Plot(int q, int r){
+    public Plot(int q, int r,Couleur couleur){
         this.coord = new CoordAxial(q,r);
         this.bambou = 0;
         this.water = false;
+        this.couleur = couleur;
+    }
+
+    public Plot(CoordAxial coordAxial,Couleur couleur){
+        this(coordAxial.getQ(),coordAxial.getR(),couleur);
+    }
+
+    public Plot(int q, int r){
+        this(q,r,Couleur.BLANC);
     }
 
     public Plot(CoordAxial coordAxial){
-        this(coordAxial.getQ(),coordAxial.getR());
+        this(coordAxial.getQ(),coordAxial.getR(),Couleur.BLANC);
     }
 
     public Plot(){
-        this(0,0);
+        this(0,0,Couleur.BLANC);
     }
 
 
@@ -53,6 +63,14 @@ public class Plot {
     public void setCoord(int q, int r){
         coord.setQ(q);
         coord.setR(r);
+    }
+
+    public Couleur getCouleur() {
+        return couleur;
+    }
+
+    public void setCouleur(Couleur couleur) {
+        this.couleur = couleur;
     }
 
     /**
