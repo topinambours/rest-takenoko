@@ -5,32 +5,43 @@ import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Classe en prévision de la suite !
- */
-public class StrategieColor {
-    /*
+public class StrategieColor implements Strategie{
+
+    /**
+     * Renvoie la première coordonnée de la position légale la plus rentable
+     * pour la stratégie couleur
+     * @param plateau
+     * @param plot
+     * @return
+     */
     public CoordAxial getCoord(Plateau plateau, Plot plot) {
 
-        List<CoordAxial> listOfPos = plateau.legalPositions();
-
-        int i = 0;
-        while(!listOfPos.isEmpty()){
-            for(int j =0; j<listOfPos.get(i).getNeighborCoords().size(); j++){
-                Plot plot2 = plateau.getPlot(listOfPos.get(i).getNeighborCoords().get(j));
-                if(plot2.getCouleur() == plot.getCouleur()){
-                    return listOfPos.get(i).getNeighborCoords().get(j);
-                }
-            }
-            i++;
-        }
+        List<CoordAxial> listOfPos = getCoords(plateau, plot);
         return listOfPos.get(0);
 
     }
-    */
+
+    /**
+     * Renvoie la liste trier par nombre d'adjacence de même couleur que
+     * le plot que le robot veut poser, des positions légales de poses.
+     * @param p
+     * @param plot
+     * @return
+     */
+    public List<CoordAxial> getCoords(Plateau p, Plot plot) {
+        List<CoordAxial> legPos = p.legalPositions();
+
+        ComparateurPosColorAdj test = new ComparateurPosColorAdj(p, plot.getCouleur());
+
+        legPos.sort(test);
+        Collections.reverse(legPos);
+
+        return legPos;
+    }
 
     public Optional<CoordIrrig> getIrrig(Plateau plateau) {
         var res = plateau.legalIrrigPositions();
@@ -40,6 +51,13 @@ public class StrategieColor {
             return Optional.empty();
         }
     }
+
+    @Override
+    public String getStrategieLabel() {
+        return "Max Color Adj";
+    }
+
+
     public StrategieColor() {
     }
 }
