@@ -19,13 +19,13 @@ Version textuel n'étant pas destinée à être jouée par des êtres humains ma
 
 ## Plan de route
 
- - [x] *Version 1 :* un robot pioche et place les parcelles aléatoirement sur le plateau jusqu’à épuisement de la pioche.
- - [x] *Version 2 :* Le placement des tuiles est encadré par les règles takenoko (adjacences). Ajout d'une stratégie aux robots leurs permettant de placer une parcelle en maximisant son nombre de parcelle adjacente. Un robot marque autant de point que d'adjacence dont dispose sa parcelle.
+ - [x] **Version 1 :** un robot pioche et place les parcelles aléatoirement sur le plateau jusqu’à épuisement de la pioche.
+ - [x] **Version 2 :** Le placement des tuiles est encadré par les règles takenoko (adjacences). Ajout d'une stratégie aux robots leurs permettant de placer une parcelle en maximisant son nombre de parcelle adjacente. Un robot marque autant de point que d'adjacence dont dispose sa parcelle.
  
- - [x] Version 3 : Ajout de composants liés à l’irrigation des parcelles, les bambous ne poussent que si la parcelle est irrigué. A chaque tour, les parcelles se dotent d'un bambous supplémentaire. Un robot ne marque des points qu'en plaçant une parcelle adjacent à une parcelle disposant de bambous, récolte les bambous et marque 1 point par bambou récolté.
+ - [x] **Version 3** : Ajout de composants liés à l’irrigation des parcelles, les bambous ne poussent que si la parcelle est irrigué. A chaque tour, les parcelles se dotent d'un bambous supplémentaire. Un robot ne marque des points qu'en plaçant une parcelle adjacent à une parcelle disposant de bambous, récolte les bambous et marque 1 point par bambou récolté.
  Une nouvelle stratégie est alors possible, chercher l'emplacement maximisant le nombre de bambous adjacents. Il est alors possible de faire jouer trois robots avec une stratégie qui lui est propre.
- - [ ] Version 4 : Ajouter la possibilité aux robots d'ajouter des canaux d'irrigations. ~~Réaliser plusieurs stratégies liées aux canaux~~. Ajout des couleurs pour les parcelles, les robots marquent des points supplémentaires si la parcelle est posé en bordure d'autres parcelles de la même couleurs.
- - [ ] Version 5 : En cours d'étude...
+ - [x] **Version 4** : Ajouter la possibilité aux robots d'ajouter des canaux d'irrigations. ~~Réaliser plusieurs stratégies liées aux canaux~~. Ajout des couleurs pour les parcelles, les robots marquent des points supplémentaires si la parcelle est posé en bordure d'autres parcelles de la même couleurs.
+ - [ ] **Version 5** : Ajouter les objectifs Panda. Pour ceci il faut ajouter la détection de motifs.
 
 ## Y'a quoi dans la boite ?
 
