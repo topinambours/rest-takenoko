@@ -6,7 +6,7 @@ import java.io.OutputStreamWriter;
 public enum Console {
     Log;
 
-    private Mode mode;
+    private Mode mode = Mode.TEST;
     private OutputStreamWriter out;
 
     public enum Mode{

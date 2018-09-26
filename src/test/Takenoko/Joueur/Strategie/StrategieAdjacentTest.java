@@ -27,7 +27,7 @@ public class StrategieAdjacentTest{
         game.getPlateau().putPlot(plot1,plot1.getCoord());
         game.getPlateau().putPlot(plot2,plot2.getCoord());
 
-        CoordAxial plotFinal = strategie.getCoord(game.getPlateau());
+        CoordAxial plotFinal = strategie.getCoord(game.getPlateau(), null);
 
         assertEquals(new Plot(-1,1).getCoord(),plotFinal);
         

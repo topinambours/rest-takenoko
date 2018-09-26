@@ -2,6 +2,7 @@ package Takenoko;
 
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plot.CoordAxial;
+import Takenoko.Plot.Couleur;
 import Takenoko.Plot.Plot;
 
 import java.util.*;
@@ -25,7 +26,7 @@ public class Plateau {
      */
     public Plateau() {
         plots = new HashMap<>();
-        lastPlop = null;
+        lastPlop = new Plot(_STARTING_COORDINATE_, Couleur.BLEU);
         irrigations = new HashSet<CoordIrrig>();
 
         List<CoordIrrig> borderCoords = _STARTING_COORDINATE_.getBorderCoords();
@@ -83,6 +84,14 @@ public class Plateau {
     }
 
     /**
+     * ajoute une section d'irrigation au plateau
+     * @param coo
+     */
+    public void putIrrigation(CoordIrrig coo) {
+        irrigations.add(coo);
+    }
+
+    /**
      * placeur de parcelle, prend les coordonnées mises ensemble
      * @param plot une parcelle à placer
      * @param coord le couple de coordonnées où la placer
@@ -95,6 +104,10 @@ public class Plateau {
         putPlot(plot, plot.getCoord());
     }
 
+    /**
+     * ajoute la tuile étang au plateau
+     * @param plot
+     */
     public void addStartingPlot(Plot plot){
         plot.setWater(true);
         putPlot(plot, _STARTING_COORDINATE_);
@@ -136,7 +149,7 @@ public class Plateau {
      * @param coo
      * @return
      */
-    public boolean isPositionLegal(CoordAxial coo) {
+    private boolean isPositionLegal(CoordAxial coo) {
         if (getPlot(coo) != null) {
             return false;
         }

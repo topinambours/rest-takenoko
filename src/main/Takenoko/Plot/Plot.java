@@ -5,19 +5,33 @@ public class Plot {
     private CoordAxial coord;
     private int bambou;
     private boolean water;
+    private Couleur couleur;
 
-    public Plot(int q, int r){
+    public Plot(int q, int r,Couleur couleur){
         this.coord = new CoordAxial(q,r);
         this.bambou = 0;
         this.water = false;
+        this.couleur = couleur;
+    }
+
+    public Plot(CoordAxial coordAxial,Couleur couleur){
+        this(coordAxial.getQ(),coordAxial.getR(),couleur);
+    }
+
+    public Plot(int q, int r){
+        this(q,r,Couleur.JAUNE);
     }
 
     public Plot(CoordAxial coordAxial){
-        this(coordAxial.getQ(),coordAxial.getR());
+        this(coordAxial.getQ(),coordAxial.getR(),Couleur.JAUNE);
+    }
+
+    public Plot(Couleur couleur){
+        this(0,0,couleur);
     }
 
     public Plot(){
-        this(0,0);
+        this(0,0,Couleur.JAUNE);
     }
 
 
@@ -55,6 +69,14 @@ public class Plot {
         coord.setR(r);
     }
 
+    public Couleur getCouleur() {
+        return couleur;
+    }
+
+    public void setCouleur(Couleur couleur) {
+        this.couleur = couleur;
+    }
+
     /**
      * Permet de savoir si la parcelle est irriguée, utile pour le bambou
      * @return boolean true|false
@@ -89,20 +111,25 @@ public class Plot {
 
     /**
      * Permet de supprimer le bambou du plot
+     * @return le nombre de bambous enlevés de la parcelle
      */
-    public void removeBamboo(){
+    public int removeBamboo(){
+        int out = this.bambou;
         this.bambou = 0;
+        return out;
     }
 
     /**
      * Fait pousser de 1 le bambou sur le plot
      * si le plot est irrigué.
+     * @return true si un nouveau bambou a été ajouté false sinon.
      */
-    public void pousserBambou(){
-        if(haveWater()){
+    public boolean pousserBambou(){
+        if(haveWater() && bambou < 4){
             bambou++;
+            return true;
         }
-
+        return false;
     }
 
     @Override

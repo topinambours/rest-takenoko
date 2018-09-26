@@ -1,9 +1,13 @@
 package Takenoko.Deque;
 
+import Takenoko.Plot.Couleur;
 import Takenoko.Plot.Plot;
 
+import java.awt.*;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.ArrayDeque;
+import java.util.HashMap;
 
 
 /**
@@ -16,10 +20,55 @@ import java.util.ArrayDeque;
 public class Deck {
 
     private Deque<Plot> deck;
+    private final int NB_PARCELLE = 27;
+    private final int NB_COLOR = 3;
+
+    private final int NB_VERTE = 11;
+    private final int NB_ROSE = 7;
+    private final int NB_JAUNE = 9;
+    private HashMap<Couleur, Integer> nbPlotByColor;
+
 
     public Deck(){
         deck = new ArrayDeque<>();
+        nbPlotByColor = new HashMap<>();
+        nbPlotByColor.put(Couleur.VERT, NB_VERTE);
+        nbPlotByColor.put(Couleur.ROSE,NB_ROSE);
+        nbPlotByColor.put(Couleur.JAUNE,NB_JAUNE);
     }
+
+
+    /**
+     * Permet d'initialiser le deck
+     * @return boolean true|false
+     */
+    public boolean init() {
+
+        for (int i = 0;i < NB_COLOR; i++){
+            for (int j = 0; j < nbPlotByColor.get(Couleur.getById(i)); j++){
+                deck.addFirst(new Plot(Couleur.getById(i)));
+            }
+        }
+
+        return NB_PARCELLE == this.getSize();
+
+    }
+
+
+
+    /*
+    public boolean init(){
+
+        for(int i = 0; i < NB_COULEUR; i++){
+            for (int j = 0; j < Couleur.getnb(i); j++){
+                deck.addFirst(new Plot(Couleur.getById(i)));
+                System.out.println(Couleur.getById(i));
+            }
+        }
+
+        return NB_PARCELLE == this.getSize();
+     }
+     */
 
     /**
      * Get the first element of the deck.

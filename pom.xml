@@ -30,6 +30,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.6.0</version>
                 <executions>
+
                     <execution>
                         <id>debug</id>
                         <goals>
@@ -45,6 +46,19 @@
 
                     <execution>
                         <id>release</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>Takenoko.Main</mainClass>
+                            <arguments>
+                                <argument>release</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>default-cli</id>
                         <goals>
                             <goal>java</goal>
                         </goals>

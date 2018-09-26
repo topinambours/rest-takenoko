@@ -1,11 +1,13 @@
 package Takenoko;
 
 import Takenoko.Deque.Deck;
+import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieAdjacent;
 import Takenoko.Joueur.Strategie.StrategieBamboo;
 import Takenoko.Joueur.Strategie.StrategieRandom;
 import Takenoko.Plot.CoordAxial;
+import Takenoko.Plot.Couleur;
 import Takenoko.Plot.Plot;
 import Takenoko.Util.Console;
 
@@ -24,12 +26,11 @@ public class Game {
     public Game() {
         this.deck = new Deck();
         this.joueurs = new ArrayList<>();
-        for (int i = 0; i < 500; i++) {
-            deck.addFirst(new Plot());
-        }
-
         this.plateau = new Plateau();
-        this.plateau.addStartingPlot(new Plot());
+        this.plateau.addStartingPlot(new Plot(Couleur.BLEU));
+
+        Boolean deckBool = deck.init();
+        Console.Log.debugPrint("Deck init : "+ deckBool+"\n");
 
         Joueur j1 = new Joueur(1, new StrategieAdjacent());
         Joueur j2 = new Joueur(2, new StrategieBamboo());
@@ -59,8 +60,12 @@ public class Game {
                     break;
                 }
                 Plot current = turn(j);
+                Optional<CoordIrrig> newIrrig = irrigTurn(j);
                 CoordAxial coord = current.getCoord();
                 Console.Log.println(String.format("Le joueur %d pose une parcelle ici : %s", j.number, coord));
+                if (newIrrig.isPresent()) {
+                    Console.Log.println(String.format("Le joueur %d pose une section d'irrigation ici : %s",j.number, newIrrig.get()));
+                }
                 Console.Log.debugPrint("La parcelle "+current.toString()+"a water a : "+getPlateau().checkPlotWater(coord));
                 //Console.Log.println(String.format("Le joueur %d pose un bambou ici : %s", j.number, coord));
 
@@ -87,6 +92,10 @@ public class Game {
         return current;
     }
 
+    public Optional<CoordIrrig> irrigTurn(Joueur joueur) {
+        var coo = joueur.putIrrig(plateau);
+        return coo;
+    }
 
     //GRADUATE
 
@@ -96,38 +105,58 @@ public class Game {
     protected void evaluate(Joueur j, CoordAxial coord){
         //CHECK NeighborColor
         //int n = plateau.getNeighbors(coord).size();
-        int n = plateau.getNeighbors(coord).stream().mapToInt(parcel -> parcel.getBambou()).sum();
+        /*int n = plateau.getNeighbors(coord).stream().mapToInt(parcel -> parcel.getBambou()).sum();
+        j.addScore(n);*/
+
+        int vert = plateau.getNeighbors(coord)
+                .stream()
+                .filter(p -> p.getCouleur() == Couleur.VERT)
+                .mapToInt(p -> p.getBambou())
+                .sum();
+        int jaune = plateau.getNeighbors(coord)
+                .stream()
+                .filter(p -> p.getCouleur() == Couleur.JAUNE)
+                .mapToInt(p -> p.getBambou())
+                .sum();
+        int rose = plateau.getNeighbors(coord)
+                .stream()
+                .filter(p -> p.getCouleur() == Couleur.ROSE)
+                .mapToInt(p -> p.getBambou())
+                .sum();
+        int n = vert + jaune + rose;
         j.addScore(n);
+        j.setBambousVerts(j.getBambousVerts() + vert);
+        j.setBambousJaunes(j.getBambousJaunes() + jaune);
+        j.setBambousRoses(j.getBambousRoses() + rose);
+
         for (Plot nei : plateau.getNeighbors(coord)){
             nei.removeBamboo();
         }
         Console.Log.println(String.format("Le joueur %d gagne %d point car il a posé une parcelle", j.number ,n));
 
-        /*HashSet<Couleur> couleurs = getNeighborColor(plateau.getLastPlop(),plateau);
+        HashSet<Couleur> couleurs = getNeighborColor(coord,plateau);
         if(couleurs.contains(plateau.getLastPlop().getCouleur())){
-            joueur.addScore1();
-            Console.Log.println("Le joueur gagne 1 point la parcelle posée à la même couleur que la parcelle adjacente");
-        }*/
+            j.addScore1();
+            Console.Log.println("Le joueur gagne 1 point car la parcelle posée à la même couleur que la parcelle adjacente");
+        }
+
     }
 
 
 
-   /* private HashSet<Couleur> getNeighborColor(Plot plot,Plateau plateau){
+    private HashSet<Couleur> getNeighborColor(CoordAxial coordAxial,Plateau plateau){
         HashSet<Couleur> couleurs = new HashSet<>();
 
-        int q = plot.getq();
-        int r = plot.getr();
+        List<Plot> neighbors = plateau.getNeighbors(coordAxial);
 
-        couleurs.add(plateau.getPlot(new CoordAxial(q-1,r)).getCouleur());
-        couleurs.add(plateau.getPlot(new CoordAxial(q,r-1)).getCouleur());
-        couleurs.add(plateau.getPlot(new CoordAxial(q+1,r-1)).getCouleur());
-        couleurs.add(plateau.getPlot(new CoordAxial(q+1,r)).getCouleur());
-        couleurs.add(plateau.getPlot(new CoordAxial(q,r+1)).getCouleur());
-        couleurs.add(plateau.getPlot(new CoordAxial(q-1,r+1)).getCouleur());
+        for (Plot current : neighbors){
+                couleurs.add(plateau.getPlot(current.getCoord()).getCouleur());
 
+        }
         return couleurs;
 
-    }*/
+    }
+
 
    private void grow(Plateau plateau){
        HashMap<CoordAxial, Plot> hashMap = plateau.getPlots();

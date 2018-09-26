@@ -56,30 +56,13 @@ public class CoordIrrig {
      * @return
      */
     public static CoordIrrig join(CoordAxial a, CoordAxial b) {
-        int du = abs(a.getQ() - b.getQ());
-        int dv = abs(a.getR() - b.getR());
-
-        switch (du) {
-            case 0: {
-                if (dv == 1) {
-                    return new CoordIrrig(a.getQ(), min(a.getR(), b.getR()), Orient.W);
-                } else {
-                    return null;
-                }
-            }
-            case 1: {
-                if (dv == 0) {
-                    return new CoordIrrig(min(a.getQ(), b.getQ()), a.getR(), Orient.N);
-                } else if (dv == 1) {
-                    return new CoordIrrig(max(a.getQ(), b.getQ()), min(a.getR(), b.getR()), Orient.S);
-                } else {
-                    return null;
-                }
-            }
-            default: {
-                return null;
+        var nbc = a.getNeighborCoords();
+        for (int i = 0; i < nbc.size(); i++) {
+            if (nbc.get(i).equals(b)) {
+                return a.getBorderCoords().get(i);
             }
         }
+        return null;
     }
 
     /**
@@ -124,5 +107,14 @@ public class CoordIrrig {
     @Override
     public int hashCode() {
         return Objects.hash(u, v, o);
+    }
+
+    @Override
+    public String toString() {
+        return "(" +
+                "u=" + u +
+                ", v=" + v +
+                ", o=" + o +
+                ')';
     }
 }

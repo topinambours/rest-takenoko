@@ -1,10 +1,13 @@
 package Takenoko.Joueur;
 
 import Takenoko.Deque.Deck;
+import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Strategie.Strategie;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import Takenoko.Plateau;
+
+import java.util.Optional;
 
 
 public class Joueur implements Comparable{
@@ -13,6 +16,10 @@ public class Joueur implements Comparable{
     public int number;
     private Strategie strategie;
     private int score;
+
+    private int bambousVerts;
+    private int bambousJaunes;
+    private int bambousRoses;
 
 
     public Joueur(int n,Strategie strategie){
@@ -61,11 +68,27 @@ public class Joueur implements Comparable{
      */
     public CoordAxial putPlot(Plot plot, Plateau board){
         hand.remove(plot);
-        CoordAxial coor = strategie.getCoord(board);
+        CoordAxial coor = strategie.getCoord(board, plot);
         plot.setCoord(coor.getQ(),coor.getR());
         //plot.setWater(board.checkPlotWater(plot.getCoord())); //Check if have water
         board.putPlot(plot);
         return coor;
+    }
+
+    public Optional<CoordIrrig> putIrrig(Plateau plateau) {
+        Optional<CoordIrrig> strat = strategie.getIrrig(plateau);
+        if (strat.isPresent()) {
+            var coo = strat.get();
+            var borders = coo.borders();
+            Plot plot = plateau.getPlot(borders.get(0));
+            if (plot != null) plot.setWater(true);
+            Plot plot2 = plateau.getPlot(borders.get(1));
+            if (plot2 != null ) plot2.setWater(true);
+            plateau.putIrrigation(coo);
+            return Optional.of(coo);
+        } else {
+            return Optional.empty();
+        }
     }
 
     /**
@@ -124,5 +147,27 @@ public class Joueur implements Comparable{
         return this.compareTo(joueur) > 0;
     }
 
+    public int getBambousVerts() {
+        return bambousVerts;
+    }
 
+    public void setBambousVerts(int bambousVerts) {
+        this.bambousVerts = bambousVerts;
+    }
+
+    public int getBambousJaunes() {
+        return bambousJaunes;
+    }
+
+    public void setBambousJaunes(int bambousJaunes) {
+        this.bambousJaunes = bambousJaunes;
+    }
+
+    public int getBambousRoses() {
+        return bambousRoses;
+    }
+
+    public void setBambousRoses(int bambousRoses) {
+        this.bambousRoses = bambousRoses;
+    }
 }

@@ -7,6 +7,7 @@ import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.zip.CheckedInputStream;
 import java.util.Random;
 import java.util.TreeMap;
@@ -17,7 +18,7 @@ import static java.util.stream.Collectors.toList;
 public class StrategieAdjacent implements Strategie{
 
     @Override
-    public List<CoordAxial> getCoords(Plateau p) {
+    public List<CoordAxial> getCoords(Plateau p, Plot plot) {
         List<CoordAxial> legPos = p.legalPositions();
 
         return legPos.stream().collect(Collectors.groupingBy
@@ -25,12 +26,17 @@ public class StrategieAdjacent implements Strategie{
                         TreeMap::new, toList())).lastEntry().getValue();
     }
 
-    public CoordIrrig getIrrig(Plateau plateau) {
-        return plateau.legalIrrigPositions().get(0);
+    public Optional<CoordIrrig> getIrrig(Plateau plateau) {
+        var res = plateau.legalIrrigPositions();
+        if (res.size() >= 1) {
+            return Optional.of(res.get(0));
+        } else {
+            return Optional.empty();
+        }
     }
 
-    public CoordAxial getCoord(Plateau p) {
-        List<CoordAxial> posMaxBamboo = getCoords(p);
+    public CoordAxial getCoord(Plateau p, Plot plot) {
+        List<CoordAxial> posMaxBamboo = getCoords(p, plot);
 
 
         Random rand = new Random();
