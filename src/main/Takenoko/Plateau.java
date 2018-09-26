@@ -83,6 +83,10 @@ public class Plateau {
         this.irrigations = irrigations;
     }
 
+    /**
+     * ajoute une section d'irrigation au plateau
+     * @param coo
+     */
     public void putIrrigation(CoordIrrig coo) {
         irrigations.add(coo);
     }
@@ -100,6 +104,10 @@ public class Plateau {
         putPlot(plot, plot.getCoord());
     }
 
+    /**
+     * ajoute la tuile étang au plateau
+     * @param plot
+     */
     public void addStartingPlot(Plot plot){
         plot.setWater(true);
         putPlot(plot, _STARTING_COORDINATE_);
@@ -141,7 +149,7 @@ public class Plateau {
      * @param coo
      * @return
      */
-    public boolean isPositionLegal(CoordAxial coo) {
+    private boolean isPositionLegal(CoordAxial coo) {
         if (getPlot(coo) != null) {
             return false;
         }

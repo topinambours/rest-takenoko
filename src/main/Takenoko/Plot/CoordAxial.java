@@ -1,6 +1,7 @@
 package Takenoko.Plot;
 
 import Takenoko.Irrigation.CoordIrrig;
+import Takenoko.Irrigation.Orient;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -57,9 +58,12 @@ public class CoordAxial {
      */
     public List<CoordIrrig> getBorderCoords() {
         var res = new ArrayList<CoordIrrig>();
-        for (CoordAxial coo : getNeighborCoords()) {
-            res.add(CoordIrrig.join(this, coo));
-        }
+        res.add(new CoordIrrig(q + 1, r - 1, Orient.S));
+        res.add(new CoordIrrig(q + 1, r, Orient.W));
+        res.add(new CoordIrrig(q, r, Orient.N));
+        res.add(new CoordIrrig(q, r + 1, Orient.N));
+        res.add(new CoordIrrig(q, r, Orient.W));
+        res.add(new CoordIrrig(q, r, Orient.S));
         return res;
     }
 

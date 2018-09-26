@@ -23,7 +23,7 @@ public class CoordIrrigTest {
 
     @Test
     public void joinTest() {
-        var join = CoordIrrig.join(new CoordAxial(0, 3), new CoordAxial(1, 2));
-        assertEquals(join, new CoordIrrig(1, 2, Orient.S));
+        var join = CoordIrrig.join(new CoordAxial(0, 3), new CoordAxial(1, 3));
+        assertEquals(join, new CoordIrrig(1, 3, Orient.W));
     }
 }
