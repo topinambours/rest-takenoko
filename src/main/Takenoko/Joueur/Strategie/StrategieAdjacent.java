@@ -18,7 +18,7 @@ import static java.util.stream.Collectors.toList;
 public class StrategieAdjacent implements Strategie{
 
     @Override
-    public List<CoordAxial> getCoords(Plateau p) {
+    public List<CoordAxial> getCoords(Plateau p, Plot plot) {
         List<CoordAxial> legPos = p.legalPositions();
 
         return legPos.stream().collect(Collectors.groupingBy
@@ -35,8 +35,8 @@ public class StrategieAdjacent implements Strategie{
         }
     }
 
-    public CoordAxial getCoord(Plateau p) {
-        List<CoordAxial> posMaxBamboo = getCoords(p);
+    public CoordAxial getCoord(Plateau p, Plot plot) {
+        List<CoordAxial> posMaxBamboo = getCoords(p, plot);
 
 
         Random rand = new Random();
