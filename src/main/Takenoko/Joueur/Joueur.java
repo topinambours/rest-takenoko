@@ -12,7 +12,6 @@ import java.util.Optional;
 
 public class Joueur implements Comparable{
 
-    private Deck hand;
     public int number;
     private Strategie strategie;
     private int score;
@@ -23,7 +22,6 @@ public class Joueur implements Comparable{
 
 
     public Joueur(int n,Strategie strategie){
-        hand = new Deck();
         number = n;
         this.strategie = strategie;
     }
@@ -32,13 +30,8 @@ public class Joueur implements Comparable{
         return number;
     }
 
-    public Deck getHand(){
-        return hand;
-    }
-
     public Plot draw(Deck deck){
         Plot plot = deck.popLast();
-        hand.addLast(plot);
         return plot;
     }
 
@@ -51,7 +44,6 @@ public class Joueur implements Comparable{
     }
 
     public Plot replaceInDeck(Deck deck, Plot plot){
-        hand.remove(plot);
         deck.addFirst(plot);
         return plot;
     }
@@ -67,7 +59,6 @@ public class Joueur implements Comparable{
      * @return
      */
     public CoordAxial putPlot(Plot plot, Plateau board){
-        hand.remove(plot);
         CoordAxial coor = strategie.getCoord(board, plot);
         plot.setCoord(coor.getQ(),coor.getR());
         //plot.setWater(board.checkPlotWater(plot.getCoord())); //Check if have water
@@ -170,4 +161,6 @@ public class Joueur implements Comparable{
     public void setBambousRoses(int bambousRoses) {
         this.bambousRoses = bambousRoses;
     }
+
+
 }

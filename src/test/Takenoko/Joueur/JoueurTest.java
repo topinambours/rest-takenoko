@@ -32,27 +32,12 @@ public class JoueurTest {
         assertEquals(2, joueur2.getNumber());
     }
 
-    @Test
-    public void getHand(){
-        assertEquals(0, joueur1.getHand().getSize());
-        assertEquals(0, joueur2.getHand().getSize());
-        joueur1.multiDraw(dtest, 50);
-        assertEquals(50, joueur1.getHand().getSize());
-    }
 
     @Test
     public void draw(){
-        Plot plot = joueur1.draw(dtest);
-        assertEquals(plot, joueur1.getHand().getLast());
-        Plot plot2 = joueur1.draw(dtest);
-        assertEquals(plot2, joueur1.getHand().getLast());
+        //todo
     }
 
-    @Test
-    public void multiDraw(){
-        joueur1.multiDraw(dtest, 49);
-        assertEquals(49, joueur1.getHand().getSize());
-    }
 
     @Test
     public void replaceInDeck(){
