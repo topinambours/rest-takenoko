@@ -8,6 +8,9 @@ import java.util.Objects;
 
 import static java.lang.Math.*;
 
+/**
+ * La classe CoorIrrig permet de calculer les coordonnées des irrigations
+ */
 public class CoordIrrig {
     private int u;
     private int v;

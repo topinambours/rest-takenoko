@@ -54,3 +54,10 @@ Version textuel n'étant pas destinée à être jouée par des êtres humains ma
 
 ### Système de coordonnées
 ![](https://image.ibb.co/c04o6p/Capture_de_2018_09_26_14_25_13.png)![Représentation des arrêtes](https://image.ibb.co/c87Y6p/Screenshot_at_Sep_26_14_15_37.png)
+
+### Les stratégies 
+- **La stratégie Adjacente :** consiste à poser des parcelles en maximisant le nombre de voisins
+- **La stratégie Bambou :** Le robot prend le parti de placer sa parcelle au placement maximisant le nombre de bambous adjacents
+- **La stratégie Couleur :** consiste à placer les parcelles en maximisant le nombre de voisins de la même couleur qui la parcelle
+- **La stratégie irrigation :** faite pour la pose des irrigations
+- **La stratégie random :** Stratégie de base. Elle effectue les actions de façon aléatoire

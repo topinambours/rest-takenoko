@@ -9,6 +9,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * La stratégie Couleur consiste à placer les parcelles en maximisant le nombre de voisins de la même couleur qui la parcelle
+ */
 public class StrategieColor implements Strategie{
 
     /**

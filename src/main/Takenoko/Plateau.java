@@ -244,6 +244,11 @@ public class Plateau {
         return plots;
     }
 
+    /**
+     * Permet de définir si une parcelle est irriguée
+     * @param coordAxial CoordAxial les coordonnées de la parcelle
+     * @return boolean true|false
+     */
     public boolean checkPlotWater(CoordAxial coordAxial){
         for (CoordIrrig c : coordAxial.getBorderCoords()){
             if (this.getIrrigations().contains(c)){

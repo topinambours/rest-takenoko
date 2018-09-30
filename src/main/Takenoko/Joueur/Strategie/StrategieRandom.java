@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+/**
+ * La stratégie random est la stratégie de base. Elle effectue les actions de façon aléatoire
+ */
 public class StrategieRandom implements Strategie{
 
     @Override

@@ -9,7 +9,9 @@ import Takenoko.Plateau;
 
 import java.util.Optional;
 
-
+/**
+ * Le robot, joue au jeu en utilisant une stratégie spécifique
+ */
 public class Joueur implements Comparable{
 
     public int number;
@@ -30,11 +32,21 @@ public class Joueur implements Comparable{
         return number;
     }
 
+    /**
+     * Permet de piocher
+     * @param deck Deck le deck
+     * @return Plot une parcelle
+     */
     public Plot draw(Deck deck){
         Plot plot = deck.popLast();
         return plot;
     }
 
+    /**
+     * Permet de piocher plusieurs parcelles en même temps
+     * @param deck Deck le deck
+     * @param n int
+     */
     public void multiDraw(Deck deck, int n){
         int i = n;
         while(!deck.isEmpty() && i > 0){
@@ -43,11 +55,21 @@ public class Joueur implements Comparable{
         }
     }
 
+    /**
+     * Permet de replacer dans la pioche une parcelle
+     * @param deck Deck le deck
+     * @param plot Plot une parcelle
+     * @return Plot la parcelle replacée
+     */
     public Plot replaceInDeck(Deck deck, Plot plot){
         deck.addFirst(plot);
         return plot;
     }
 
+    /**
+     * Permet de savoir la strategie courante du joueur sous forme de string
+     * @return String strategie
+     */
     public String getStrategieLabel(){
         return strategie.getStrategieLabel();
     }
@@ -66,6 +88,11 @@ public class Joueur implements Comparable{
         return coor;
     }
 
+    /**
+     * Permet de placer une irrigation
+     * @param plateau Plateau le plateau
+     * @return Optional l'irrigation posee
+     */
     public Optional<CoordIrrig> putIrrig(Plateau plateau) {
         Optional<CoordIrrig> strat = strategie.getIrrig(plateau);
         if (strat.isPresent()) {

@@ -87,6 +87,11 @@ public class Game {
         return deck;
     }
 
+    /**
+     * Effectue le tour d'un joueur
+     * @param joueur Joueur un joueur
+     * @return Plot la parcelle que le joueur a joué
+     */
     public Plot turn(Joueur joueur){
         Plot current = deck.popFirst();
         CoordAxial coord = joueur.putPlot(current,plateau);
@@ -95,6 +100,11 @@ public class Game {
         return current;
     }
 
+    /**
+     * Effectue le tour de pose d'irrigation d'un joueur
+     * @param joueur Joueur un joueur
+     * @return Optional une irrigation si une irrigation a été posée
+     */
     public Optional<CoordIrrig> irrigTurn(Joueur joueur) {
         var coo = joueur.putIrrig(plateau);
         return coo;
@@ -146,7 +156,12 @@ public class Game {
     }
 
 
-
+    /**
+     * Permet d'avoir la couleur de ses voisins
+     * @param coordAxial CoordAxial une coordonnée
+     * @param plateau Plateau le plateau
+     * @return HashSet ensemble de couleurs
+     */
     private HashSet<Couleur> getNeighborColor(CoordAxial coordAxial,Plateau plateau){
         HashSet<Couleur> couleurs = new HashSet<>();
 
@@ -160,7 +175,10 @@ public class Game {
 
     }
 
-
+    /**
+     * Permet de faire pousser les bambous
+     * @param plateau Plateau le plateau
+     */
    private void grow(Plateau plateau){
        HashMap<CoordAxial, Plot> hashMap = plateau.getPlots();
        Iterator iterator = hashMap.entrySet().iterator();

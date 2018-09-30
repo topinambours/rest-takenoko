@@ -1,5 +1,8 @@
 package Takenoko.Plot;
 
+/**
+ * Cette classe represente les parcelles
+ */
 public class Plot {
 
     private CoordAxial coord;
@@ -69,10 +72,18 @@ public class Plot {
         coord.setR(r);
     }
 
+    /**
+     * Permet de connaitre la couleur d'une parcelle
+     * @return Couleur la couleur
+     */
     public Couleur getCouleur() {
         return couleur;
     }
 
+    /**
+     * Permet de definir la couleur d'une parcelle
+     * @param couleur Couleur la couleur
+     */
     public void setCouleur(Couleur couleur) {
         this.couleur = couleur;
     }

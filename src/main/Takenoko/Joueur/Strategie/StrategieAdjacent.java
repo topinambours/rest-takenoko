@@ -13,6 +13,9 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
+/**
+ * La stratégie Adjacente consiste à poser des parcelles en maximisant le nombre de voisins
+ */
 public class StrategieAdjacent implements Strategie{
 
     @Override
