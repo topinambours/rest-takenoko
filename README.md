@@ -31,8 +31,8 @@ Version textuel n'étant pas destinée à être jouée par des êtres humains ma
 
 |Nombre| Nom | Image 
 |--|--|--|
-| 1 | Figurine Panda |![](https://image.ibb.co/g8mXE9/1.jpg)  
-| 1 | Figurine Jardinier|  ![](https://image.ibb.co/cvs3nU/penda_1.jpg) 
+| 1 | Figurine Jardinier |![](https://image.ibb.co/g8mXE9/1.jpg)  
+| 1 | Figurine Panda |  ![](https://image.ibb.co/cvs3nU/penda_1.jpg) 
 | 1 |Carte Empereur|  ![](https://image.ibb.co/dkt17U/carte1_1.jpg)
 | 20 | Bâtonnet irrigation|  ![](http://jeuxstrategieter.free.fr/jeu_takenoko/pion3.jpg) 
 | 8 (4*4) |Jetons action|  ![](http://jeuxstrategieter.free.fr/jeu_takenoko/pion4.jpg)

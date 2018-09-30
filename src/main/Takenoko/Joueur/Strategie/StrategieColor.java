@@ -3,6 +3,7 @@ import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
+import Takenoko.Util.Comparators.ComparateurPosColorAdj;
 
 import java.util.Collections;
 import java.util.List;

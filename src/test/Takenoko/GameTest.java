@@ -17,7 +17,7 @@ public class GameTest {
     }
 
     @Test public void testGame(){
-        Console.Log.init(Console.Mode.TEST);
+        Console.Log.init();
         game.play();
         assertTrue(game.end());
     }

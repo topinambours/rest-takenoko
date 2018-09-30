@@ -1,6 +1,6 @@
 package Takenoko.Joueur.Strategie;
 
-import Takenoko.Irrigation.ComparateurIrig;
+import Takenoko.Util.Comparators.ComparateurIrig;
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;

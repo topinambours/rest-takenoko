@@ -1,9 +1,10 @@
 package Takenoko.Joueur.Strategie;
 
 import Takenoko.Plateau;
-import Takenoko.Plot.ComparateurCoordAxial;
+import Takenoko.Util.Comparators.ComparateurCoordAxial;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
+import Takenoko.Util.Comparators.ComparateurPosBambooAdj;
 import org.junit.Before;
 import org.junit.Test;
 

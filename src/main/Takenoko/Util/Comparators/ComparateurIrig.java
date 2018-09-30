@@ -1,5 +1,6 @@
-package Takenoko.Irrigation;
+package Takenoko.Util.Comparators;
 
+import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plateau;
 
 import java.util.Comparator;
