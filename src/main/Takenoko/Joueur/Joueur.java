@@ -9,7 +9,9 @@ import Takenoko.Plateau;
 
 import java.util.Optional;
 
-
+/**
+ * Le robot, joue au jeu en utilisant une stratégie spécifique
+ */
 public class Joueur implements Comparable{
 
     public int number;
@@ -30,11 +32,21 @@ public class Joueur implements Comparable{
         return number;
     }
 
+    /**
+     * Permet de retourner la derniere parcelle du deck
+     * @param deck le deck
+     * @return Plot une parcelle
+     */
     public Plot draw(Deck deck){
         Plot plot = deck.popLast();
         return plot;
     }
 
+    /**
+     *
+     * @param deck
+     * @param n
+     */
     public void multiDraw(Deck deck, int n){
         int i = n;
         while(!deck.isEmpty() && i > 0){

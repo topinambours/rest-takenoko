@@ -1,6 +1,6 @@
 package Takenoko.Joueur.Strategie;
 
-import Takenoko.Irrigation.ComparateurIrig;
+import Takenoko.Util.Comparateur.ComparateurIrig;
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
@@ -9,6 +9,9 @@ import Takenoko.Plot.Plot;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * La stratégie irrigation est elle faite pour la pose des irrigations
+ */
 public class StrategieIrig implements Strategie{
 
     Plateau p;

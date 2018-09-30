@@ -3,11 +3,15 @@ import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
+import Takenoko.Util.Comparateur.ComparateurPosColorAdj;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * La stratégie Couleur consiste à placer les parcelles en maximisant le nombre de voisins de la même couleur qui la parcelle
+ */
 public class StrategieColor implements Strategie{
 
     /**

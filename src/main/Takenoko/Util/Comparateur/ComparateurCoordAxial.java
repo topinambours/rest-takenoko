@@ -1,4 +1,6 @@
-package Takenoko.Plot;
+package Takenoko.Util.Comparateur;
+
+import Takenoko.Plot.CoordAxial;
 
 import java.util.Comparator;
 
