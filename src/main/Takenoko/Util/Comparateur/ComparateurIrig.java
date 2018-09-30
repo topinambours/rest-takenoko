@@ -6,6 +6,9 @@ import Takenoko.Plateau;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
+/**
+ * Le commparateur des irrigations
+ */
 public class ComparateurIrig implements Comparator<CoordIrrig> {
 
     Plateau plateau;

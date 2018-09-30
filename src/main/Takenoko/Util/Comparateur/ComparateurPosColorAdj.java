@@ -8,6 +8,9 @@ import Takenoko.Plot.Plot;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Permet de comparer les couleurs
+ */
 public class ComparateurPosColorAdj implements Comparator<CoordAxial> {
 
     private Plateau p;

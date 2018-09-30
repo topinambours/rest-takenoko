@@ -33,8 +33,8 @@ public class Joueur implements Comparable{
     }
 
     /**
-     * Permet de retourner la derniere parcelle du deck
-     * @param deck le deck
+     * Permet de piocher
+     * @param deck Deck le deck
      * @return Plot une parcelle
      */
     public Plot draw(Deck deck){
@@ -43,9 +43,9 @@ public class Joueur implements Comparable{
     }
 
     /**
-     *
-     * @param deck
-     * @param n
+     * Permet de piocher plusieurs parcelles en même temps
+     * @param deck Deck le deck
+     * @param n int
      */
     public void multiDraw(Deck deck, int n){
         int i = n;
@@ -55,11 +55,21 @@ public class Joueur implements Comparable{
         }
     }
 
+    /**
+     * Permet de replacer dans la pioche une parcelle
+     * @param deck Deck le deck
+     * @param plot Plot une parcelle
+     * @return Plot la parcelle replacée
+     */
     public Plot replaceInDeck(Deck deck, Plot plot){
         deck.addFirst(plot);
         return plot;
     }
 
+    /**
+     * Permet de savoir la strategie courante du joueur sous forme de string
+     * @return String strategie
+     */
     public String getStrategieLabel(){
         return strategie.getStrategieLabel();
     }
@@ -78,6 +88,11 @@ public class Joueur implements Comparable{
         return coor;
     }
 
+    /**
+     * Permet de placer une irrigation
+     * @param plateau Plateau le plateau
+     * @return Optional l'irrigation posee
+     */
     public Optional<CoordIrrig> putIrrig(Plateau plateau) {
         Optional<CoordIrrig> strat = strategie.getIrrig(plateau);
         if (strat.isPresent()) {
