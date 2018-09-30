@@ -37,6 +37,10 @@ public class CoordAxial {
         this.r = r;
     }
 
+    public CoordAxial add(CoordAxial coo) {
+        return new CoordAxial(q + coo.getQ(), r + coo.getR());
+    }
+
     /**
      * rend les 6 coordonnées des hexagones voisins
      * @return

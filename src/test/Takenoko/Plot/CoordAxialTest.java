@@ -41,4 +41,14 @@ public class CoordAxialTest {
         assertEquals(toTest.get(4), new CoordIrrig(0, 0, Orient.W));
         assertEquals(toTest.get(5), new CoordIrrig(0, 0, Orient.S));
     }
+
+    @Test
+    public void testAdd() {
+        CoordAxial myCoo1 = new CoordAxial(2, 2);
+        CoordAxial myCoo2 = new CoordAxial(3, -1);
+        CoordAxial finalCoo = new CoordAxial(5, 1);
+
+        assertEquals(finalCoo, myCoo1.add(myCoo2));
+        assertEquals(finalCoo, myCoo2.add(myCoo1));
+    }
 }
