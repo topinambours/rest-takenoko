@@ -61,7 +61,7 @@ public class CoordAxial {
      * @return
      */
     public List<CoordIrrig> getBorderCoords() {
-        var res = new ArrayList<CoordIrrig>();
+        ArrayList<CoordIrrig> res = new ArrayList<CoordIrrig>();
         res.add(new CoordIrrig(q + 1, r - 1, Orient.S));
         res.add(new CoordIrrig(q + 1, r, Orient.W));
         res.add(new CoordIrrig(q, r, Orient.N));

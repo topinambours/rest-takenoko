@@ -11,14 +11,17 @@ public class PandaObjectiveCard extends ObjectiveCard {
     private int pointValue;
     private Joueur owner;
 
+    @Override
     public int getPointValue() {
         return pointValue;
     }
 
+    @Override
     public boolean isComplete() {
         return (owner.getBambousVerts() >= vertRequis && owner.getBambousJaunes() >= jauneRequis && owner.getBambousRoses() >= roseRequis);
     }
 
+    @Override
     public int validate() {
         owner.setBambousVerts(owner.getBambousVerts() - vertRequis);
         owner.setBambousJaunes(owner.getBambousJaunes() - jauneRequis);
@@ -33,6 +36,7 @@ public class PandaObjectiveCard extends ObjectiveCard {
         pointValue = value;
     }
 
+    @Override
     public void instanciate(Plateau plateau, Joueur joueur) {
         owner = joueur;
     }

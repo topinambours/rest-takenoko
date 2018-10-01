@@ -121,7 +121,7 @@ public class Plateau {
     public List<Plot> getNeighbors(CoordAxial coo) {
         ArrayList<Plot> res = new ArrayList<>();
         for (CoordAxial nbc : coo.getNeighborCoords()) {
-            var myPlot = getPlot(nbc);
+            Plot myPlot = getPlot(nbc);
             if (myPlot != null) {
                 res.add(myPlot);
             }
@@ -219,7 +219,7 @@ public class Plateau {
     private boolean isIrrigPositionLegal(CoordIrrig coo) {
         for (CoordIrrig nbc : coo.continues()) {
             if (!irrigations.contains(coo) && irrigations.contains(nbc)) {
-                var hexes = nbc.borders();
+                List<CoordAxial> hexes = nbc.borders();
                 if (getPlot(hexes.get(0)) != null && getPlot(hexes.get(1)) != null) {
                     return true;
                 }
@@ -233,7 +233,7 @@ public class Plateau {
      * @return
      */
     private List<CoordIrrig> irrigPositionsToTest() {
-        var mySet = new HashSet<CoordIrrig>();
+        HashSet<CoordIrrig> mySet = new HashSet<CoordIrrig>();
         for (CoordIrrig irrig : irrigations) {
             mySet.addAll(irrig.continues());
         }

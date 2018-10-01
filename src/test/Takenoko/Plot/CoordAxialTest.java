@@ -4,6 +4,8 @@ import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Irrigation.Orient;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 
@@ -18,8 +20,8 @@ public class CoordAxialTest {
 
     @Test
     public void testNeighborCoords() {
-        var myCoo = new CoordAxial(0, 0);
-        var toTest = myCoo.getNeighborCoords();
+        CoordAxial myCoo = new CoordAxial(0, 0);
+        List<CoordAxial> toTest = myCoo.getNeighborCoords();
 
         assertEquals(toTest.get(0), new CoordAxial(1, -1));
         assertEquals(toTest.get(1), new CoordAxial(1, 0));
@@ -31,8 +33,8 @@ public class CoordAxialTest {
 
     @Test
     public void testBorderCoords() {
-        var myCoo = new CoordAxial(0, 0);
-        var toTest = myCoo.getBorderCoords();
+        CoordAxial myCoo = new CoordAxial(0, 0);
+        List<CoordIrrig> toTest = myCoo.getBorderCoords();
 
         assertEquals(toTest.get(0), new CoordIrrig(1, -1, Orient.S));
         assertEquals(toTest.get(1), new CoordIrrig(1, 0, Orient.W));

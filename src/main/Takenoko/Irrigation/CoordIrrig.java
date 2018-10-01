@@ -33,7 +33,7 @@ public class CoordIrrig {
      * @return
      */
     public List<CoordAxial> borders() {
-        var res = new ArrayList<CoordAxial>();
+        List<CoordAxial> res = new ArrayList<CoordAxial>();
         switch (o) {
             case N: {
                 res.add(new CoordAxial(u, v - 1));
@@ -59,7 +59,7 @@ public class CoordIrrig {
      * @return
      */
     public static CoordIrrig join(CoordAxial a, CoordAxial b) {
-        var nbc = a.getNeighborCoords();
+        List<CoordAxial> nbc = a.getNeighborCoords();
         for (int i = 0; i < nbc.size(); i++) {
             if (nbc.get(i).equals(b)) {
                 return a.getBorderCoords().get(i);
@@ -73,7 +73,7 @@ public class CoordIrrig {
      * @return
      */
     public List<CoordIrrig> continues() {
-        var res = new ArrayList<CoordIrrig>();
+        List<CoordIrrig> res = new ArrayList<CoordIrrig>();
         switch (o) {
             case N: {
                 res.add(new CoordIrrig(u, v, Orient.W));

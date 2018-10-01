@@ -106,7 +106,7 @@ public class Game {
      * @return Optional une irrigation si une irrigation a été posée
      */
     public Optional<CoordIrrig> irrigTurn(Joueur joueur) {
-        var coo = joueur.putIrrig(plateau);
+        Optional<CoordIrrig> coo = joueur.putIrrig(plateau);
         return coo;
     }
 

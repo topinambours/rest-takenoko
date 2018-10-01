@@ -7,6 +7,7 @@ import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import Takenoko.Plateau;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -96,8 +97,8 @@ public class Joueur implements Comparable{
     public Optional<CoordIrrig> putIrrig(Plateau plateau) {
         Optional<CoordIrrig> strat = strategie.getIrrig(plateau);
         if (strat.isPresent()) {
-            var coo = strat.get();
-            var borders = coo.borders();
+            CoordIrrig coo = strat.get();
+            List<CoordAxial> borders = coo.borders();
             Plot plot = plateau.getPlot(borders.get(0));
             if (plot != null) plot.setWater(true);
             Plot plot2 = plateau.getPlot(borders.get(1));

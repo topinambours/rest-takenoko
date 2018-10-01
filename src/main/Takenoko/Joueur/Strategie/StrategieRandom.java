@@ -38,7 +38,7 @@ public class StrategieRandom implements Strategie{
     }
 
     public Optional<CoordIrrig> getIrrig(Plateau plateau) {
-        var res = plateau.legalIrrigPositions();
+        List<CoordIrrig> res = plateau.legalIrrigPositions();
         if (res.size() >= 1) {
             return Optional.of(res.get(0));
         } else {
