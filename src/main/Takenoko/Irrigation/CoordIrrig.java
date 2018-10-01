@@ -38,15 +38,19 @@ public class CoordIrrig {
             case N: {
                 res.add(new CoordAxial(u, v - 1));
                 res.add(new CoordAxial(u, v));
+                break;
             }
             case W: {
                 res.add(new CoordAxial(u - 1, v));
                 res.add(new CoordAxial(u, v));
+                break;
             }
             case S: {
                 res.add(new CoordAxial(u, v));
                 res.add(new CoordAxial(u - 1, v + 1));
+                break;
             }
+            default: throw new IllegalArgumentException("Invalid orientation given");
         }
         return res;
     }
@@ -80,19 +84,23 @@ public class CoordIrrig {
                 res.add(new CoordIrrig(u, v - 1, Orient.S));
                 res.add(new CoordIrrig(u + 1, v - 1, Orient.W));
                 res.add(new CoordIrrig(u + 1, v - 1, Orient.S));
+                break;
             }
             case W: {
                 res.add(new CoordIrrig(u, v, Orient.S));
                 res.add(new CoordIrrig(u - 1, v + 1, Orient.N));
                 res.add(new CoordIrrig(u, v - 1, Orient.S));
                 res.add(new CoordIrrig(u, v, Orient.N));
+                break;
             }
             case S: {
                 res.add(new CoordIrrig(u, v, Orient.W));
                 res.add(new CoordIrrig(u - 1, v + 1, Orient.N));
                 res.add(new CoordIrrig(u, v + 1, Orient.W));
                 res.add(new CoordIrrig(u, v + 1, Orient.N));
+                break;
             }
+            default: throw new IllegalArgumentException("Invalid orientation given");
         }
         return res;
     }
