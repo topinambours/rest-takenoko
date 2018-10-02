@@ -64,12 +64,12 @@ public class Game {
                 Plot current = turn(j);
                 Optional<CoordIrrig> newIrrig = irrigTurn(j);
                 CoordAxial coord = current.getCoord();
-                Console.Log.println(String.format("Le joueur %d pose une parcelle ici : %s", j.id, coord));
+                Console.Log.println(String.format("Le joueur %d pose une parcelle ici : %s", j.getId(), coord));
                 if (newIrrig.isPresent()) {
-                    Console.Log.println(String.format("Le joueur %d pose une section d'irrigation ici : %s",j.id, newIrrig.get()));
+                    Console.Log.println(String.format("Le joueur %d pose une section d'irrigation ici : %s",j.getId(), newIrrig.get()));
                 }
                 Console.Log.debugPrint("La parcelle "+current.toString()+"a water a : "+getPlateau().checkPlotWater(coord));
-                //Console.Log.println(String.format("Le joueur %d pose un bambou ici : %s", j.id, coord));
+                //Console.Log.println(String.format("Le joueur %d pose un bambou ici : %s", j.getId(), coord));
 
                 evaluate(j, coord);
             }//Todo : faire piocher -> faire poser
@@ -78,7 +78,7 @@ public class Game {
         }
         Console.Log.println("La partie est terminée");
         for (Joueur j : joueurs){
-            Console.Log.println(String.format("Le joueur %d a marqué %d points avec une %s", j.id, j.getScore(), j.getStrategieLabel()));
+            Console.Log.println(String.format("Le joueur %d a marqué %d points avec une %s", j.getId(), j.getScore(), j.getStrategieLabel()));
         }
     }
 
@@ -145,7 +145,7 @@ public class Game {
         for (Plot nei : plateau.getNeighbors(coord)){
             nei.removeBamboo();
         }
-        Console.Log.println(String.format("Le joueur %d gagne %d point car il a posé une parcelle", j.id,n));
+        Console.Log.println(String.format("Le joueur %d gagne %d point car il a posé une parcelle", j.getId(),n));
 
         HashSet<Couleur> couleurs = getNeighborColor(coord,plateau);
         if(couleurs.contains(plateau.getLastPlop().getCouleur())){

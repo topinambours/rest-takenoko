@@ -159,6 +159,11 @@ public class Plot {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(coord, bambou, water, couleur);
+    }
+
+    @Override
     public String toString(){
         return "Parcelle("+getq()+","+getr()+")";
     }

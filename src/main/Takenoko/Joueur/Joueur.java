@@ -22,7 +22,7 @@ public class Joueur implements Comparable{
     /**
      * Identidiant du joueur
      */
-    public int id;
+    private int id;
 
     /**
      * Stratégie adoptée par le joueur
