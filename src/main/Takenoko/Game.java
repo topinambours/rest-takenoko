@@ -6,14 +6,13 @@ import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieAdjacent;
 import Takenoko.Joueur.Strategie.StrategieBamboo;
 import Takenoko.Joueur.Strategie.StrategieColor;
-import Takenoko.Joueur.Strategie.StrategieRandom;
 import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Couleur;
+import Takenoko.Properties.Couleur;
 import Takenoko.Plot.Plot;
 import Takenoko.Util.Console;
+import Takenoko.Util.Exceptions.EmptyDeckException;
 
 import java.util.*;
-import java.util.function.Function;
 
 /**
  * La classe Game permet de créer une partie
@@ -56,7 +55,7 @@ public class Game {
     /**
      * La fonction principale qui permet de lancer et faire la game
      */
-    public void play(){
+    public void play() throws EmptyDeckException {
         while(!end()){ //Tant que la partie n'est pas terminée
             for (Joueur j : joueurs){
                 if (end()){
@@ -65,12 +64,12 @@ public class Game {
                 Plot current = turn(j);
                 Optional<CoordIrrig> newIrrig = irrigTurn(j);
                 CoordAxial coord = current.getCoord();
-                Console.Log.println(String.format("Le joueur %d pose une parcelle ici : %s", j.number, coord));
+                Console.Log.println(String.format("Le joueur %d pose une parcelle ici : %s", j.id, coord));
                 if (newIrrig.isPresent()) {
-                    Console.Log.println(String.format("Le joueur %d pose une section d'irrigation ici : %s",j.number, newIrrig.get()));
+                    Console.Log.println(String.format("Le joueur %d pose une section d'irrigation ici : %s",j.id, newIrrig.get()));
                 }
                 Console.Log.debugPrint("La parcelle "+current.toString()+"a water a : "+getPlateau().checkPlotWater(coord));
-                //Console.Log.println(String.format("Le joueur %d pose un bambou ici : %s", j.number, coord));
+                //Console.Log.println(String.format("Le joueur %d pose un bambou ici : %s", j.id, coord));
 
                 evaluate(j, coord);
             }//Todo : faire piocher -> faire poser
@@ -79,7 +78,7 @@ public class Game {
         }
         Console.Log.println("La partie est terminée");
         for (Joueur j : joueurs){
-            Console.Log.println(String.format("Le joueur %d a marqué %d points avec une %s", j.number, j.getScore(), j.getStrategieLabel()));
+            Console.Log.println(String.format("Le joueur %d a marqué %d points avec une %s", j.id, j.getScore(), j.getStrategieLabel()));
         }
     }
 
@@ -92,8 +91,9 @@ public class Game {
      * @param joueur Joueur un joueur
      * @return Plot la parcelle que le joueur a joué
      */
-    public Plot turn(Joueur joueur){
-        Plot current = deck.popFirst();
+    public Plot turn(Joueur joueur) throws EmptyDeckException {
+        Plot current;
+        current = joueur.draw(deck);
         CoordAxial coord = joueur.putPlot(current,plateau);
         current.setWater(getPlateau().checkPlotWater(coord)); //dans le joueur maintenant
 
@@ -145,7 +145,7 @@ public class Game {
         for (Plot nei : plateau.getNeighbors(coord)){
             nei.removeBamboo();
         }
-        Console.Log.println(String.format("Le joueur %d gagne %d point car il a posé une parcelle", j.number ,n));
+        Console.Log.println(String.format("Le joueur %d gagne %d point car il a posé une parcelle", j.id,n));
 
         HashSet<Couleur> couleurs = getNeighborColor(coord,plateau);
         if(couleurs.contains(plateau.getLastPlop().getCouleur())){

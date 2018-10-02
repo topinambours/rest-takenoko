@@ -1,16 +1,24 @@
 package Takenoko.Joueur;
 
 import Takenoko.Deque.Deck;
+import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Strategie.StrategieRandom;
+import Takenoko.Plateau;
+import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
+import Takenoko.Util.Exceptions.EmptyDeckException;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
 public class JoueurTest {
 
-    private final int DECK_SIZE = 100;
+    private final int DECK_SIZE = 120;
     private Deck dtest;
     private Joueur joueur1;
     private Joueur joueur2;
@@ -21,31 +29,108 @@ public class JoueurTest {
         joueur1 = new Joueur(1, new StrategieRandom());
         joueur2 = new Joueur(2, new StrategieRandom());
 
-        for (int i = 0; i <= DECK_SIZE; i++){
+        for (int i = 0; i < DECK_SIZE; i++){
             dtest.addFirst(new Plot(i,0));
         }
     }
 
     @Test
-    public void getNumber(){
-        assertEquals(1, joueur1.getNumber());
-        assertEquals(2, joueur2.getNumber());
+    public void getId() {
+        assertEquals(1, joueur1.getId());
+        assertEquals(2, joueur2.getId());
     }
 
-
-    @Test
-    public void draw(){
-        //todo
-    }
-
-
-    @Test
-    public void replaceInDeck(){
-        //todo
+    @Test (expected = EmptyDeckException.class)
+    public void draw() throws EmptyDeckException {
+        for (int i = 0; i < DECK_SIZE; i++){
+            assertEquals(new Plot(i,0), joueur1.draw(dtest));
+        }
+        joueur1.draw(dtest);
     }
 
     @Test
-    public void putPlot(){
-        //todo
+    public void multiDraw() throws EmptyDeckException {
+        List<Plot> current;
+        for (int i = 0; i < (DECK_SIZE / 3); i+=3){
+            current = new ArrayList<>();
+            current.add(new Plot(i,0));
+            current.add(new Plot(i+1,0));
+            current.add(new Plot(i+2,0));
+
+            assertArrayEquals(current.toArray() , joueur1.multiDraw(dtest, 3).toArray());
+        }
+    }
+
+    @Test
+    public void multiDrawOutOfCapacity() throws EmptyDeckException {
+        int UPPER_BOUND = DECK_SIZE - 5;
+        List<Plot> current;
+        for (int i = 0; i < UPPER_BOUND; i+=5){
+            current = new ArrayList<>();
+            for (int j = i; j <= i+4; j++) {
+                current.add(new Plot(j, 0));
+            }
+            assertArrayEquals(current.toArray() , joueur1.multiDraw(dtest, 5).toArray());
+        }
+
+        // On essaye de piocher 10 cartes parmis 5 restantes
+        current = new ArrayList<>();
+        for (int j = UPPER_BOUND; j < DECK_SIZE; j++) {
+            current.add(new Plot(j, 0));
+        }
+        // Résultats attendu : le joueur n'a pioché que 5 cartes, aucune exception de levée
+        assertArrayEquals(current.toArray() , joueur1.multiDraw(dtest, 10).toArray());
+    }
+
+    @Test
+    public void replaceInDeck() throws EmptyDeckException {
+        assertEquals(new Plot(0,0), dtest.getLast());
+        Plot pioche = joueur1.draw(dtest);
+        assertEquals(new Plot(0,0), pioche);
+
+        assertEquals(pioche, joueur1.replaceInDeck(dtest, pioche));
+
+        assertEquals(pioche, dtest.getFirst());
+    }
+
+    @Test
+    public void putPlot() throws EmptyDeckException {
+        Plateau pTest = new Plateau();
+        CoordAxial currentPlotPos;
+        for (int i = 0; i < DECK_SIZE; i++){
+            currentPlotPos = joueur1.putPlot(joueur1.draw(dtest), pTest);
+            assertTrue(!pTest.legalPositions().contains(currentPlotPos));
+        }
+    }
+
+    // @TODO tester toute les stratégies
+    @Test
+    public void putIrrigRandomStrategie() {
+        Plateau pTest = new Plateau();
+        assertEquals(Optional.empty(), joueur1.putIrrig(pTest));
+
+    }
+
+    @Test
+    public void compareTo() {
+        joueur1.addScore(100);
+        joueur2.addScore(10);
+
+        assertTrue(joueur1.compareTo(joueur2) > 0);
+        assertTrue(joueur2.compareTo(joueur1) < 0);
+
+        joueur2.addScore(90);
+        assertEquals(0,joueur2.compareTo(joueur1));
+
+        assertEquals(-1, joueur1.compareTo(new CoordAxial(0,0)));
+    }
+
+    @Test
+    public void isUpper() {
+        joueur1.addScore(100);
+        joueur2.addScore(10);
+
+        assertTrue(joueur1.isUpper(joueur2));
+        assertFalse(joueur2.isUpper(joueur1));
     }
 }

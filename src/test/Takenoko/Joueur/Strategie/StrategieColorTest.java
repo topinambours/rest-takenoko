@@ -4,7 +4,7 @@ import Takenoko.Joueur.Joueur;
 
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Couleur;
+import Takenoko.Properties.Couleur;
 import Takenoko.Plot.Plot;
 import org.junit.Before;
 import org.junit.Test;

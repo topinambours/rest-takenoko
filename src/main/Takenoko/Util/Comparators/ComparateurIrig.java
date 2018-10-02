@@ -17,6 +17,12 @@ public class ComparateurIrig implements Comparator<CoordIrrig> {
         this.plateau = p;
     }
 
+    /**
+     *
+     * @param o1
+     * @param o2
+     * @return
+     */
     @Override
     public int compare(CoordIrrig o1, CoordIrrig o2) {
         int o1NotirigatedAdjCount = o1.borders().stream().filter(coordAxial -> plateau.getPlot(coordAxial).haveWater()).collect(Collectors.toList()).size();

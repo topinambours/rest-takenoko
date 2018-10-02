@@ -1,5 +1,9 @@
 package Takenoko.Plot;
 
+import Takenoko.Properties.Couleur;
+
+import java.util.Objects;
+
 /**
  * Cette classe represente les parcelles
  */
@@ -141,6 +145,17 @@ public class Plot {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Plot plot = (Plot) o;
+        return bambou == plot.bambou &&
+                water == plot.water &&
+                Objects.equals(coord, plot.coord) &&
+                couleur == plot.couleur;
     }
 
     @Override

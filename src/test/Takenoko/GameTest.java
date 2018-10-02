@@ -1,6 +1,7 @@
 package Takenoko;
 
 import Takenoko.Util.Console;
+import Takenoko.Util.Exceptions.EmptyDeckException;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,7 +17,7 @@ public class GameTest {
         game = new Game();
     }
 
-    @Test public void testGame(){
+    @Test public void testGame() throws EmptyDeckException {
         Console.Log.init();
         game.play();
         assertTrue(game.end());

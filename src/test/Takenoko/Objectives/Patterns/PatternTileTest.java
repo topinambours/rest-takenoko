@@ -1,7 +1,7 @@
 package Takenoko.Objectives.Patterns;
 
 import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Couleur;
+import Takenoko.Properties.Couleur;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 

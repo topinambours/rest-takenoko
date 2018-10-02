@@ -1,8 +1,10 @@
 package Takenoko.Deque;
 
 import Takenoko.Plot.Plot;
+import Takenoko.Util.Exceptions.EmptyDeckException;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.*;
 
@@ -20,24 +22,38 @@ public class DeckTest {
         }
     }
 
-    @Test
-    public void get_pop_First() {
+    @Test (expected = EmptyDeckException.class)
+    public void get_pop_First() throws EmptyDeckException {
         for (int i = DECK_SIZE; i >= 0; i--){
             assertEquals(i, dtest.getFirst().getq());
             assertEquals(i, dtest.popFirst().getq());
         }
+        dtest.popFirst();
     }
 
-    @Test
-    public void get_pop_Last() {
+    @Test (expected = EmptyDeckException.class)
+    public void get_FirstException() throws EmptyDeckException {
+        dtest = new Deck();
+        dtest.getFirst();
+    }
+
+    @Test  (expected = EmptyDeckException.class)
+    public void get_pop_Last() throws EmptyDeckException {
         for (int i = 0; i <= DECK_SIZE; i++){
             assertEquals(i, dtest.getLast().getq());
             assertEquals(i, dtest.popLast().getq());
         }
+        dtest.popLast();
+    }
+
+    @Test  (expected = EmptyDeckException.class)
+    public void get_LastException() throws EmptyDeckException {
+        dtest = new Deck();
+        dtest.popLast();
     }
 
     @Test
-    public void addFirst() {
+    public void addFirst() throws EmptyDeckException {
         for (int i = DECK_SIZE + 1; i <= DECK_SIZE * 2; i++){
             dtest.addFirst(new Plot(i, 1));
         }
@@ -52,7 +68,7 @@ public class DeckTest {
     }
 
     @Test
-    public void addLast() {
+    public void addLast() throws EmptyDeckException {
         for (int i = -1; i >= DECK_SIZE * -1 ; i--){
             dtest.addLast(new Plot(i, 1));
         }
@@ -69,7 +85,7 @@ public class DeckTest {
     }
 
     @Test
-    public void getSize() {
+    public void getSize() throws EmptyDeckException {
         assertEquals(101, dtest.getSize());
         for(int i = 0 ; i<50; i++){
             dtest.popLast();

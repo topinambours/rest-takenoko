@@ -2,11 +2,10 @@ package Takenoko;
 
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Couleur;
+import Takenoko.Properties.Couleur;
 import Takenoko.Plot.Plot;
 
 import java.util.*;
-import java.lang.Math;
 import java.util.stream.Collectors;
 
 /**

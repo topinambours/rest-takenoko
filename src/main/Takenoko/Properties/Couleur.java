@@ -1,4 +1,4 @@
-package Takenoko.Plot;
+package Takenoko.Properties;
 
 /**
  * La classe couleur est une enumeration qui permet de savoir quel est la bonne couleur

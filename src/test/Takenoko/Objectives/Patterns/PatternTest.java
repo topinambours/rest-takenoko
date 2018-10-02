@@ -1,11 +1,8 @@
 package Takenoko.Objectives.Patterns;
 
-import Takenoko.Objectives.Patterns.CoordCube;
-import Takenoko.Objectives.Patterns.Pattern;
-import Takenoko.Objectives.Patterns.PatternTile;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Couleur;
+import Takenoko.Properties.Couleur;
 import Takenoko.Plot.Plot;
 import org.junit.Test;
 
