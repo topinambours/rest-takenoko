@@ -97,6 +97,7 @@ public class Plateau {
      */
     public void putPlot(Plot plot, CoordAxial coord) {
         plots.put(coord, plot);
+        plot.setWater(checkPlotWater(plot.getCoord()));
     }
 
     public void putPlot(Plot plot){

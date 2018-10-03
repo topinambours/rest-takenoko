@@ -71,12 +71,16 @@ public class Game {
         stratJ2.setGoal(j2.getPandaObjectiveCards());
     }
 
+    public Deck getDeck(){
+        return deck;
+    }
+
     /**
      * La fonction end permet de savoir si la partie est terminée
      * @return boolean true|false
      */
     public boolean end(){
-        return deck.getSize()==0;
+        return deck.isEmpty();
     }
 
 
@@ -86,32 +90,24 @@ public class Game {
     public void play() throws EmptyDeckException {
         while(!end()){ //Tant que la partie n'est pas terminée
             for (Joueur j : joueurs){
+                Console.Log.println("----");
                 if (end()){
                     break;
                 }
-                Plot current = turn(j);
-                Optional<CoordIrrig> newIrrig = irrigTurn(j);
-                CoordAxial coord = current.getCoord();
-                Console.Log.println(String.format("Le joueur %d pose une parcelle ici : %s", j.getId(), coord));
-                if (newIrrig.isPresent()) {
-                    Console.Log.println(String.format("Le joueur %d pose une section d'irrigation ici : %s",j.getId(), newIrrig.get()));
-                }
-                Console.Log.debugPrint("La parcelle "+current.toString()+"a water a : "+getPlateau().checkPlotWater(coord));
-                //Console.Log.println(String.format("Le joueur %d pose un bambou ici : %s", j.getId(), coord));
+                // Le joueur pioche une parcelle
+                Plot pose = turn(j);
 
-                evaluate(j, coord);
+                irrigTurn(j);
+
+                evaluate(j, pose.getCoord());
             }//Todo : faire piocher -> faire poser
 
             grow();
         }
-        Console.Log.println("La partie est terminée");
+        Console.Log.println("----\nLa partie est terminée");
         for (Joueur j : joueurs){
             Console.Log.println(String.format("Le joueur %d a marqué %d points avec une %s", j.getId(), j.getScore(), j.getStrategieLabel()));
         }
-    }
-
-    public Deck getDeck(){
-        return deck;
     }
 
     /**
@@ -120,12 +116,10 @@ public class Game {
      * @return Plot la parcelle que le joueur a joué
      */
     public Plot turn(Joueur joueur) throws EmptyDeckException {
-        Plot current;
-        current = joueur.draw(deck);
-        CoordAxial coord = joueur.putPlot(current,plateau);
-        current.setWater(getPlateau().checkPlotWater(coord)); //dans le joueur maintenant
-
-        return current;
+        Plot pioche = joueur.draw(deck);
+        joueur.putPlot(pioche,plateau);
+        Console.Log.println(String.format("Robot_%d pose une parcelle en : %s", joueur.getId(), pioche.getCoord()));
+        return pioche;
     }
 
     /**
@@ -135,6 +129,11 @@ public class Game {
      */
     public Optional<CoordIrrig> irrigTurn(Joueur joueur) {
         Optional<CoordIrrig> coo = joueur.putIrrig(plateau);
+        if (coo.isPresent()) {
+            Console.Log.println(String.format("Robot_%d pose une section d'irrigation en : %s",joueur.getId(), coo.get()));
+            List<CoordAxial> newIrrigated = coo.get().borders();
+            Console.Log.println(String.format("Les parcelles %s et %s sont irriguées", newIrrigated.get(0), newIrrigated.get(1)));
+        }
         return coo;
     }
 
@@ -151,25 +150,25 @@ public class Game {
 
         int n = evaluateBambou(j,coord);
 
-        j.addScore(n);
+        if (n > 0) {
+            j.addScore(n);
 
-
-        for (Plot nei : plateau.getNeighbors(coord)){
-            nei.removeBamboo();
+            for (Plot nei : plateau.getNeighbors(coord)) {
+                nei.removeBamboo();
+            }
+            Console.Log.println(String.format("Robot_%d gagne %d point(s) car %d sections de bambous étaient présentes sur les parcelles adjacentes", j.getId(), n, n));
         }
-        Console.Log.println(String.format("Le joueur %d gagne %d point car il a posé une parcelle", j.getId(),n));
 
         HashSet<Couleur> couleurs = getNeighborColor(coord,plateau);
         if(couleurs.contains(plateau.getLastPlop().getCouleur())){
             j.addScore1();
-            Console.Log.println("Le joueur gagne 1 point car la parcelle posée à la même couleur que la parcelle adjacente");
+            Console.Log.println(String.format("Robot_%d gagne 1 point car la parcelle posée à la même couleur que la parcelle adjacente", j.getId()));
         }
-
 
         int evaluatedPandaObjective = evaluatePandaObjective(j);
         j.addScore(evaluatedPandaObjective);
         if (evaluatedPandaObjective > 0){
-            Console.Log.println(String.format("Le joueur %d gagne %d point grace à la réalisation d'une carte panda",j.getId(),evaluatedPandaObjective));
+            Console.Log.println(String.format("Robot_%d gagne %d point grace à la réalisation d'une carte panda",j.getId(),evaluatedPandaObjective));
         }
 
 

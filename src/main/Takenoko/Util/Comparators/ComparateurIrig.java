@@ -26,7 +26,7 @@ public class ComparateurIrig implements Comparator<CoordIrrig> {
     @Override
     public int compare(CoordIrrig o1, CoordIrrig o2) {
         int o1NotirigatedAdjCount = o1.borders().stream().filter(coordAxial -> plateau.getPlot(coordAxial).haveWater()).collect(Collectors.toList()).size();
-        int o2NotirigatedAdjCount = o1.borders().stream().filter(coordAxial -> plateau.getPlot(coordAxial).haveWater()).collect(Collectors.toList()).size();
+        int o2NotirigatedAdjCount = o2.borders().stream().filter(coordAxial -> plateau.getPlot(coordAxial).haveWater()).collect(Collectors.toList()).size();
         return o1NotirigatedAdjCount - o2NotirigatedAdjCount;
     }
 }

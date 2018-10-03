@@ -18,18 +18,22 @@ public class GameBambouTest {
         CoordAxial coordAxial = new CoordAxial(1,0);
         Plot current = new Plot(coordAxial);
 
-        //pas d'eau
-        game.getPlateau().putPlot(current);
-        game.grow();
-
-        assertEquals(0,game.getPlateau().getPlot(coordAxial).getBambou());
-
-        //avec de l'eau
-        current.setWater(true);
+        //Irrigué par la parcelle de départ
         game.getPlateau().putPlot(current);
         game.grow();
 
         assertEquals(1,game.getPlateau().getPlot(coordAxial).getBambou());
+
+        game.grow();
+        game.getPlateau().putPlot(new Plot(new CoordAxial(2,0)));
+        assertEquals(0,game.getPlateau().getPlot(new CoordAxial(2,0)).getBambou());
+        assertEquals(2,game.getPlateau().getPlot(coordAxial).getBambou());
+
+        //avec de l'eau
+        game.getPlateau().getPlot(new CoordAxial(2,0)).setWater(true);
+        game.grow();
+
+        assertEquals(1,game.getPlateau().getPlot(new CoordAxial(2,0)).getBambou());
 
 
     }
