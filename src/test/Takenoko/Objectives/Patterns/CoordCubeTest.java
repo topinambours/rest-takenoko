@@ -17,14 +17,7 @@ public class CoordCubeTest {
         thrown.expect(IllegalArgumentException.class);
         CoordCube coord = new CoordCube(1, 1, 1);
     }
-
-    @Test
-    public void fromAxialTest() {
-        CoordAxial coordAxial = new CoordAxial(2, 2);
-        CoordCube coordCube = new CoordCube(coordAxial);
-        assertEquals(new CoordCube(2, 2, -4), coordCube);
-    }
-
+    
     @Test
     public void toAxialTest() {
         CoordCube myCube = new CoordCube(1, 1, -2);

@@ -22,10 +22,6 @@ public class CoordCube {
         this.s = -q - r;
     }
 
-    public CoordCube(CoordAxial qr) {
-        new CoordCube(qr.getQ(), qr.getR());
-    }
-
     public int getQ() {
         return q;
     }
