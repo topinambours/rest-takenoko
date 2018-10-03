@@ -264,7 +264,12 @@ public class Joueur implements Comparable{
      * @param bambousVerts le nouveau compte en bambous verts du joueur
      */
     public void setBambousVerts(int bambousVerts) {
-        setBambooByColor(Couleur.VERT, bambousVerts);
+        if(bambousVerts > 0) {
+            setBambooByColor(Couleur.VERT, bambousVerts);
+        }
+        else{
+            setBambooByColor(Couleur.VERT, 0);
+        }
     }
 
     /**
@@ -280,7 +285,12 @@ public class Joueur implements Comparable{
      * @param bambousJaunes le nouveau compte en bambous jaunes du joueur
      */
     public void setBambousJaunes(int bambousJaunes) {
-        setBambooByColor(Couleur.JAUNE, bambousJaunes);
+        if(bambousJaunes > 0) {
+            setBambooByColor(Couleur.JAUNE, bambousJaunes);
+        }
+        else{
+            setBambooByColor(Couleur.JAUNE, 0);
+        }
     }
 
     /**
@@ -296,7 +306,12 @@ public class Joueur implements Comparable{
      * @param bambousRoses le nouveau compte en bambous roses du joueur
      */
     public void setBambousRoses(int bambousRoses) {
-        setBambooByColor(Couleur.ROSE, bambousRoses);
+        if(bambousRoses > 0) {
+            setBambooByColor(Couleur.ROSE, bambousRoses);
+        }
+        else{
+            setBambooByColor(Couleur.ROSE, 0);
+        }
     }
 
 

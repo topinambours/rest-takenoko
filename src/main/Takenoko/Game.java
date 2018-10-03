@@ -163,6 +163,7 @@ public class Game {
         j.setBambousVerts(j.getBambousVerts() + vert);
         j.setBambousJaunes(j.getBambousJaunes() + jaune);
         j.setBambousRoses(j.getBambousRoses() + rose);
+        
 
         for (Plot nei : plateau.getNeighbors(coord)){
             nei.removeBamboo();

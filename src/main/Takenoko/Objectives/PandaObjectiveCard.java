@@ -41,6 +41,7 @@ public class PandaObjectiveCard extends ObjectiveCard {
     @Override
     public void instanciate(Plateau plateau, Joueur joueur) {
         owner = joueur;
+        joueur.addPandaObjectiveCard(this);
     }
 
     @Override

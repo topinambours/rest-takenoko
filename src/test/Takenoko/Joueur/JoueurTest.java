@@ -1,8 +1,8 @@
 package Takenoko.Joueur;
 
 import Takenoko.Deque.Deck;
-import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Strategie.StrategieRandom;
+import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,12 +23,16 @@ public class JoueurTest {
     private Deck dtest;
     private Joueur joueur1;
     private Joueur joueur2;
+    private PandaObjectiveCard pandaObjectiveCard;
+    private Plateau p;
 
     @Before
     public void setUp() throws Exception {
         dtest = new Deck();
         joueur1 = new Joueur(1, new StrategieRandom());
         joueur2 = new Joueur(2, new StrategieRandom());
+
+        pandaObjectiveCard = new PandaObjectiveCard(1, 1, 1, 1);
 
         for (int i = 0; i < DECK_SIZE; i++){
             dtest.addFirst(new Plot(i,0));
@@ -132,5 +137,155 @@ public class JoueurTest {
 
         assertTrue(joueur1.isUpper(joueur2));
         assertFalse(joueur2.isUpper(joueur1));
+    }
+
+    @Test
+    public void getPandaObjectiveCard(){
+        HashSet<PandaObjectiveCard> hashSet = new HashSet<>();
+        assertEquals(hashSet, joueur1.getPandaObjectiveCards());
+
+        joueur1.addPandaObjectiveCard(pandaObjectiveCard);
+        hashSet.add(pandaObjectiveCard);
+        assertEquals(hashSet, joueur1.getPandaObjectiveCards());
+
+        joueur1.removePandaObjectiveCard(pandaObjectiveCard);
+        hashSet.remove(pandaObjectiveCard);
+        assertEquals(hashSet, joueur1.getPandaObjectiveCards());
+
+    }
+
+    @Test
+    public void addPandaObjectiveCard(){
+        HashSet<PandaObjectiveCard> hashSet = new HashSet<>();
+        assertEquals(hashSet, joueur1.getPandaObjectiveCards());
+
+        joueur1.addPandaObjectiveCard(pandaObjectiveCard);
+        hashSet.add(pandaObjectiveCard);
+        assertEquals(hashSet, joueur1.getPandaObjectiveCards());
+
+        joueur1.removePandaObjectiveCard(pandaObjectiveCard);
+        hashSet.remove(pandaObjectiveCard);
+        assertEquals(hashSet, joueur1.getPandaObjectiveCards());
+    }
+
+    @Test
+    public void removePandaObjectiveCard(){
+        HashSet<PandaObjectiveCard> hashSet = new HashSet<>();
+        assertEquals(hashSet, joueur1.getPandaObjectiveCards());
+
+        joueur1.addPandaObjectiveCard(pandaObjectiveCard);
+        hashSet.add(pandaObjectiveCard);
+        assertEquals(hashSet, joueur1.getPandaObjectiveCards());
+
+        joueur1.removePandaObjectiveCard(pandaObjectiveCard);
+        hashSet.remove(pandaObjectiveCard);
+        assertEquals(hashSet, joueur1.getPandaObjectiveCards());
+    }
+
+    @Test
+    public void getScore(){
+        assertEquals(0, joueur1.getScore());
+        joueur1.addScore(3);
+        assertEquals(3, joueur1.getScore());
+        joueur1.addScore(2);
+        assertEquals(5, joueur1.getScore());
+    }
+
+    @Test
+    public void addScore(){
+        assertEquals(0, joueur1.getScore());
+        joueur1.addScore(3);
+        assertEquals(3, joueur1.getScore());
+        joueur1.addScore(2);
+        assertEquals(5, joueur1.getScore());
+    }
+
+    @Test
+    public void addScore1(){
+        assertEquals(0, joueur1.getScore());
+        joueur1.addScore1();
+        assertEquals(1, joueur1.getScore());
+        joueur1.addScore1();
+        assertEquals(2, joueur1.getScore());
+    }
+
+    @Test
+    public void setBambousVerts(){
+        assertEquals(0, joueur1.getBambousVerts());
+        joueur1.setBambousVerts(1);
+        assertEquals(1, joueur1.getBambousVerts());
+        joueur1.setBambousVerts(2);
+        assertEquals(2, joueur1.getBambousVerts());
+        joueur1.setBambousVerts(5);
+        assertEquals(5, joueur1.getBambousVerts());
+        joueur1.setBambousVerts(-5);
+        assertEquals(0, joueur1.getBambousVerts());
+    }
+
+    @Test
+    public void setBambousJaunes(){
+        assertEquals(0, joueur1.getBambousJaunes());
+        joueur1.setBambousJaunes(1);
+        assertEquals(1, joueur1.getBambousJaunes());
+        joueur1.setBambousJaunes(2);
+        assertEquals(2, joueur1.getBambousJaunes());
+        joueur1.setBambousJaunes(5);
+        assertEquals(5, joueur1.getBambousJaunes());
+        joueur1.setBambousJaunes(-5);
+        assertEquals(0, joueur1.getBambousJaunes());
+
+    }
+
+    @Test
+    public void setBambousRoses(){
+        assertEquals(0, joueur1.getBambousRoses());
+        joueur1.setBambousRoses(1);
+        assertEquals(1, joueur1.getBambousRoses());
+        joueur1.setBambousRoses(2);
+        assertEquals(2, joueur1.getBambousRoses());
+        joueur1.setBambousRoses(5);
+        assertEquals(5, joueur1.getBambousRoses());
+        joueur1.setBambousRoses(-5);
+        assertEquals(0, joueur1.getBambousRoses());
+    }
+
+    @Test
+    public void getBambousVerts(){
+        assertEquals(0, joueur1.getBambousVerts());
+        joueur1.setBambousVerts(1);
+        assertEquals(1, joueur1.getBambousVerts());
+        joueur1.setBambousVerts(2);
+        assertEquals(2, joueur1.getBambousVerts());
+        joueur1.setBambousVerts(5);
+        assertEquals(5, joueur1.getBambousVerts());
+        joueur1.setBambousVerts(-5);
+        assertEquals(0, joueur1.getBambousVerts());
+    }
+
+    @Test
+    public void getBambousJaunes(){
+        assertEquals(0, joueur1.getBambousJaunes());
+        joueur1.setBambousJaunes(1);
+        assertEquals(1, joueur1.getBambousJaunes());
+        joueur1.setBambousJaunes(2);
+        assertEquals(2, joueur1.getBambousJaunes());
+        joueur1.setBambousJaunes(5);
+        assertEquals(5, joueur1.getBambousJaunes());
+        joueur1.setBambousJaunes(-5);
+        assertEquals(0, joueur1.getBambousJaunes());
+
+    }
+
+    @Test
+    public void getBambousRoses(){
+        assertEquals(0, joueur1.getBambousRoses());
+        joueur1.setBambousRoses(1);
+        assertEquals(1, joueur1.getBambousRoses());
+        joueur1.setBambousRoses(2);
+        assertEquals(2, joueur1.getBambousRoses());
+        joueur1.setBambousRoses(5);
+        assertEquals(5, joueur1.getBambousRoses());
+        joueur1.setBambousRoses(-5);
+        assertEquals(0, joueur1.getBambousRoses());
     }
 }
