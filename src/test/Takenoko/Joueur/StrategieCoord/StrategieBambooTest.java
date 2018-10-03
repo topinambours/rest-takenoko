@@ -1,4 +1,4 @@
-package Takenoko.Joueur.Strategie;
+package Takenoko.Joueur.StrategieCoord;
 
 import Takenoko.Plateau;
 import Takenoko.Util.Comparators.ComparateurCoordAxial;

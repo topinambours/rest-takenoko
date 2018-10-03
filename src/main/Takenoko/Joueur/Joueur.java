@@ -2,7 +2,8 @@ package Takenoko.Joueur;
 
 import Takenoko.Deque.Deck;
 import Takenoko.Irrigation.CoordIrrig;
-import Takenoko.Joueur.Strategie.Strategie;
+import Takenoko.Joueur.StrategieCoord.Strategie;
+import Takenoko.Joueur.StrategieIrrig.StrategieIrrig;
 import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
@@ -43,12 +44,14 @@ public class Joueur implements Comparable{
      */
     private HashSet<PandaObjectiveCard> pandaObjectiveCards;
 
+    private StrategieIrrig strategieIrrig;
+
     /**
      * Un joueur est initialisé avec un identifiant
      * @param id identifiant (unique)
      * @param strategie stratégie adopté {@link Strategie}
      */
-    public Joueur(int id, Strategie strategie){
+    public Joueur(int id, Strategie strategie,StrategieIrrig strategieIrrig){
         this.id = id;
         this.bambooByColor = new HashMap<>();
         for (Couleur c : Couleur.values()){
@@ -56,6 +59,7 @@ public class Joueur implements Comparable{
         }
         this.strategie = strategie;
         this.pandaObjectiveCards = new HashSet<PandaObjectiveCard>();
+        this.strategieIrrig = strategieIrrig;
     }
 
     /**
@@ -161,7 +165,7 @@ public class Joueur implements Comparable{
      * @return Optional l'irrigation posee
      */
     public Optional<CoordIrrig> putIrrig(Plateau plateau) {
-        Optional<CoordIrrig> strat = strategie.getIrrig(plateau);
+        Optional<CoordIrrig> strat = strategieIrrig.getIrrig(plateau);
         if (strat.isPresent()) {
             CoordIrrig coo = strat.get();
             List<CoordAxial> borders = coo.borders();

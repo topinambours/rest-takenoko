@@ -1,7 +1,8 @@
-package Takenoko.Joueur.Strategie;
+package Takenoko.Joueur.StrategieCoord;
 
 import Takenoko.Joueur.Joueur;
 
+import Takenoko.Joueur.StrategieIrrig.StrategieIrigBase;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Properties.Couleur;
@@ -24,7 +25,7 @@ public class StrategieColorTest {
     public void setup() throws Exception{
         strategieColor = new StrategieColor();
         p = new Plateau();
-        joueur = new Joueur(1, strategieColor);
+        joueur = new Joueur(1, strategieColor,new StrategieIrigBase(p));
     }
 
     @Test

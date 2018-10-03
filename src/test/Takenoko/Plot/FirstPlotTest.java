@@ -2,13 +2,11 @@ package Takenoko.Plot;
 
 import Takenoko.Game;
 import Takenoko.Joueur.Joueur;
-import Takenoko.Joueur.Strategie.StrategieRandom;
-import Takenoko.Plateau;
+import Takenoko.Joueur.StrategieCoord.StrategieRandom;
+import Takenoko.Joueur.StrategieIrrig.StrategieIrigBase;
 import Takenoko.Util.Exceptions.EmptyDeckException;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
@@ -18,7 +16,7 @@ public class FirstPlotTest {
 
     @Before public void FirstPlotTest(){
         game = new Game();
-        joueur = new Joueur(1,new StrategieRandom());
+        joueur = new Joueur(1,new StrategieRandom(),new StrategieIrigBase(game.getPlateau()));
 
 
     }

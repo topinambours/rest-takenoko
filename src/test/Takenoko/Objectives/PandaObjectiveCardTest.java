@@ -1,7 +1,8 @@
 package Takenoko.Objectives;
 
 import Takenoko.Joueur.Joueur;
-import Takenoko.Joueur.Strategie.StrategieRandom;
+import Takenoko.Joueur.StrategieCoord.StrategieRandom;
+import Takenoko.Joueur.StrategieIrrig.StrategieIrigBase;
 import Takenoko.Plateau;
 import org.junit.Test;
 
@@ -25,7 +26,7 @@ public class PandaObjectiveCardTest {
     public void isComplete() {
         goal = new PandaObjectiveCard(5,2,1,5);
         Plateau p = new Plateau();
-        j = new Joueur(1, new StrategieRandom());
+        j = new Joueur(1, new StrategieRandom(),new StrategieIrigBase(p));
         goal.instanciate(p, j);
 
         j.setBambousJaunes(2);

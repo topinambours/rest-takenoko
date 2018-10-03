@@ -1,9 +1,7 @@
-package Takenoko.Joueur.Strategie;
+package Takenoko.Joueur.StrategieCoord;
 
-import Takenoko.Game;
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Joueur;
-import Takenoko.Objectives.ObjectiveCard;
 import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;

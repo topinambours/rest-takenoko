@@ -1,4 +1,4 @@
-package Takenoko.Joueur.Strategie;
+package Takenoko.Joueur.StrategieIrrig;
 
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plateau;
@@ -17,7 +17,7 @@ import java.util.Optional;
  *     <li>getStrategieLabel qui permet de savoir sur quelle stratégie on travaille actuellement</li>
  * </ul>
  */
-public interface Strategie {
+public interface StrategieIrrig {
     public List<CoordAxial> getCoords(Plateau p, Plot plot);
     public List<CoordAxial> getCoords(Plateau p);
 
