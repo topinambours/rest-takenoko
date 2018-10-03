@@ -143,27 +143,10 @@ public class Game {
         /*int n = plateau.getNeighbors(coord).stream().mapToInt(parcel -> parcel.getBambou()).sum();
         j.addScore(n);*/
 
-        int vert = plateau.getNeighbors(coord)
-                .stream()
-                .filter(p -> p.getCouleur() == Couleur.VERT)
-                .mapToInt(p -> p.getBambou())
-                .sum();
-        int jaune = plateau.getNeighbors(coord)
-                .stream()
-                .filter(p -> p.getCouleur() == Couleur.JAUNE)
-                .mapToInt(p -> p.getBambou())
-                .sum();
-        int rose = plateau.getNeighbors(coord)
-                .stream()
-                .filter(p -> p.getCouleur() == Couleur.ROSE)
-                .mapToInt(p -> p.getBambou())
-                .sum();
-        int n = vert + jaune + rose;
+        int n = evaluateBambou(j,coord);
+
         j.addScore(n);
-        j.setBambousVerts(j.getBambousVerts() + vert);
-        j.setBambousJaunes(j.getBambousJaunes() + jaune);
-        j.setBambousRoses(j.getBambousRoses() + rose);
-        
+
 
         for (Plot nei : plateau.getNeighbors(coord)){
             nei.removeBamboo();
@@ -187,18 +170,51 @@ public class Game {
     }
 
     /**
+     * permet d'evaluer les bambous
+     * @param j Joueur le joueur
+     * @param coord CoordAxial la coordonnée
+     * @return int l'évaluation
+     */
+    protected int evaluateBambou(Joueur j,CoordAxial coord){
+
+        int vert = plateau.getNeighbors(coord)
+                .stream()
+                .filter(p -> p.getCouleur() == Couleur.VERT)
+                .mapToInt(p -> p.getBambou())
+                .sum();
+        int jaune = plateau.getNeighbors(coord)
+                .stream()
+                .filter(p -> p.getCouleur() == Couleur.JAUNE)
+                .mapToInt(p -> p.getBambou())
+                .sum();
+        int rose = plateau.getNeighbors(coord)
+                .stream()
+                .filter(p -> p.getCouleur() == Couleur.ROSE)
+                .mapToInt(p -> p.getBambou())
+                .sum();
+        int n = vert + jaune + rose;
+
+
+        j.setBambousVerts(j.getBambousVerts() + vert);
+        j.setBambousJaunes(j.getBambousJaunes() + jaune);
+        j.setBambousRoses(j.getBambousRoses() + rose);
+
+        return n;
+    }
+
+    /**
      * Permet d'evaluer
      * @param joueur Joueur le joueur
      * @return int Le score resultant
      */
     protected int evaluatePandaObjective(Joueur joueur){
         int score  = 0;
-        for (PandaObjectiveCard pandaObjectiveCard : joueur.getPandaObjectiveCards()){
+        HashSet<PandaObjectiveCard> pandas = (HashSet<PandaObjectiveCard>) joueur.getPandaObjectiveCards().clone();
+        for (PandaObjectiveCard pandaObjectiveCard : pandas){
             if (pandaObjectiveCard.isComplete()){
-                score++;
+                score = score + pandaObjectiveCard.getPointValue();
                 joueur.removePandaObjectiveCard(pandaObjectiveCard);
                 Console.Log.debugPrint(String.format("Le joueur %d stock 1 point pour la réalisation d'une carte panda",joueur.getId()));
-                return score; // Important, le joueur ne complete pas n cartes d'un seul coup
             }
         }
         return score;
