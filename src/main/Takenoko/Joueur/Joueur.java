@@ -2,8 +2,8 @@ package Takenoko.Joueur;
 
 import Takenoko.Deque.Deck;
 import Takenoko.Irrigation.CoordIrrig;
-import Takenoko.Joueur.StrategieCoord.StrategieCoord;
-import Takenoko.Joueur.StrategieIrrig.StrategieIrrig;
+import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoord;
+import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrig;
 import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;

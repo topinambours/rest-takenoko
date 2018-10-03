@@ -1,8 +1,8 @@
 package Takenoko;
 
 import Takenoko.Joueur.Joueur;
-import Takenoko.Joueur.StrategieCoord.StrategieCoordRandom;
-import Takenoko.Joueur.StrategieIrrig.StrategieIrigBase;
+import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
+import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import Takenoko.Util.Console;
@@ -19,7 +19,7 @@ public class ScoreTest {
     @BeforeClass public static void ScoreTest(){
         Console.Log.init();
         game = new Game();
-        joueur = new Joueur(1, new StrategieCoordRandom(),new StrategieIrigBase(game.getPlateau()));
+        joueur = new Joueur(1, new StrategieCoordRandom(),new StrategieIrrigBase(game.getPlateau()));
     }
 
     @Test public void test(){

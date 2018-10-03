@@ -1,4 +1,4 @@
-package Takenoko.Joueur.StrategieIrrig;
+package Takenoko.Joueur.Strategie.StrategieIrrig;
 
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plateau;

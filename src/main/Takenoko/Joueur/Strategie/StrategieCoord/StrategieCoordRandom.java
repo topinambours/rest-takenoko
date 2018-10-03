@@ -1,4 +1,4 @@
-package Takenoko.Joueur.StrategieCoord;
+package Takenoko.Joueur.Strategie.StrategieCoord;
 
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plateau;
@@ -37,14 +37,6 @@ public class StrategieCoordRandom implements StrategieCoord {
 
     }
 
-    public Optional<CoordIrrig> getIrrig(Plateau plateau) {
-        List<CoordIrrig> res = plateau.legalIrrigPositions();
-        if (res.size() >= 1) {
-            return Optional.of(res.get(0));
-        } else {
-            return Optional.empty();
-        }
-    }
 
     @Override
     public String getStrategieLabel() {

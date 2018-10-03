@@ -1,8 +1,8 @@
 package Takenoko.Objectives;
 
 import Takenoko.Joueur.Joueur;
-import Takenoko.Joueur.StrategieCoord.StrategieCoordRandom;
-import Takenoko.Joueur.StrategieIrrig.StrategieIrigBase;
+import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
+import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Objectives.Patterns.CoordCube;
 import Takenoko.Objectives.Patterns.Pattern;
 import Takenoko.Objectives.Patterns.PatternTile;
@@ -35,7 +35,7 @@ public class PatternObjectiveCardTest {
         list.add(tile2);
         Pattern myPattern = new Pattern(list);
         PatternObjectiveCard patternObjectiveCard = new PatternObjectiveCard(myPattern, 1);
-        patternObjectiveCard.instanciate(plateau, new Joueur(1, new StrategieCoordRandom(),new StrategieIrigBase(plateau)));
+        patternObjectiveCard.instanciate(plateau, new Joueur(1, new StrategieCoordRandom(),new StrategieIrrigBase(plateau)));
 
         plateau.putPlot(new Plot(0, 0, Couleur.ROSE), 0, 0);
         plateau.putPlot(new Plot(0, 1, Couleur.ROSE), 0, 1);

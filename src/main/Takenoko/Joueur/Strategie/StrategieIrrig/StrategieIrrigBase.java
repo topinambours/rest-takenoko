@@ -1,4 +1,4 @@
-package Takenoko.Joueur.StrategieIrrig;
+package Takenoko.Joueur.Strategie.StrategieIrrig;
 
 import Takenoko.Util.Comparators.ComparateurIrig;
 import Takenoko.Irrigation.CoordIrrig;
@@ -12,11 +12,11 @@ import java.util.Optional;
 /**
  * La stratégie irrigation de base. Pose où elle le peut
  */
-public class StrategieIrigBase implements StrategieIrrig {
+public class StrategieIrrigBase implements StrategieIrrig {
 
     Plateau p;
 
-    public StrategieIrigBase(Plateau p){
+    public StrategieIrrigBase(Plateau p){
         this.p = p;
     }
 

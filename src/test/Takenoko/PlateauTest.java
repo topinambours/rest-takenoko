@@ -1,8 +1,9 @@
 package Takenoko;
 
 import Takenoko.Joueur.Joueur;
-import Takenoko.Joueur.StrategieCoord.StrategieCoordRandom;
-import Takenoko.Joueur.StrategieIrrig.StrategieIrigBase;
+import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
+
+import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import org.junit.Test;
@@ -24,7 +25,7 @@ public class PlateauTest {
     public void newputPlot() {
         Plateau plat = new Plateau();
         Plot parc = new Plot();
-        Joueur bot = new Joueur(1, new StrategieCoordRandom(),new StrategieIrigBase(plat));
+        Joueur bot = new Joueur(1, new StrategieCoordRandom(),new StrategieIrrigBase(plat));
         CoordAxial coo = bot.putPlot(parc, plat);
         assertEquals(coo.getQ(), parc.getq());
         assertEquals(coo.getR(), parc.getr());

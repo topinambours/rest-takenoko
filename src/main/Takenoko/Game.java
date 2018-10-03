@@ -3,11 +3,11 @@ package Takenoko;
 import Takenoko.Deque.Deck;
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Joueur;
-import Takenoko.Joueur.StrategieCoord.StrategieCoordAdjacent;
-import Takenoko.Joueur.StrategieCoord.StrategieCoordBamboo;
-import Takenoko.Joueur.StrategieCoord.StrategieCoordColor;
-import Takenoko.Joueur.StrategieIrrig.StrategieIrigBase;
-import Takenoko.Joueur.StrategieIrrig.StrategieIrigComparator;
+import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordAdjacent;
+import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordBamboo;
+import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordColor;
+import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
+import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigComparator;
 import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Properties.Couleur;
@@ -36,13 +36,13 @@ public class Game {
         Boolean deckBool = deck.init();
         Console.Log.debugPrint("Deck init : "+ deckBool+"\n");
 
-        Joueur j1 = new Joueur(1, new StrategieCoordAdjacent(),new StrategieIrigComparator(plateau));
+        Joueur j1 = new Joueur(1, new StrategieCoordAdjacent(),new StrategieIrrigComparator(plateau));
 
         StrategieCoordBamboo stratJ2 = new StrategieCoordBamboo(true);
-        Joueur j2 = new Joueur(2, stratJ2,new StrategieIrigBase(plateau));
+        Joueur j2 = new Joueur(2, stratJ2,new StrategieIrrigBase(plateau));
         stratJ2.setJoueur(j2);
 
-        Joueur j3 = new Joueur(3, new StrategieCoordColor(),new StrategieIrigComparator(plateau));
+        Joueur j3 = new Joueur(3, new StrategieCoordColor(),new StrategieIrrigComparator(plateau));
         joueurs.add(j1);
         joueurs.add(j2);
         joueurs.add(j3);

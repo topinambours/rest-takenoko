@@ -1,8 +1,8 @@
-package Takenoko.Joueur.StrategieCoord;
+package Takenoko.Joueur.Strategie.StrategieCoord;
 
 import Takenoko.Game;
 import Takenoko.Joueur.Joueur;
-import Takenoko.Joueur.StrategieIrrig.StrategieIrigBase;
+import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import org.junit.Before;
@@ -18,7 +18,7 @@ public class StrategieCoordAdjacentTest {
     @Before public void StrategieAdjacentTest(){
          game = new Game();
          strategieCoord = new StrategieCoordAdjacent();
-         joueur = new Joueur(1, strategieCoord,new StrategieIrigBase(game.getPlateau()));
+         joueur = new Joueur(1, strategieCoord,new StrategieIrrigBase(game.getPlateau()));
     }
 
     @Test public void test(){
