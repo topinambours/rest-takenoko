@@ -106,7 +106,7 @@ public class Game {
         }
         Console.Log.println("----\nLa partie est terminée");
         for (Joueur j : joueurs){
-            Console.Log.println(String.format("Le joueur %d a marqué %d points avec une %s", j.getId(), j.getScore(), j.getStrategieLabel()));
+            Console.Log.println(String.format("Robot_%d a marqué %d points avec une %s", j.getId(), j.getScore(), j.getStrategieLabel()));
         }
     }
 
@@ -118,7 +118,7 @@ public class Game {
     public Plot turn(Joueur joueur) throws EmptyDeckException {
         Plot pioche = joueur.draw(deck);
         joueur.putPlot(pioche,plateau);
-        Console.Log.println(String.format("Robot_%d pose une parcelle en : %s", joueur.getId(), pioche.getCoord()));
+        Console.Log.println(String.format("Robot_%d pose une parcelle %s en : %s", joueur.getId(),pioche.getCouleur().toString(), pioche.getCoord()));
         return pioche;
     }
 
@@ -160,9 +160,9 @@ public class Game {
         }
 
         HashSet<Couleur> couleurs = getNeighborColor(coord,plateau);
-        if(couleurs.contains(plateau.getLastPlop().getCouleur())){
+        if(couleurs.contains(plateau.getPlot(coord).getCouleur())){
             j.addScore1();
-            Console.Log.println(String.format("Robot_%d gagne 1 point car la parcelle posée à la même couleur que la parcelle adjacente", j.getId()));
+            Console.Log.println(String.format("Robot_%d gagne 1 point car une des parcelles adjacentes est de la même couleur", j.getId()));
         }
 
         int evaluatedPandaObjective = evaluatePandaObjective(j);

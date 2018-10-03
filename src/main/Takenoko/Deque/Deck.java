@@ -5,10 +5,7 @@ import Takenoko.Plot.Plot;
 import Takenoko.Util.Exceptions.EmptyDeckException;
 
 import java.awt.event.ItemEvent;
-import java.util.Deque;
-import java.util.ArrayDeque;
-import java.util.EmptyStackException;
-import java.util.HashMap;
+import java.util.*;
 
 
 /**
@@ -44,12 +41,15 @@ public class Deck {
      * @return boolean true|false
      */
     public boolean init() {
-
+        List<Plot> preDeck = new ArrayList<>();
         for (int i = 0;i < NB_COLOR; i++){
             for (int j = 0; j < nbPlotByColor.get(Couleur.getById(i)); j++){
-                deck.addFirst(new Plot(Couleur.getById(i)));
+                preDeck.add(new Plot(Couleur.getById(i)));
             }
         }
+        Collections.shuffle(preDeck);
+
+        deck.addAll(preDeck);
 
         return NB_PARCELLE == this.getSize();
 
