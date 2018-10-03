@@ -3,6 +3,8 @@ package Takenoko.Objectives;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Plateau;
 
+import java.util.Objects;
+
 public class PandaObjectiveCard extends ObjectiveCard {
     private int vertRequis;
     private int jauneRequis;
@@ -39,5 +41,22 @@ public class PandaObjectiveCard extends ObjectiveCard {
     @Override
     public void instanciate(Plateau plateau, Joueur joueur) {
         owner = joueur;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PandaObjectiveCard that = (PandaObjectiveCard) o;
+        return vertRequis == that.vertRequis &&
+                jauneRequis == that.jauneRequis &&
+                roseRequis == that.roseRequis &&
+                pointValue == that.pointValue &&
+                Objects.equals(owner, that.owner);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(vertRequis, jauneRequis, roseRequis, pointValue, owner);
     }
 }

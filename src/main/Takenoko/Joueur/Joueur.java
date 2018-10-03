@@ -67,11 +67,20 @@ public class Joueur implements Comparable{
     }
 
     /**
-     * Permet d'ajouter une carte au joueur
+     * Permet d'ajouter une carte panda au joueur
      * @param pandaObjectiveCard PandaObjectiveCard une carte panda
      */
     public void addPandaObjectiveCard(PandaObjectiveCard pandaObjectiveCard){
-        pandaObjectiveCards.add(pandaObjectiveCard);
+        this.pandaObjectiveCards.add(pandaObjectiveCard);
+    }
+
+    /**
+     * Permet de retirer une carte panda au joueur
+     * Voir la fonction Equal !
+     * @param pandaObjectiveCard PandaObjectiveCard une carte panda
+     */
+    public void removePandaObjectiveCard(PandaObjectiveCard pandaObjectiveCard){
+        this.pandaObjectiveCards.remove(pandaObjectiveCard);
     }
 
     /**
