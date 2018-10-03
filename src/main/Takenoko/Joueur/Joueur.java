@@ -3,16 +3,14 @@ package Takenoko.Joueur;
 import Takenoko.Deque.Deck;
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Strategie.Strategie;
+import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import Takenoko.Plateau;
 import Takenoko.Properties.Couleur;
 import Takenoko.Util.Exceptions.EmptyDeckException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Le robot, joue au jeu en utilisant une stratégie spécifique
@@ -41,6 +39,11 @@ public class Joueur implements Comparable{
     private HashMap<Couleur, Integer> bambooByColor;
 
     /**
+     * Registre des cartes objectifs dont dispose le joueur.
+     */
+    private HashSet<PandaObjectiveCard> pandaObjectiveCards;
+
+    /**
      * Un joueur est initialisé avec un identifiant
      * @param id identifiant (unique)
      * @param strategie stratégie adopté {@link Strategie}
@@ -52,6 +55,23 @@ public class Joueur implements Comparable{
             this.bambooByColor.put(c, 0);
         }
         this.strategie = strategie;
+        this.pandaObjectiveCards = new HashSet<PandaObjectiveCard>();
+    }
+
+    /**
+     * Permet d'avoir la liste des cartes en main
+     * @return HashSet les cartes
+     */
+    public HashSet<PandaObjectiveCard> getPandaObjectiveCards() {
+        return pandaObjectiveCards;
+    }
+
+    /**
+     * Permet d'ajouter une carte au joueur
+     * @param pandaObjectiveCard PandaObjectiveCard une carte panda
+     */
+    public void addPandaObjectiveCard(PandaObjectiveCard pandaObjectiveCard){
+        pandaObjectiveCards.add(pandaObjectiveCard);
     }
 
     /**

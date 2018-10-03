@@ -153,6 +153,8 @@ public class Game {
             Console.Log.println("Le joueur gagne 1 point car la parcelle posée à la même couleur que la parcelle adjacente");
         }
 
+
+
     }
 
 
