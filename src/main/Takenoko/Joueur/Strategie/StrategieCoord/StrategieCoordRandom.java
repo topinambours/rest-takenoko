@@ -1,4 +1,4 @@
-package Takenoko.Joueur.Strategie;
+package Takenoko.Joueur.Strategie.StrategieCoord;
 
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plateau;
@@ -12,7 +12,7 @@ import java.util.Random;
 /**
  * La stratégie random est la stratégie de base. Elle effectue les actions de façon aléatoire
  */
-public class StrategieRandom implements Strategie{
+public class StrategieCoordRandom implements StrategieCoord {
 
     @Override
     public List<CoordAxial> getCoords(Plateau p, Plot plot) {
@@ -37,14 +37,6 @@ public class StrategieRandom implements Strategie{
 
     }
 
-    public Optional<CoordIrrig> getIrrig(Plateau plateau) {
-        List<CoordIrrig> res = plateau.legalIrrigPositions();
-        if (res.size() >= 1) {
-            return Optional.of(res.get(0));
-        } else {
-            return Optional.empty();
-        }
-    }
 
     @Override
     public String getStrategieLabel() {

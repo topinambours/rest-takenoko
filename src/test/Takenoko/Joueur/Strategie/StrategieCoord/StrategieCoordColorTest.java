@@ -1,7 +1,8 @@
-package Takenoko.Joueur.Strategie;
+package Takenoko.Joueur.Strategie.StrategieCoord;
 
 import Takenoko.Joueur.Joueur;
 
+import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Properties.Couleur;
@@ -14,17 +15,17 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class StrategieColorTest {
+public class StrategieCoordColorTest {
 
-    StrategieColor strategieColor;
+    StrategieCoordColor strategieColor;
     Plateau p;
     Joueur joueur;
 
     @Before
     public void setup() throws Exception{
-        strategieColor = new StrategieColor();
+        strategieColor = new StrategieCoordColor();
         p = new Plateau();
-        joueur = new Joueur(1, strategieColor);
+        joueur = new Joueur(1, strategieColor,new StrategieIrrigBase(p));
     }
 
     @Test

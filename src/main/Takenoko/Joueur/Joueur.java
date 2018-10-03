@@ -2,7 +2,8 @@ package Takenoko.Joueur;
 
 import Takenoko.Deque.Deck;
 import Takenoko.Irrigation.CoordIrrig;
-import Takenoko.Joueur.Strategie.Strategie;
+import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoord;
+import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrig;
 import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
@@ -25,7 +26,7 @@ public class Joueur implements Comparable{
     /**
      * Stratégie adoptée par le joueur
      */
-    private Strategie strategie;
+    private StrategieCoord strategieCoord;
 
     /**
      * Score générale du joueur
@@ -43,19 +44,22 @@ public class Joueur implements Comparable{
      */
     private HashSet<PandaObjectiveCard> pandaObjectiveCards;
 
+    private StrategieIrrig strategieIrrig;
+
     /**
      * Un joueur est initialisé avec un identifiant
      * @param id identifiant (unique)
-     * @param strategie stratégie adopté {@link Strategie}
+     * @param strategieCoord stratégie adopté {@link StrategieCoord}
      */
-    public Joueur(int id, Strategie strategie){
+    public Joueur(int id, StrategieCoord strategieCoord, StrategieIrrig strategieIrrig){
         this.id = id;
         this.bambooByColor = new HashMap<>();
         for (Couleur c : Couleur.values()){
             this.bambooByColor.put(c, 0);
         }
-        this.strategie = strategie;
+        this.strategieCoord = strategieCoord;
         this.pandaObjectiveCards = new HashSet<PandaObjectiveCard>();
+        this.strategieIrrig = strategieIrrig;
     }
 
     /**
@@ -138,7 +142,7 @@ public class Joueur implements Comparable{
      * @return String strategie
      */
     public String getStrategieLabel(){
-        return strategie.getStrategieLabel();
+        return strategieCoord.getStrategieLabel();
     }
 
     /**
@@ -148,7 +152,7 @@ public class Joueur implements Comparable{
      * @return
      */
     public CoordAxial putPlot(Plot plot, Plateau board){
-        CoordAxial coor = strategie.getCoord(board, plot);
+        CoordAxial coor = strategieCoord.getCoord(board, plot);
         plot.setCoord(coor.getQ(),coor.getR());
         //plot.setWater(board.checkPlotWater(plot.getCoord())); //Check if have water
         board.putPlot(plot);
@@ -161,7 +165,7 @@ public class Joueur implements Comparable{
      * @return Optional l'irrigation posee
      */
     public Optional<CoordIrrig> putIrrig(Plateau plateau) {
-        Optional<CoordIrrig> strat = strategie.getIrrig(plateau);
+        Optional<CoordIrrig> strat = strategieIrrig.getIrrig(plateau);
         if (strat.isPresent()) {
             CoordIrrig coo = strat.get();
             List<CoordAxial> borders = coo.borders();

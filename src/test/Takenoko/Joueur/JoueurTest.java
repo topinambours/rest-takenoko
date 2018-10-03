@@ -1,7 +1,8 @@
 package Takenoko.Joueur;
 
 import Takenoko.Deque.Deck;
-import Takenoko.Joueur.Strategie.StrategieRandom;
+import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
+import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
@@ -29,8 +30,9 @@ public class JoueurTest {
     @Before
     public void setUp() throws Exception {
         dtest = new Deck();
-        joueur1 = new Joueur(1, new StrategieRandom());
-        joueur2 = new Joueur(2, new StrategieRandom());
+        p = new Plateau();
+        joueur1 = new Joueur(1, new StrategieCoordRandom(),new StrategieIrrigBase(p));
+        joueur2 = new Joueur(2, new StrategieCoordRandom(),new StrategieIrrigBase(p));
 
         pandaObjectiveCard = new PandaObjectiveCard(1, 1, 1, 1);
 
