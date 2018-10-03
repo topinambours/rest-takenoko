@@ -6,6 +6,7 @@ import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieAdjacent;
 import Takenoko.Joueur.Strategie.StrategieBamboo;
 import Takenoko.Joueur.Strategie.StrategieColor;
+import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Properties.Couleur;
 import Takenoko.Plot.Plot;
@@ -154,7 +155,31 @@ public class Game {
         }
 
 
+        int evaluatedPandaObjective = evaluatePandaObjective(j);
+        j.addScore(evaluatedPandaObjective);
+        if (evaluatedPandaObjective > 0){
+            Console.Log.println(String.format("Le joueur %d gagne %d point grace à la réalisation d'une carte panda",j.getId(),evaluatedPandaObjective));
+        }
 
+
+    }
+
+    /**
+     * Permet d'evaluer
+     * @param joueur Joueur le joueur
+     * @return int Le score resultant
+     */
+    protected int evaluatePandaObjective(Joueur joueur){
+        int score  = 0;
+        for (PandaObjectiveCard pandaObjectiveCard : joueur.getPandaObjectiveCards()){
+            if (pandaObjectiveCard.isComplete()){
+                score++;
+                joueur.removePandaObjectiveCard(pandaObjectiveCard);
+                Console.Log.debugPrint(String.format("Le joueur %d stock 1 point pour la réalisation d'une carte panda",joueur.getId()));
+                break; // Important, le joueur ne complete pas n cartes d'un seul coup
+            }
+        }
+        return score;
     }
 
 
