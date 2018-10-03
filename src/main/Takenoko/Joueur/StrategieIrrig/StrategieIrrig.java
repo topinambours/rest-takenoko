@@ -18,13 +18,6 @@ import java.util.Optional;
  * </ul>
  */
 public interface StrategieIrrig {
-    public List<CoordAxial> getCoords(Plateau p, Plot plot);
-    public List<CoordAxial> getCoords(Plateau p);
-
     public Optional<CoordIrrig> getIrrig(Plateau P);
-
-    public CoordAxial getCoord(Plateau p, Plot plot);
-    public CoordAxial getCoord(Plateau p);
-
     public String getStrategieLabel();
 }

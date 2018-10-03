@@ -20,15 +20,6 @@ public class StrategieIrigBase implements StrategieIrrig {
         this.p = p;
     }
 
-    @Override
-    public List<CoordAxial> getCoords(Plateau p, Plot plot) {
-        return null;
-    }
-
-    @Override
-    public List<CoordAxial> getCoords(Plateau p) {
-        return null;
-    }
 
     @Override
     public Optional<CoordIrrig> getIrrig(Plateau P) {
@@ -46,15 +37,6 @@ public class StrategieIrigBase implements StrategieIrrig {
     }
 
 
-    @Override
-    public CoordAxial getCoord(Plateau p, Plot plot) {
-        return null;
-    }
-
-    @Override
-    public CoordAxial getCoord(Plateau p) {
-        return null;
-    }
 
     @Override
     public String getStrategieLabel() {
