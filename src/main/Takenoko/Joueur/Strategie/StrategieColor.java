@@ -69,7 +69,4 @@ public class StrategieColor implements Strategie{
         return "Max Color Adj";
     }
 
-
-    public StrategieColor() {
-    }
 }

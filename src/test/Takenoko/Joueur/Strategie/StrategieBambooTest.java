@@ -25,7 +25,7 @@ public class StrategieBambooTest {
 
     @Before
     public void setUp() throws Exception {
-        st = new StrategieBamboo();
+        st = new StrategieBamboo(false);
         p = new Plateau();
     }
 

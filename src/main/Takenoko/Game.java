@@ -3,6 +3,7 @@ package Takenoko;
 import Takenoko.Deque.Deck;
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Joueur;
+import Takenoko.Joueur.Strategie.Strategie;
 import Takenoko.Joueur.Strategie.StrategieAdjacent;
 import Takenoko.Joueur.Strategie.StrategieBamboo;
 import Takenoko.Joueur.Strategie.StrategieColor;
@@ -35,7 +36,11 @@ public class Game {
         Console.Log.debugPrint("Deck init : "+ deckBool+"\n");
 
         Joueur j1 = new Joueur(1, new StrategieAdjacent());
-        Joueur j2 = new Joueur(2, new StrategieBamboo());
+
+        StrategieBamboo stratJ2 = new StrategieBamboo(true);
+        Joueur j2 = new Joueur(2, stratJ2);
+        stratJ2.setJoueur(j2);
+
         Joueur j3 = new Joueur(3, new StrategieColor());
         joueurs.add(j1);
         joueurs.add(j2);
@@ -62,7 +67,7 @@ public class Game {
             cartesPanda.remove(0).instanciate(plateau, j3);
         }
 
-
+        stratJ2.setGoal(j2.getPandaObjectiveCards());
     }
 
     /**

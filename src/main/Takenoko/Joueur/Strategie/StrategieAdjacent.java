@@ -58,7 +58,4 @@ public class StrategieAdjacent implements Strategie{
         return "Stratégie des adjacents";
     }
 
-    public StrategieAdjacent() {
-
-    }
 }

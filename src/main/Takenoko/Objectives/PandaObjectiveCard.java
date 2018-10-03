@@ -2,7 +2,9 @@ package Takenoko.Objectives;
 
 import Takenoko.Joueur.Joueur;
 import Takenoko.Plateau;
+import Takenoko.Properties.Couleur;
 
+import java.util.EnumMap;
 import java.util.Objects;
 
 public class PandaObjectiveCard extends ObjectiveCard {
@@ -29,6 +31,16 @@ public class PandaObjectiveCard extends ObjectiveCard {
         owner.setBambousJaunes(owner.getBambousJaunes() - jauneRequis);
         owner.setBambousRoses(owner.getBambousRoses() - roseRequis);
         return pointValue;
+    }
+
+    public EnumMap<Couleur, Integer> countRequired(){
+        EnumMap<Couleur, Integer> out = new EnumMap<Couleur, Integer>(Couleur.class);
+
+        out.put(Couleur.VERT, vertRequis);
+        out.put(Couleur.JAUNE, jauneRequis);
+        out.put(Couleur.ROSE, roseRequis);
+
+        return out;
     }
 
     public PandaObjectiveCard(int vert, int jaune, int rose, int value) {

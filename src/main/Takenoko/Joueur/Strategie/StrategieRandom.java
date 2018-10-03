@@ -45,8 +45,6 @@ public class StrategieRandom implements Strategie{
             return Optional.empty();
         }
     }
-    public StrategieRandom() {
-    }
 
     @Override
     public String getStrategieLabel() {

@@ -48,7 +48,7 @@ public class Joueur implements Comparable{
      * @param id identifiant (unique)
      * @param strategie stratégie adopté {@link Strategie}
      */
-    public Joueur(int id,Strategie strategie){
+    public Joueur(int id, Strategie strategie){
         this.id = id;
         this.bambooByColor = new HashMap<>();
         for (Couleur c : Couleur.values()){
