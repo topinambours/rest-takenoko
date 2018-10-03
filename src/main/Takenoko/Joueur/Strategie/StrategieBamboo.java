@@ -1,9 +1,14 @@
 package Takenoko.Joueur.Strategie;
 
+import Takenoko.Game;
 import Takenoko.Irrigation.CoordIrrig;
+import Takenoko.Joueur.Joueur;
+import Takenoko.Objectives.ObjectiveCard;
+import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
+import Takenoko.Properties.Couleur;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -15,13 +20,44 @@ import static java.util.stream.Collectors.toList;
  */
 public class StrategieBamboo implements Strategie {
 
+    private Boolean mustCompleteGoals;
+
+    private Joueur joueur;
+
+    private HashSet<PandaObjectiveCard> goals;
+
+
+    public Joueur getJoueur() {
+        return joueur;
+    }
+    public HashSet<PandaObjectiveCard> getGoal() {
+        return goals;
+    }
+    public void setJoueur(Joueur joueur) {
+        this.joueur = joueur;
+    }
+
+    public void setGoal(HashSet<PandaObjectiveCard> goals) {
+        this.goals = goals;
+    }
+
+
+    public StrategieBamboo(Boolean mustCompleteGoals){
+        this.mustCompleteGoals = mustCompleteGoals;
+    }
+
     @Override
     public List<CoordAxial> getCoords(Plateau p) {
         List<CoordAxial> legPos = p.legalPositions();
 
-        return legPos.stream().collect(Collectors.groupingBy
+        List<CoordAxial> legPosFilteredByMaxBambooAdj =  legPos.stream().collect(Collectors.groupingBy
                 (pos -> p.getNeighbors(pos).stream().mapToInt(Plot::getBambou).sum(),
                         TreeMap::new, toList())).lastEntry().getValue();
+
+
+
+        return legPosFilteredByMaxBambooAdj;
+
     }
 
     @Override
@@ -37,12 +73,34 @@ public class StrategieBamboo implements Strategie {
     public CoordAxial getCoord(Plateau p) {
         List<CoordAxial> posMaxBamboo = getCoords(p);
 
-        Random rand = new Random();
-        return posMaxBamboo.get(rand.nextInt(posMaxBamboo.size()));
+        if (mustCompleteGoals) {
+
+            int countAdjVert = 0;
+            int countAdjRose = 0;
+            int countAdjJaune = 0;
+            for (CoordAxial pos : posMaxBamboo) {
+                countAdjVert = p.getNeighbors(pos).stream().filter(plot -> plot.getCouleur() == Couleur.VERT).mapToInt(Plot::getBambou).sum();
+                countAdjRose = p.getNeighbors(pos).stream().filter(plot -> plot.getCouleur() == Couleur.VERT).mapToInt(Plot::getBambou).sum();
+                countAdjJaune = p.getNeighbors(pos).stream().filter(plot -> plot.getCouleur() == Couleur.VERT).mapToInt(Plot::getBambou).sum();
+
+                for (PandaObjectiveCard card : goals ){
+                    EnumMap<Couleur, Integer> needed = card.countRequired();
+                    // Le joueur à plus de bambous jaune, il peut compléter la carte sans se préocuper des jaunes
+                    if ((countAdjJaune - joueur.getBambousJaunes()) > needed.get(Couleur.JAUNE) &&
+                            (countAdjRose - joueur.getBambousRoses()) > needed.get(Couleur.ROSE) &&
+                            (countAdjVert - joueur.getBambousVerts()) > needed.get(Couleur.VERT)){
+                        return pos;
+                    }
+                }
+
+            }
+        }
+
+        return posMaxBamboo.get(0);
     }
 
     public Optional<CoordIrrig> getIrrig(Plateau plateau) {
-        var res = plateau.legalIrrigPositions();
+        List<CoordIrrig> res = plateau.legalIrrigPositions();
         if (res.size() >= 1) {
             return Optional.of(res.get(0));
         } else {

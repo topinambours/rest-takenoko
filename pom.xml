@@ -6,13 +6,15 @@
 
     <groupId>BambooMaster</groupId>
     <artifactId>Takenoko</artifactId>
-    <version>0.0</version>
+    <version>0.5</version>
 
     <build>
         <sourceDirectory>src/main/</sourceDirectory>
         <testSourceDirectory>src/test/</testSourceDirectory>
 
         <plugins>
+
+            <!-- use mvn site -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -23,6 +25,11 @@
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.5.0.1254</version>
+            </plugin>
 
             <!-- Use >> mvn exec:java@debug -->
             <plugin>

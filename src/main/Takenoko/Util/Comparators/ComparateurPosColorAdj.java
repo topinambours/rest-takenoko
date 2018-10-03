@@ -1,13 +1,16 @@
-package Takenoko.Joueur.Strategie;
+package Takenoko.Util.Comparators;
 
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Couleur;
+import Takenoko.Properties.Couleur;
 import Takenoko.Plot.Plot;
 
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Permet de comparer les couleurs
+ */
 public class ComparateurPosColorAdj implements Comparator<CoordAxial> {
 
     private Plateau p;

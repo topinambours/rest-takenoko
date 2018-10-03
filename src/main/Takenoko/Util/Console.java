@@ -3,35 +3,61 @@ package Takenoko.Util;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
+/**
+ * Console encadrant l'affichage des messages en fonction du mode de lancement de l'application.
+ *
+ * /!\ Singleton, instancié lors du premier appel les champs ont une porté statique global /!\
+ */
 public enum Console {
     Log;
 
-    private Mode mode = Mode.TEST;
-    private OutputStreamWriter out;
-
+    /**
+     * Les différents modes de consoles
+     * release  -> affichage dédié à l'utilisateur final
+     * debug    -> affichage pour les développeurs, messages masqués à l'utilisateur final
+     * test     -> aucun affichage
+     */
     public enum Mode{
         PROD, DEBUG, TEST;
     }
 
-    public Mode getModeFromLabel(String str){
-        switch (str){
-            case "release" : return Mode.PROD;
-            case "debug" : return Mode.DEBUG;
-            case "test" : return Mode.TEST;
-            default: return Mode.PROD;
+    // mode test par défaut pour éviter une classe runner pour les tests unitaires
+    private Mode mode = Mode.TEST;
+
+    // Objet qui écrit sur le flux standard
+    private OutputStreamWriter out;
+
+    /**
+     * Initalisation de la console
+     * @param modeLabel mode dans lequel sera la console
+     * @return vrai si la console a été initalisée
+     */
+    public boolean init(String modeLabel){
+        switch (modeLabel){
+            case "release" : this.mode = Mode.PROD; break;
+            case "debug" : this.mode = Mode.DEBUG;break;
+            case "test" : this.mode = Mode.TEST;break;
+            default: throw new IllegalArgumentException("Wrong console mode given must be one of {release, debug, test}");
         }
-    }
-
-    public void init(Mode mode){
-        this.mode = mode;
         this.out = new OutputStreamWriter(System.out);
+        return true;
     }
 
-    public Boolean IS_DEBUG_MODE(){
-        return (this.mode == Mode.DEBUG);
+    /**
+     * Initalisation par défaut en mode test
+     * @return vrai si la console a été initialisée
+     */
+    public boolean init(){
+        return init("test");
     }
 
-    public void print(String str){
+    /**
+     * Affiche sur l'entrée standard le message str
+     * En mode test, aucun affichage.
+     * @param str message à afficher
+     * @return vrai si le message a été affiché
+     */
+    public boolean print(String str){
         if (this.mode != Mode.TEST) {
                 try {
                     out.append(str);
@@ -39,21 +65,42 @@ public enum Console {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                return true;
             }
+            return false;
     }
 
-    public void println(String str){
-        print(str + "\n");
+    /**
+     * Comportement identique à la méthode {@link #print(String) print(String str)}
+     * Ajoute un retour chariot à la fin du message str
+     * @param str
+     * @return vrai si le message a été affiché
+     */
+    public boolean println(String str){
+        return print(str + "\n");
     }
 
-    public void debugPrint(String str){
-        if (IS_DEBUG_MODE()) {
-            print(str);
+    /**
+     * N'affiche le message que si la console est en mode debug
+     * Aucun affichage en mode test
+     * @param str message à afficher
+     * @return vrai si le message a été affiché
+     */
+    public boolean debugPrint(String str){
+        if (this.mode == Mode.DEBUG) {
+            return print("[DEBUG]" + str);
         }
+        return false;
     }
 
-    public void debugPrintln(String str){
-        debugPrint(str + "\n");
+    /**
+     * Comportement identique à la méthode {@link #debugPrint(String)} (String) debugPrint(String str)}
+     * Ajoute un retour chariot à la fin du message str
+     * @param str message à afficher
+     * @return vrai si le message a été affiché
+     */
+    public boolean debugPrintln(String str){
+        return debugPrint(str + "\n");
     }
 
 }

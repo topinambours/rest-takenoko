@@ -1,10 +1,14 @@
-package Takenoko.Irrigation;
+package Takenoko.Util.Comparators;
 
+import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plateau;
 
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
+/**
+ * Le commparateur des irrigations
+ */
 public class ComparateurIrig implements Comparator<CoordIrrig> {
 
     Plateau plateau;
@@ -13,6 +17,12 @@ public class ComparateurIrig implements Comparator<CoordIrrig> {
         this.plateau = p;
     }
 
+    /**
+     *
+     * @param o1
+     * @param o2
+     * @return
+     */
     @Override
     public int compare(CoordIrrig o1, CoordIrrig o2) {
         int o1NotirigatedAdjCount = o1.borders().stream().filter(coordAxial -> plateau.getPlot(coordAxial).haveWater()).collect(Collectors.toList()).size();

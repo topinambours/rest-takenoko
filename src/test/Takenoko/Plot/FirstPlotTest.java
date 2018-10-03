@@ -4,6 +4,7 @@ import Takenoko.Game;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieRandom;
 import Takenoko.Plateau;
+import Takenoko.Util.Exceptions.EmptyDeckException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,7 +23,7 @@ public class FirstPlotTest {
 
     }
 
-    @Test public void test(){
+    @Test public void test() throws EmptyDeckException {
         Plot plot = game.turn(joueur);
         assertTrue(plot.haveWater());
     }

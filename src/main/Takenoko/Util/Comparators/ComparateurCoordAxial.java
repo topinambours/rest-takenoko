@@ -1,7 +1,11 @@
-package Takenoko.Plot;
+package Takenoko.Util.Comparators;
+
+import Takenoko.Plot.CoordAxial;
 
 import java.util.Comparator;
-
+/**
+ * Le comparateur de coordonnées axiales
+ */
 public class ComparateurCoordAxial implements Comparator<CoordAxial> {
 
     public ComparateurCoordAxial(){

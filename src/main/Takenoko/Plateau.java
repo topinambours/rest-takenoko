@@ -2,11 +2,10 @@ package Takenoko;
 
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Couleur;
+import Takenoko.Properties.Couleur;
 import Takenoko.Plot.Plot;
 
 import java.util.*;
-import java.lang.Math;
 import java.util.stream.Collectors;
 
 /**
@@ -121,7 +120,7 @@ public class Plateau {
     public List<Plot> getNeighbors(CoordAxial coo) {
         ArrayList<Plot> res = new ArrayList<>();
         for (CoordAxial nbc : coo.getNeighborCoords()) {
-            var myPlot = getPlot(nbc);
+            Plot myPlot = getPlot(nbc);
             if (myPlot != null) {
                 res.add(myPlot);
             }
@@ -219,7 +218,7 @@ public class Plateau {
     private boolean isIrrigPositionLegal(CoordIrrig coo) {
         for (CoordIrrig nbc : coo.continues()) {
             if (!irrigations.contains(coo) && irrigations.contains(nbc)) {
-                var hexes = nbc.borders();
+                List<CoordAxial> hexes = nbc.borders();
                 if (getPlot(hexes.get(0)) != null && getPlot(hexes.get(1)) != null) {
                     return true;
                 }
@@ -233,7 +232,7 @@ public class Plateau {
      * @return
      */
     private List<CoordIrrig> irrigPositionsToTest() {
-        var mySet = new HashSet<CoordIrrig>();
+        HashSet<CoordIrrig> mySet = new HashSet<CoordIrrig>();
         for (CoordIrrig irrig : irrigations) {
             mySet.addAll(irrig.continues());
         }
@@ -244,6 +243,11 @@ public class Plateau {
         return plots;
     }
 
+    /**
+     * Permet de définir si une parcelle est irriguée
+     * @param coordAxial CoordAxial les coordonnées de la parcelle
+     * @return boolean true|false
+     */
     public boolean checkPlotWater(CoordAxial coordAxial){
         for (CoordIrrig c : coordAxial.getBorderCoords()){
             if (this.getIrrigations().contains(c)){

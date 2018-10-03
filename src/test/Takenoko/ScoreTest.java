@@ -16,6 +16,7 @@ public class ScoreTest {
     private static Joueur joueur;
 
     @BeforeClass public static void ScoreTest(){
+        Console.Log.init();
         game = new Game();
         joueur = new Joueur(1, new StrategieRandom());
     }

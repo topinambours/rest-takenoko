@@ -4,7 +4,7 @@ import Takenoko.Joueur.Joueur;
 
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Couleur;
+import Takenoko.Properties.Couleur;
 import Takenoko.Plot.Plot;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,9 +43,7 @@ public class StrategieColorTest {
         p.putPlot(new Plot(2,-2));
 
         boolean b = p.legalPositions().contains(new CoordAxial(2,-1));
-        System.out.println(b);
         boolean c = p.legalPositions().contains(new CoordAxial(2,-2));
-        System.out.println(c);
         assertEquals(new CoordAxial(2,-1), strategieColor.getCoord(p, new Plot()));
     }
 

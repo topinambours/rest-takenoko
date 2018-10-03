@@ -1,4 +1,4 @@
-package Takenoko.Joueur.Strategie;
+package Takenoko.Util.Comparators;
 
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
@@ -7,6 +7,9 @@ import Takenoko.Plot.Plot;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Comprateur permetttant l'optimisation de la pose des bambous
+ */
 public class ComparateurPosBambooAdj implements Comparator<CoordAxial> {
 
     private Plateau p;

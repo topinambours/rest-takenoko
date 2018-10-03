@@ -1,12 +1,13 @@
 package Takenoko.Deque;
 
-import Takenoko.Plot.Couleur;
+import Takenoko.Properties.Couleur;
 import Takenoko.Plot.Plot;
+import Takenoko.Util.Exceptions.EmptyDeckException;
 
-import java.awt.*;
-import java.util.Arrays;
+import java.awt.event.ItemEvent;
 import java.util.Deque;
 import java.util.ArrayDeque;
+import java.util.EmptyStackException;
 import java.util.HashMap;
 
 
@@ -74,7 +75,10 @@ public class Deck {
      * Get the first element of the deck.
      * @return
      */
-    public Plot getFirst(){
+    public Plot getFirst() throws EmptyDeckException {
+        if (deck.isEmpty()){
+            throw new EmptyDeckException();
+        }
         return deck.peekFirst();
     }
 
@@ -82,7 +86,10 @@ public class Deck {
      * Get the last element of the deck.
      * @return
      */
-    public Plot getLast(){
+    public Plot getLast() throws EmptyDeckException {
+        if (deck.isEmpty()){
+            throw new EmptyDeckException();
+        }
         return deck.peekLast();
     }
 
@@ -110,7 +117,10 @@ public class Deck {
      * Delete the first element of the deck.
      * @return
      */
-    public Plot popFirst(){
+    public Plot popFirst() throws EmptyDeckException {
+        if (deck.isEmpty()){
+            throw new EmptyDeckException();
+        }
         return deck.pollFirst();
     }
 
@@ -118,7 +128,10 @@ public class Deck {
      * Delete the last element of the deck.
      * @return
      */
-    public Plot popLast(){
+    public Plot popLast() throws EmptyDeckException {
+        if (deck.isEmpty()){
+            throw new EmptyDeckException();
+        }
         return deck.pollLast();
     }
 

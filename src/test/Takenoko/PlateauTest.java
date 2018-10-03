@@ -12,19 +12,19 @@ public class PlateauTest {
 
     @Test
     public void getputPlot() {
-        var plat = new Plateau();
-        var parc = new Plot(3, 5);
-        var coo = new CoordAxial(3, 5);
+        Plateau plat = new Plateau();
+        Plot parc = new Plot(3, 5);
+        CoordAxial coo = new CoordAxial(3, 5);
         plat.putPlot(parc, coo);
         assertEquals(parc, plat.getPlot(3, 5));
     }
 
     @Test
     public void newputPlot() {
-        var plat = new Plateau();
-        var parc = new Plot();
-        var bot = new Joueur(1, new StrategieRandom());
-        var coo = bot.putPlot(parc, plat);
+        Plateau plat = new Plateau();
+        Plot parc = new Plot();
+        Joueur bot = new Joueur(1, new StrategieRandom());
+        CoordAxial coo = bot.putPlot(parc, plat);
         assertEquals(coo.getQ(), parc.getq());
         assertEquals(coo.getR(), parc.getr());
     }
