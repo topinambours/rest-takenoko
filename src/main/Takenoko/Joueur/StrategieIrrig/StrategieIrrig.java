@@ -9,12 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * L'interface de stratégie Général. Permet d'implémenter les stratégies.
+ * L'interface de stratégie d'irrigation.
  * Elle compte les classes suivantes :
  * <ul>
- *     <li>getCoords qui permet au robot de définir les bonnes coordonnés en fonction de la strategie adoptée</li>
- *     <li>getIrrig qui permet au robot de placer des irrigations en fonction de la strategie adoptée</li>
- *     <li>getStrategieLabel qui permet de savoir sur quelle stratégie on travaille actuellement</li>
+ *     <li>getIrrig qui permet au robot de définir les bons emplacements pour jouer une irrigation</li>
+ *     <li>getStrategieLabel qui permet d'avoir le label de la strategie</li>
  * </ul>
  */
 public interface StrategieIrrig {

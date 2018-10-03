@@ -12,7 +12,7 @@ import java.util.Optional;
 /**
  * La stratégie Couleur consiste à placer les parcelles en maximisant le nombre de voisins de la même couleur qui la parcelle
  */
-public class StrategieColor implements Strategie{
+public class StrategieCoordColor implements StrategieCoord {
 
     /**
      * Renvoie la première coordonnée de la position légale la plus rentable

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * La stratégie irrigation est elle faite pour la pose des irrigations
+ * La stratégie irrigation de base. Pose où elle le peut
  */
 public class StrategieIrigBase implements StrategieIrrig {
 
@@ -20,26 +20,28 @@ public class StrategieIrigBase implements StrategieIrrig {
         this.p = p;
     }
 
-
+    /**
+     * Permet d'avoir l'irrigation a poser
+     * @param P Plateau le plateau
+     * @return Optional une irrigation si une est possible
+     */
     @Override
-    public Optional<CoordIrrig> getIrrig(Plateau P) {
-        List<CoordIrrig> legalPos = p.legalIrrigPositions();
-        if(!P.getLastPlop().getCoord().equals(new CoordAxial(0,0))){
-            Optional res = legalPos.stream().max(new ComparateurIrig(p));
-
-            if (res.isPresent()){
-                return (Optional<CoordIrrig>) res.get();
-            }
+    public Optional<CoordIrrig> getIrrig(Plateau plateau) {
+        List<CoordIrrig> res = plateau.legalIrrigPositions();
+        if (res.size() >= 1) {
+            return Optional.of(res.get(0));
+        } else {
+            return Optional.empty();
         }
-
-
-        return Optional.empty();
     }
 
 
-
+    /**
+     * Permet d'avoir le label de la strategie
+     * @return String label
+     */
     @Override
     public String getStrategieLabel() {
-        return "Stratégie irrigation optimal";
+        return "Stratégie irrigation de base";
     }
 }

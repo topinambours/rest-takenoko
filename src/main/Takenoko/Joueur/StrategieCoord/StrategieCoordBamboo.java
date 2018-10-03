@@ -16,7 +16,7 @@ import static java.util.stream.Collectors.toList;
 /**
  * Le robot prend le parti de placer sa parcelle au placement maximisant le nombre de bambous adjacents
  */
-public class StrategieBamboo implements Strategie {
+public class StrategieCoordBamboo implements StrategieCoord {
 
     private Boolean mustCompleteGoals;
 
@@ -40,7 +40,7 @@ public class StrategieBamboo implements Strategie {
     }
 
 
-    public StrategieBamboo(Boolean mustCompleteGoals){
+    public StrategieCoordBamboo(Boolean mustCompleteGoals){
         this.mustCompleteGoals = mustCompleteGoals;
     }
 

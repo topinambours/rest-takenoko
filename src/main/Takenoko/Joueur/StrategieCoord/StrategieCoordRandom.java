@@ -12,7 +12,7 @@ import java.util.Random;
 /**
  * La stratégie random est la stratégie de base. Elle effectue les actions de façon aléatoire
  */
-public class StrategieRandom implements Strategie{
+public class StrategieCoordRandom implements StrategieCoord {
 
     @Override
     public List<CoordAxial> getCoords(Plateau p, Plot plot) {

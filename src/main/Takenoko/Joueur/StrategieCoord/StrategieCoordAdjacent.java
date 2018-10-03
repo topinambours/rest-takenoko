@@ -16,7 +16,7 @@ import static java.util.stream.Collectors.toList;
 /**
  * La stratégie Adjacente consiste à poser des parcelles en maximisant le nombre de voisins
  */
-public class StrategieAdjacent implements Strategie{
+public class StrategieCoordAdjacent implements StrategieCoord {
 
     @Override
     public List<CoordAxial> getCoords(Plateau p, Plot plot) {

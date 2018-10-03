@@ -15,15 +15,15 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class StrategieColorTest {
+public class StrategieCoordColorTest {
 
-    StrategieColor strategieColor;
+    StrategieCoordColor strategieColor;
     Plateau p;
     Joueur joueur;
 
     @Before
     public void setup() throws Exception{
-        strategieColor = new StrategieColor();
+        strategieColor = new StrategieCoordColor();
         p = new Plateau();
         joueur = new Joueur(1, strategieColor,new StrategieIrigBase(p));
     }
