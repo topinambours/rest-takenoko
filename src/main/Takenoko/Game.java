@@ -6,6 +6,7 @@ import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieAdjacent;
 import Takenoko.Joueur.Strategie.StrategieBamboo;
 import Takenoko.Joueur.Strategie.StrategieColor;
+import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Properties.Couleur;
 import Takenoko.Plot.Plot;
@@ -29,6 +30,7 @@ public class Game {
         this.plateau = new Plateau();
         this.plateau.addStartingPlot(new Plot(Couleur.BLEU));
 
+
         Boolean deckBool = deck.init();
         Console.Log.debugPrint("Deck init : "+ deckBool+"\n");
 
@@ -40,6 +42,26 @@ public class Game {
         joueurs.add(j3);
 
         //Todo: Création d'un ou plusieurs robot
+
+
+        //Instanciation des cartes panda.
+        List<PandaObjectiveCard> cartesPanda = new ArrayList<>();
+        cartesPanda.add(new PandaObjectiveCard(1, 0, 0, 1));
+        cartesPanda.add(new PandaObjectiveCard(1, 1, 0, 1));
+        cartesPanda.add(new PandaObjectiveCard(1, 0, 1, 1));
+        cartesPanda.add(new PandaObjectiveCard(2, 0, 0, 2));
+        cartesPanda.add(new PandaObjectiveCard(2, 2, 0, 2));
+        cartesPanda.add(new PandaObjectiveCard(2, 0, 2, 2));
+        cartesPanda.add(new PandaObjectiveCard(0, 2, 2, 2));
+        cartesPanda.add(new PandaObjectiveCard(0, 1, 2, 2));
+        cartesPanda.add(new PandaObjectiveCard(1, 1, 2, 2));
+
+        for(int i = 0; i < 3; i++){
+            cartesPanda.remove(0).instanciate(plateau, j1);
+            cartesPanda.remove(0).instanciate(plateau, j2);
+            cartesPanda.remove(0).instanciate(plateau, j3);
+        }
+
 
     }
 
