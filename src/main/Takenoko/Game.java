@@ -197,7 +197,7 @@ public class Game {
                 score++;
                 joueur.removePandaObjectiveCard(pandaObjectiveCard);
                 Console.Log.debugPrint(String.format("Le joueur %d stock 1 point pour la réalisation d'une carte panda",joueur.getId()));
-                break; // Important, le joueur ne complete pas n cartes d'un seul coup
+                return score; // Important, le joueur ne complete pas n cartes d'un seul coup
             }
         }
         return score;
