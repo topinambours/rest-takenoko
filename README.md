@@ -1,9 +1,9 @@
 
 # Projet [Takenoko](http://jeuxstrategie1.free.fr/jeu_takenoko/regle.pdf "Takenoko")
 
-![Build Status](https://travis-ci.com/Mahe-Thomas/takenoko.svg?token=bUpqc1gh48xw2KVtqzGz&branch=master) ![](http://93.115.97.196/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=alert_status) ![](http://vps-38327.fhnet.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=reliability_rating) ![](http://vps-38327.fhnet.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=code_smells) ![](http://vps-38327.fhnet.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=coverage)  ![](http://vps-38327.fhnet.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=sqale_rating)
+![Build Status](https://travis-ci.com/Mahe-Thomas/takenoko.svg?token=bUpqc1gh48xw2KVtqzGz&branch=master) ![](http://sonarqube.hamlab.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=alert_status) ![](http://sonarqube.hamlab.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=reliability_rating) ![](http://sonarqube.hamlab.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=code_smells) ![](http://sonarqube.hamlab.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=coverage)  ![](http://sonarqube.hamlab.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=sqale_rating)
 
-> ##### SonarQube : [vps-38327.fhnet.fr](http://vps-38327.fhnet.fr/sessions/new)
+> ##### SonarQube : [sonarqube.hamlab.fr](http://sonarqube.hamlab.fr/sessions/new)
 > Login : admin\
 > Pass : admin2906
 

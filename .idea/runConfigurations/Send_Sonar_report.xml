@@ -11,7 +11,7 @@
           <option name="goals">
             <list>
               <option value="sonar:sonar" />
-              <option value="-Dsonar.host.url=http://vps-38327.fhnet.fr" />
+              <option value="-Dsonar.host.url=http://sonarqube.hamlab.fr" />
               <option value="-Dsonar.login=efd7b5ab41c1289fd85fb16a9bc9115e3c5b8f64" />
             </list>
           </option>
