@@ -4,11 +4,20 @@ import Takenoko.Plot.CoordAxial;
 
 import java.util.Objects;
 
+/**
+ * Représente un emplacement hexagonal dans un système de coordonnées cubiques
+ */
 public class CoordCube {
     private int q;
     private int r;
     private int s;
 
+    /**
+     * constructeur prenant les 3 coordonnées séparément
+     * @param q la coordonnée q
+     * @param r la coordonnée r
+     * @param s la coordonnée s
+     */
     public CoordCube(int q, int r, int s) {
         if (q + r + s != 0) throw new IllegalArgumentException("q + r + s must equal 0");
         this.q = q;
@@ -16,6 +25,11 @@ public class CoordCube {
         this.s = s;
     }
 
+    /**
+     * constructeur prenant 2 coordonnées et calculant la 3e
+     * @param q la coordonnée q
+     * @param r la coordonnée r
+     */
     public CoordCube(int q, int r) {
         this.q = q;
         this.r = r;
@@ -34,10 +48,18 @@ public class CoordCube {
         return s;
     }
 
+    /**
+     * convertit la coordonnée en coordonnée axiale
+     * @return la coordonnée axiale correspondante
+     */
     public CoordAxial toAxial() {
         return new CoordAxial(q, r);
     }
 
+    /**
+     * calcule la coordonnée tournée de 60° autour de l'origine
+     * @return une nouvelle coordonnée tournée de 60°
+     */
     public CoordCube rotate60() {
         return new CoordCube(-s, -q, -r);
     }

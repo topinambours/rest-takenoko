@@ -37,13 +37,18 @@ public class CoordAxial {
         this.r = r;
     }
 
+    /**
+     * permet de faire la somme de 2 coordonnées axiales
+     * @param coo la coordonnée à ajouter à celle-ci
+     * @return la somme des 2 coordonnées
+     */
     public CoordAxial add(CoordAxial coo) {
         return new CoordAxial(q + coo.getQ(), r + coo.getR());
     }
 
     /**
      * rend les 6 coordonnées des hexagones voisins
-     * @return
+     * @return Liste de CoordAxial correspondant aux 6 emplacements voisins
      */
     public List<CoordAxial> getNeighborCoords() {
         ArrayList<CoordAxial> res = new ArrayList<>();
@@ -58,7 +63,7 @@ public class CoordAxial {
 
     /**
      * rend les coordonnées des 6 arêtes du pourtour de l'hexagone
-     * @return
+     * @return Liste de CoordIrrig correspondant aux 6 arêtes de l'hexagone
      */
     public List<CoordIrrig> getBorderCoords() {
         ArrayList<CoordIrrig> res = new ArrayList<CoordIrrig>();

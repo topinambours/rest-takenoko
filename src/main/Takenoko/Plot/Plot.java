@@ -44,15 +44,15 @@ public class Plot {
 
     /**
      * Renvoie la coordonnée q du plot.
-     * @return
+     * @return la coordonnée q du plot.
      */
     public int getq(){
         return coord.getQ();
     }
 
     /**
-     * Renvoie la coordonné r du plot.
-     * @return
+     * Renvoie la coordonnée r du plot.
+     * @return la coordonnée r du plot.
      */
     public int getr(){
         return coord.getR();
@@ -60,7 +60,7 @@ public class Plot {
 
     /**
      * Renvoie les coordonnées du plot.
-     * @return
+     * @return les coordonnées du plot.
      */
     public CoordAxial getCoord() {
         return coord;
@@ -68,8 +68,8 @@ public class Plot {
 
     /**
      * Permet d'assigner une coordonnée à un plot.
-     * @param q
-     * @param r
+     * @param q la coordonnée q
+     * @param r la coordonnée r
      */
     public void setCoord(int q, int r){
         coord.setQ(q);
