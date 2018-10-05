@@ -26,6 +26,7 @@ public class Plateau {
     public Plateau() {
         plots = new HashMap<>();
         lastPlop = new Plot(_STARTING_COORDINATE_, Couleur.BLEU);
+        plots.put(_STARTING_COORDINATE_, lastPlop);
         irrigations = new HashSet<CoordIrrig>();
 
         List<CoordIrrig> borderCoords = _STARTING_COORDINATE_.getBorderCoords();
@@ -84,10 +85,14 @@ public class Plateau {
 
     /**
      * ajoute une section d'irrigation au plateau
+     * Modifie la propriété "irriguée" aux parcelles adjacentes à l'irrigation
      * @param coo
      */
     public void putIrrigation(CoordIrrig coo) {
         irrigations.add(coo);
+        for (Plot p : getPlotsFromIrig(coo)){
+            p.setWater(true);
+        }
     }
 
     /**
@@ -96,6 +101,7 @@ public class Plateau {
      * @param coord le couple de coordonnées où la placer
      */
     public void putPlot(Plot plot, CoordAxial coord) {
+        plot.setCoord(coord.getQ(), coord.getR());
         plots.put(coord, plot);
         plot.setWater(checkPlotWater(plot.getCoord()));
     }
@@ -212,6 +218,24 @@ public class Plateau {
     }
 
     /**
+     * Renvoie la liste des tuiles adjacentes à une coordonnée d'irrigation
+     * Les tuiles renvoyées sont posées sur le plateau
+     * @param coordIrrig coordonnée d'irrigation
+     * @return tuiles présentent sur le plateau étant adjacente à coordIrrig passée en paramètre
+     */
+    public List<Plot> getPlotsFromIrig(CoordIrrig coordIrrig){
+        List<Plot> out = new ArrayList<>();
+        List<CoordAxial> coordAxials = coordIrrig.borders();
+
+        for (CoordAxial c : coordAxials){
+            if (plots.containsKey(c)){
+                out.add(plots.get(c));
+            }
+        }
+        return out;
+    }
+
+    /**
      * renvoie si on peut placer
      * @param coo
      * @return
@@ -246,10 +270,15 @@ public class Plateau {
 
     /**
      * Permet de définir si une parcelle est irriguée
+     * Une parcelle est automatique irrigué si elle est adjacente à la parcelle de départ
      * @param coordAxial CoordAxial les coordonnées de la parcelle
      * @return boolean true|false
      */
     public boolean checkPlotWater(CoordAxial coordAxial){
+        if (coordAxial.getNeighborCoords().contains(_STARTING_COORDINATE_)){
+            return true;
+        }
+
         for (CoordIrrig c : coordAxial.getBorderCoords()){
             if (this.getIrrigations().contains(c)){
                 return true;
