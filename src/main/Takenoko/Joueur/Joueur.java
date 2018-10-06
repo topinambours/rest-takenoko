@@ -46,8 +46,14 @@ public class Joueur implements Comparable{
      */
     private HashSet<PandaObjectiveCard> pandaObjectiveCards;
 
+    /**
+     * Déclaration du paquet de carte objectif pattern du joueur sous forme d'un HashSet
+     */
     private HashSet<PatternObjectiveCard> patternObjectiveCards;
 
+    /**
+     * Déclaration de la stratégie d'iirigation du joueur
+     */
     private StrategieIrrig strategieIrrig;
 
     /**
@@ -92,13 +98,27 @@ public class Joueur implements Comparable{
         this.pandaObjectiveCards.remove(pandaObjectiveCard);
     }
 
+    /**
+     * Renvoie les cartes pattern objectifs du joueur sous forme d'un HashSet
+     * @return le SashSet
+     */
     public HashSet<PatternObjectiveCard> getPatternObjectiveCards(){
         return patternObjectiveCards;
     }
+
+    /**
+     * Permet d'ajouter une carte pattern au joueur
+     * @param patternObjectiveCard
+     */
     public void addPatternObjectiveCard(PatternObjectiveCard patternObjectiveCard){
         this.patternObjectiveCards.add(patternObjectiveCard);
     }
-    public void removeObjetiveCard(PatternObjectiveCard patternObjectiveCard){
+
+    /**
+     * Permet de supprimer une carte pattern du joueur
+     * @param patternObjectiveCard
+     */
+    public void removeObjectiveCard(PatternObjectiveCard patternObjectiveCard){
         this.patternObjectiveCards.add(patternObjectiveCard);
     }
 
@@ -118,12 +138,6 @@ public class Joueur implements Comparable{
     public Plot draw(Deck deck) throws EmptyDeckException {
         return deck.popLast();
     }
-
-    /**
-     * Permet de piocher plusieurs parcelles en même temps
-     * @param deck Deck le deck
-     * @param n int
-     */
 
     /**
      * Permet de piocher plusieurs parcelles en même temps

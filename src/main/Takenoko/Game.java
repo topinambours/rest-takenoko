@@ -232,14 +232,21 @@ public class Game {
         return score;
     }
 
-
+    /**
+     * Evaluation de l'objectif de pattern en fonction des cartes
+     * objectifs que possède le joueur et le motif créer en posant
+     * une parcelle à une coordonnée coo
+     * @param joueur Le joueur jouant le tour
+     * @param coo La coordonnée à laquelle le joueur pose la parcelle
+     * @return le score sous forme d'entier int
+     */
     protected int evaluatePatternObjective(Joueur joueur, CoordAxial coo){
         int score = 0;
         HashSet<PatternObjectiveCard> patternCards = joueur.getPatternObjectiveCards();
         for(PatternObjectiveCard patternObjectiveCard : patternCards){
             if(patternObjectiveCard.isCompleteCoord(coo)){
                 score = score + patternObjectiveCard.getPointValue();
-                joueur.removeObjetiveCard(patternObjectiveCard);
+                joueur.removeObjectiveCard(patternObjectiveCard);
                 Console.Log.debugPrint(String.format("Le joueur %d stock %d point pour la réalisation d'une carte pattern",joueur.getId(), patternObjectiveCard.getPointValue()));
             }
         }
