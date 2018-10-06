@@ -5,6 +5,8 @@ import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoord;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrig;
 import Takenoko.Objectives.PandaObjectiveCard;
+import Takenoko.Objectives.PatternObjectiveCard;
+import Takenoko.Objectives.Patterns.Pattern;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import Takenoko.Plateau;
@@ -44,6 +46,8 @@ public class Joueur implements Comparable{
      */
     private HashSet<PandaObjectiveCard> pandaObjectiveCards;
 
+    private HashSet<PatternObjectiveCard> patternObjectiveCards;
+
     private StrategieIrrig strategieIrrig;
 
     /**
@@ -59,6 +63,7 @@ public class Joueur implements Comparable{
         }
         this.strategieCoord = strategieCoord;
         this.pandaObjectiveCards = new HashSet<PandaObjectiveCard>();
+        this.patternObjectiveCards = new HashSet<PatternObjectiveCard>();
         this.strategieIrrig = strategieIrrig;
     }
 
@@ -85,6 +90,16 @@ public class Joueur implements Comparable{
      */
     public void removePandaObjectiveCard(PandaObjectiveCard pandaObjectiveCard){
         this.pandaObjectiveCards.remove(pandaObjectiveCard);
+    }
+
+    public HashSet<PatternObjectiveCard> getPatternObjectiveCards(){
+        return patternObjectiveCards;
+    }
+    public void addPatternObjectiveCard(PatternObjectiveCard patternObjectiveCard){
+        this.patternObjectiveCards.add(patternObjectiveCard);
+    }
+    public void removeObjetiveCard(PatternObjectiveCard patternObjectiveCard){
+        this.patternObjectiveCards.add(patternObjectiveCard);
     }
 
     /**

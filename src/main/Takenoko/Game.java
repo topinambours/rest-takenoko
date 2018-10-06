@@ -9,6 +9,7 @@ import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordColor;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigComparator;
 import Takenoko.Objectives.PandaObjectiveCard;
+import Takenoko.Objectives.PatternObjectiveCard;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Properties.Couleur;
 import Takenoko.Plot.Plot;
@@ -171,6 +172,12 @@ public class Game {
             Console.Log.println(String.format("Robot_%d gagne %d point grace à la réalisation d'une carte panda",j.getId(),evaluatedPandaObjective));
         }
 
+        int evaluatedPatternObjective = evaluatePatternObjective(j, coord);
+        j.addScore(evaluatedPandaObjective);
+        if(evaluatedPatternObjective > 0){
+            Console.Log.println(String.format("Robot_%d gagne %d point grace à la réalisation d'une carte panda",j.getId(),evaluatedPatternObjective));
+        }
+
 
     }
 
@@ -219,10 +226,25 @@ public class Game {
             if (pandaObjectiveCard.isComplete()){
                 score = score + pandaObjectiveCard.getPointValue();
                 joueur.removePandaObjectiveCard(pandaObjectiveCard);
-                Console.Log.debugPrint(String.format("Le joueur %d stock 1 point pour la réalisation d'une carte panda",joueur.getId()));
+                Console.Log.debugPrint(String.format("Le joueur %d stock %d point pour la réalisation d'une carte panda",joueur.getId(), pandaObjectiveCard.getPointValue()));
             }
         }
         return score;
+    }
+
+
+    protected int evaluatePatternObjective(Joueur joueur, CoordAxial coo){
+        int score = 0;
+        HashSet<PatternObjectiveCard> patternCards = joueur.getPatternObjectiveCards();
+        for(PatternObjectiveCard patternObjectiveCard : patternCards){
+            if(patternObjectiveCard.isCompleteCoord(coo)){
+                score = score + patternObjectiveCard.getPointValue();
+                joueur.removeObjetiveCard(patternObjectiveCard);
+                Console.Log.debugPrint(String.format("Le joueur %d stock %d point pour la réalisation d'une carte pattern",joueur.getId(), patternObjectiveCard.getPointValue()));
+            }
+        }
+        return score;
+
     }
 
 

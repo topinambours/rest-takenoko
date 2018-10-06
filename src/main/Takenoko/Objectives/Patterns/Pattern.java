@@ -5,7 +5,6 @@ import Takenoko.Plot.CoordAxial;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 
 /**
@@ -83,6 +82,21 @@ public class Pattern {
         for (int i = 0; i < 6; i++) {
             pat = pat.rotate60();
             if (pat.checkAll(plateau)) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Vérifie si le motif existe à une coordonnée du plateau, dans n'importe quelle orientation
+     * @param plateau le plateau dans lequel on regarde
+     * @param coo la coordonnée du plateau à laquelle on vérifie
+     * @return vrai si le motif est trouvé, faux sinon
+     */
+    public boolean checkRotate(Plateau plateau, CoordAxial coo) {
+        Pattern pat = new Pattern(this);
+        for (int i = 0; i < 6; i++) {
+            pat = pat.rotate60();
+            if (pat.check(plateau, coo)) return true;
         }
         return false;
     }
