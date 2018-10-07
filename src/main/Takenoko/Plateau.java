@@ -2,8 +2,8 @@ package Takenoko;
 
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plot.CoordAxial;
-import Takenoko.Properties.Couleur;
 import Takenoko.Plot.Plot;
+import Takenoko.Properties.Couleur;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -64,15 +64,29 @@ public class Plateau {
     }
 
     /**
+     * placeur de parcelle, prend les coordonnées mises ensemble
+     * @param plot une parcelle à placer
+     * @param coord le couple de coordonnées où la placer
+     */
+    public void putPlot(Plot plot, CoordAxial coord) {
+        plot.setCoord(coord.getQ(), coord.getR());
+        plots.put(coord, plot);
+        setLastPlop(plot);
+        plot.setWater(checkPlotWater(plot.getCoord()));
+    }
+
+    /**
      * placeur de parcelle, prend les coordonnées séparément
      * @param plot une parcelle à placer
      * @param q coord en axe q où placer la parcelle
      * @param r coord en axe r où placer la parcelle
      */
     public void putPlot(Plot plot, int q, int r) {
-        plots.put(new CoordAxial(q, r), plot);
-        setLastPlop(plot);
+        putPlot(plot, new CoordAxial(q, r));
+    }
 
+    public void putPlot(Plot plot){
+        putPlot(plot, plot.getCoord());
     }
 
     public HashSet<CoordIrrig> getIrrigations() {
@@ -93,21 +107,6 @@ public class Plateau {
         for (Plot p : getPlotsFromIrig(coo)){
             p.setWater(true);
         }
-    }
-
-    /**
-     * placeur de parcelle, prend les coordonnées mises ensemble
-     * @param plot une parcelle à placer
-     * @param coord le couple de coordonnées où la placer
-     */
-    public void putPlot(Plot plot, CoordAxial coord) {
-        plot.setCoord(coord.getQ(), coord.getR());
-        plots.put(coord, plot);
-        plot.setWater(checkPlotWater(plot.getCoord()));
-    }
-
-    public void putPlot(Plot plot){
-        putPlot(plot, plot.getCoord());
     }
 
     /**
@@ -214,7 +213,7 @@ public class Plateau {
      * @return
      */
     public List<CoordIrrig> legalIrrigPositions() {
-        return irrigPositionsToTest().stream().filter(c -> isIrrigPositionLegal(c)).collect(Collectors.toList());
+        return irrigPositionsToTest().stream().filter(this::isIrrigPositionLegal).collect(Collectors.toList());
     }
 
     /**
@@ -240,13 +239,17 @@ public class Plateau {
      * @param coo
      * @return
      */
-    private boolean isIrrigPositionLegal(CoordIrrig coo) {
+    public boolean isIrrigPositionLegal(CoordIrrig coo) {
+        // Déjà placé
+        if (irrigations.contains(coo)){
+            return false;
+        }
+
+        // Si la position est la continuité d'un autre canal d'irrigation la pos est valide
         for (CoordIrrig nbc : coo.continues()) {
-            if (!irrigations.contains(coo) && irrigations.contains(nbc)) {
-                List<CoordAxial> hexes = nbc.borders();
-                if (getPlot(hexes.get(0)) != null && getPlot(hexes.get(1)) != null) {
+            if (irrigations.contains(nbc) && getPlotsFromIrig(coo).size() == 2) {
+                // Un canaux ne peut être placé qu'entre deux parcelles
                     return true;
-                }
             }
         }
         return false;

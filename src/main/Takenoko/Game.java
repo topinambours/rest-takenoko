@@ -11,8 +11,8 @@ import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigComparator;
 import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Objectives.PatternObjectiveCard;
 import Takenoko.Plot.CoordAxial;
-import Takenoko.Properties.Couleur;
 import Takenoko.Plot.Plot;
+import Takenoko.Properties.Couleur;
 import Takenoko.Util.Console;
 import Takenoko.Util.Exceptions.EmptyDeckException;
 

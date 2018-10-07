@@ -2,14 +2,14 @@ package Takenoko.Objectives.Patterns;
 
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
-import Takenoko.Properties.Couleur;
 import Takenoko.Plot.Plot;
+import Takenoko.Properties.Couleur;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class PatternTest {
 

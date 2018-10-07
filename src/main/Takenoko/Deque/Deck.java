@@ -1,10 +1,9 @@
 package Takenoko.Deque;
 
-import Takenoko.Properties.Couleur;
 import Takenoko.Plot.Plot;
+import Takenoko.Properties.Couleur;
 import Takenoko.Util.Exceptions.EmptyDeckException;
 
-import java.awt.event.ItemEvent;
 import java.util.*;
 
 

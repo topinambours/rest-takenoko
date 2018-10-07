@@ -4,7 +4,6 @@ import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Irrigation.Orient;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
-
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
@@ -12,7 +11,8 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class PlateauTest {
 

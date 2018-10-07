@@ -4,7 +4,6 @@ import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Irrigation.Orient;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 /** La classe CoordAxial permet de nous créer une coordonnée

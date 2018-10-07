@@ -10,10 +10,11 @@ import Takenoko.Plateau;
 import Takenoko.Plot.Plot;
 import Takenoko.Properties.Couleur;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class PatternObjectiveCardTest {
 

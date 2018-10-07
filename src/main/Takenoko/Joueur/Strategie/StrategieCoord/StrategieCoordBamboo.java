@@ -1,6 +1,5 @@
 package Takenoko.Joueur.Strategie.StrategieCoord;
 
-import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Plateau;
@@ -8,7 +7,10 @@ import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import Takenoko.Properties.Couleur;
 
-import java.util.*;
+import java.util.EnumMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;

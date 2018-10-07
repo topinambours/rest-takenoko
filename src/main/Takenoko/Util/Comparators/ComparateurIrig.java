@@ -34,9 +34,6 @@ public class ComparateurIrig implements Comparator<CoordIrrig> {
         if (o1NotirigatedAdjCount == o2NotirigatedAdjCount){
             return 0;
         }
-        if (o1NotirigatedAdjCount > o2NotirigatedAdjCount){
-            return 1;
-        }
-        return -1;
+        return o1NotirigatedAdjCount - o2NotirigatedAdjCount;
     }
 }

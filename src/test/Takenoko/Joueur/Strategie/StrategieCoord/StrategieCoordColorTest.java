@@ -1,19 +1,18 @@
 package Takenoko.Joueur.Strategie.StrategieCoord;
 
 import Takenoko.Joueur.Joueur;
-
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
-import Takenoko.Properties.Couleur;
 import Takenoko.Plot.Plot;
+import Takenoko.Properties.Couleur;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class StrategieCoordColorTest {
 

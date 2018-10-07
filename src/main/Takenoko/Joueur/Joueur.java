@@ -6,10 +6,9 @@ import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoord;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrig;
 import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Objectives.PatternObjectiveCard;
-import Takenoko.Objectives.Patterns.Pattern;
+import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
-import Takenoko.Plateau;
 import Takenoko.Properties.Couleur;
 import Takenoko.Util.Exceptions.EmptyDeckException;
 

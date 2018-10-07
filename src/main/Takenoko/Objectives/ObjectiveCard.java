@@ -2,7 +2,6 @@ package Takenoko.Objectives;
 
 import Takenoko.Joueur.Joueur;
 import Takenoko.Plateau;
-import Takenoko.Plot.CoordAxial;
 
 /**
  * Classe abstraite pour représenter les cartes objectif

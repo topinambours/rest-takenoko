@@ -2,9 +2,9 @@ package Takenoko.Irrigation;
 
 import Takenoko.Plot.CoordAxial;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-import Takenoko.Irrigation.CoordIrrig;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class CoordIrrigTest {
 

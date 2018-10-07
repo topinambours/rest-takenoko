@@ -1,10 +1,9 @@
 package Takenoko.Joueur.Strategie.StrategieIrrig;
 
-import Takenoko.Util.Comparators.ComparateurIrig;
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Plot;
+import Takenoko.Util.Comparators.ComparateurIrig;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,20 +21,30 @@ public class StrategieIrrigComparator implements StrategieIrrig {
 
     /**
      * Permet d'avoir l'irrigation a poser
+     * Renvoie la liste triée des positions irrigables en fonction du nombre de parcelles non irriguées
+     * Voir {@link ComparateurIrig}
      * @param P Plateau le plateau
      * @return Optional une irrigation si une est possible
      */
     @Override
     public Optional<CoordIrrig> getIrrig(Plateau P) {
         List<CoordIrrig> legalPos = p.legalIrrigPositions();
-        if(!P.getLastPlop().getCoord().equals(new CoordAxial(0,0))){
-            Optional res = legalPos.stream().max(new ComparateurIrig(p));
+        if(!P.getLastPlop().getCoord().equals(new CoordAxial(0,0))) {
+            // le robot cherche à maximiser le nombre de nouvelles parcelles irriguées
+            // On cherche donc la position maximisant le nombre de nouvelles parcelles
 
-            if (res.isPresent()){
-                return (Optional<CoordIrrig>) res.get();
+            Optional<CoordIrrig> res = legalPos.stream().max((o1, o2) -> {
+
+                int nbIrrigatedPloto1 = p.getPlotsFromIrig(o1).stream().mapToInt(pos -> pos.haveWater() ? 1 : 0).sum();
+                int nbIrrigatedPloto2 = p.getPlotsFromIrig(o2).stream().mapToInt(pos -> pos.haveWater() ? 1 : 0).sum();
+
+                return nbIrrigatedPloto1 - nbIrrigatedPloto2;
+            });
+
+            if (res.isPresent()) {
+                return res;
             }
         }
-
 
         return Optional.empty();
     }

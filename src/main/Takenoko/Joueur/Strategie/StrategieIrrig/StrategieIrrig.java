@@ -1,11 +1,7 @@
 package Takenoko.Joueur.Strategie.StrategieIrrig;
 
-import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plateau;
-import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Plot;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -17,6 +13,6 @@ import java.util.Optional;
  * </ul>
  */
 public interface StrategieIrrig {
-    public Optional<CoordIrrig> getIrrig(Plateau P);
+    public Optional getIrrig(Plateau P);
     public String getStrategieLabel();
 }

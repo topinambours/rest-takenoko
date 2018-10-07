@@ -3,10 +3,9 @@ package Takenoko;
 import Takenoko.Util.Console;
 import Takenoko.Util.Exceptions.EmptyDeckException;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class GameTest {
     private Game game;

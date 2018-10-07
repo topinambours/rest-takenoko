@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static java.lang.Math.*;
-
 /**
  * La classe CoorIrrig permet de calculer les coordonnées des irrigations
  */
