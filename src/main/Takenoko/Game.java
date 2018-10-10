@@ -214,7 +214,7 @@ public class Game {
      * @param joueur Joueur le joueur
      * @return Boolean true|false
      */
-    private boolean drawPattern(Joueur joueur){
+    public boolean drawPattern(Joueur joueur){
         Boolean bool = !cartesPattern.isEmpty();
         if(bool){
             cartesPattern.remove(0).instanciate(plateau,joueur);
@@ -239,7 +239,7 @@ public class Game {
      * @param joueur Joueur le joueur
      * @return Boolean true|false
      */
-    private boolean drawObjectif(Joueur joueur){
+    public boolean drawObjectif(Joueur joueur){
         Boolean bool = !cartesPanda.isEmpty();
         if (bool){
             cartesPanda.remove(0).instanciate(plateau,joueur);
@@ -371,6 +371,8 @@ public class Game {
             Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte panda",j.getId(),evaluatedPandaObjective));
         }
 
+        j.addScore(evaluatePatternObjective(j));
+
     }
 
     /**
@@ -439,6 +441,7 @@ public class Game {
                 score = score + patternObjectiveCard.getPointValue();
                 joueur.removeObjectiveCard(patternObjectiveCard);
                 Console.Log.debugPrint(String.format("Le joueur %d stock %d point pour la réalisation d'une carte pattern",joueur.getId(), patternObjectiveCard.getPointValue()));
+                drawPattern(joueur);
             }
         }
         return score;
