@@ -35,7 +35,7 @@ public class PatternTile {
 
     boolean matchPlot(Plateau plateau, CoordAxial coo) {
         Plot myPlot = plateau.getPlot(toConcretePosition(coo));
-        return (myPlot != null && myPlot.getCouleur() == couleur);
+        return (myPlot != null && myPlot.getCouleur() == couleur && myPlot.haveWater());
     }
 
     @Override
