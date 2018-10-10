@@ -48,7 +48,7 @@ public class Joueur implements Comparable{
     /**
      * Déclaration du paquet de carte objectif pattern du joueur sous forme d'un HashSet
      */
-    private HashSet<PatternObjectiveCard> patternObjectiveCards;
+    private ArrayList<PatternObjectiveCard> patternObjectiveCards;
 
     /**
      * Déclaration de la stratégie d'iirigation du joueur
@@ -68,7 +68,7 @@ public class Joueur implements Comparable{
         }
         this.strategieCoord = strategieCoord;
         this.pandaObjectiveCards = new HashSet<PandaObjectiveCard>();
-        this.patternObjectiveCards = new HashSet<PatternObjectiveCard>();
+        this.patternObjectiveCards = new ArrayList<PatternObjectiveCard>();
         this.strategieIrrig = strategieIrrig;
     }
 
@@ -101,7 +101,7 @@ public class Joueur implements Comparable{
      * Renvoie les cartes pattern objectifs du joueur sous forme d'un HashSet
      * @return le SashSet
      */
-    public HashSet<PatternObjectiveCard> getPatternObjectiveCards(){
+    public ArrayList<PatternObjectiveCard> getPatternObjectiveCards(){
         return patternObjectiveCards;
     }
 
@@ -118,7 +118,7 @@ public class Joueur implements Comparable{
      * @param patternObjectiveCard
      */
     public void removeObjectiveCard(PatternObjectiveCard patternObjectiveCard){
-        this.patternObjectiveCards.add(patternObjectiveCard);
+        this.patternObjectiveCards.remove(patternObjectiveCard);
     }
 
     /**

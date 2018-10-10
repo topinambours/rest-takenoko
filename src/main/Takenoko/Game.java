@@ -370,7 +370,6 @@ public class Game {
         if (evaluatedPandaObjective > 0){
             Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte panda",j.getId(),evaluatedPandaObjective));
         }
-
         j.addScore(evaluatePatternObjective(j));
 
     }
@@ -435,14 +434,22 @@ public class Game {
      */
     protected int evaluatePatternObjective(Joueur joueur){
         int score = 0;
-        HashSet<PatternObjectiveCard> patternCards = joueur.getPatternObjectiveCards();
+        ArrayList<PatternObjectiveCard> patternObjectiveCard1 = new ArrayList<>();
+        ArrayList<PatternObjectiveCard> patternCards = joueur.getPatternObjectiveCards();
+        int i = 0;
         for(PatternObjectiveCard patternObjectiveCard : patternCards){
             if(patternObjectiveCard.isComplete()){
+                patternObjectiveCard1.add(patternObjectiveCard);
                 score = score + patternObjectiveCard.getPointValue();
-                joueur.removeObjectiveCard(patternObjectiveCard);
                 Console.Log.debugPrint(String.format("Le joueur %d stock %d point pour la réalisation d'une carte pattern",joueur.getId(), patternObjectiveCard.getPointValue()));
-                drawPattern(joueur);
+                i+= 1;
             }
+        }
+        for (int j = 0;j<patternObjectiveCard1.size(); j++) {
+            joueur.removeObjectiveCard(patternObjectiveCard1.get(j));
+        }
+        for(int k = 0; k<i; k++){
+            drawPattern(joueur);
         }
         return score;
 
