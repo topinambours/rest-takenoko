@@ -26,6 +26,7 @@ public class Game {
     private Deck deck;
     private ArrayList<Joueur> joueurs;
     private Plateau plateau;
+    private List<PandaObjectiveCard> cartesPanda;
 
     public Game() {
         this.deck = new Deck();
@@ -52,7 +53,7 @@ public class Game {
 
 
         //Instanciation des cartes panda.
-        List<PandaObjectiveCard> cartesPanda = new ArrayList<>();
+        cartesPanda = new ArrayList<>();
         cartesPanda.add(new PandaObjectiveCard(1, 0, 0, 1));
         cartesPanda.add(new PandaObjectiveCard(1, 1, 0, 1));
         cartesPanda.add(new PandaObjectiveCard(1, 0, 1, 1));
@@ -63,13 +64,42 @@ public class Game {
         cartesPanda.add(new PandaObjectiveCard(0, 1, 2, 2));
         cartesPanda.add(new PandaObjectiveCard(1, 1, 2, 2));
 
-        for(int i = 0; i < 3; i++){
-            cartesPanda.remove(0).instanciate(plateau, j1);
-            cartesPanda.remove(0).instanciate(plateau, j2);
-            cartesPanda.remove(0).instanciate(plateau, j3);
-        }
+        Collections.shuffle(cartesPanda);
+
+        firstDrawObjectif(joueurs);
 
         stratJ2.setGoal(j2.getPandaObjectiveCards());
+
+
+
+
+    }
+
+    /**
+     * Permet de faire piocher le joueur
+     * @param joueur Joueur le joueur
+     */
+    private void drawObjectif(Joueur joueur){
+            cartesPanda.remove(0).instanciate(plateau,joueur);
+    }
+
+    /**
+     * Permet de faire piocher chaque joueur. Utile pour l'initialisation de la partie
+     * @param joueurs ArrayList liste des joueurs
+     */
+    private void firstDrawObjectif(ArrayList<Joueur> joueurs){
+        Iterator<Joueur> iterator = joueurs.iterator();
+        while (iterator.hasNext()){
+            drawObjectif(iterator.next());
+        }
+    }
+
+    /**
+     * Permet d'avoir la liste des joueurs
+     * @return ArrayList Joueurs
+     */
+    public ArrayList<Joueur> getJoueurs() {
+        return joueurs;
     }
 
     public Deck getDeck(){
