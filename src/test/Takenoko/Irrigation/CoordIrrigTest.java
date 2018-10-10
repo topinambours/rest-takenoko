@@ -2,17 +2,26 @@ package Takenoko.Irrigation;
 
 import Takenoko.Plot.CoordAxial;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-import Takenoko.Irrigation.CoordIrrig;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class CoordIrrigTest {
 
     @Test
     public void bordersTest() {
-        var borders = new CoordIrrig(3, 3, Orient.N).borders();
-        assertEquals(borders.get(0), new CoordAxial(3, 2));
-        assertEquals(borders.get(1), new CoordAxial(3, 3));
+        var borders = new CoordIrrig(0, 0, Orient.N).borders();
+        assertTrue(borders.contains(new CoordAxial(0, 0)));
+        assertTrue(borders.contains(new CoordAxial(0, -1)));
+
+        borders = new CoordIrrig(0, 0, Orient.W).borders();
+        assertTrue(borders.contains(new CoordAxial(0, 0)));
+        assertTrue(borders.contains(new CoordAxial(-1, 0)));
+
+        borders = new CoordIrrig(0, 0, Orient.S).borders();
+        assertTrue(borders.contains(new CoordAxial(0, 0)));
+        assertTrue(borders.contains(new CoordAxial(-1, 1)));
+
     }
 
     @Test

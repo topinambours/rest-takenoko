@@ -1,16 +1,17 @@
-package Takenoko.Joueur.Strategie;
+package Takenoko.Joueur.Strategie.StrategieCoord;
 
 import Takenoko.Plateau;
-import Takenoko.Util.Comparators.ComparateurCoordAxial;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
+import Takenoko.Util.Comparators.ComparateurCoordAxial;
 import Takenoko.Util.Comparators.ComparateurPosBambooAdj;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 
 /**
@@ -18,14 +19,14 @@ import static org.junit.Assert.*;
  * Cette stratégie cherche à trouver le meilleur placement en maximisant le nombre de bambous déjà présent
  * sur les parcelles adjacentes.
  */
-public class StrategieBambooTest {
+public class StrategieCoordBambooTest {
 
-    StrategieBamboo st;
+    StrategieCoordBamboo st;
     Plateau p;
 
     @Before
     public void setUp() throws Exception {
-        st = new StrategieBamboo(false);
+        st = new StrategieCoordBamboo(false);
         p = new Plateau();
     }
 
@@ -68,7 +69,7 @@ public class StrategieBambooTest {
          * initialisation du plateau
          */
         p.addStartingPlot(new Plot());
-        StrategieRandom randomStrat = new StrategieRandom();
+        StrategieCoordRandom randomStrat = new StrategieCoordRandom();
 
         List<CoordAxial> legalPos;
         List<CoordAxial> computePos;

@@ -17,7 +17,7 @@ public class CoordCubeTest {
         thrown.expect(IllegalArgumentException.class);
         CoordCube coord = new CoordCube(1, 1, 1);
     }
-    
+
     @Test
     public void toAxialTest() {
         CoordCube myCube = new CoordCube(1, 1, -2);

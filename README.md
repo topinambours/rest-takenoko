@@ -1,9 +1,9 @@
 
 # Projet [Takenoko](http://jeuxstrategie1.free.fr/jeu_takenoko/regle.pdf "Takenoko")
 
-![Build Status](https://travis-ci.com/Mahe-Thomas/takenoko.svg?token=bUpqc1gh48xw2KVtqzGz&branch=master) ![](http://93.115.97.196/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=alert_status) ![](http://vps-38327.fhnet.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=reliability_rating) ![](http://vps-38327.fhnet.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=code_smells) ![](http://vps-38327.fhnet.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=coverage)  ![](http://vps-38327.fhnet.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=sqale_rating)
+![Build Status](https://travis-ci.com/Mahe-Thomas/takenoko.svg?token=bUpqc1gh48xw2KVtqzGz&branch=master) ![](http://sonarqube.hamlab.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=alert_status) ![](http://sonarqube.hamlab.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=reliability_rating) ![](http://sonarqube.hamlab.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=code_smells) ![](http://sonarqube.hamlab.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=coverage)  ![](http://sonarqube.hamlab.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=sqale_rating)
 
-> ##### SonarQube : [vps-38327.fhnet.fr](http://vps-38327.fhnet.fr/sessions/new)
+> ##### SonarQube : [sonarqube.hamlab.fr](http://sonarqube.hamlab.fr/sessions/new)
 > Login : admin\
 > Pass : admin2906
 
@@ -33,7 +33,7 @@ Version textuel n'étant pas destinée à être jouée par des êtres humains ma
  Une nouvelle stratégie est alors possible, chercher l'emplacement maximisant le nombre de bambous adjacents. Il est alors possible de faire jouer trois robots avec une stratégie qui lui est propre.
  - [x] **Version 4** : Ajouter la possibilité aux robots d'ajouter des canaux d'irrigations. ~~Réaliser plusieurs stratégies liées aux canaux~~. Ajout des couleurs pour les parcelles, les robots marquent des points supplémentaires si la parcelle est posé en bordure d'autres parcelles de la même couleurs.
  - [x] **Version 5** : Les joueurs recoivent des cartes objectifs panda, les joueurs gagnent des points pour chaque carte objectif complétée. Les joueurs adapte leurs stratégies pour compléter leurs objectifs.
- - [ ] **Version 6** : Les joueurs recoivent des cartes objectifs parcelle, un joueur gagne des points en complétant ses cartes. Un joueur va donc adapter ses placements de parcelles pour achever ses objectifs.
+ - [x] **Version 6** : Les joueurs recoivent des cartes objectifs parcelle, un joueur gagne des points en complétant ses cartes. Un joueur va donc adapter ses placements de parcelles pour achever ses objectifs.
  - [ ] **Version 7** : Les joueurs ont un nombre limité d'action à effectuer chaque tour. Possiblité d'évaluer et de comparer le nombre de points que rapporte les actions.
 
 ## Y'a quoi dans la boite ?

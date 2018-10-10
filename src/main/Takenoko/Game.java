@@ -3,14 +3,19 @@ package Takenoko;
 import Takenoko.Deque.Deck;
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Joueur;
-import Takenoko.Joueur.Strategie.Strategie;
-import Takenoko.Joueur.Strategie.StrategieAdjacent;
-import Takenoko.Joueur.Strategie.StrategieBamboo;
-import Takenoko.Joueur.Strategie.StrategieColor;
+import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordAdjacent;
+import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordBamboo;
+import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordColor;
+import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
+import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigComparator;
 import Takenoko.Objectives.PandaObjectiveCard;
+import Takenoko.Objectives.PatternObjectiveCard;
+import Takenoko.Objectives.Patterns.CoordCube;
+import Takenoko.Objectives.Patterns.Pattern;
+import Takenoko.Objectives.Patterns.PatternTile;
 import Takenoko.Plot.CoordAxial;
-import Takenoko.Properties.Couleur;
 import Takenoko.Plot.Plot;
+import Takenoko.Properties.Couleur;
 import Takenoko.Util.Console;
 import Takenoko.Util.Exceptions.EmptyDeckException;
 
@@ -24,24 +29,27 @@ public class Game {
     private Deck deck;
     private ArrayList<Joueur> joueurs;
     private Plateau plateau;
+    private List<PandaObjectiveCard> cartesPanda;
+    private List<PatternObjectiveCard> cartesPattern;
 
     public Game() {
         this.deck = new Deck();
         this.joueurs = new ArrayList<>();
         this.plateau = new Plateau();
         this.plateau.addStartingPlot(new Plot(Couleur.BLEU));
+        this.cartesPattern = new ArrayList<>();
 
 
         Boolean deckBool = deck.init();
         Console.Log.debugPrint("Deck init : "+ deckBool+"\n");
 
-        Joueur j1 = new Joueur(1, new StrategieAdjacent());
+        Joueur j1 = new Joueur(1, new StrategieCoordAdjacent(),new StrategieIrrigComparator(plateau));
 
-        StrategieBamboo stratJ2 = new StrategieBamboo(true);
-        Joueur j2 = new Joueur(2, stratJ2);
+        StrategieCoordBamboo stratJ2 = new StrategieCoordBamboo(true);
+        Joueur j2 = new Joueur(2, stratJ2,new StrategieIrrigBase(plateau));
         stratJ2.setJoueur(j2);
 
-        Joueur j3 = new Joueur(3, new StrategieColor());
+        Joueur j3 = new Joueur(3, new StrategieCoordColor(),new StrategieIrrigComparator(plateau));
         joueurs.add(j1);
         joueurs.add(j2);
         joueurs.add(j3);
@@ -50,7 +58,7 @@ public class Game {
 
 
         //Instanciation des cartes panda.
-        List<PandaObjectiveCard> cartesPanda = new ArrayList<>();
+        cartesPanda = new ArrayList<>();
         cartesPanda.add(new PandaObjectiveCard(1, 0, 0, 1));
         cartesPanda.add(new PandaObjectiveCard(1, 1, 0, 1));
         cartesPanda.add(new PandaObjectiveCard(1, 0, 1, 1));
@@ -61,13 +69,206 @@ public class Game {
         cartesPanda.add(new PandaObjectiveCard(0, 1, 2, 2));
         cartesPanda.add(new PandaObjectiveCard(1, 1, 2, 2));
 
-        for(int i = 0; i < 3; i++){
-            cartesPanda.remove(0).instanciate(plateau, j1);
-            cartesPanda.remove(0).instanciate(plateau, j2);
-            cartesPanda.remove(0).instanciate(plateau, j3);
-        }
+        Collections.shuffle(cartesPanda);
+
+        firstDrawObjectif(joueurs);
+
+        initPatternsCards();
+        firstDrawPattern(joueurs);
 
         stratJ2.setGoal(j2.getPandaObjectiveCards());
+
+
+
+
+    }
+
+    /**
+     * Permet la création des patterns
+     * nous avons les patterns suivant :
+     * <ul>
+     *     <li>(0,0,Rose),(0,1,Rose),(-1,1,Jaune),(-1,2,Jaune)</li>
+     *     <li>(0,0,Vert),(0,1,Vert),(0,2,Vert)</li>
+     *     <li>(0,0,Jaune),(-1,1,Jaune),(-1,2,Jaune)</li>
+     *     <li>(0,0,Rose),(-1,1,Rose),(0,1,Rose)</li>
+     *     <li>(0,0,Vert),(0,1,Vert),(-1,1,Rose),(-1,2,Rose)</li>
+     * </ul>
+     */
+    private void initPatternsCards(){
+        int q;
+        int r;
+        Couleur couleur;
+
+        //CARTE 1 :
+        List<PatternTile> tilesPattern1 = new ArrayList<>();
+        q = 0;
+        r = 0;
+        couleur = Couleur.ROSE;
+        tilesPattern1.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
+
+        q = 0;
+        r = 1;
+        couleur = Couleur.ROSE;
+        tilesPattern1.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
+
+        q = -1;
+        r = 1;
+        couleur = Couleur.JAUNE;
+        tilesPattern1.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
+
+        q = -1;
+        r = 2;
+        couleur = Couleur.JAUNE;
+        tilesPattern1.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
+
+        cartesPattern.add(new PatternObjectiveCard(new Pattern(tilesPattern1),5));
+
+
+        //CARTE 2 :
+        List<PatternTile> tilesPattern2 = new ArrayList<>();
+        q = 0;
+        r = 0;
+        couleur = Couleur.VERT;
+        tilesPattern2.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
+
+        q = 0;
+        r = 1;
+        couleur = Couleur.VERT;
+        tilesPattern2.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
+
+        q = 0;
+        r = 2;
+        couleur = Couleur.VERT;
+        tilesPattern2.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
+
+        cartesPattern.add(new PatternObjectiveCard(new Pattern(tilesPattern2),2));
+
+        //CARTE 3 :
+        List<PatternTile> tilesPattern3 = new ArrayList<>();
+        q = 0;
+        r = 0;
+        couleur = Couleur.JAUNE;
+        tilesPattern3.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
+
+        q = -1;
+        r = 1;
+        couleur = Couleur.JAUNE;
+        tilesPattern3.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
+
+        q = -1;
+        r = 2;
+        couleur = Couleur.JAUNE;
+        tilesPattern3.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
+
+        cartesPattern.add(new PatternObjectiveCard(new Pattern(tilesPattern3),3));
+
+        //CARTE 4 :
+        List<PatternTile> tilesPattern4 = new ArrayList<>();
+        q = 0;
+        r = 0;
+        couleur = Couleur.ROSE;
+        tilesPattern4.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
+
+        q = -1;
+        r = 1;
+        couleur = Couleur.ROSE;
+        tilesPattern4.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
+
+        q = 0;
+        r = 1;
+        couleur = Couleur.ROSE;
+        tilesPattern4.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
+
+        cartesPattern.add(new PatternObjectiveCard(new Pattern(tilesPattern4),4));
+
+        //CARTE 5 :
+        List<PatternTile> tilesPattern5 = new ArrayList<>();
+        q = 0;
+        r = 0;
+        couleur = Couleur.VERT;
+        tilesPattern5.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
+
+        q = 0;
+        r = 1;
+        couleur = Couleur.VERT;
+        tilesPattern5.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
+
+        q = -1;
+        r = 1;
+        couleur = Couleur.ROSE;
+        tilesPattern5.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
+
+        q = -1;
+        r = 2;
+        couleur = Couleur.ROSE;
+        tilesPattern5.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
+
+        cartesPattern.add(new PatternObjectiveCard(new Pattern(tilesPattern5),4));
+
+        Collections.shuffle(cartesPattern);
+    }
+
+
+    /**
+     * Permet de faire piocher un pattern au joueur
+     * @param joueur Joueur le joueur
+     * @return Boolean true|false
+     */
+    public boolean drawPattern(Joueur joueur){
+        Boolean bool = !cartesPattern.isEmpty();
+        if(bool){
+            cartesPattern.remove(0).instanciate(plateau,joueur);
+        }
+        return bool;
+
+    }
+
+    /**
+     * Permet de faire piocher un pattern à chaque joueur. Utile pour l'initialisation de la partie
+     * @param joueurs ArrayList liste des joueurs
+     */
+    private void firstDrawPattern(ArrayList<Joueur> joueurs){
+        Iterator<Joueur> iterator = joueurs.iterator();
+        while (iterator.hasNext()){
+            drawPattern(iterator.next());
+        }
+    }
+
+    /**
+     * Permet de faire piocher un objectif au joueur
+     * @param joueur Joueur le joueur
+     * @return Boolean true|false
+     */
+    public boolean drawObjectif(Joueur joueur){
+        Boolean bool = !cartesPanda.isEmpty();
+        if (bool){
+            cartesPanda.remove(0).instanciate(plateau,joueur);
+        }
+        return bool;
+
+    }
+
+    /**
+     * Permet de faire piocher un objectif à chaque joueur. Utile pour l'initialisation de la partie
+     * @param joueurs ArrayList liste des joueurs
+     */
+    private void firstDrawObjectif(ArrayList<Joueur> joueurs){
+        Iterator<Joueur> iterator = joueurs.iterator();
+        while (iterator.hasNext()){
+            drawObjectif(iterator.next());
+        }
+    }
+
+    /**
+     * Permet d'avoir la liste des joueurs
+     * @return ArrayList Joueurs
+     */
+    public ArrayList<Joueur> getJoueurs() {
+        return joueurs;
+    }
+
+    public Deck getDeck(){
+        return deck;
     }
 
     /**
@@ -75,7 +276,7 @@ public class Game {
      * @return boolean true|false
      */
     public boolean end(){
-        return deck.getSize()==0;
+        return deck.isEmpty();
     }
 
 
@@ -85,32 +286,24 @@ public class Game {
     public void play() throws EmptyDeckException {
         while(!end()){ //Tant que la partie n'est pas terminée
             for (Joueur j : joueurs){
+                Console.Log.println("----");
                 if (end()){
                     break;
                 }
-                Plot current = turn(j);
-                Optional<CoordIrrig> newIrrig = irrigTurn(j);
-                CoordAxial coord = current.getCoord();
-                Console.Log.println(String.format("Le joueur %d pose une parcelle ici : %s", j.getId(), coord));
-                if (newIrrig.isPresent()) {
-                    Console.Log.println(String.format("Le joueur %d pose une section d'irrigation ici : %s",j.getId(), newIrrig.get()));
-                }
-                Console.Log.debugPrint("La parcelle "+current.toString()+"a water a : "+getPlateau().checkPlotWater(coord));
-                //Console.Log.println(String.format("Le joueur %d pose un bambou ici : %s", j.getId(), coord));
+                // Le joueur pioche une parcelle
+                Plot pose = turn(j);
 
-                evaluate(j, coord);
+                irrigTurn(j);
+
+                evaluate(j, pose.getCoord());
             }//Todo : faire piocher -> faire poser
 
             grow();
         }
-        Console.Log.println("La partie est terminée");
+        Console.Log.println("----\nLa partie est terminée");
         for (Joueur j : joueurs){
-            Console.Log.println(String.format("Le joueur %d a marqué %d points avec une %s", j.getId(), j.getScore(), j.getStrategieLabel()));
+            Console.Log.println(String.format("Robot_%d a marqué %d points avec une %s", j.getId(), j.getScore(), j.getStrategieLabel()));
         }
-    }
-
-    public Deck getDeck(){
-        return deck;
     }
 
     /**
@@ -119,12 +312,10 @@ public class Game {
      * @return Plot la parcelle que le joueur a joué
      */
     public Plot turn(Joueur joueur) throws EmptyDeckException {
-        Plot current;
-        current = joueur.draw(deck);
-        CoordAxial coord = joueur.putPlot(current,plateau);
-        current.setWater(getPlateau().checkPlotWater(coord)); //dans le joueur maintenant
-
-        return current;
+        Plot pioche = joueur.draw(deck);
+        joueur.putPlot(pioche,plateau);
+        Console.Log.println(String.format("Robot_%d pose une parcelle %s en : %s", joueur.getId(),pioche.getCouleur().toString(), pioche.getCoord()));
+        return pioche;
     }
 
     /**
@@ -134,6 +325,11 @@ public class Game {
      */
     public Optional<CoordIrrig> irrigTurn(Joueur joueur) {
         Optional<CoordIrrig> coo = joueur.putIrrig(plateau);
+        if (coo.isPresent()) {
+            Console.Log.println(String.format("Robot_%d pose une section d'irrigation en : %s",joueur.getId(), coo.get()));
+            List<CoordAxial> newIrrigated = coo.get().borders();
+            Console.Log.println(String.format("Les parcelles %s et %s sont irriguées", newIrrigated.get(0), newIrrigated.get(1)));
+        }
         return coo;
     }
 
@@ -150,27 +346,31 @@ public class Game {
 
         int n = evaluateBambou(j,coord);
 
-        j.addScore(n);
+        if (n > 0) {
+            j.addScore(n);
 
-
-        for (Plot nei : plateau.getNeighbors(coord)){
-            nei.removeBamboo();
+            for (Plot nei : plateau.getNeighbors(coord)) {
+                nei.removeBamboo();
+            }
+            if (n > 1) {
+                Console.Log.println(String.format("Robot_%d gagne 1 point, une unique section de bambou était présente sur les parcelles adjacentes", j.getId()));
+            }else{
+                Console.Log.println(String.format("Robot_%d gagne %d points car %d sections de bambou étaient présentes sur les parcelles adjacentes", j.getId(), n, n));
+            }
         }
-        Console.Log.println(String.format("Le joueur %d gagne %d point car il a posé une parcelle", j.getId(),n));
 
         HashSet<Couleur> couleurs = getNeighborColor(coord,plateau);
-        if(couleurs.contains(plateau.getLastPlop().getCouleur())){
+        if(couleurs.contains(plateau.getPlot(coord).getCouleur())){
             j.addScore1();
-            Console.Log.println("Le joueur gagne 1 point car la parcelle posée à la même couleur que la parcelle adjacente");
+            Console.Log.println(String.format("Robot_%d gagne 1 point car une des parcelles adjacentes est de la même couleur", j.getId()));
         }
-
 
         int evaluatedPandaObjective = evaluatePandaObjective(j);
         j.addScore(evaluatedPandaObjective);
         if (evaluatedPandaObjective > 0){
-            Console.Log.println(String.format("Le joueur %d gagne %d point grace à la réalisation d'une carte panda",j.getId(),evaluatedPandaObjective));
+            Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte panda",j.getId(),evaluatedPandaObjective));
         }
-
+        j.addScore(evaluatePatternObjective(j));
 
     }
 
@@ -219,10 +419,40 @@ public class Game {
             if (pandaObjectiveCard.isComplete()){
                 score = score + pandaObjectiveCard.getPointValue();
                 joueur.removePandaObjectiveCard(pandaObjectiveCard);
-                Console.Log.debugPrint(String.format("Le joueur %d stock 1 point pour la réalisation d'une carte panda",joueur.getId()));
+                Console.Log.debugPrint(String.format("Le joueur %d stock %d point pour la réalisation d'une carte panda",joueur.getId(), pandaObjectiveCard.getPointValue()));
             }
         }
         return score;
+    }
+
+    /**
+     * Evaluation de l'objectif de pattern en fonction des cartes
+     * objectifs que possède le joueur et le motif créer en posant
+     * une parcelle à une coordonnée coo
+     * @param joueur Le joueur jouant le tour
+     * @return le score sous forme d'entier int
+     */
+    protected int evaluatePatternObjective(Joueur joueur){
+        int score = 0;
+        ArrayList<PatternObjectiveCard> patternObjectiveCard1 = new ArrayList<>();
+        ArrayList<PatternObjectiveCard> patternCards = joueur.getPatternObjectiveCards();
+        int i = 0;
+        for(PatternObjectiveCard patternObjectiveCard : patternCards){
+            if(patternObjectiveCard.isComplete()){
+                patternObjectiveCard1.add(patternObjectiveCard);
+                score = score + patternObjectiveCard.getPointValue();
+                Console.Log.debugPrint(String.format("Le joueur %d stock %d point pour la réalisation d'une carte pattern",joueur.getId(), patternObjectiveCard.getPointValue()));
+                i+= 1;
+            }
+        }
+        for (int j = 0;j<patternObjectiveCard1.size(); j++) {
+            joueur.removeObjectiveCard(patternObjectiveCard1.get(j));
+        }
+        for(int k = 0; k<i; k++){
+            drawPattern(joueur);
+        }
+        return score;
+
     }
 
 

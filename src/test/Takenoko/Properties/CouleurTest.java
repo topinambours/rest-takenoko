@@ -2,11 +2,10 @@ package Takenoko.Properties;
 
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
-import Takenoko.Properties.Couleur;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class CouleurTest {
     private Plot plot;

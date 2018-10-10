@@ -1,18 +1,22 @@
 package Takenoko.Joueur;
 
-import Takenoko.Joueur.Strategie.StrategieRandom;
+import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
+import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
+import Takenoko.Plateau;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class JoueurComparable {
     private Joueur joueur1;
     private Joueur joueur2;
+    private Plateau plateau;
 
     @Before public void JoueurComparable(){
-        joueur1 = new Joueur(1,new StrategieRandom());
-        joueur2 = new Joueur(2,new StrategieRandom());
+        plateau = new Plateau();
+        joueur1 = new Joueur(1,new StrategieCoordRandom(),new StrategieIrrigBase(plateau));
+        joueur2 = new Joueur(2,new StrategieCoordRandom(),new StrategieIrrigBase(plateau));
         joueur1.addScore1();
     }
 

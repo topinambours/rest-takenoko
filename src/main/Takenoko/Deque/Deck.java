@@ -1,14 +1,10 @@
 package Takenoko.Deque;
 
-import Takenoko.Properties.Couleur;
 import Takenoko.Plot.Plot;
+import Takenoko.Properties.Couleur;
 import Takenoko.Util.Exceptions.EmptyDeckException;
 
-import java.awt.event.ItemEvent;
-import java.util.Deque;
-import java.util.ArrayDeque;
-import java.util.EmptyStackException;
-import java.util.HashMap;
+import java.util.*;
 
 
 /**
@@ -20,16 +16,44 @@ import java.util.HashMap;
  */
 public class Deck {
 
+    /**
+     * File à double queue, permet d'insérer au début et à la fin de la file
+     */
     private Deque<Plot> deck;
-    private final int NB_PARCELLE = 27;
-    private final int NB_COLOR = 3;
 
-    private final int NB_VERTE = 11;
-    private final int NB_ROSE = 7;
-    private final int NB_JAUNE = 9;
+    /**
+     * Nombre total de parcelles dans le jeu (parcelle de départ exclue)
+     */
+    private static final int NB_PARCELLE = 27;
+
+    /**
+     * Nombre de couleurs associées aux parcelles voir {@link Couleur}
+     */
+    private static final int NB_COLOR = 3;
+
+    /**
+     * Nombre de parcelles vertes
+     */
+    private static final int NB_VERTE = 11;
+
+    /**
+     * Nombre de parcelles roses
+     */
+    private static final int NB_ROSE = 7;
+
+    /**
+     * Nombre de parcelles jaunes
+     */
+    private static final int NB_JAUNE = 9;
+
+    /**
+     * Dictionnaire associant à une couleur, le nombre de parcelles correspondantes
+     */
     private HashMap<Couleur, Integer> nbPlotByColor;
 
-
+    /**
+     * Constructeur se chargeant de construire les stuctures de données
+     */
     public Deck(){
         deck = new ArrayDeque<>();
         nbPlotByColor = new HashMap<>();
@@ -44,36 +68,23 @@ public class Deck {
      * @return boolean true|false
      */
     public boolean init() {
-
+        List<Plot> preDeck = new ArrayList<>();
         for (int i = 0;i < NB_COLOR; i++){
             for (int j = 0; j < nbPlotByColor.get(Couleur.getById(i)); j++){
-                deck.addFirst(new Plot(Couleur.getById(i)));
+                preDeck.add(new Plot(Couleur.getById(i)));
             }
         }
+        Collections.shuffle(preDeck);
+
+        deck.addAll(preDeck);
 
         return NB_PARCELLE == this.getSize();
 
     }
 
-
-
-    /*
-    public boolean init(){
-
-        for(int i = 0; i < NB_COULEUR; i++){
-            for (int j = 0; j < Couleur.getnb(i); j++){
-                deck.addFirst(new Plot(Couleur.getById(i)));
-                System.out.println(Couleur.getById(i));
-            }
-        }
-
-        return NB_PARCELLE == this.getSize();
-     }
-     */
-
     /**
      * Get the first element of the deck.
-     * @return
+     * @return first element in deck
      */
     public Plot getFirst() throws EmptyDeckException {
         if (deck.isEmpty()){
@@ -84,7 +95,7 @@ public class Deck {
 
     /**
      * Get the last element of the deck.
-     * @return
+     * @return last element in deck
      */
     public Plot getLast() throws EmptyDeckException {
         if (deck.isEmpty()){
@@ -95,7 +106,7 @@ public class Deck {
 
     /**
      * Add an element at the top of the deck.
-     * @param plot
+     * @param plot {@link}
      * @return
      */
     public boolean addFirst(Plot plot){

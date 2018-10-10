@@ -1,5 +1,5 @@
-package Takenoko.Joueur.Strategie;
-import Takenoko.Irrigation.CoordIrrig;
+package Takenoko.Joueur.Strategie.StrategieCoord;
+
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
@@ -7,12 +7,11 @@ import Takenoko.Util.Comparators.ComparateurPosColorAdj;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * La stratégie Couleur consiste à placer les parcelles en maximisant le nombre de voisins de la même couleur qui la parcelle
  */
-public class StrategieColor implements Strategie{
+public class StrategieCoordColor implements StrategieCoord {
 
     /**
      * Renvoie la première coordonnée de la position légale la plus rentable
@@ -55,14 +54,7 @@ public class StrategieColor implements Strategie{
         return null;
     }
 
-    public Optional<CoordIrrig> getIrrig(Plateau plateau) {
-        List<CoordIrrig> res = plateau.legalIrrigPositions();
-        if (res.size() >= 1) {
-            return Optional.of(res.get(0));
-        } else {
-            return Optional.empty();
-        }
-    }
+
 
     @Override
     public String getStrategieLabel() {
