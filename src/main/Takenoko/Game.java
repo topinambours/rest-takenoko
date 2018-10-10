@@ -37,6 +37,7 @@ public class Game {
         this.joueurs = new ArrayList<>();
         this.plateau = new Plateau();
         this.plateau.addStartingPlot(new Plot(Couleur.BLEU));
+        this.cartesPattern = new ArrayList<>();
 
 
         Boolean deckBool = deck.init();
@@ -72,6 +73,9 @@ public class Game {
 
         firstDrawObjectif(joueurs);
 
+        initPatternsCards();
+        firstDrawPattern(joueurs);
+
         stratJ2.setGoal(j2.getPandaObjectiveCards());
 
 
@@ -91,7 +95,6 @@ public class Game {
      * </ul>
      */
     private void initPatternsCards(){
-        cartesPattern = new ArrayList<>();
         int q;
         int r;
         Couleur couleur;
@@ -201,19 +204,52 @@ public class Game {
         tilesPattern5.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
 
         cartesPattern.add(new PatternObjectiveCard(new Pattern(tilesPattern5),4));
+
+        Collections.shuffle(cartesPattern);
     }
 
 
     /**
-     * Permet de faire piocher le joueur
+     * Permet de faire piocher un pattern au joueur
      * @param joueur Joueur le joueur
+     * @return Boolean true|false
      */
-    private void drawObjectif(Joueur joueur){
-            cartesPanda.remove(0).instanciate(plateau,joueur);
+    private boolean drawPattern(Joueur joueur){
+        Boolean bool = !cartesPattern.isEmpty();
+        if(bool){
+            cartesPattern.remove(0).instanciate(plateau,joueur);
+        }
+        return bool;
+
     }
 
     /**
-     * Permet de faire piocher chaque joueur. Utile pour l'initialisation de la partie
+     * Permet de faire piocher un pattern à chaque joueur. Utile pour l'initialisation de la partie
+     * @param joueurs ArrayList liste des joueurs
+     */
+    private void firstDrawPattern(ArrayList<Joueur> joueurs){
+        Iterator<Joueur> iterator = joueurs.iterator();
+        while (iterator.hasNext()){
+            drawPattern(iterator.next());
+        }
+    }
+
+    /**
+     * Permet de faire piocher un objectif au joueur
+     * @param joueur Joueur le joueur
+     * @return Boolean true|false
+     */
+    private boolean drawObjectif(Joueur joueur){
+        Boolean bool = !cartesPanda.isEmpty();
+        if (bool){
+            cartesPanda.remove(0).instanciate(plateau,joueur);
+        }
+        return bool;
+
+    }
+
+    /**
+     * Permet de faire piocher un objectif à chaque joueur. Utile pour l'initialisation de la partie
      * @param joueurs ArrayList liste des joueurs
      */
     private void firstDrawObjectif(ArrayList<Joueur> joueurs){

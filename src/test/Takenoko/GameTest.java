@@ -33,7 +33,11 @@ public class GameTest {
         while (iterator.hasNext()){
             Joueur joueur = iterator.next();
             assertEquals(1,joueur.getPandaObjectiveCards().size());
+            assertEquals(1,joueur.getPatternObjectiveCards().size());
         }
 
+
     }
+
+
 }
