@@ -187,7 +187,11 @@ public class Game {
             for (Plot nei : plateau.getNeighbors(coord)) {
                 nei.removeBamboo();
             }
-            Console.Log.println(String.format("Robot_%d gagne %d point(s) car %d sections de bambous étaient présentes sur les parcelles adjacentes", j.getId(), n, n));
+            if (n > 1) {
+                Console.Log.println(String.format("Robot_%d gagne 1 point, une unique section de bambou était présente sur les parcelles adjacentes", j.getId()));
+            }else{
+                Console.Log.println(String.format("Robot_%d gagne %d points car %d sections de bambou étaient présentes sur les parcelles adjacentes", j.getId(), n, n));
+            }
         }
 
         HashSet<Couleur> couleurs = getNeighborColor(coord,plateau);
@@ -199,15 +203,8 @@ public class Game {
         int evaluatedPandaObjective = evaluatePandaObjective(j);
         j.addScore(evaluatedPandaObjective);
         if (evaluatedPandaObjective > 0){
-            Console.Log.println(String.format("Robot_%d gagne %d point grace à la réalisation d'une carte panda",j.getId(),evaluatedPandaObjective));
+            Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte panda",j.getId(),evaluatedPandaObjective));
         }
-
-        int evaluatedPatternObjective = evaluatePatternObjective(j, coord);
-        j.addScore(evaluatedPandaObjective);
-        if(evaluatedPatternObjective > 0){
-            Console.Log.println(String.format("Robot_%d gagne %d point grace à la réalisation d'une carte panda",j.getId(),evaluatedPatternObjective));
-        }
-
 
     }
 
