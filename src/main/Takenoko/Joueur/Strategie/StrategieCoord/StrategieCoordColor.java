@@ -57,7 +57,7 @@ public class StrategieCoordColor implements StrategieCoord {
 
 
     @Override
-    public String getStrategieLabel() {
+    public String getStrategieCoordLabel() {
         return "Max Color Adj";
     }
 

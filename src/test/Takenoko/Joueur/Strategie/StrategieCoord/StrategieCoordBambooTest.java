@@ -107,6 +107,6 @@ public class StrategieCoordBambooTest {
 
     @Test
     public void getStrategieLabel() {
-        assertEquals("max adj bamboo", st.getStrategieLabel());
+        assertEquals("max adj bamboo", st.getStrategieCoordLabel());
     }
 }

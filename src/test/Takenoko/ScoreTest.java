@@ -1,6 +1,7 @@
 package Takenoko;
 
 import Takenoko.Joueur.Joueur;
+import Takenoko.Joueur.Strategie.StrategieConcrete;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Plot.CoordAxial;
@@ -21,7 +22,7 @@ public class ScoreTest {
     public void ScoreTest(){
         Console.Log.init();
         game = new Game();
-        joueur = new Joueur(1, new StrategieCoordRandom(),new StrategieIrrigBase(game.getPlateau()));
+        joueur = new Joueur(1, new StrategieConcrete(new StrategieCoordRandom(),new StrategieIrrigBase(game.getPlateau())));
     }
 
     @Test public void test(){

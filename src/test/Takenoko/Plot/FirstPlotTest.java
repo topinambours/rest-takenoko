@@ -2,6 +2,7 @@ package Takenoko.Plot;
 
 import Takenoko.Game;
 import Takenoko.Joueur.Joueur;
+import Takenoko.Joueur.Strategie.StrategieConcrete;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Util.Exceptions.EmptyDeckException;
@@ -16,7 +17,7 @@ public class FirstPlotTest {
 
     @Before public void FirstPlotTest(){
         game = new Game();
-        joueur = new Joueur(1,new StrategieCoordRandom(),new StrategieIrrigBase(game.getPlateau()));
+        joueur = new Joueur(1, new StrategieConcrete(new StrategieCoordRandom(),new StrategieIrrigBase(game.getPlateau())));
 
 
     }

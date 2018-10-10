@@ -23,5 +23,5 @@ public interface StrategieCoord {
     public CoordAxial getCoord(Plateau p, Plot plot);
     public CoordAxial getCoord(Plateau p);
 
-    public String getStrategieLabel();
+    public String getStrategieCoordLabel();
 }

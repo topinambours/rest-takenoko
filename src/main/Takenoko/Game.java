@@ -3,9 +3,11 @@ package Takenoko;
 import Takenoko.Deque.Deck;
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Joueur;
+import Takenoko.Joueur.Strategie.StrategieConcrete;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordAdjacent;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordBamboo;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordColor;
+import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrig;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigComparator;
 import Takenoko.Objectives.PandaObjectiveCard;
@@ -43,13 +45,17 @@ public class Game {
         Boolean deckBool = deck.init();
         Console.Log.debugPrint("Deck init : "+ deckBool+"\n");
 
-        Joueur j1 = new Joueur(1, new StrategieCoordAdjacent(),new StrategieIrrigComparator(plateau));
+        StrategieConcrete strategieJ1 = new StrategieConcrete(new StrategieCoordAdjacent(),new StrategieIrrigComparator(plateau));
+        Joueur j1 = new Joueur(1, strategieJ1);
 
-        StrategieCoordBamboo stratJ2 = new StrategieCoordBamboo(true);
-        Joueur j2 = new Joueur(2, stratJ2,new StrategieIrrigBase(plateau));
-        stratJ2.setJoueur(j2);
+        StrategieConcrete strategieJ2 = new StrategieConcrete();
+        Joueur j2 = new Joueur(2, strategieJ2);
+        StrategieCoordBamboo stratCoordJ2 = new StrategieCoordBamboo(true);
+        stratCoordJ2.setJoueur(j2);
+        strategieJ2.initialize(stratCoordJ2, new StrategieIrrigBase(plateau));
 
-        Joueur j3 = new Joueur(3, new StrategieCoordColor(),new StrategieIrrigComparator(plateau));
+        StrategieConcrete strategieJ3 = new StrategieConcrete(new StrategieCoordColor(),new StrategieIrrigComparator(plateau));
+        Joueur j3 = new Joueur(3, strategieJ3);
         joueurs.add(j1);
         joueurs.add(j2);
         joueurs.add(j3);
@@ -75,11 +81,6 @@ public class Game {
 
         initPatternsCards();
         firstDrawPattern(joueurs);
-
-        stratJ2.setGoal(j2.getPandaObjectiveCards());
-
-
-
 
     }
 

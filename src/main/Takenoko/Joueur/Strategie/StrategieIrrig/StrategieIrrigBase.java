@@ -19,7 +19,7 @@ public class StrategieIrrigBase implements StrategieIrrig {
 
     /**
      * Permet d'avoir l'irrigation a poser
-     * @param P Plateau le plateau
+     * @param plateau Plateau le plateau
      * @return Optional une irrigation si une est possible
      */
     @Override
@@ -38,7 +38,7 @@ public class StrategieIrrigBase implements StrategieIrrig {
      * @return String label
      */
     @Override
-    public String getStrategieLabel() {
+    public String getStrategieIrrigLabel() {
         return "Stratégie irrigation de base";
     }
 }
