@@ -352,7 +352,11 @@ public class Game {
             for (Plot nei : plateau.getNeighbors(coord)) {
                 nei.removeBamboo();
             }
-            Console.Log.println(String.format("Robot_%d gagne %d point(s) car %d sections de bambous étaient présentes sur les parcelles adjacentes", j.getId(), n, n));
+            if (n > 1) {
+                Console.Log.println(String.format("Robot_%d gagne 1 point, une unique section de bambou était présente sur les parcelles adjacentes", j.getId()));
+            }else{
+                Console.Log.println(String.format("Robot_%d gagne %d points car %d sections de bambou étaient présentes sur les parcelles adjacentes", j.getId(), n, n));
+            }
         }
 
         HashSet<Couleur> couleurs = getNeighborColor(coord,plateau);
@@ -364,15 +368,8 @@ public class Game {
         int evaluatedPandaObjective = evaluatePandaObjective(j);
         j.addScore(evaluatedPandaObjective);
         if (evaluatedPandaObjective > 0){
-            Console.Log.println(String.format("Robot_%d gagne %d point grace à la réalisation d'une carte panda",j.getId(),evaluatedPandaObjective));
+            Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte panda",j.getId(),evaluatedPandaObjective));
         }
-
-        int evaluatedPatternObjective = evaluatePatternObjective(j, coord);
-        j.addScore(evaluatedPandaObjective);
-        if(evaluatedPatternObjective > 0){
-            Console.Log.println(String.format("Robot_%d gagne %d point grace à la réalisation d'une carte panda",j.getId(),evaluatedPatternObjective));
-        }
-
 
     }
 
@@ -432,14 +429,13 @@ public class Game {
      * objectifs que possède le joueur et le motif créer en posant
      * une parcelle à une coordonnée coo
      * @param joueur Le joueur jouant le tour
-     * @param coo La coordonnée à laquelle le joueur pose la parcelle
      * @return le score sous forme d'entier int
      */
-    protected int evaluatePatternObjective(Joueur joueur, CoordAxial coo){
+    protected int evaluatePatternObjective(Joueur joueur){
         int score = 0;
         HashSet<PatternObjectiveCard> patternCards = joueur.getPatternObjectiveCards();
         for(PatternObjectiveCard patternObjectiveCard : patternCards){
-            if(patternObjectiveCard.isCompleteCoord(coo)){
+            if(patternObjectiveCard.isComplete()){
                 score = score + patternObjectiveCard.getPointValue();
                 joueur.removeObjectiveCard(patternObjectiveCard);
                 Console.Log.debugPrint(String.format("Le joueur %d stock %d point pour la réalisation d'une carte pattern",joueur.getId(), patternObjectiveCard.getPointValue()));

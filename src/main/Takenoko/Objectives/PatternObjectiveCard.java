@@ -39,15 +39,6 @@ public class PatternObjectiveCard extends ObjectiveCard {
         return pattern.checkAllRotate(this.plateau);
     }
 
-    /**
-     * Permet de détécter si le pattern est présent sur la plateau à une
-     * coordonnée précise
-     * @return true si le pattern existe sur la plateau, sinon false
-     */
-    public boolean isCompleteCoord(CoordAxial coo){
-        return pattern.checkRotate(this.plateau, coo);
-    }
-
     @Override
     public int validate() {
         return pointValue;
