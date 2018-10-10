@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Comprateur permetttant l'optimisation de la pose des bambous
+ * Comprateur permettant l'optimisation de la pose des bambous
  */
 public class ComparateurPosBambooAdj implements Comparator<CoordAxial> {
 
@@ -18,6 +18,13 @@ public class ComparateurPosBambooAdj implements Comparator<CoordAxial> {
         this.p = p;
     }
 
+    /**
+     * Compare 2 coordonnées selon le nombre de voisins contenant des
+     * bambous
+     * @param o1
+     * @param o2
+     * @return
+     */
     @Override
     public int compare(CoordAxial o1, CoordAxial o2) {
         List<Plot> n1 = p.getNeighbors(o1);

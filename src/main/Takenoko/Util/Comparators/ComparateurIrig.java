@@ -21,7 +21,7 @@ public class ComparateurIrig implements Comparator<CoordIrrig> {
     }
 
     /**
-     *
+     * Ordonne en fonction du nombre de parcelle irrigués au voisinage d'une coordonnée d'irrigation
      * @param o1
      * @param o2
      * @return
