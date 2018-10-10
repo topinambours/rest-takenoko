@@ -63,7 +63,7 @@ public enum Console {
                     out.append(str);
                     out.flush();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    debugPrint(e.getMessage());
                 }
                 return true;
             }
