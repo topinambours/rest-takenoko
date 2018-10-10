@@ -1,5 +1,7 @@
 package Takenoko.Objectives.Patterns;
 
+import Takenoko.Irrigation.CoordIrrig;
+import Takenoko.Irrigation.Orient;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
@@ -43,6 +45,11 @@ public class PatternTest {
         plateau.putPlot(new Plot(0, 1, Couleur.ROSE), 0, 1);
         plateau.putPlot(new Plot(1, 1, Couleur.VERT), 1, 1);
         plateau.putPlot(new Plot(1, 0, Couleur.JAUNE), 1, 0);
+
+        assertEquals(false, myPattern.checkAllRotate(plateau));
+
+        plateau.putIrrigation(new CoordIrrig(1,0, Orient.S));
+        plateau.putIrrigation(new CoordIrrig(1,1, Orient.S));
 
         assertEquals(true, myPattern.checkAllRotate(plateau));
     }

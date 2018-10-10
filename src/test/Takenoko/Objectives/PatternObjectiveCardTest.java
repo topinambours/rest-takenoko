@@ -1,5 +1,7 @@
 package Takenoko.Objectives;
 
+import Takenoko.Irrigation.CoordIrrig;
+import Takenoko.Irrigation.Orient;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
@@ -38,11 +40,18 @@ public class PatternObjectiveCardTest {
         PatternObjectiveCard patternObjectiveCard = new PatternObjectiveCard(myPattern, 1);
         patternObjectiveCard.instanciate(plateau, new Joueur(1, new StrategieCoordRandom(),new StrategieIrrigBase(plateau)));
 
-        plateau.putPlot(new Plot(0, 0, Couleur.ROSE), 0, 0);
+
         plateau.putPlot(new Plot(0, 1, Couleur.ROSE), 0, 1);
         plateau.putPlot(new Plot(1, 1, Couleur.VERT), 1, 1);
         plateau.putPlot(new Plot(1, 0, Couleur.JAUNE), 1, 0);
 
+        assertEquals(false, patternObjectiveCard.isComplete());
+
+        plateau.putIrrigation(new CoordIrrig(1,0, Orient.S));
+        plateau.putIrrigation(new CoordIrrig(1,1, Orient.S));
+
         assertEquals(true, patternObjectiveCard.isComplete());
+
+
     }
 }
