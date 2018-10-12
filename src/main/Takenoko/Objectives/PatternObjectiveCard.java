@@ -12,6 +12,16 @@ public class PatternObjectiveCard extends ObjectiveCard {
     private Plateau plateau;
 
     /**
+     * Constructeur d'une carte objectif pattern vide
+     * @param
+     * @param
+     */
+    public PatternObjectiveCard() {
+        this.pointValue = 0;
+        this.pattern = null;
+    }
+
+    /**
      * Constructeur d'une carte objectif pattern
      * @param pattern
      * @param value
@@ -53,5 +63,14 @@ public class PatternObjectiveCard extends ObjectiveCard {
     public void instanciate(Plateau plateau, Joueur joueur) {
         this.plateau = plateau;
         joueur.addPatternObjectiveCard(this);
+    }
+
+    @Override
+    public String toString() {
+        return "PatternObjectiveCard{" +
+                "pointValue=" + pointValue +
+                ", pattern=" + pattern +
+                ", plateau=" + plateau +
+                '}';
     }
 }
