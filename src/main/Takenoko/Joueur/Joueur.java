@@ -65,7 +65,6 @@ public class Joueur implements Comparable{
         this.strategie = strategie;
         this.pandaObjectiveCards = new HashSet<PandaObjectiveCard>();
         this.patternObjectiveCards = new ArrayList<PatternObjectiveCard>();
-        this.strategieIrrig = strategieIrrig;
     }
 
     /**
