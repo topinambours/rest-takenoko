@@ -38,7 +38,6 @@ public class Plateau {
         irrigations.addAll(borderCoords);
 
         posPanda = _STARTING_COORDINATE_;
-
     }
 
     /**
@@ -294,4 +293,22 @@ public class Plateau {
         }
         return false;
     }
+
+    /**
+     * RELATIF AU PANDA
+     */
+
+    /**
+     * Modifie la position du panda uniquement si pour la nouvelle position, il existe une parcelle sur le plateau
+     * @param coord nouvelle coordonnée de la figurine panda
+     * @return vrai si le panda a changé de position
+     */
+    public boolean movePanda(CoordAxial coord){
+        if (plots.containsKey(coord)){
+            posPanda = coord;
+            return true;
+        }
+        return false;
+    }
+
 }

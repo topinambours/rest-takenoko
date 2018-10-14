@@ -13,6 +13,7 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class PlateauTest {
@@ -62,5 +63,16 @@ public class PlateauTest {
         listPlots = p.getPlotsFromIrig(new CoordIrrig(50,50,Orient.W));
 
         assertTrue(listPlots.isEmpty());
+    }
+
+    @Test
+    public void movePanda() {
+        Plateau p = new Plateau();
+
+        assertFalse(p.movePanda(new CoordAxial(1,800)));
+
+        p.putPlot(new Plot(), 1,800);
+
+        assertTrue(p.movePanda(new CoordAxial(1,800)));
     }
 }
