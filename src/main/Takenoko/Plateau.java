@@ -18,6 +18,11 @@ public class Plateau {
     private HashMap<CoordAxial, Plot> plots;
     private Plot lastPlop;
 
+    /**
+     * Position du Panda sur le plateau
+     */
+    private CoordAxial posPanda;
+
     private HashSet<CoordIrrig> irrigations;
 
     /**
@@ -30,9 +35,9 @@ public class Plateau {
         irrigations = new HashSet<CoordIrrig>();
 
         List<CoordIrrig> borderCoords = _STARTING_COORDINATE_.getBorderCoords();
-        for(CoordIrrig coordIrrig : borderCoords){
-            irrigations.add(coordIrrig);
-        }
+        irrigations.addAll(borderCoords);
+
+        posPanda = _STARTING_COORDINATE_;
 
     }
 
