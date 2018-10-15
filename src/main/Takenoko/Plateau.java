@@ -347,8 +347,10 @@ public class Plateau {
         Couleur color = getPlot(coord).getCouleur();
         List<CoordAxial> res = new ArrayList<>();
         for(CoordAxial coordAxial : adj){
-            if(color == getPlot(coordAxial).getCouleur()){
-                res.add(coordAxial);
+            if(plots.containsKey(coordAxial)) {
+                if (color == getPlot(coordAxial).getCouleur()) {
+                    res.add(coordAxial);
+                }
             }
         }
         return res;

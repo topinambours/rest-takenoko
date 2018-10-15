@@ -296,10 +296,12 @@ public class Game {
 
                 irrigTurn(j);
 
+                plateau.moveJardinier(pose.getCoord());
+
                 evaluate(j, pose.getCoord());
             }//Todo : faire piocher -> faire poser
 
-            grow();
+
         }
         Console.Log.println("----\nLa partie est terminée");
         for (Joueur j : joueurs){
@@ -481,6 +483,7 @@ public class Game {
      * @param plateau Plateau le plateau
      */
    private void grow(Plateau plateau){
+
        HashMap<CoordAxial, Plot> hashMap = plateau.getPlots();
        Iterator iterator = hashMap.entrySet().iterator();
        while (iterator.hasNext()){
@@ -492,7 +495,6 @@ public class Game {
                current.pousserBambou();
            }
        }
-
    }
 
    protected void grow(){
