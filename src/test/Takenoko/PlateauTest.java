@@ -69,11 +69,25 @@ public class PlateauTest {
     public void movePanda() {
         Plateau p = new Plateau();
 
-        assertFalse(p.movePanda(new CoordAxial(1,800)));
+        CoordAxial coordTest = new CoordAxial(10,-10);
 
-        p.putPlot(new Plot(), 1,800);
+        // Pas de parcelle à cet emplacement
+        assertFalse(p.movePanda(coordTest));
 
-        assertTrue(p.movePanda(new CoordAxial(1,800)));
+
+        p.putPlot(new Plot(), coordTest);
+        assertFalse(p.getPlot(coordTest).haveBambou());
+        p.getPlot(coordTest).setWater(true);
+        p.getPlot(coordTest).pousserBambou();
+        assertTrue(p.getPlot(coordTest).haveBambou());
+        assertTrue(p.movePanda(coordTest));
+        assertFalse(p.getPlot(coordTest).haveBambou());
+
+        // Tuile qui n'est pas en "ligne" avec la position du panda
+        p.putPlot(new Plot(new CoordAxial(10,-12)));
+
+        assertFalse(p.movePanda(new CoordAxial(11,-12)));
+
     }
 
     @Test

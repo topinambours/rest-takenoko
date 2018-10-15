@@ -128,9 +128,22 @@ public class Plot {
      * Permet de supprimer le bambou du plot
      * @return le nombre de bambous enlevés de la parcelle
      */
-    public int removeBamboo(){
+    public int removeAllBambou(){
+        return removeBambou(this.bambou);
+    }
+
+    /**
+     * Permet de supprimer un certain nombre de bambou du plot
+     * @param n nombre de bambous à enlever
+     * @return le nombre de bambous enlevés de la parcelle
+     */
+    public int removeBambou(int n){
         int out = this.bambou;
-        this.bambou = 0;
+        if (n > this.bambou){
+            this.bambou = 0;
+        }else{
+            this.bambou -= n;
+        }
         return out;
     }
 

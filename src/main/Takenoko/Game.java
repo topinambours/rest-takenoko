@@ -351,7 +351,7 @@ public class Game {
             j.addScore(n);
 
             for (Plot nei : plateau.getNeighbors(coord)) {
-                nei.removeBamboo();
+                nei.removeAllBambou();
             }
             if (n > 1) {
                 Console.Log.println(String.format("Robot_%d gagne 1 point, une unique section de bambou était présente sur les parcelles adjacentes", j.getId()));
