@@ -3,11 +3,38 @@ package Takenoko.Objectives;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Plateau;
 import Takenoko.Properties.Couleur;
-
 import java.util.EnumMap;
 import java.util.Objects;
 
 public class PandaObjectiveCard extends ObjectiveCard {
+    public int getVertRequis() {
+        return vertRequis;
+    }
+
+    public void setVertRequis(int vertRequis) {
+        this.vertRequis = vertRequis;
+    }
+
+    public int getJauneRequis() {
+        return jauneRequis;
+    }
+
+    public void setJauneRequis(int jauneRequis) {
+        this.jauneRequis = jauneRequis;
+    }
+
+    public int getRoseRequis() {
+        return roseRequis;
+    }
+
+    public void setRoseRequis(int roseRequis) {
+        this.roseRequis = roseRequis;
+    }
+
+    public void setPointValue(int pointValue) {
+        this.pointValue = pointValue;
+    }
+
     private int vertRequis;
     private int jauneRequis;
     private int roseRequis;
@@ -58,16 +85,26 @@ public class PandaObjectiveCard extends ObjectiveCard {
     /**
      * Constructeur, prend le nombre de bambous de chaque couleur correspondant à l'objectif
      * ainsi que sa valeur en points
-     * @param vert le nombre de bambous verts
-     * @param jaune le nombre de bambous jaunes
-     * @param rose le nombre de bambous roses
-     * @param value la valeur en points
+     * @param vertRequis le nombre de bambous verts
+     * @param jauneRequis le nombre de bambous jaunes
+     * @param roseRequis le nombre de bambous roses
+     * @param pointValue la valeur en points
      */
-    public PandaObjectiveCard(int vert, int jaune, int rose, int value) {
-        vertRequis = vert;
-        jauneRequis = jaune;
-        roseRequis = rose;
-        pointValue = value;
+    public PandaObjectiveCard(int vertRequis, int jauneRequis, int roseRequis, int pointValue) {
+        this.vertRequis = vertRequis;
+        this.jauneRequis = jauneRequis;
+        this.roseRequis = roseRequis;
+        this.pointValue = pointValue;
+    }
+
+    /**
+     * Nécessaire pour le parsing depuis Json
+     */
+    private PandaObjectiveCard(){
+        this.vertRequis = 0;
+        this.jauneRequis = 0;
+        this.roseRequis = 0;
+        this.pointValue = 0;
     }
 
     /**
@@ -80,6 +117,9 @@ public class PandaObjectiveCard extends ObjectiveCard {
         owner = joueur;
         joueur.addPandaObjectiveCard(this);
     }
+
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -96,5 +136,16 @@ public class PandaObjectiveCard extends ObjectiveCard {
     @Override
     public int hashCode() {
         return Objects.hash(vertRequis, jauneRequis, roseRequis, pointValue, owner);
+    }
+
+    @Override
+    public String toString() {
+        return "PandaObjectiveCard{" +
+                "vertRequis=" + vertRequis +
+                ", jauneRequis=" + jauneRequis +
+                ", roseRequis=" + roseRequis +
+                ", pointValue=" + pointValue +
+                ", owner=" + owner +
+                '}';
     }
 }

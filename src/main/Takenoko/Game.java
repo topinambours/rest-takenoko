@@ -1,6 +1,7 @@
 package Takenoko;
 
 import Takenoko.Deque.Deck;
+import Takenoko.Deque.ObjectivesPandaDeck;
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieConcrete;
@@ -31,13 +32,14 @@ import java.util.stream.Collectors;
 public class Game {
 
     private Deck deck;
+    private ObjectivesPandaDeck pandObjDeck;
     private ArrayList<Joueur> joueurs;
     private Plateau plateau;
-    private List<PandaObjectiveCard> cartesPanda;
     private List<PatternObjectiveCard> cartesPattern;
 
     public Game() {
         this.deck = new Deck();
+        this.pandObjDeck = new ObjectivesPandaDeck();
         this.joueurs = new ArrayList<>();
         this.plateau = new Plateau();
         this.plateau.addStartingPlot(new Plot(Couleur.BLEU));
@@ -61,23 +63,6 @@ public class Game {
         joueurs.add(j1);
         joueurs.add(j2);
         joueurs.add(j3);
-
-        //Todo: Création d'un ou plusieurs robot
-
-
-        //Instanciation des cartes panda.
-        cartesPanda = new ArrayList<>();
-        cartesPanda.add(new PandaObjectiveCard(1, 0, 0, 1));
-        cartesPanda.add(new PandaObjectiveCard(1, 1, 0, 1));
-        cartesPanda.add(new PandaObjectiveCard(1, 0, 1, 1));
-        cartesPanda.add(new PandaObjectiveCard(2, 0, 0, 2));
-        cartesPanda.add(new PandaObjectiveCard(2, 2, 0, 2));
-        cartesPanda.add(new PandaObjectiveCard(2, 0, 2, 2));
-        cartesPanda.add(new PandaObjectiveCard(0, 2, 2, 2));
-        cartesPanda.add(new PandaObjectiveCard(0, 1, 2, 2));
-        cartesPanda.add(new PandaObjectiveCard(1, 1, 2, 2));
-
-        Collections.shuffle(cartesPanda);
 
         firstDrawObjectif(joueurs);
 
@@ -242,9 +227,9 @@ public class Game {
      * @return Boolean true|false
      */
     public boolean drawObjectif(Joueur joueur){
-        Boolean bool = !cartesPanda.isEmpty();
+        Boolean bool = !pandObjDeck.isEmpty();
         if (bool){
-            cartesPanda.remove(0).instanciate(plateau,joueur);
+            pandObjDeck.pop().instanciate(plateau,joueur);
         }
         return bool;
 
