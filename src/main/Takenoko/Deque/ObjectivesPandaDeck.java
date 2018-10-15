@@ -2,6 +2,7 @@ package Takenoko.Deque;
 
 import Takenoko.Objectives.ObjectiveCard;
 import Takenoko.Objectives.PandaObjectiveCard;
+import Takenoko.Util.Console;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
@@ -23,7 +24,7 @@ public class ObjectivesPandaDeck extends ObjectivesDeck {
         try {
             obj = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, PandaObjectiveCard.class));
         } catch (IOException e) {
-            e.printStackTrace();
+            Console.Log.debugPrint(e.getMessage());
         }
         return obj;
     }
