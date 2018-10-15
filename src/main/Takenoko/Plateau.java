@@ -15,6 +15,8 @@ public class Plateau {
     private final CoordAxial _STARTING_COORDINATE_ = new CoordAxial(0,0);
     private final List<CoordAxial> posInit = _STARTING_COORDINATE_.getNeighborCoords();
 
+    private final CoordAxial initJardinier = new CoordAxial(0,0);
+
     private HashMap<CoordAxial, Plot> plots;
     private Plot lastPlop;
 
@@ -22,6 +24,11 @@ public class Plateau {
      * Position du Panda sur le plateau
      */
     private CoordAxial posPanda;
+
+    /**
+     * Position du Jardinier sur le plateau
+     */
+    private CoordAxial posJardinier;
 
     private HashSet<CoordIrrig> irrigations;
 
@@ -38,6 +45,7 @@ public class Plateau {
         irrigations.addAll(borderCoords);
 
         posPanda = _STARTING_COORDINATE_;
+        posJardinier = initJardinier;
     }
 
     /**
@@ -310,5 +318,12 @@ public class Plateau {
         }
         return false;
     }
+
+
+    /**
+     * RELATIF AU JARDINIER
+     */
+
+
 
 }
