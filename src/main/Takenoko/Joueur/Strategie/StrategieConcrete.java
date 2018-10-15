@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class StrategieConcrete extends AbstractStrategie {
-    public StrategieCoord strategieCoord;
-    public StrategieIrrig strategieIrrig;
+    private StrategieCoord strategieCoord;
+    private StrategieIrrig strategieIrrig;
 
     public StrategieConcrete(StrategieCoord strategieCoord, StrategieIrrig strategieIrrig) {
         this.strategieCoord = strategieCoord;

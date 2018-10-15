@@ -18,10 +18,12 @@ import Takenoko.Objectives.Patterns.PatternTile;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import Takenoko.Properties.Couleur;
+import Takenoko.Util.Comparators.ComparateurPosBambooAdj;
 import Takenoko.Util.Console;
 import Takenoko.Util.Exceptions.EmptyDeckException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * La classe Game permet de créer une partie
@@ -295,6 +297,23 @@ public class Game {
                 Plot pose = turn(j);
 
                 irrigTurn(j);
+
+                List<Plot> legalMovesPanda = plateau.getLinePlots(plateau.getPosPanda());
+                // On prend la première position légale
+                List<Plot> legalMovesPandaWithBamboo = legalMovesPanda.stream().filter(Plot::haveBambou).collect(Collectors.toList());
+
+                CoordAxial newPosPanda = legalMovesPanda.get(new Random().nextInt(legalMovesPanda.size())).getCoord();
+                if (!legalMovesPandaWithBamboo.isEmpty()) {
+                    newPosPanda = legalMovesPandaWithBamboo.get(0).getCoord();
+                }
+                Couleur eatedColor = plateau.movePanda(newPosPanda);
+
+                if (eatedColor != Couleur.BLEU){
+                    j.setBambooByColor(eatedColor, j.getBambooByColor(eatedColor) + 1);
+                    Console.Log.println(String.format("Robot_%d déplace le panda en %s, il gagne une section de bambou %s", j.getId(), newPosPanda, eatedColor ));
+                }else{
+                    Console.Log.println(String.format("Robot_%d déplace le panda en %s, il ne récolte aucun bambou",j.getId(), newPosPanda));
+                }
 
                 plateau.moveJardinier(pose.getCoord());
 

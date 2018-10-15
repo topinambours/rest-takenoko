@@ -57,6 +57,10 @@ public class Plateau {
         return plots.get(new CoordAxial(q, r));
     }
 
+    public CoordAxial getPosPanda() {
+        return posPanda;
+    }
+
     /**
      * getter de parcelle, prend les coordonnées mises ensemble
      * @param coord coordonnées axiales de la parcelle
@@ -316,10 +320,10 @@ public class Plateau {
             Plot current = plots.get(coord);
             if (current.getBambou() > 0) {
                 plots.get(coord).removeBambou(1);
-                Console.Log.println(String.format("Le panda à mangé une section de bambou en %s.", coord.toString()));
+
                 return plots.get(coord).getCouleur();
             }else{
-                Console.Log.println(String.format("Le panda n'a mangé aucune section de bambou en %s.", coord.toString()));
+
                 return Couleur.BLEU;
             }
         }
@@ -361,6 +365,10 @@ public class Plateau {
             }
         }
         return res;
+    }
+
+    public List<Plot> getLinePlots(CoordAxial coord){
+        return plots.values().stream().filter(p -> coord.isInLine(p.getCoord())).collect(Collectors.toList());
     }
 
 

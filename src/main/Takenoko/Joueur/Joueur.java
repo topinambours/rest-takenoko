@@ -264,7 +264,7 @@ public class Joueur implements Comparable{
      * @param c la couleur des bambous
      * @return nombre de bambous correspondants
      */
-    private int getBambooByColor(Couleur c){
+    public int getBambooByColor(Couleur c){
         return bambooByColor.get(c);
     }
 
@@ -273,7 +273,7 @@ public class Joueur implements Comparable{
      * @param c la couleur des bambous à modifier
      * @param amount le nouveau compte en bambou
      */
-    private void setBambooByColor(Couleur c, int amount){
+    public void setBambooByColor(Couleur c, int amount){
         bambooByColor.remove(c);
         bambooByColor.put(c, amount);
     }
@@ -340,6 +340,5 @@ public class Joueur implements Comparable{
             setBambooByColor(Couleur.ROSE, 0);
         }
     }
-
 
 }
