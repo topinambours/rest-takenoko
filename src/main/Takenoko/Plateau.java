@@ -328,11 +328,27 @@ public class Plateau {
      * @return true si le jardinier est bien bougé sinon false
      */
     public boolean moveJardinier(CoordAxial coord){
-        if(coord.isInLine(posJardinier)){
+        if(coord.isInLine(posJardinier) && plots.containsKey(coord)){
             posJardinier = coord;
+            getPlot(coord).pousserBambou();
+            for(CoordAxial coordAxial : neighborColor(coord)){
+                getPlot(coordAxial).pousserBambou();
+            }
             return true;
         }
         return false;
+    }
+
+    public List<CoordAxial> neighborColor(CoordAxial coord){
+        List<CoordAxial> adj = coord.getNeighborCoords();
+        Couleur color = getPlot(coord).getCouleur();
+        List<CoordAxial> res = new ArrayList<>();
+        for(CoordAxial coordAxial : adj){
+            if(color == getPlot(coordAxial).getCouleur()){
+                res.add(coordAxial);
+            }
+        }
+        return res;
     }
 
 
