@@ -8,6 +8,7 @@ import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
+import Takenoko.Properties.Couleur;
 import org.junit.Test;
 
 import java.util.List;
@@ -72,21 +73,21 @@ public class PlateauTest {
         CoordAxial coordTest = new CoordAxial(10,-10);
 
         // Pas de parcelle à cet emplacement
-        assertFalse(p.movePanda(coordTest));
+        assertEquals(Couleur.BLEU, p.movePanda(coordTest));
 
 
-        p.putPlot(new Plot(), coordTest);
+        p.putPlot(new Plot(Couleur.VERT), coordTest);
         assertFalse(p.getPlot(coordTest).haveBambou());
         p.getPlot(coordTest).setWater(true);
         p.getPlot(coordTest).pousserBambou();
         assertTrue(p.getPlot(coordTest).haveBambou());
-        assertTrue(p.movePanda(coordTest));
+        assertEquals(Couleur.VERT, p.movePanda(coordTest));
         assertFalse(p.getPlot(coordTest).haveBambou());
 
         // Tuile qui n'est pas en "ligne" avec la position du panda
         p.putPlot(new Plot(new CoordAxial(10,-12)));
 
-        assertFalse(p.movePanda(new CoordAxial(11,-12)));
+        assertEquals(Couleur.BLEU, p.movePanda(new CoordAxial(11,-12)));
 
     }
 

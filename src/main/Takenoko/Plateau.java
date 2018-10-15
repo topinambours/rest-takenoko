@@ -308,16 +308,23 @@ public class Plateau {
     /**
      * Modifie la position du panda uniquement si pour la nouvelle position, il existe une parcelle sur le plateau
      * @param coord nouvelle coordonnée de la figurine panda
-     * @return vrai si le panda a changé de position
+     * @return la couleur du bambou récupéré après le passage du panda
      */
-    public boolean movePanda(CoordAxial coord){
+    public Couleur movePanda(CoordAxial coord){
         if (plots.containsKey(coord) && coord.isInLine(posPanda)){
             posPanda = coord;
-            plots.get(coord).removeBambou(1);
-            Console.Log.println(String.format("Le panda à mangé une section de bambou en %s.", coord.toString()));
-            return true;
+            Plot current = plots.get(coord);
+            if (current.getBambou() > 0) {
+                plots.get(coord).removeBambou(1);
+                Console.Log.println(String.format("Le panda à mangé une section de bambou en %s.", coord.toString()));
+                return plots.get(coord).getCouleur();
+            }else{
+                Console.Log.println(String.format("Le panda n'a mangé aucune section de bambou en %s.", coord.toString()));
+                return Couleur.BLEU;
+            }
         }
-        return false;
+        // Couleur de la tuile de départ, ne rapporte pas de section au joueur.
+        return Couleur.BLEU;
     }
 
 
