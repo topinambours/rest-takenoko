@@ -15,8 +15,6 @@ public class Plateau {
     private final CoordAxial _STARTING_COORDINATE_ = new CoordAxial(0,0);
     private final List<CoordAxial> posInit = _STARTING_COORDINATE_.getNeighborCoords();
 
-    private final CoordAxial initJardinier = new CoordAxial(0,0);
-
     private HashMap<CoordAxial, Plot> plots;
     private Plot lastPlop;
 
@@ -45,7 +43,7 @@ public class Plateau {
         irrigations.addAll(borderCoords);
 
         posPanda = _STARTING_COORDINATE_;
-        posJardinier = initJardinier;
+        posJardinier = _STARTING_COORDINATE_;
     }
 
     /**
@@ -323,6 +321,19 @@ public class Plateau {
     /**
      * RELATIF AU JARDINIER
      */
+
+    /**
+     * Fonction permettant de bouger le jardinier.
+     * @param coord une coordonnée
+     * @return true si le jardinier est bien bougé sinon false
+     */
+    public boolean moveJardinier(CoordAxial coord){
+        if(coord.isInLine(posJardinier)){
+            posJardinier = coord;
+            return true;
+        }
+        return false;
+    }
 
 
 

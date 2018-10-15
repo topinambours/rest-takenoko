@@ -75,4 +75,20 @@ public class PlateauTest {
 
         assertTrue(p.movePanda(new CoordAxial(1,800)));
     }
+
+    @Test
+    public void moveJardinier() {
+        Plateau p = new Plateau();
+
+        assertFalse(p.moveJardinier(new CoordAxial(1,1)));
+
+        p.putPlot(new Plot(), 1,1);
+
+        assertFalse(p.moveJardinier(new CoordAxial(1,1)));
+        p.putPlot(new Plot(), 1,0);
+        assertTrue(p.moveJardinier(new CoordAxial(1,0)));
+
+        p.putPlot(new Plot(), 1,1);
+
+    }
 }

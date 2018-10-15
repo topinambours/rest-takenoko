@@ -10,8 +10,6 @@ import java.util.List;
  */
 public class CoordAxial {
 
-
-
     private int q;
     private int r;
 
@@ -73,6 +71,28 @@ public class CoordAxial {
         res.add(new CoordIrrig(q, r, Orient.W));
         res.add(new CoordIrrig(q, r, Orient.S));
         return res;
+    }
+
+    /**
+     * Permet de savoir si une coordonnée est dans la même line que
+     * la coordonnée courante.
+     * @param coord une coordonnée
+     * @return true ou false
+     */
+    public boolean isInLine(CoordAxial coord){
+        int qn = coord.getQ();
+        int rn = coord.getR();
+        int qsous = q-qn;
+        int rsous = r-rn;
+        int qabs = Math.abs(qsous);
+        int rabs = Math.abs(rsous);
+
+        if((q==qn) || (r==rn) || (qabs==rabs && qsous != rsous)){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     @Override
