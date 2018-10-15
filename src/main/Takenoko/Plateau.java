@@ -61,6 +61,8 @@ public class Plateau {
         return posPanda;
     }
 
+    public CoordAxial getPosJardinier(){return posJardinier;}
+
     /**
      * getter de parcelle, prend les coordonnées mises ensemble
      * @param coord coordonnées axiales de la parcelle

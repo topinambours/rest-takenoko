@@ -211,7 +211,6 @@ public class Game {
         Collections.shuffle(cartesPattern);
     }
 
-
     /**
      * Permet de faire piocher un pattern au joueur
      * @param joueur Joueur le joueur
@@ -315,7 +314,10 @@ public class Game {
                     Console.Log.println(String.format("Robot_%d déplace le panda en %s, il ne récolte aucun bambou",j.getId(), newPosPanda));
                 }
 
-                plateau.moveJardinier(pose.getCoord());
+                Boolean mooveJard = plateau.moveJardinier(pose.getCoord());
+                if(mooveJard){
+                    Console.Log.println(String.format("Robot_%d déplace le jardinier en %s", j.getId(), plateau.getPosJardinier()));
+                }
 
                 evaluate(j, pose.getCoord());
             }//Todo : faire piocher -> faire poser
