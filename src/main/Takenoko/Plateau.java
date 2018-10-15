@@ -4,6 +4,7 @@ import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import Takenoko.Properties.Couleur;
+import Takenoko.Util.Console;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -310,8 +311,10 @@ public class Plateau {
      * @return vrai si le panda a changé de position
      */
     public boolean movePanda(CoordAxial coord){
-        if (plots.containsKey(coord)){
+        if (plots.containsKey(coord) && coord.isInLine(posPanda)){
             posPanda = coord;
+            plots.get(coord).removeBambou(1);
+            Console.Log.println(String.format("Le panda à mangé une section de bambou en %s.", coord.toString()));
             return true;
         }
         return false;
