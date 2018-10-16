@@ -25,6 +25,12 @@ public class CoordCube {
         this.s = s;
     }
 
+    public CoordCube() {
+        this.q = 0;
+        this.r = 0;
+        this.s = 0;
+    }
+
     /**
      * constructeur prenant 2 coordonnées et calculant la 3e
      * @param q la coordonnée q

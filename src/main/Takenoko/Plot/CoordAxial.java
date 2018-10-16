@@ -30,6 +30,10 @@ public class CoordAxial {
         return r;
     }
 
+    /**
+     * Setter de R
+     * @param r la nouvelle valeur de r
+     */
     public void setR(int r) {
         this.r = r;
     }

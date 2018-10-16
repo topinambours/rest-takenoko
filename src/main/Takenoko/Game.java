@@ -2,6 +2,7 @@ package Takenoko;
 
 import Takenoko.Deque.Deck;
 import Takenoko.Deque.ObjectivesPandaDeck;
+import Takenoko.Deque.ObjectivesPatternDeck;
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieConcrete;
@@ -33,9 +34,9 @@ public class Game {
 
     private Deck deck;
     private ObjectivesPandaDeck pandObjDeck;
+    private ObjectivesPatternDeck patternObjDeck;
     private ArrayList<Joueur> joueurs;
     private Plateau plateau;
-    private List<PatternObjectiveCard> cartesPattern;
 
     public Game() {
         this.deck = new Deck();
@@ -43,7 +44,7 @@ public class Game {
         this.joueurs = new ArrayList<>();
         this.plateau = new Plateau();
         this.plateau.addStartingPlot(new Plot(Couleur.BLEU));
-        this.cartesPattern = new ArrayList<>();
+        this.patternObjDeck = new ObjectivesPatternDeck();
 
 
         Boolean deckBool = deck.init();
@@ -66,134 +67,8 @@ public class Game {
 
         firstDrawObjectif(joueurs);
 
-        initPatternsCards();
         firstDrawPattern(joueurs);
 
-    }
-
-    /**
-     * Permet la création des patterns
-     * nous avons les patterns suivant :
-     * <ul>
-     *     <li>(0,0,Rose),(0,1,Rose),(-1,1,Jaune),(-1,2,Jaune)</li>
-     *     <li>(0,0,Vert),(0,1,Vert),(0,2,Vert)</li>
-     *     <li>(0,0,Jaune),(-1,1,Jaune),(-1,2,Jaune)</li>
-     *     <li>(0,0,Rose),(-1,1,Rose),(0,1,Rose)</li>
-     *     <li>(0,0,Vert),(0,1,Vert),(-1,1,Rose),(-1,2,Rose)</li>
-     * </ul>
-     */
-    private void initPatternsCards(){
-        int q;
-        int r;
-        Couleur couleur;
-
-        //CARTE 1 :
-        List<PatternTile> tilesPattern1 = new ArrayList<>();
-        q = 0;
-        r = 0;
-        couleur = Couleur.ROSE;
-        tilesPattern1.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = 0;
-        r = 1;
-        couleur = Couleur.ROSE;
-        tilesPattern1.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = -1;
-        r = 1;
-        couleur = Couleur.JAUNE;
-        tilesPattern1.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = -1;
-        r = 2;
-        couleur = Couleur.JAUNE;
-        tilesPattern1.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        cartesPattern.add(new PatternObjectiveCard(new Pattern(tilesPattern1),5));
-
-
-        //CARTE 2 :
-        List<PatternTile> tilesPattern2 = new ArrayList<>();
-        q = 0;
-        r = 0;
-        couleur = Couleur.VERT;
-        tilesPattern2.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = 0;
-        r = 1;
-        couleur = Couleur.VERT;
-        tilesPattern2.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = 0;
-        r = 2;
-        couleur = Couleur.VERT;
-        tilesPattern2.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        cartesPattern.add(new PatternObjectiveCard(new Pattern(tilesPattern2),2));
-
-        //CARTE 3 :
-        List<PatternTile> tilesPattern3 = new ArrayList<>();
-        q = 0;
-        r = 0;
-        couleur = Couleur.JAUNE;
-        tilesPattern3.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = -1;
-        r = 1;
-        couleur = Couleur.JAUNE;
-        tilesPattern3.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = -1;
-        r = 2;
-        couleur = Couleur.JAUNE;
-        tilesPattern3.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        cartesPattern.add(new PatternObjectiveCard(new Pattern(tilesPattern3),3));
-
-        //CARTE 4 :
-        List<PatternTile> tilesPattern4 = new ArrayList<>();
-        q = 0;
-        r = 0;
-        couleur = Couleur.ROSE;
-        tilesPattern4.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = -1;
-        r = 1;
-        couleur = Couleur.ROSE;
-        tilesPattern4.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = 0;
-        r = 1;
-        couleur = Couleur.ROSE;
-        tilesPattern4.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        cartesPattern.add(new PatternObjectiveCard(new Pattern(tilesPattern4),4));
-
-        //CARTE 5 :
-        List<PatternTile> tilesPattern5 = new ArrayList<>();
-        q = 0;
-        r = 0;
-        couleur = Couleur.VERT;
-        tilesPattern5.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = 0;
-        r = 1;
-        couleur = Couleur.VERT;
-        tilesPattern5.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = -1;
-        r = 1;
-        couleur = Couleur.ROSE;
-        tilesPattern5.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = -1;
-        r = 2;
-        couleur = Couleur.ROSE;
-        tilesPattern5.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        cartesPattern.add(new PatternObjectiveCard(new Pattern(tilesPattern5),4));
-
-        Collections.shuffle(cartesPattern);
     }
 
     /**
@@ -202,11 +77,11 @@ public class Game {
      * @return Boolean true|false
      */
     public boolean drawPattern(Joueur joueur){
-        Boolean bool = !cartesPattern.isEmpty();
-        if(bool){
-            cartesPattern.remove(0).instanciate(plateau,joueur);
+        if(!patternObjDeck.isEmpty()){
+            patternObjDeck.pop().instanciate(plateau,joueur);
+            return true;
         }
-        return bool;
+        return false;
 
     }
 

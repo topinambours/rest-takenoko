@@ -7,9 +7,24 @@ import Takenoko.Plot.CoordAxial;
 
 public class PatternObjectiveCard extends ObjectiveCard {
     private int pointValue;
+
+
+
     private Pattern pattern;
 
     private Plateau plateau;
+
+
+
+    /**
+     * Constructeur d'une carte objectif pattern
+     * @param pattern
+     * @param pointValue
+     */
+    public PatternObjectiveCard(Pattern pattern, int pointValue) {
+        this.pointValue = pointValue;
+        this.pattern = pattern;
+    }
 
     /**
      * Constructeur d'une carte objectif pattern vide
@@ -22,22 +37,20 @@ public class PatternObjectiveCard extends ObjectiveCard {
     }
 
     /**
-     * Constructeur d'une carte objectif pattern
-     * @param pattern
-     * @param value
-     */
-    public PatternObjectiveCard(Pattern pattern, int value) {
-        this.pointValue = value;
-        this.pattern = pattern;
-    }
-
-    /**
      * Renvoie la valeur de point de la carte
      * @return
      */
     @Override
     public int getPointValue() {
         return pointValue;
+    }
+
+    public void setPointValue(int pointValue) {
+        this.pointValue = pointValue;
+    }
+
+    public void setPattern(Pattern pattern) {
+        this.pattern = pattern;
     }
 
     /**

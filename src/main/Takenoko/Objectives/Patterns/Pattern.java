@@ -12,6 +12,10 @@ import java.util.stream.Collectors;
  * Utilisée pour les cartes objectif parcelle
  */
 public class Pattern {
+    public void setTiles(List<PatternTile> tiles) {
+        this.tiles = tiles;
+    }
+
     private List<PatternTile> tiles;
 
     /**
@@ -21,6 +25,8 @@ public class Pattern {
     public Pattern(List<PatternTile> tiles) {
         this.tiles = tiles;
     }
+
+    public Pattern(){}
 
     /**
      * Copy Constructor utilisé en interne

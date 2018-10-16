@@ -1,5 +1,7 @@
 package Takenoko.Properties;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * La classe couleur est une enumeration qui permet de savoir quel est la bonne couleur
  * Les couleurs disponibles étant :
@@ -11,7 +13,14 @@ package Takenoko.Properties;
  * </ul>
  */
 public enum Couleur {
-    VERT("Vert",0),ROSE("Rose",1),JAUNE("Jaune",2),BLEU("Bleu(Lac)",3);
+    @JsonProperty("Vert")
+    VERT("Vert",0),
+    @JsonProperty("Rose")
+    ROSE("Rose",1),
+    @JsonProperty("Jaune")
+    JAUNE("Jaune",2),
+    @JsonProperty("Bleu")
+    BLEU("Bleu(Lac)",3);
     //BLANC("Blanc"),NOIR("Noir");
 
     private String name ="";
@@ -21,6 +30,9 @@ public enum Couleur {
         this.name = name;
         this.id = id;
 
+    }
+
+    Couleur() {
     }
 
 

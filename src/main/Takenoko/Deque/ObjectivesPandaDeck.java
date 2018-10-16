@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ObjectivesPandaDeck extends ObjectivesDeck {
 
@@ -18,7 +19,7 @@ public class ObjectivesPandaDeck extends ObjectivesDeck {
 
     public List<ObjectiveCard> importFromJsonFile(){
         ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("panda.json").getFile());
+        File file = new File(Objects.requireNonNull(classLoader.getResource("panda.json")).getFile());
         ObjectMapper mapper = new ObjectMapper();
         List<ObjectiveCard> obj = new ArrayList<>();
         try {

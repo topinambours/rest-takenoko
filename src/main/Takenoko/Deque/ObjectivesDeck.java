@@ -17,6 +17,11 @@ public class ObjectivesDeck {
     private Stack<ObjectiveCard> stack;
 
     /**
+     * La taille de la pioche
+     */
+    private int size;
+
+    /**
      * Une pioche est initialisé à partir d'une liste de cartes
      * Cette liste est fabriqué au sein des classes filles
      * @param initDeck liste de départ
@@ -27,6 +32,7 @@ public class ObjectivesDeck {
         for (ObjectiveCard card : initDeck){
             push(card);
         }
+        size = initDeck.size();
     }
 
     /**
@@ -43,6 +49,7 @@ public class ObjectivesDeck {
      */
     private void push(ObjectiveCard card){
         stack.push(card);
+        size += 1;
     }
 
     /**
@@ -50,6 +57,16 @@ public class ObjectivesDeck {
      * @return la carte piochée
      */
     public ObjectiveCard pop(){
+        size -= 1;
         return stack.pop();
     }
+
+    /**
+     * Permet de récupérer la taille de la pioche
+     * @return taille de la pioche
+     */
+    public int getSize(){
+        return size;
+    }
+
 }
