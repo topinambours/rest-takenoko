@@ -1,5 +1,6 @@
 package Takenoko.Joueur.Strategie;
 
+import Takenoko.Game;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieAction.Action;
 import Takenoko.Joueur.Strategie.StrategieAction.StrategieAction;
@@ -32,9 +33,20 @@ public abstract class AbstractStrategie implements StrategieCoord, StrategieIrri
 
     public abstract CoordAxial getPandaMove(Plateau plateau, Joueur joueur);
 
-    public abstract Action firstActionType(Plateau plateau);
+    public abstract Action firstActionType(Game game);
 
-    public abstract Action secondActionType(Plateau plateau);
+    public abstract Action secondActionType(Game game);
 
-    public abstract Action thirdActionType(Plateau plateau);
+    public abstract Action thirdActionType(Game game);
+
+    public abstract void setStrategieCoord(StrategieCoord strategieCoord);
+
+    public abstract void setStrategieIrrig(StrategieIrrig strategieIrrig);
+
+    public abstract void setStrategiePanda(StrategiePanda strategiePanda);
+
+    public abstract void setStrategieJardinier(StrategieJardinier strategieJardinier);
+
+    public abstract void setStrategieAction(StrategieAction strategieAction);
+
 }

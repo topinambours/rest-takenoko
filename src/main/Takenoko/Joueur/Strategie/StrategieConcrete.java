@@ -1,5 +1,6 @@
 package Takenoko.Joueur.Strategie;
 
+import Takenoko.Game;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieAction.Action;
 import Takenoko.Joueur.Strategie.StrategieAction.StrategieAction;
@@ -114,17 +115,42 @@ public class StrategieConcrete extends AbstractStrategie {
     }
 
     @Override
-    public Action firstActionType(Plateau plat) {
-        return strategieAction.firstActionType(plat);
+    public Action firstActionType(Game game) {
+        return strategieAction.firstActionType(game);
     }
 
     @Override
-    public Action secondActionType(Plateau plat) {
-        return strategieAction.secondActionType(plat);
+    public Action secondActionType(Game game) {
+        return strategieAction.secondActionType(game);
     }
 
     @Override
-    public Action thirdActionType(Plateau plat) {
-        return strategieAction.thirdActionType(plat);
+    public Action thirdActionType(Game game) {
+        return strategieAction.thirdActionType(game);
+    }
+
+    @Override
+    public void setStrategieCoord(StrategieCoord strategieCoord) {
+        this.strategieCoord = strategieCoord;
+    }
+
+    @Override
+    public void setStrategieIrrig(StrategieIrrig strategieIrrig) {
+        this.strategieIrrig = strategieIrrig;
+    }
+
+    @Override
+    public void setStrategiePanda(StrategiePanda strategiePanda) {
+        this.strategiePanda = strategiePanda;
+    }
+
+    @Override
+    public void setStrategieJardinier(StrategieJardinier strategieJardinier) {
+        this.strategieJardinier = strategieJardinier;
+    }
+
+    @Override
+    public void setStrategieAction(StrategieAction strategieAction) {
+        this.strategieAction = strategieAction;
     }
 }

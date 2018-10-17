@@ -1,9 +1,13 @@
 package Takenoko.Joueur.Strategie;
 
+import Takenoko.Game;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieAction.Action;
+import Takenoko.Joueur.Strategie.StrategieAction.StrategieAction;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoord;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrig;
+import Takenoko.Joueur.Strategie.StrategieJardinier.StrategieJardinier;
+import Takenoko.Joueur.Strategie.StrategiePanda.StrategiePanda;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
@@ -91,17 +95,42 @@ public class StrategieSansPions extends AbstractStrategie {
     }
 
     @Override
-    public Action firstActionType(Plateau plateau) {
+    public Action firstActionType(Game game) {
         return null;
     }
 
     @Override
-    public Action secondActionType(Plateau plateau) {
+    public Action secondActionType(Game game) {
         return null;
     }
 
     @Override
-    public Action thirdActionType(Plateau plateau) {
+    public Action thirdActionType(Game game) {
         return null;
+    }
+
+    @Override
+    public void setStrategieCoord(StrategieCoord strategieCoord) {
+
+    }
+
+    @Override
+    public void setStrategieIrrig(StrategieIrrig strategieIrrig) {
+
+    }
+
+    @Override
+    public void setStrategiePanda(StrategiePanda strategiePanda) {
+
+    }
+
+    @Override
+    public void setStrategieJardinier(StrategieJardinier strategieJardinier) {
+
+    }
+
+    @Override
+    public void setStrategieAction(StrategieAction strategieAction) {
+
     }
 }

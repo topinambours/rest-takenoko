@@ -4,7 +4,7 @@ import Takenoko.Deque.Deck;
 import Takenoko.Game;
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Strategie.AbstractStrategie;
-import Takenoko.Joueur.Strategie.Action;
+import Takenoko.Joueur.Strategie.StrategieAction.*;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoord;
 import Takenoko.Objectives.GardenObjectiveCard;
 import Takenoko.Objectives.PandaObjectiveCard;
@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
  * Le robot, joue au jeu en utilisant une stratégie spécifique
  */
 public class Joueur implements Comparable{
+
 
     private Plot plot;
 
@@ -75,6 +76,7 @@ public class Joueur implements Comparable{
         this.pandaObjectiveCards = new HashSet<PandaObjectiveCard>();
         this.patternObjectiveCards = new ArrayList<PatternObjectiveCard>();
         this.gardenObjectiveCards = new HashSet<GardenObjectiveCard>();
+        strategie.setStrategieAction(new StrategieActionBasique());
     }
 
     /**
@@ -429,6 +431,9 @@ public class Joueur implements Comparable{
         Joueur joueur = this;
         Deck deck = game.getDeck();
         Plateau plateau = game.getPlateau();
+        if(action == null){
+            throw new NoActionSelectedException();
+        }
         switch (action){
             case Card:
                 joueur.draw(deck);
@@ -451,6 +456,16 @@ public class Joueur implements Comparable{
             default:
                 throw new NoActionSelectedException();
         }
+
+    }
+
+    /**
+     * Le joueur effectue un tour
+     * @param game Game la game
+     */
+    public void turn(Game game) throws EmptyDeckException, NoActionSelectedException {
+        turn(game,strategie.firstActionType(game));
+        turn(game,strategie.secondActionType(game));
 
     }
 
