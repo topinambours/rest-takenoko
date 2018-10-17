@@ -7,5 +7,5 @@ import Takenoko.Plot.CoordAxial;
 
 public interface StrategiePanda {
     public String getStrategiePandaLabel();
-    public CoordAxial getMove(Plateau plateau, Joueur joueur);
+    public CoordAxial getPandaMove(Plateau plateau, Joueur joueur);
 }

@@ -6,5 +6,5 @@ import Takenoko.Plot.CoordAxial;
 
 public interface StrategieJardinier {
     public String getStrategieJardinierLabel();
-    public CoordAxial getMove(Plateau plateau, Joueur joueur);
+    public CoordAxial getJardinierMove(Plateau plateau, Joueur joueur);
 }
