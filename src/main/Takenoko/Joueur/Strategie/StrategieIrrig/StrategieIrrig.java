@@ -14,5 +14,5 @@ import java.util.Optional;
  */
 public interface StrategieIrrig {
     public Optional getIrrig(Plateau P);
-    public String getStrategieLabel();
+    public String getStrategieIrrigLabel();
 }

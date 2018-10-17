@@ -1,23 +1,33 @@
 package Takenoko.Joueur;
 
 import Takenoko.Deque.Deck;
+import Takenoko.Game;
 import Takenoko.Irrigation.CoordIrrig;
+import Takenoko.Joueur.Strategie.AbstractStrategie;
+import Takenoko.Joueur.Strategie.StrategieAction.*;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoord;
-import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrig;
+import Takenoko.Objectives.GardenObjectiveCard;
 import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Objectives.PatternObjectiveCard;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import Takenoko.Properties.Couleur;
+import Takenoko.Util.Console;
 import Takenoko.Util.Exceptions.EmptyDeckException;
+import Takenoko.Util.Exceptions.NoActionSelectedException;
 
+import java.security.CodeSource;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Le robot, joue au jeu en utilisant une stratégie spécifique
  */
 public class Joueur implements Comparable{
+
+
+    private Plot plot;
 
     /**
      * Identidiant du joueur
@@ -25,9 +35,9 @@ public class Joueur implements Comparable{
     private int id;
 
     /**
-     * Stratégie adoptée par le joueur
+     * Stratégie globale du Joueur englobant tous les types d'action possibles
      */
-    private StrategieCoord strategieCoord;
+    private AbstractStrategie strategie;
 
     /**
      * Score générale du joueur
@@ -50,26 +60,23 @@ public class Joueur implements Comparable{
      */
     private ArrayList<PatternObjectiveCard> patternObjectiveCards;
 
-    /**
-     * Déclaration de la stratégie d'iirigation du joueur
-     */
-    private StrategieIrrig strategieIrrig;
+    private HashSet<GardenObjectiveCard> gardenObjectiveCards;
 
     /**
      * Un joueur est initialisé avec un identifiant
      * @param id identifiant (unique)
-     * @param strategieCoord stratégie adopté {@link StrategieCoord}
+     * @param strategie stratégie adopté {@link StrategieCoord}
      */
-    public Joueur(int id, StrategieCoord strategieCoord, StrategieIrrig strategieIrrig){
+    public Joueur(int id, AbstractStrategie strategie){
         this.id = id;
         this.bambooByColor = new HashMap<>();
         for (Couleur c : Couleur.values()){
             this.bambooByColor.put(c, 0);
         }
-        this.strategieCoord = strategieCoord;
+        this.strategie = strategie;
         this.pandaObjectiveCards = new HashSet<PandaObjectiveCard>();
         this.patternObjectiveCards = new ArrayList<PatternObjectiveCard>();
-        this.strategieIrrig = strategieIrrig;
+        this.gardenObjectiveCards = new HashSet<GardenObjectiveCard>();
     }
 
     /**
@@ -78,6 +85,10 @@ public class Joueur implements Comparable{
      */
     public HashSet<PandaObjectiveCard> getPandaObjectiveCards() {
         return pandaObjectiveCards;
+    }
+
+    public HashSet<GardenObjectiveCard> getGardenObjectiveCards() {
+        return gardenObjectiveCards;
     }
 
     /**
@@ -122,6 +133,22 @@ public class Joueur implements Comparable{
     }
 
     /**
+     * Permet d'ajouter une carte objectif Jardinier du joueur
+     * @param gardenObjectiveCard
+     */
+    public void addGardenObjectiveCard(GardenObjectiveCard gardenObjectiveCard){
+        this.gardenObjectiveCards.add(gardenObjectiveCard);
+    }
+
+    /**
+     * Permet de supprimer une carte objectif Jardinier du joueur
+     * @param gardenObjectiveCard
+     */
+    public void removeGardenObjectiveCard(GardenObjectiveCard gardenObjectiveCard){
+        this.gardenObjectiveCards.remove(gardenObjectiveCard);
+    }
+
+    /**
      * Getter pour l'identifiant du joueur
      * @return identifiant du joueur
      */
@@ -135,7 +162,9 @@ public class Joueur implements Comparable{
      * @return Plot une parcelle
      */
     public Plot draw(Deck deck) throws EmptyDeckException {
-        return deck.popLast();
+        Plot plot = deck.popLast();
+        this.setPlot(plot);
+        return plot;
     }
 
     /**
@@ -170,7 +199,7 @@ public class Joueur implements Comparable{
      * @return String strategie
      */
     public String getStrategieLabel(){
-        return strategieCoord.getStrategieLabel();
+        return strategie.getStrategieLabel();
     }
 
     /**
@@ -180,10 +209,11 @@ public class Joueur implements Comparable{
      * @return
      */
     public CoordAxial putPlot(Plot plot, Plateau board){
-        CoordAxial coor = strategieCoord.getCoord(board, plot);
+        CoordAxial coor = strategie.getCoord(board, plot);
         plot.setCoord(coor.getQ(),coor.getR());
         //plot.setWater(board.checkPlotWater(plot.getCoord())); //Check if have water
         board.putPlot(plot);
+        this.plot.setCoord(coor);
         return coor;
     }
 
@@ -193,7 +223,7 @@ public class Joueur implements Comparable{
      * @return Optional l'irrigation posee
      */
     public Optional<CoordIrrig> putIrrig(Plateau plateau) {
-        Optional<CoordIrrig> strat = strategieIrrig.getIrrig(plateau);
+        Optional<CoordIrrig> strat = strategie.getIrrig(plateau);
         if (strat.isPresent()) {
             CoordIrrig coo = strat.get();
             List<CoordAxial> borders = coo.borders();
@@ -269,7 +299,7 @@ public class Joueur implements Comparable{
      * @param c la couleur des bambous
      * @return nombre de bambous correspondants
      */
-    private int getBambooByColor(Couleur c){
+    public int getBambooByColor(Couleur c){
         return bambooByColor.get(c);
     }
 
@@ -278,7 +308,7 @@ public class Joueur implements Comparable{
      * @param c la couleur des bambous à modifier
      * @param amount le nouveau compte en bambou
      */
-    private void setBambooByColor(Couleur c, int amount){
+    public void setBambooByColor(Couleur c, int amount){
         bambooByColor.remove(c);
         bambooByColor.put(c, amount);
     }
@@ -346,5 +376,110 @@ public class Joueur implements Comparable{
         }
     }
 
+    public Plot getPlot() {
+        return this.plot;
+    }
 
+    public void setPlot(Plot nextPlot) {
+        this.plot = nextPlot;
+    }
+
+
+
+    /**
+     * Permet de faire jouer le tour jardinier
+     * @param game Game
+     */
+    public void jardinierTurn(Game game){
+        Plateau plateau = game.getPlateau();
+        Boolean mooveJard = plateau.moveJardinier(this.getPlot().getCoord());
+        if(mooveJard){
+            Console.Log.println(String.format("Robot_%d déplace le jardinier en %s", this.getId(), plateau.getPosJardinier()));
+        }
+    }
+
+    /**
+     * Permet de faire jouer le tour au panda
+     * @param game Game le jeu
+     */
+    public void pandaTurn(Game game){
+        Plateau plateau = game.getPlateau();
+
+        CoordAxial newPosPanda = strategie.getPandaMove(plateau, this);
+
+        Couleur eatedColor = plateau.movePanda(newPosPanda);
+
+        if (eatedColor != Couleur.BLEU){
+            this.setBambooByColor(eatedColor, this.getBambooByColor(eatedColor) + 1);
+            Console.Log.println(String.format("Robot_%d déplace le panda en %s, il gagne une section de bambou %s", this.getId(), newPosPanda, eatedColor ));
+        }else{
+            Console.Log.println(String.format("Robot_%d déplace le panda en %s, il ne récolte aucun bambou",this.getId(), newPosPanda));
+        }
+    }
+
+    /**
+     * Le joueur effectue un tour
+     * @param game Game la game
+     * @param action Action une action
+     */
+    public void turn(Game game, Action action) throws EmptyDeckException, NoActionSelectedException {
+        Joueur joueur = this;
+        Deck deck = game.getDeck();
+        Plateau plateau = game.getPlateau();
+        if(action == null){
+            throw new NoActionSelectedException();
+        }
+        Console.Log.debugPrintln("Robot_"+joueur.getId()+" choisit l'action "+action.toString());
+        switch (action){
+            case Card:
+                joueur.draw(deck);
+                Console.Log.println("Robot_"+joueur.getId()+" pioche une parcelle : "+joueur.getPlot().getCouleur());
+                break;
+            case Plot:
+                joueur.putPlot(joueur.getPlot(),plateau);
+                Console.Log.println("Robot_"+joueur.getId()+" pose la parcelle en "+joueur.getPlot().getCoord());
+                Console.Log.debugPrintln("plateau : " + plateau.getPlots().toString());
+                break;
+            case Irrig:
+                Console.Log.print("Robot_"+joueur.getId()+" essaie de poser une irrigation... ");
+                irrigTurn(game.getPlateau());
+                break;
+            case Panda:
+                pandaTurn(game);
+                break;
+            case Gardener:
+                jardinierTurn(game);
+                break;
+            default:
+                throw new NoActionSelectedException();
+        }
+
+    }
+
+    /**
+     * Le joueur effectue un tour
+     * @param game Game la game
+     */
+    public void turn(Game game) throws EmptyDeckException, NoActionSelectedException {
+        turn(game,strategie.firstActionType(game));
+        turn(game,strategie.secondActionType(game));
+
+    }
+
+    /**
+     * Effectue le tour de pose d'irrigation d'un joueur
+     * @param plateau Plateau le plateau
+     * @return Optional une irrigation si une irrigation a été posée
+     */
+    public Optional<CoordIrrig> irrigTurn(Plateau plateau) {
+        Optional<CoordIrrig> coo = this.putIrrig(plateau);
+        if (coo.isPresent()) {
+            Console.Log.println(String.format("Il pose une section d'irrigation en : %s", coo.get()));
+            List<CoordAxial> newIrrigated = coo.get().borders();
+            Console.Log.println(String.format("Les parcelles %s et %s sont irriguées", newIrrigated.get(0), newIrrigated.get(1)));
+        }else{
+            Console.Log.println(String.format("Il ne peut pas poser de section supplémentaire"));
+        }
+        return coo;
+    }
 }

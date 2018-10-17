@@ -2,7 +2,10 @@ package Takenoko.Joueur.Strategie.StrategieCoord;
 
 import Takenoko.Game;
 import Takenoko.Joueur.Joueur;
+import Takenoko.Joueur.Strategie.StrategieConcrete;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
+import Takenoko.Joueur.Strategie.StrategieSansPions;
+import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import org.junit.Before;
@@ -14,11 +17,13 @@ public class StrategieCoordAdjacentTest {
     private Game game;
     private Joueur joueur;
     private StrategieCoord strategieCoord;
+    private StrategieSansPions strategie;
 
     @Before public void StrategieAdjacentTest(){
          game = new Game();
          strategieCoord = new StrategieCoordAdjacent();
-         joueur = new Joueur(1, strategieCoord,new StrategieIrrigBase(game.getPlateau()));
+         strategie = new StrategieSansPions(strategieCoord, new StrategieIrrigBase(game.getPlateau()));
+         joueur = new Joueur(1, strategie);
     }
 
     @Test public void test(){

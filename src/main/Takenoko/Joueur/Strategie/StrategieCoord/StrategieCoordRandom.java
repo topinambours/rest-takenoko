@@ -37,7 +37,7 @@ public class StrategieCoordRandom implements StrategieCoord {
 
 
     @Override
-    public String getStrategieLabel() {
+    public String getStrategieCoordLabel() {
         return "Stratégie aléatoire";
     }
 }

@@ -55,7 +55,7 @@ public class StrategieIrrigComparator implements StrategieIrrig {
      * @return String label
      */
     @Override
-    public String getStrategieLabel() {
+    public String getStrategieIrrigLabel() {
         return "Stratégie irrigation optimal";
     }
 }

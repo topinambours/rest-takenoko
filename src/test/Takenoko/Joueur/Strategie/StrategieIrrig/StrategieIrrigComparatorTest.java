@@ -45,6 +45,6 @@ public class StrategieIrrigComparatorTest {
 
     @Test
     public void getStrategieLabel() {
-        assertEquals("Stratégie irrigation optimal", cp.getStrategieLabel());
+        assertEquals("Stratégie irrigation optimal", cp.getStrategieIrrigLabel());
     }
 }

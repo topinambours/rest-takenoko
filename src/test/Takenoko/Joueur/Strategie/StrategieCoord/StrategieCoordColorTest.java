@@ -1,7 +1,9 @@
 package Takenoko.Joueur.Strategie.StrategieCoord;
 
 import Takenoko.Joueur.Joueur;
+import Takenoko.Joueur.Strategie.StrategieConcrete;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
+import Takenoko.Joueur.Strategie.StrategieSansPions;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
@@ -17,14 +19,17 @@ import static org.junit.Assert.assertEquals;
 public class StrategieCoordColorTest {
 
     StrategieCoordColor strategieColor;
+    StrategieSansPions strategie;
     Plateau p;
     Joueur joueur;
 
     @Before
     public void setup() throws Exception{
         strategieColor = new StrategieCoordColor();
+        strategie = new StrategieSansPions(strategieColor, new StrategieIrrigBase(p));
+
         p = new Plateau();
-        joueur = new Joueur(1, strategieColor,new StrategieIrrigBase(p));
+        joueur = new Joueur(1, strategie);
     }
 
     @Test
@@ -65,7 +70,7 @@ public class StrategieCoordColorTest {
     @Test
     public void getStrategieLabel(){
         String name = "Max Color Adj";
-        assertEquals(name, strategieColor.getStrategieLabel());
+        assertEquals(name, strategieColor.getStrategieCoordLabel());
     }
 
 }

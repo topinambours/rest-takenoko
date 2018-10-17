@@ -1,25 +1,37 @@
 package Takenoko;
 
 import Takenoko.Deque.Deck;
+import Takenoko.Deque.ObjectivesGardenDeck;
+import Takenoko.Deque.ObjectivesPandaDeck;
+import Takenoko.Deque.ObjectivesPatternDeck;
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Joueur;
+import Takenoko.Joueur.Strategie.StrategieAction.Action;
+import Takenoko.Joueur.Strategie.StrategieAction.StrategieActionBasique;
+import Takenoko.Joueur.Strategie.StrategieConcrete;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordAdjacent;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordBamboo;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordColor;
+import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigComparator;
+import Takenoko.Joueur.Strategie.StrategieJardinier.StrategieJardinierBasique;
+import Takenoko.Joueur.Strategie.StrategieJardinier.StrategieJardinierRandom;
+import Takenoko.Joueur.Strategie.StrategiePanda.StrategiePandaBasique;
+import Takenoko.Joueur.Strategie.StrategiePanda.StrategiePandaRandom;
+import Takenoko.Joueur.Strategie.StrategieSansPions;
+import Takenoko.Objectives.GardenObjectiveCard;
 import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Objectives.PatternObjectiveCard;
-import Takenoko.Objectives.Patterns.CoordCube;
-import Takenoko.Objectives.Patterns.Pattern;
-import Takenoko.Objectives.Patterns.PatternTile;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import Takenoko.Properties.Couleur;
 import Takenoko.Util.Console;
 import Takenoko.Util.Exceptions.EmptyDeckException;
+import Takenoko.Util.Exceptions.NoActionSelectedException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * La classe Game permet de créer une partie
@@ -27,187 +39,44 @@ import java.util.*;
 public class Game {
 
     private Deck deck;
+    private ObjectivesPandaDeck pandObjDeck;
+    private ObjectivesPatternDeck patternObjDeck;
+    private ObjectivesGardenDeck gardenObjDeck;
     private ArrayList<Joueur> joueurs;
     private Plateau plateau;
-    private List<PandaObjectiveCard> cartesPanda;
-    private List<PatternObjectiveCard> cartesPattern;
 
     public Game() {
         this.deck = new Deck();
+        this.pandObjDeck = new ObjectivesPandaDeck();
         this.joueurs = new ArrayList<>();
         this.plateau = new Plateau();
         this.plateau.addStartingPlot(new Plot(Couleur.BLEU));
-        this.cartesPattern = new ArrayList<>();
+        this.patternObjDeck = new ObjectivesPatternDeck();
+        this.gardenObjDeck = new ObjectivesGardenDeck();
 
 
         Boolean deckBool = deck.init();
         Console.Log.debugPrint("Deck init : "+ deckBool+"\n");
 
-        Joueur j1 = new Joueur(1, new StrategieCoordAdjacent(),new StrategieIrrigComparator(plateau));
+        StrategieConcrete strategieJ1 = new StrategieConcrete(new StrategieCoordAdjacent(),new StrategieIrrigComparator(plateau));
+        strategieJ1.setStrategieAction(new StrategieActionBasique());
 
-        StrategieCoordBamboo stratJ2 = new StrategieCoordBamboo(true);
-        Joueur j2 = new Joueur(2, stratJ2,new StrategieIrrigBase(plateau));
-        stratJ2.setJoueur(j2);
+        Joueur j1 = new Joueur(1, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaBasique(), new StrategieJardinierBasique(), new StrategieActionBasique()));
 
-        Joueur j3 = new Joueur(3, new StrategieCoordColor(),new StrategieIrrigComparator(plateau));
+        Joueur j2 = new Joueur(2, new StrategieConcrete(new StrategieCoordRandom(), new StrategieIrrigComparator(plateau), new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique()));
+
+
         joueurs.add(j1);
         joueurs.add(j2);
-        joueurs.add(j3);
-
-        //Todo: Création d'un ou plusieurs robot
-
-
-        //Instanciation des cartes panda.
-        cartesPanda = new ArrayList<>();
-        cartesPanda.add(new PandaObjectiveCard(1, 0, 0, 1));
-        cartesPanda.add(new PandaObjectiveCard(1, 1, 0, 1));
-        cartesPanda.add(new PandaObjectiveCard(1, 0, 1, 1));
-        cartesPanda.add(new PandaObjectiveCard(2, 0, 0, 2));
-        cartesPanda.add(new PandaObjectiveCard(2, 2, 0, 2));
-        cartesPanda.add(new PandaObjectiveCard(2, 0, 2, 2));
-        cartesPanda.add(new PandaObjectiveCard(0, 2, 2, 2));
-        cartesPanda.add(new PandaObjectiveCard(0, 1, 2, 2));
-        cartesPanda.add(new PandaObjectiveCard(1, 1, 2, 2));
-
-        Collections.shuffle(cartesPanda);
 
         firstDrawObjectif(joueurs);
 
-        initPatternsCards();
         firstDrawPattern(joueurs);
-
-        stratJ2.setGoal(j2.getPandaObjectiveCards());
-
-
+        
+        firstDrawGarden(joueurs);
 
 
     }
-
-    /**
-     * Permet la création des patterns
-     * nous avons les patterns suivant :
-     * <ul>
-     *     <li>(0,0,Rose),(0,1,Rose),(-1,1,Jaune),(-1,2,Jaune)</li>
-     *     <li>(0,0,Vert),(0,1,Vert),(0,2,Vert)</li>
-     *     <li>(0,0,Jaune),(-1,1,Jaune),(-1,2,Jaune)</li>
-     *     <li>(0,0,Rose),(-1,1,Rose),(0,1,Rose)</li>
-     *     <li>(0,0,Vert),(0,1,Vert),(-1,1,Rose),(-1,2,Rose)</li>
-     * </ul>
-     */
-    private void initPatternsCards(){
-        int q;
-        int r;
-        Couleur couleur;
-
-        //CARTE 1 :
-        List<PatternTile> tilesPattern1 = new ArrayList<>();
-        q = 0;
-        r = 0;
-        couleur = Couleur.ROSE;
-        tilesPattern1.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = 0;
-        r = 1;
-        couleur = Couleur.ROSE;
-        tilesPattern1.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = -1;
-        r = 1;
-        couleur = Couleur.JAUNE;
-        tilesPattern1.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = -1;
-        r = 2;
-        couleur = Couleur.JAUNE;
-        tilesPattern1.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        cartesPattern.add(new PatternObjectiveCard(new Pattern(tilesPattern1),5));
-
-
-        //CARTE 2 :
-        List<PatternTile> tilesPattern2 = new ArrayList<>();
-        q = 0;
-        r = 0;
-        couleur = Couleur.VERT;
-        tilesPattern2.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = 0;
-        r = 1;
-        couleur = Couleur.VERT;
-        tilesPattern2.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = 0;
-        r = 2;
-        couleur = Couleur.VERT;
-        tilesPattern2.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        cartesPattern.add(new PatternObjectiveCard(new Pattern(tilesPattern2),2));
-
-        //CARTE 3 :
-        List<PatternTile> tilesPattern3 = new ArrayList<>();
-        q = 0;
-        r = 0;
-        couleur = Couleur.JAUNE;
-        tilesPattern3.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = -1;
-        r = 1;
-        couleur = Couleur.JAUNE;
-        tilesPattern3.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = -1;
-        r = 2;
-        couleur = Couleur.JAUNE;
-        tilesPattern3.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        cartesPattern.add(new PatternObjectiveCard(new Pattern(tilesPattern3),3));
-
-        //CARTE 4 :
-        List<PatternTile> tilesPattern4 = new ArrayList<>();
-        q = 0;
-        r = 0;
-        couleur = Couleur.ROSE;
-        tilesPattern4.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = -1;
-        r = 1;
-        couleur = Couleur.ROSE;
-        tilesPattern4.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = 0;
-        r = 1;
-        couleur = Couleur.ROSE;
-        tilesPattern4.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        cartesPattern.add(new PatternObjectiveCard(new Pattern(tilesPattern4),4));
-
-        //CARTE 5 :
-        List<PatternTile> tilesPattern5 = new ArrayList<>();
-        q = 0;
-        r = 0;
-        couleur = Couleur.VERT;
-        tilesPattern5.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = 0;
-        r = 1;
-        couleur = Couleur.VERT;
-        tilesPattern5.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = -1;
-        r = 1;
-        couleur = Couleur.ROSE;
-        tilesPattern5.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        q = -1;
-        r = 2;
-        couleur = Couleur.ROSE;
-        tilesPattern5.add(new PatternTile(new CoordCube(q,r,-q-r),couleur));
-
-        cartesPattern.add(new PatternObjectiveCard(new Pattern(tilesPattern5),4));
-
-        Collections.shuffle(cartesPattern);
-    }
-
 
     /**
      * Permet de faire piocher un pattern au joueur
@@ -215,11 +84,11 @@ public class Game {
      * @return Boolean true|false
      */
     public boolean drawPattern(Joueur joueur){
-        Boolean bool = !cartesPattern.isEmpty();
-        if(bool){
-            cartesPattern.remove(0).instanciate(plateau,joueur);
+        if(!patternObjDeck.isEmpty()){
+            patternObjDeck.pop().instanciate(plateau,joueur);
+            return true;
         }
-        return bool;
+        return false;
 
     }
 
@@ -240,9 +109,9 @@ public class Game {
      * @return Boolean true|false
      */
     public boolean drawObjectif(Joueur joueur){
-        Boolean bool = !cartesPanda.isEmpty();
+        Boolean bool = !pandObjDeck.isEmpty();
         if (bool){
-            cartesPanda.remove(0).instanciate(plateau,joueur);
+            pandObjDeck.pop().instanciate(plateau,joueur);
         }
         return bool;
 
@@ -256,6 +125,22 @@ public class Game {
         Iterator<Joueur> iterator = joueurs.iterator();
         while (iterator.hasNext()){
             drawObjectif(iterator.next());
+        }
+    }
+
+    public boolean drawGarden(Joueur joueur){
+        Boolean bool = !gardenObjDeck.isEmpty();
+        if (bool){
+            gardenObjDeck.pop().instanciate(plateau,joueur);
+        }
+        return bool;
+
+    }
+
+    private void firstDrawGarden(ArrayList<Joueur> joueurs){
+        Iterator<Joueur> iterator = joueurs.iterator();
+        while (iterator.hasNext()){
+            drawGarden(iterator.next());
         }
     }
 
@@ -283,22 +168,24 @@ public class Game {
     /**
      * La fonction principale qui permet de lancer et faire la game
      */
-    public void play() throws EmptyDeckException {
+    public void play() throws EmptyDeckException, NoActionSelectedException {
         while(!end()){ //Tant que la partie n'est pas terminée
             for (Joueur j : joueurs){
                 Console.Log.println("----");
                 if (end()){
                     break;
                 }
-                // Le joueur pioche une parcelle
-                Plot pose = turn(j);
 
-                irrigTurn(j);
+                j.turn(this);
+                j.turn(this,Action.Irrig);
+                j.turn(this,Action.Gardener);
+                j.turn(this,Action.Panda);
 
-                evaluate(j, pose.getCoord());
+
+                evaluate(j, j.getPlot().getCoord());
             }//Todo : faire piocher -> faire poser
 
-            grow();
+
         }
         Console.Log.println("----\nLa partie est terminée");
         for (Joueur j : joueurs){
@@ -306,32 +193,6 @@ public class Game {
         }
     }
 
-    /**
-     * Effectue le tour d'un joueur
-     * @param joueur Joueur un joueur
-     * @return Plot la parcelle que le joueur a joué
-     */
-    public Plot turn(Joueur joueur) throws EmptyDeckException {
-        Plot pioche = joueur.draw(deck);
-        joueur.putPlot(pioche,plateau);
-        Console.Log.println(String.format("Robot_%d pose une parcelle %s en : %s", joueur.getId(),pioche.getCouleur().toString(), pioche.getCoord()));
-        return pioche;
-    }
-
-    /**
-     * Effectue le tour de pose d'irrigation d'un joueur
-     * @param joueur Joueur un joueur
-     * @return Optional une irrigation si une irrigation a été posée
-     */
-    public Optional<CoordIrrig> irrigTurn(Joueur joueur) {
-        Optional<CoordIrrig> coo = joueur.putIrrig(plateau);
-        if (coo.isPresent()) {
-            Console.Log.println(String.format("Robot_%d pose une section d'irrigation en : %s",joueur.getId(), coo.get()));
-            List<CoordAxial> newIrrigated = coo.get().borders();
-            Console.Log.println(String.format("Les parcelles %s et %s sont irriguées", newIrrigated.get(0), newIrrigated.get(1)));
-        }
-        return coo;
-    }
 
     //GRADUATE
 
@@ -339,38 +200,24 @@ public class Game {
      * Graduate permet d'évaluer les points à chaque tour
      */
     protected void evaluate(Joueur j, CoordAxial coord){
-        //CHECK NeighborColor
-        //int n = plateau.getNeighbors(coord).size();
-        /*int n = plateau.getNeighbors(coord).stream().mapToInt(parcel -> parcel.getBambou()).sum();
-        j.addScore(n);*/
-
-        int n = evaluateBambou(j,coord);
-
-        if (n > 0) {
-            j.addScore(n);
-
-            for (Plot nei : plateau.getNeighbors(coord)) {
-                nei.removeBamboo();
-            }
-            if (n > 1) {
-                Console.Log.println(String.format("Robot_%d gagne 1 point, une unique section de bambou était présente sur les parcelles adjacentes", j.getId()));
-            }else{
-                Console.Log.println(String.format("Robot_%d gagne %d points car %d sections de bambou étaient présentes sur les parcelles adjacentes", j.getId(), n, n));
-            }
-        }
-
-        HashSet<Couleur> couleurs = getNeighborColor(coord,plateau);
-        if(couleurs.contains(plateau.getPlot(coord).getCouleur())){
-            j.addScore1();
-            Console.Log.println(String.format("Robot_%d gagne 1 point car une des parcelles adjacentes est de la même couleur", j.getId()));
-        }
 
         int evaluatedPandaObjective = evaluatePandaObjective(j);
         j.addScore(evaluatedPandaObjective);
         if (evaluatedPandaObjective > 0){
             Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte panda",j.getId(),evaluatedPandaObjective));
         }
-        j.addScore(evaluatePatternObjective(j));
+
+        int evaluatePatternObjective = evaluatePatternObjective(j);
+        j.addScore(evaluatePatternObjective);
+        if (evaluatePatternObjective > 0){
+            Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte Pattern",j.getId(),evaluatePatternObjective));
+        }
+
+        int evaluateGardenObjective = evaluateGardenObjective(j);
+        j.addScore(evaluateGardenObjective);
+        if (evaluateGardenObjective > 0){
+            Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte Jardinier",j.getId(),evaluateGardenObjective));
+        }
 
     }
 
@@ -419,7 +266,6 @@ public class Game {
             if (pandaObjectiveCard.isComplete()){
                 score = score + pandaObjectiveCard.getPointValue();
                 joueur.removePandaObjectiveCard(pandaObjectiveCard);
-                Console.Log.debugPrint(String.format("Le joueur %d stock %d point pour la réalisation d'une carte panda",joueur.getId(), pandaObjectiveCard.getPointValue()));
             }
         }
         return score;
@@ -441,7 +287,6 @@ public class Game {
             if(patternObjectiveCard.isComplete()){
                 patternObjectiveCard1.add(patternObjectiveCard);
                 score = score + patternObjectiveCard.getPointValue();
-                Console.Log.debugPrint(String.format("Le joueur %d stock %d point pour la réalisation d'une carte pattern",joueur.getId(), patternObjectiveCard.getPointValue()));
                 i+= 1;
             }
         }
@@ -453,6 +298,18 @@ public class Game {
         }
         return score;
 
+    }
+
+    protected int evaluateGardenObjective(Joueur joueur){
+        int score = 0;
+        HashSet<GardenObjectiveCard> gardenObjectiveCards = (HashSet<GardenObjectiveCard>) joueur.getGardenObjectiveCards().clone();
+        for(GardenObjectiveCard gardenObjectiveCard : gardenObjectiveCards){
+            if(gardenObjectiveCard.isComplete()){
+                score = score + gardenObjectiveCard.getPointValue();
+                joueur.removeGardenObjectiveCard(gardenObjectiveCard);
+            }
+        }
+        return score;
     }
 
 
@@ -480,6 +337,7 @@ public class Game {
      * @param plateau Plateau le plateau
      */
    private void grow(Plateau plateau){
+
        HashMap<CoordAxial, Plot> hashMap = plateau.getPlots();
        Iterator iterator = hashMap.entrySet().iterator();
        while (iterator.hasNext()){
@@ -491,7 +349,6 @@ public class Game {
                current.pousserBambou();
            }
        }
-
    }
 
    protected void grow(){

@@ -90,8 +90,8 @@ public class PlotTest {
                 assertTrue(p.pousserBambou());
             }
             assertEquals(amount, p.getBambou());
-            assertEquals(amount, p.removeBamboo());
-            assertEquals(0, p.removeBamboo());
+            assertEquals(amount, p.removeAllBambou());
+            assertEquals(0, p.removeAllBambou());
             assertFalse(p.haveBambou());
         }
     }

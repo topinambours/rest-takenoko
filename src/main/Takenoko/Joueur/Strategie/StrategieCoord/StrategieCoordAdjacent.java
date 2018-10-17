@@ -45,8 +45,8 @@ public class StrategieCoordAdjacent implements StrategieCoord {
     }
 
     @Override
-    public String getStrategieLabel() {
-        return "Stratégie des adjacents";
+    public String getStrategieCoordLabel() {
+        return "Stratégie qui maximise les gains par action";
     }
 
 }

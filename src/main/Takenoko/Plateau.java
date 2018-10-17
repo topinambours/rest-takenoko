@@ -18,6 +18,16 @@ public class Plateau {
     private HashMap<CoordAxial, Plot> plots;
     private Plot lastPlop;
 
+    /**
+     * Position du Panda sur le plateau
+     */
+    private CoordAxial posPanda;
+
+    /**
+     * Position du Jardinier sur le plateau
+     */
+    private CoordAxial posJardinier;
+
     private HashSet<CoordIrrig> irrigations;
 
     /**
@@ -30,10 +40,10 @@ public class Plateau {
         irrigations = new HashSet<CoordIrrig>();
 
         List<CoordIrrig> borderCoords = _STARTING_COORDINATE_.getBorderCoords();
-        for(CoordIrrig coordIrrig : borderCoords){
-            irrigations.add(coordIrrig);
-        }
+        irrigations.addAll(borderCoords);
 
+        posPanda = _STARTING_COORDINATE_;
+        posJardinier = _STARTING_COORDINATE_;
     }
 
     /**
@@ -45,6 +55,12 @@ public class Plateau {
     public Plot getPlot(int q, int r) {
         return plots.get(new CoordAxial(q, r));
     }
+
+    public CoordAxial getPosPanda() {
+        return posPanda;
+    }
+
+    public CoordAxial getPosJardinier(){return posJardinier;}
 
     /**
      * getter de parcelle, prend les coordonnées mises ensemble
@@ -289,4 +305,101 @@ public class Plateau {
         }
         return false;
     }
+
+    /**
+     * RELATIF AU PANDA
+     */
+
+    /**
+     * Modifie la position du panda uniquement si pour la nouvelle position, il existe une parcelle sur le plateau
+     * @param coord nouvelle coordonnée de la figurine panda
+     * @return la couleur du bambou récupéré après le passage du panda
+     */
+    public Couleur movePanda(CoordAxial coord){
+        if (plots.containsKey(coord) && coord.isInLine(posPanda)){
+            posPanda = coord;
+            Plot current = plots.get(coord);
+            if (current.getBambou() > 0) {
+                plots.get(coord).removeBambou(1);
+
+                return plots.get(coord).getCouleur();
+            }else{
+
+                return Couleur.BLEU;
+            }
+        }
+        // Couleur de la tuile de départ, ne rapporte pas de section au joueur.
+        return Couleur.BLEU;
+    }
+
+
+    /**
+     * RELATIF AU JARDINIER
+     */
+
+    /**
+     * Fonction permettant de bouger le jardinier.
+     * @param coord une coordonnée
+     * @return true si le jardinier est bien bougé sinon false
+     */
+    public boolean moveJardinier(CoordAxial coord){
+        if(coord.isInLine(posJardinier) && plots.containsKey(coord)){
+            posJardinier = coord;
+            getPlot(coord).pousserBambou();
+            for(CoordAxial coordAxial : neighborColor(coord)){
+                getPlot(coordAxial).pousserBambou();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public List<CoordAxial> neighborColor(CoordAxial coord){
+        List<CoordAxial> adj = coord.getNeighborCoords();
+        Couleur color = getPlot(coord).getCouleur();
+        List<CoordAxial> res = new ArrayList<>();
+        for(CoordAxial coordAxial : adj){
+            if(plots.containsKey(coordAxial)) {
+                if (color == getPlot(coordAxial).getCouleur()) {
+                    res.add(coordAxial);
+                }
+            }
+        }
+        return res;
+    }
+
+    public List<Plot> getLinePlots(CoordAxial coord){
+        return plots.values().stream().filter(p -> coord.isInLine(p.getCoord())).collect(Collectors.toList());
+    }
+
+    public boolean isMotifInAll(Couleur color, int tower){
+        int iterTower = 0;
+
+        Collection<Plot> plot = plots.values();
+
+        if(tower == 1) {
+            for (Plot plot1 : plot) {
+                if (plot1.getCouleur() == color && plot1.getBambou() == 4) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        else if(tower <= 4 && tower > 1) {
+            for (Plot plot1 : plot) {
+                if (plot1.getCouleur() == color && plot1.getBambou() == 3) {
+                    iterTower += 1;
+                    if (iterTower == tower) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        else {
+            return false;
+        }
+    }
+
+
 }

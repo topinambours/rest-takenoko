@@ -3,8 +3,10 @@ package Takenoko.Objectives;
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Irrigation.Orient;
 import Takenoko.Joueur.Joueur;
+import Takenoko.Joueur.Strategie.StrategieConcrete;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
+import Takenoko.Joueur.Strategie.StrategieSansPions;
 import Takenoko.Objectives.Patterns.CoordCube;
 import Takenoko.Objectives.Patterns.Pattern;
 import Takenoko.Objectives.Patterns.PatternTile;
@@ -38,7 +40,7 @@ public class PatternObjectiveCardTest {
         list.add(tile2);
         myPattern = new Pattern(list);
         patternObjectiveCard = new PatternObjectiveCard(myPattern, 1);
-        patternObjectiveCard.instanciate(plateau, new Joueur(1, new StrategieCoordRandom(),new StrategieIrrigBase(plateau)));
+        patternObjectiveCard.instanciate(plateau, new Joueur(1, new StrategieSansPions(new StrategieCoordRandom(),new StrategieIrrigBase(plateau))));
     }
 
     @Test

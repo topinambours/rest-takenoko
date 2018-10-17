@@ -83,7 +83,7 @@ public class StrategieCoordBamboo implements StrategieCoord {
                 countAdjRose = p.getNeighbors(pos).stream().filter(plot -> plot.getCouleur() == Couleur.VERT).mapToInt(Plot::getBambou).sum();
                 countAdjJaune = p.getNeighbors(pos).stream().filter(plot -> plot.getCouleur() == Couleur.VERT).mapToInt(Plot::getBambou).sum();
 
-                for (PandaObjectiveCard card : goals ){
+                for (PandaObjectiveCard card : joueur.getPandaObjectiveCards() ){
                     EnumMap<Couleur, Integer> needed = card.countRequired();
                     // Le joueur à plus de bambous jaune, il peut compléter la carte sans se préocuper des jaunes
                     if ((countAdjJaune - joueur.getBambousJaunes()) > needed.get(Couleur.JAUNE) &&
@@ -102,7 +102,7 @@ public class StrategieCoordBamboo implements StrategieCoord {
 
 
     @Override
-    public String getStrategieLabel() {
+    public String getStrategieCoordLabel() {
         return "max adj bamboo";
     }
 }
