@@ -111,26 +111,23 @@ public class StrategieSansPions extends AbstractStrategie {
 
     @Override
     public void setStrategieCoord(StrategieCoord strategieCoord) {
-
+        this.strategieCoord = strategieCoord;
     }
 
     @Override
     public void setStrategieIrrig(StrategieIrrig strategieIrrig) {
-
+        this.strategieIrrig = strategieIrrig;
     }
 
     @Override
     public void setStrategiePanda(StrategiePanda strategiePanda) {
-
     }
 
     @Override
     public void setStrategieJardinier(StrategieJardinier strategieJardinier) {
-
     }
 
     @Override
     public void setStrategieAction(StrategieAction strategieAction) {
-
     }
 }

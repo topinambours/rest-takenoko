@@ -17,6 +17,7 @@ import Takenoko.Util.Console;
 import Takenoko.Util.Exceptions.EmptyDeckException;
 import Takenoko.Util.Exceptions.NoActionSelectedException;
 
+import java.security.CodeSource;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -76,7 +77,6 @@ public class Joueur implements Comparable{
         this.pandaObjectiveCards = new HashSet<PandaObjectiveCard>();
         this.patternObjectiveCards = new ArrayList<PatternObjectiveCard>();
         this.gardenObjectiveCards = new HashSet<GardenObjectiveCard>();
-        strategie.setStrategieAction(new StrategieActionBasique());
     }
 
     /**
