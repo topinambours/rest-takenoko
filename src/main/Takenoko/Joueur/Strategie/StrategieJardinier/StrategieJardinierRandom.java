@@ -4,6 +4,7 @@ import Takenoko.Joueur.Joueur;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
+import Takenoko.Properties.Couleur;
 
 import java.util.List;
 import java.util.Random;
@@ -21,6 +22,7 @@ public class StrategieJardinierRandom implements StrategieJardinier {
     @Override
     public CoordAxial getJardinierMove(Plateau plateau, Joueur joueur) {
         List<Plot> plots = plateau.getLinePlots(plateau.getPosJardinier());
+        plots.remove(new Plot(plateau.getPosPanda(), Couleur.BLEU));
         return plots
                 .get(new Random().nextInt(plots.size()))
                 .getCoord();
