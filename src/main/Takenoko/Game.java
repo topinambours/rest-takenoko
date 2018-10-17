@@ -12,8 +12,13 @@ import Takenoko.Joueur.Strategie.StrategieConcrete;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordAdjacent;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordBamboo;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordColor;
+import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigComparator;
+import Takenoko.Joueur.Strategie.StrategieJardinier.StrategieJardinierBasique;
+import Takenoko.Joueur.Strategie.StrategieJardinier.StrategieJardinierRandom;
+import Takenoko.Joueur.Strategie.StrategiePanda.StrategiePandaBasique;
+import Takenoko.Joueur.Strategie.StrategiePanda.StrategiePandaRandom;
 import Takenoko.Joueur.Strategie.StrategieSansPions;
 import Takenoko.Objectives.GardenObjectiveCard;
 import Takenoko.Objectives.PandaObjectiveCard;
@@ -55,21 +60,14 @@ public class Game {
 
         StrategieConcrete strategieJ1 = new StrategieConcrete(new StrategieCoordAdjacent(),new StrategieIrrigComparator(plateau));
         strategieJ1.setStrategieAction(new StrategieActionBasique());
-        Joueur j1 = new Joueur(1, strategieJ1);
 
-        StrategieConcrete strategieJ2 = new StrategieConcrete();
-        strategieJ2.setStrategieAction(new StrategieActionBasique());
-        Joueur j2 = new Joueur(2, strategieJ2);
-        StrategieCoordBamboo stratCoordJ2 = new StrategieCoordBamboo(true);
-        stratCoordJ2.setJoueur(j2);
-        strategieJ2.initialize(stratCoordJ2, new StrategieIrrigBase(plateau));
+        Joueur j1 = new Joueur(1, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaBasique(), new StrategieJardinierBasique(), new StrategieActionBasique()));
 
-        StrategieConcrete strategieJ3 = new StrategieConcrete(new StrategieCoordColor(),new StrategieIrrigComparator(plateau));
-        strategieJ3.setStrategieAction(new StrategieActionBasique());
-        Joueur j3 = new Joueur(3, strategieJ3);
+        Joueur j2 = new Joueur(2, new StrategieConcrete(new StrategieCoordRandom(), new StrategieIrrigComparator(plateau), new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique()));
+
+
         joueurs.add(j1);
         joueurs.add(j2);
-        joueurs.add(j3);
 
         firstDrawObjectif(joueurs);
 
@@ -202,31 +200,6 @@ public class Game {
      * Graduate permet d'évaluer les points à chaque tour
      */
     protected void evaluate(Joueur j, CoordAxial coord){
-        //CHECK NeighborColor
-        //int n = plateau.getNeighbors(coord).size();
-        /*int n = plateau.getNeighbors(coord).stream().mapToInt(parcel -> parcel.getBambou()).sum();
-        j.addScore(n);*/
-
-        int n = evaluateBambou(j,coord);
-
-        if (n > 0) {
-            j.addScore(n);
-
-            for (Plot nei : plateau.getNeighbors(coord)) {
-                nei.removeAllBambou();
-            }
-            if (n > 1) {
-                Console.Log.println(String.format("Robot_%d gagne 1 point, une unique section de bambou était présente sur les parcelles adjacentes", j.getId()));
-            }else{
-                Console.Log.println(String.format("Robot_%d gagne %d points car %d sections de bambou étaient présentes sur les parcelles adjacentes", j.getId(), n, n));
-            }
-        }
-
-        HashSet<Couleur> couleurs = getNeighborColor(coord,plateau);
-        if(couleurs.contains(plateau.getPlot(coord).getCouleur())){
-            j.addScore1();
-            Console.Log.println(String.format("Robot_%d gagne 1 point car une des parcelles adjacentes est de la même couleur", j.getId()));
-        }
 
         int evaluatedPandaObjective = evaluatePandaObjective(j);
         j.addScore(evaluatedPandaObjective);
@@ -245,9 +218,6 @@ public class Game {
         if (evaluateGardenObjective > 0){
             Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte Jardinier",j.getId(),evaluateGardenObjective));
         }
-
-
-
 
     }
 
@@ -296,7 +266,6 @@ public class Game {
             if (pandaObjectiveCard.isComplete()){
                 score = score + pandaObjectiveCard.getPointValue();
                 joueur.removePandaObjectiveCard(pandaObjectiveCard);
-                Console.Log.debugPrint(String.format("Le joueur %d stock %d point pour la réalisation d'une carte panda",joueur.getId(), pandaObjectiveCard.getPointValue()));
             }
         }
         return score;
@@ -318,7 +287,6 @@ public class Game {
             if(patternObjectiveCard.isComplete()){
                 patternObjectiveCard1.add(patternObjectiveCard);
                 score = score + patternObjectiveCard.getPointValue();
-                Console.Log.debugPrint(String.format("Le joueur %d stock %d point pour la réalisation d'une carte pattern",joueur.getId(), patternObjectiveCard.getPointValue()));
                 i+= 1;
             }
         }
@@ -339,7 +307,6 @@ public class Game {
             if(gardenObjectiveCard.isComplete()){
                 score = score + gardenObjectiveCard.getPointValue();
                 joueur.removeGardenObjectiveCard(gardenObjectiveCard);
-                Console.Log.debugPrint(String.format("Le joueur %d stock %d point pour la réalisation d'une carte Jardinier",joueur.getId(), gardenObjectiveCard.getPointValue()));
             }
         }
         return score;

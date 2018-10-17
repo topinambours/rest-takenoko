@@ -385,40 +385,18 @@ public class Plateau {
             }
             return false;
         }
-        else if(tower == 2){
+        else if(tower <= 4 && tower > 1) {
             for (Plot plot1 : plot) {
                 if (plot1.getCouleur() == color && plot1.getBambou() == 3) {
                     iterTower += 1;
-                    if(iterTower==tower){
+                    if (iterTower == tower) {
                         return true;
                     }
                 }
             }
             return false;
         }
-        else if(tower == 3){
-            for (Plot plot1 : plot) {
-                if (plot1.getCouleur() == color && plot1.getBambou() == 3) {
-                    iterTower += 1;
-                    if(iterTower==tower){
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-        else if(tower == 4){
-            for (Plot plot1 : plot) {
-                if (plot1.getCouleur() == color && plot1.getBambou() == 3) {
-                    iterTower += 1;
-                    if(iterTower==tower){
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-        else{
+        else {
             return false;
         }
     }

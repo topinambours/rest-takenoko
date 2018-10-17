@@ -9,6 +9,7 @@ import Takenoko.Util.Comparators.ComparateurPosBambooAdj;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -29,7 +30,8 @@ public class StrategieJardinierBasique implements StrategieJardinier {
         // on cherche à maximiser le nombre de bambous qui peuvent pousser pour une position
 
 
-        return coords.stream().max(new CompPosJardinier(plateau)).get();
+        Optional<CoordAxial> coordAxial = coords.stream().max(new CompPosJardinier(plateau));
+        return coordAxial.orElseGet(plateau::getPosJardinier);
 
     }
 }

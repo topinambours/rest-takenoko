@@ -2,7 +2,10 @@ package Takenoko.Deque;
 
 import Takenoko.Objectives.ObjectiveCard;
 import Takenoko.Objectives.PatternObjectiveCard;
+import Takenoko.Plot.CoordAxial;
+import Takenoko.Util.Console;
 import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,17 +30,22 @@ public class ObjectivesPatternDeck extends ObjectivesDeck {
 
         List<ObjectiveCard> out = new ArrayList<>();
         MappingIterator<PatternObjectiveCard> i = null;
+        JsonParser parser = null;
         try {
-            i = mapper.readValues(
-                    new JsonFactory().createParser(file), new TypeReference<ArrayList<PatternObjectiveCard>>(){});
+            parser = new JsonFactory().createParser(file);
+            i = mapper.readValues(parser, new TypeReference<ArrayList<PatternObjectiveCard>>(){});
+            out.addAll((Collection<? extends ObjectiveCard>) Objects.requireNonNull(i).readAll().get(0));
         } catch (IOException e) {
-            e.printStackTrace();
+            Console.Log.debugPrint(e.getMessage());
         }
-
-        try {
-            out.addAll((Collection<? extends ObjectiveCard>) i.readAll().get(0));
-        } catch (IOException e) {
-            e.printStackTrace();
+        finally {
+            try {
+                if (parser != null) {
+                    parser.close();
+                }
+            } catch (IOException e) {
+                Console.Log.debugPrint(e.getMessage());
+            }
         }
         return out;
     }

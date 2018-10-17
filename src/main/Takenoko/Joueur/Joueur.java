@@ -404,14 +404,9 @@ public class Joueur implements Comparable{
      */
     public void pandaTurn(Game game){
         Plateau plateau = game.getPlateau();
-        List<Plot> legalMovesPanda = plateau.getLinePlots(plateau.getPosPanda());
-        // On prend la première position légale
-        List<Plot> legalMovesPandaWithBamboo = legalMovesPanda.stream().filter(Plot::haveBambou).collect(Collectors.toList());
 
-        CoordAxial newPosPanda = legalMovesPanda.get(new Random().nextInt(legalMovesPanda.size())).getCoord();
-        if (!legalMovesPandaWithBamboo.isEmpty()) {
-            newPosPanda = legalMovesPandaWithBamboo.get(0).getCoord();
-        }
+        CoordAxial newPosPanda = strategie.getPandaMove(plateau, this);
+
         Couleur eatedColor = plateau.movePanda(newPosPanda);
 
         if (eatedColor != Couleur.BLEU){
@@ -438,11 +433,11 @@ public class Joueur implements Comparable{
         switch (action){
             case Card:
                 joueur.draw(deck);
-                Console.Log.println("Robot_"+joueur.getId()+" tire une plote : "+joueur.getPlot().toString());
+                Console.Log.println("Robot_"+joueur.getId()+" pioche une parcelle : "+joueur.getPlot().getCouleur());
                 break;
             case Plot:
                 joueur.putPlot(joueur.getPlot(),plateau);
-                Console.Log.println("Robot_"+joueur.getId()+" pose la parcelle "+joueur.getPlot().toString());
+                Console.Log.println("Robot_"+joueur.getId()+" pose la parcelle en "+joueur.getPlot().getCoord());
                 Console.Log.debugPrintln("plateau : " + plateau.getPlots().toString());
                 break;
             case Irrig:
@@ -479,9 +474,11 @@ public class Joueur implements Comparable{
     public Optional<CoordIrrig> irrigTurn(Plateau plateau) {
         Optional<CoordIrrig> coo = this.putIrrig(plateau);
         if (coo.isPresent()) {
-            Console.Log.println(String.format("Robot_%d pose une section d'irrigation en : %s",this.getId(), coo.get()));
+            Console.Log.println(String.format("Il pose une section d'irrigation en : %s", coo.get()));
             List<CoordAxial> newIrrigated = coo.get().borders();
             Console.Log.println(String.format("Les parcelles %s et %s sont irriguées", newIrrigated.get(0), newIrrigated.get(1)));
+        }else{
+            Console.Log.println(String.format("Il ne peut pas poser de section supplémentaire"));
         }
         return coo;
     }

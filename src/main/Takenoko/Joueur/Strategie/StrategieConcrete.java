@@ -91,7 +91,7 @@ public class StrategieConcrete extends AbstractStrategie {
 
     @Override
     public String getStrategieLabel() {
-        return getStrategieCoordLabel() + " " + getStrategieIrrigLabel();
+        return getStrategieCoordLabel();
     }
 
     @Override
