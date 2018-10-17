@@ -30,7 +30,7 @@ public class StrategieConcrete extends AbstractStrategie {
         this.strategieIrrig = strategieIrrig;
         this.strategiePanda = strategiePanda;
         this.strategieJardinier = strategieJardinier;
-        this.strategieAction = strategieAction
+        this.strategieAction = strategieAction;
     }
 
     public StrategieConcrete() {
