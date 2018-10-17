@@ -1,6 +1,7 @@
 package Takenoko;
 
 import Takenoko.Deque.Deck;
+import Takenoko.Deque.ObjectivesGardenDeck;
 import Takenoko.Deque.ObjectivesPandaDeck;
 import Takenoko.Deque.ObjectivesPatternDeck;
 import Takenoko.Irrigation.CoordIrrig;
@@ -32,6 +33,7 @@ public class Game {
     private Deck deck;
     private ObjectivesPandaDeck pandObjDeck;
     private ObjectivesPatternDeck patternObjDeck;
+    private ObjectivesGardenDeck gardenObjDeck;
     private ArrayList<Joueur> joueurs;
     private Plateau plateau;
 
@@ -42,6 +44,7 @@ public class Game {
         this.plateau = new Plateau();
         this.plateau.addStartingPlot(new Plot(Couleur.BLEU));
         this.patternObjDeck = new ObjectivesPatternDeck();
+        this.gardenObjDeck = new ObjectivesGardenDeck();
 
 
         Boolean deckBool = deck.init();
@@ -65,6 +68,9 @@ public class Game {
         firstDrawObjectif(joueurs);
 
         firstDrawPattern(joueurs);
+        
+        firstDrawGarden(joueurs);
+
 
     }
 
@@ -115,6 +121,22 @@ public class Game {
         Iterator<Joueur> iterator = joueurs.iterator();
         while (iterator.hasNext()){
             drawObjectif(iterator.next());
+        }
+    }
+
+    public boolean drawGarden(Joueur joueur){
+        Boolean bool = !gardenObjDeck.isEmpty();
+        if (bool){
+            gardenObjDeck.pop().instanciate(plateau,joueur);
+        }
+        return bool;
+
+    }
+
+    private void firstDrawGarden(ArrayList<Joueur> joueurs){
+        Iterator<Joueur> iterator = joueurs.iterator();
+        while (iterator.hasNext()){
+            drawGarden(iterator.next());
         }
     }
 

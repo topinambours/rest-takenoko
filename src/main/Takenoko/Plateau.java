@@ -4,7 +4,6 @@ import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import Takenoko.Properties.Couleur;
-import Takenoko.Util.Console;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -373,6 +372,56 @@ public class Plateau {
         return plots.values().stream().filter(p -> coord.isInLine(p.getCoord())).collect(Collectors.toList());
     }
 
+    public boolean isMotifInAll(Couleur color, int tower){
+        int iterTower = 0;
+
+        Collection<Plot> plot = plots.values();
+
+        if(tower == 1) {
+            for (Plot plot1 : plot) {
+                if (plot1.getCouleur() == color && plot1.getBambou() == 4) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        else if(tower == 2){
+            for (Plot plot1 : plot) {
+                if (plot1.getCouleur() == color && plot1.getBambou() == 3) {
+                    iterTower += 1;
+                    if(iterTower==tower){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        else if(tower == 3){
+            for (Plot plot1 : plot) {
+                if (plot1.getCouleur() == color && plot1.getBambou() == 3) {
+                    iterTower += 1;
+                    if(iterTower==tower){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        else if(tower == 4){
+            for (Plot plot1 : plot) {
+                if (plot1.getCouleur() == color && plot1.getBambou() == 3) {
+                    iterTower += 1;
+                    if(iterTower==tower){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        else{
+            return false;
+        }
+    }
 
 
 }

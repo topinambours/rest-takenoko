@@ -108,4 +108,53 @@ public class PlateauTest {
         p.putPlot(new Plot(), 1,1);
 
     }
+
+    @Test
+    public void isMotifInAll(){
+        Plateau p = new Plateau();
+        p.putPlot(new Plot(Couleur.VERT), 0, 1);
+        p.getPlot(0,1).pousserBambou();
+        p.getPlot(0,1).pousserBambou();
+        p.getPlot(0,1).pousserBambou();
+        assertFalse(p.isMotifInAll(Couleur.VERT, 1));
+        p.getPlot(0,1).pousserBambou();
+        assertTrue(p.isMotifInAll(Couleur.VERT, 1));
+
+        p.putPlot(new Plot(Couleur.JAUNE), 1, 1);
+        p.getPlot(1,1).setWater(true);
+        p.getPlot(1,1).pousserBambou();
+        p.getPlot(1,1).pousserBambou();
+        p.getPlot(1,1).pousserBambou();
+
+        p.putPlot(new Plot(Couleur.JAUNE), -1, 1);
+        p.getPlot(-1,1).setWater(true);
+        p.getPlot(-1,1).pousserBambou();
+
+        assertFalse(p.isMotifInAll(Couleur.JAUNE, 2));
+        p.getPlot(-1,1).pousserBambou();
+        p.getPlot(-1,1).pousserBambou();
+
+        assertTrue(p.isMotifInAll(Couleur.JAUNE, 2));
+
+        p.putPlot(new Plot(Couleur.JAUNE), 1, 2);
+        p.getPlot(1,2).setWater(true);
+        p.getPlot(1,2).pousserBambou();
+        p.getPlot(1,2).pousserBambou();
+        p.getPlot(1,2).pousserBambou();
+
+        assertTrue(p.isMotifInAll(Couleur.JAUNE, 3));
+
+
+        p.putPlot(new Plot(Couleur.JAUNE), 1, 3);
+        p.getPlot(1,3).setWater(true);
+        p.getPlot(1,3).pousserBambou();
+        p.getPlot(1,3).pousserBambou();
+        assertFalse(p.isMotifInAll(Couleur.JAUNE, 4));
+        p.getPlot(1,3).pousserBambou();
+
+        assertTrue(p.isMotifInAll(Couleur.JAUNE, 4));
+
+        assertFalse(p.isMotifInAll(Couleur.JAUNE, 6));
+
+    }
 }

@@ -1,14 +1,15 @@
 package Takenoko.Joueur;
 
 import Takenoko.Deque.Deck;
-import Takenoko.Joueur.Strategie.StrategieConcrete;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Joueur.Strategie.StrategieSansPions;
+import Takenoko.Objectives.GardenObjectiveCard;
 import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
+import Takenoko.Properties.Couleur;
 import Takenoko.Util.Exceptions.EmptyDeckException;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,6 +29,7 @@ public class JoueurTest {
     private Joueur joueur2;
     private PandaObjectiveCard pandaObjectiveCard;
     private Plateau p;
+    private GardenObjectiveCard gardenObjectiveCard;
 
     @Before
     public void setUp() throws Exception {
@@ -37,7 +39,7 @@ public class JoueurTest {
         joueur2 = new Joueur(2, new StrategieSansPions(new StrategieCoordRandom(),new StrategieIrrigBase(p)));
 
         pandaObjectiveCard = new PandaObjectiveCard(1, 1, 1, 1);
-
+        gardenObjectiveCard = new GardenObjectiveCard(Couleur.VERT, 1, 4);
         for (int i = 0; i < DECK_SIZE; i++){
             dtest.addFirst(new Plot(i,0));
         }
@@ -184,6 +186,34 @@ public class JoueurTest {
         joueur1.removePandaObjectiveCard(pandaObjectiveCard);
         hashSet.remove(pandaObjectiveCard);
         assertEquals(hashSet, joueur1.getPandaObjectiveCards());
+    }
+
+    @Test
+    public void addGardenObjectiveCard(){
+        HashSet<GardenObjectiveCard> list = new HashSet<>();
+        assertEquals(list, joueur1.getGardenObjectiveCards());
+
+        joueur1.addGardenObjectiveCard(gardenObjectiveCard);
+        list.add(gardenObjectiveCard);
+        assertEquals(list, joueur1.getGardenObjectiveCards());
+
+        joueur1.removeGardenObjectiveCard(gardenObjectiveCard);
+        list.remove(gardenObjectiveCard);
+        assertEquals(list, joueur1.getGardenObjectiveCards());
+    }
+
+    @Test
+    public void removeGardenObjectiveCard(){
+        HashSet<GardenObjectiveCard> list = new HashSet<>();
+        assertEquals(list, joueur1.getGardenObjectiveCards());
+
+        joueur1.addGardenObjectiveCard(gardenObjectiveCard);
+        list.add(gardenObjectiveCard);
+        assertEquals(list, joueur1.getGardenObjectiveCards());
+
+        joueur1.removeGardenObjectiveCard(gardenObjectiveCard);
+        list.remove(gardenObjectiveCard);
+        assertEquals(list, joueur1.getGardenObjectiveCards());
     }
 
     @Test

@@ -6,7 +6,7 @@ import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Strategie.AbstractStrategie;
 import Takenoko.Joueur.Strategie.Action;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoord;
-import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrig;
+import Takenoko.Objectives.GardenObjectiveCard;
 import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Objectives.PatternObjectiveCard;
 import Takenoko.Plateau;
@@ -58,6 +58,8 @@ public class Joueur implements Comparable{
      */
     private ArrayList<PatternObjectiveCard> patternObjectiveCards;
 
+    private HashSet<GardenObjectiveCard> gardenObjectiveCards;
+
     /**
      * Un joueur est initialisé avec un identifiant
      * @param id identifiant (unique)
@@ -72,6 +74,7 @@ public class Joueur implements Comparable{
         this.strategie = strategie;
         this.pandaObjectiveCards = new HashSet<PandaObjectiveCard>();
         this.patternObjectiveCards = new ArrayList<PatternObjectiveCard>();
+        this.gardenObjectiveCards = new HashSet<GardenObjectiveCard>();
     }
 
     /**
@@ -80,6 +83,10 @@ public class Joueur implements Comparable{
      */
     public HashSet<PandaObjectiveCard> getPandaObjectiveCards() {
         return pandaObjectiveCards;
+    }
+
+    public HashSet<GardenObjectiveCard> getGardenObjectiveCards() {
+        return gardenObjectiveCards;
     }
 
     /**
@@ -121,6 +128,22 @@ public class Joueur implements Comparable{
      */
     public void removeObjectiveCard(PatternObjectiveCard patternObjectiveCard){
         this.patternObjectiveCards.remove(patternObjectiveCard);
+    }
+
+    /**
+     * Permet d'ajouter une carte objectif Jardinier du joueur
+     * @param gardenObjectiveCard
+     */
+    public void addGardenObjectiveCard(GardenObjectiveCard gardenObjectiveCard){
+        this.gardenObjectiveCards.add(gardenObjectiveCard);
+    }
+
+    /**
+     * Permet de supprimer une carte objectif Jardinier du joueur
+     * @param gardenObjectiveCard
+     */
+    public void removeGardenObjectiveCard(GardenObjectiveCard gardenObjectiveCard){
+        this.gardenObjectiveCards.remove(gardenObjectiveCard);
     }
 
     /**
