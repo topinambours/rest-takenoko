@@ -18,9 +18,9 @@ public interface StrategieAction {
             case Irrig:
                 return Action.Gardener;
             case Plot:
-                return Action.Card;
-            case Card:
                 return Action.Panda;
+            case Card:
+                return Action.Plot;
             default:
                 return Action.Plot;
 

@@ -434,6 +434,7 @@ public class Joueur implements Comparable{
         if(action == null){
             throw new NoActionSelectedException();
         }
+        Console.Log.debugPrintln("Robot_"+joueur.getId()+" choisit l'action "+action.toString());
         switch (action){
             case Card:
                 joueur.draw(deck);
