@@ -179,6 +179,9 @@ public class Game {
                 }
 
                 j.turn(this);
+                j.turn(this,Action.Irrig);
+                j.turn(this,Action.Gardener);
+                j.turn(this,Action.Panda);
 
 
                 evaluate(j, j.getPlot().getCoord());

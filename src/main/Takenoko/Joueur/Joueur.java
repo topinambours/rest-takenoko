@@ -438,7 +438,7 @@ public class Joueur implements Comparable{
         switch (action){
             case Card:
                 joueur.draw(deck);
-                Console.Log.debugPrintln("Robot_"+joueur.getId()+" tire une plote : "+joueur.getPlot().toString());
+                Console.Log.println("Robot_"+joueur.getId()+" tire une plote : "+joueur.getPlot().toString());
                 break;
             case Plot:
                 joueur.putPlot(joueur.getPlot(),plateau);
@@ -446,6 +446,7 @@ public class Joueur implements Comparable{
                 Console.Log.debugPrintln("plateau : " + plateau.getPlots().toString());
                 break;
             case Irrig:
+                Console.Log.print("Robot_"+joueur.getId()+" essaie de poser une irrigation... ");
                 irrigTurn(game.getPlateau());
                 break;
             case Panda:
