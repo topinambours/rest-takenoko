@@ -3,8 +3,6 @@ package Takenoko.Joueur.Strategie;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoord;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrig;
-import Takenoko.Joueur.Strategie.StrategieJardinier.StrategieJardinier;
-import Takenoko.Joueur.Strategie.StrategiePanda.StrategiePanda;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
@@ -12,31 +10,23 @@ import Takenoko.Plot.Plot;
 import java.util.List;
 import java.util.Optional;
 
-public class StrategieConcrete extends AbstractStrategie {
+public class StrategieSansPions extends AbstractStrategie {
     private StrategieCoord strategieCoord;
     private StrategieIrrig strategieIrrig;
-    private StrategiePanda strategiePanda;
-    private StrategieJardinier strategieJardinier;
 
-    public StrategieConcrete(StrategieCoord strategieCoord, StrategieIrrig strategieIrrig, StrategiePanda strategiePanda, StrategieJardinier strategieJardinier) {
+    public StrategieSansPions(StrategieCoord strategieCoord, StrategieIrrig strategieIrrig) {
         this.strategieCoord = strategieCoord;
         this.strategieIrrig = strategieIrrig;
-        this.strategiePanda = strategiePanda;
-        this.strategieJardinier = strategieJardinier;
     }
 
-    public StrategieConcrete() {
+    public StrategieSansPions() {
         this.strategieCoord = null;
         this.strategieIrrig = null;
-        this.strategiePanda = null;
-        this.strategieJardinier = null;
     }
 
-    public void initialize(StrategieCoord strategieCoord, StrategieIrrig strategieIrrig, StrategiePanda strategiePanda, StrategieJardinier strategieJardinier) {
+    public void initialize(StrategieCoord strategieCoord, StrategieIrrig strategieIrrig) {
         this.strategieCoord = strategieCoord;
         this.strategieIrrig = strategieIrrig;
-        this.strategiePanda = strategiePanda;
-        this.strategieJardinier = strategieJardinier;
     }
 
     @Override
@@ -81,21 +71,21 @@ public class StrategieConcrete extends AbstractStrategie {
 
     @Override
     public CoordAxial getJardinierMove(Plateau plateau, Joueur joueur) {
-        return strategieJardinier.getJardinierMove(plateau, joueur);
+        return null;
     }
 
     @Override
     public CoordAxial getPandaMove(Plateau plateau, Joueur joueur) {
-        return strategiePanda.getPandaMove(plateau, joueur);
+        return null;
     }
 
     @Override
     public String getStrategieJardinierLabel() {
-        return strategieJardinier.getStrategieJardinierLabel();
+        return "Dummy Jardinier";
     }
 
     @Override
     public String getStrategiePandaLabel() {
-        return strategiePanda.getStrategiePandaLabel();
+        return "Dummy Panda";
     }
 }

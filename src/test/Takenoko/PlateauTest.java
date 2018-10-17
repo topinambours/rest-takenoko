@@ -6,6 +6,7 @@ import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieConcrete;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
+import Takenoko.Joueur.Strategie.StrategieSansPions;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import Takenoko.Properties.Couleur;
@@ -32,7 +33,7 @@ public class PlateauTest {
     public void newputPlot() {
         Plateau plat = new Plateau();
         Plot parc = new Plot();
-        Joueur bot = new Joueur(1, new StrategieConcrete(new StrategieCoordRandom(),new StrategieIrrigBase(plat)));
+        Joueur bot = new Joueur(1, new StrategieSansPions(new StrategieCoordRandom(),new StrategieIrrigBase(plat)));
         CoordAxial coo = bot.putPlot(parc, plat);
         assertEquals(coo.getQ(), parc.getq());
         assertEquals(coo.getR(), parc.getr());
