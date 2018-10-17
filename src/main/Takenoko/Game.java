@@ -212,10 +212,13 @@ public class Game {
     public void turn(Joueur joueur, Action action) throws EmptyDeckException, NoActionSelectedException {
         switch (action){
             case Card:
-                joueur.setPlot(joueur.draw(deck));
+                joueur.draw(deck);
+                Console.Log.debugPrintln("Robot_"+joueur.getId()+" tire une plote : "+joueur.getPlot().toString());
                 break;
             case Plot:
                 joueur.putPlot(joueur.getPlot(),plateau);
+                Console.Log.println("Robot_"+joueur.getId()+" pose la parcelle "+joueur.getPlot().toString());
+                Console.Log.debugPrintln("plateau : " + plateau.getPlots().toString());
                 break;
             case Irrig:
                 irrigTurn(joueur);
@@ -224,6 +227,7 @@ public class Game {
                 pandaTurn(joueur);
                 break;
             case Gardener:
+                jardinierTurn(joueur);
                 break;
             default:
                 throw new NoActionSelectedException();

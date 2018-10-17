@@ -132,7 +132,9 @@ public class Joueur implements Comparable{
      * @return Plot une parcelle
      */
     public Plot draw(Deck deck) throws EmptyDeckException {
-        return deck.popLast();
+        Plot plot = deck.popLast();
+        this.setPlot(plot);
+        return plot;
     }
 
     /**
@@ -181,6 +183,7 @@ public class Joueur implements Comparable{
         plot.setCoord(coor.getQ(),coor.getR());
         //plot.setWater(board.checkPlotWater(plot.getCoord())); //Check if have water
         board.putPlot(plot);
+        this.plot.setCoord(coor);
         return coor;
     }
 

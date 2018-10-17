@@ -77,6 +77,15 @@ public class Plot {
     }
 
     /**
+     * Permet de définir les coordonnées de la plot
+     * @param coord CoordAxial coord
+     */
+    public void setCoord(CoordAxial coord){
+        this.coord.setQ(coord.getQ());
+        this.coord.setR(coord.getR());
+    }
+
+    /**
      * Permet de connaitre la couleur d'une parcelle
      * @return Couleur la couleur
      */

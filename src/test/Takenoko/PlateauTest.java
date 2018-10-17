@@ -34,6 +34,7 @@ public class PlateauTest {
         Plateau plat = new Plateau();
         Plot parc = new Plot();
         Joueur bot = new Joueur(1, new StrategieSansPions(new StrategieCoordRandom(),new StrategieIrrigBase(plat)));
+        bot.setPlot(parc);
         CoordAxial coo = bot.putPlot(parc, plat);
         assertEquals(coo.getQ(), parc.getq());
         assertEquals(coo.getR(), parc.getr());

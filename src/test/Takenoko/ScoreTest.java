@@ -29,7 +29,7 @@ public class ScoreTest {
     @Test public void test(){
         CoordAxial coordAxial = new CoordAxial(1,0);
         Plot plot = new Plot(coordAxial, Couleur.BLEU);
-
+        joueur.setPlot(plot);
         CoordAxial pose = joueur.putPlot(plot,game.getPlateau());
 
         game.evaluate(joueur,pose);
