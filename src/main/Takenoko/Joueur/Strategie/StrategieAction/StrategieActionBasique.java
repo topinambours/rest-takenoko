@@ -11,7 +11,7 @@ public class StrategieActionBasique implements StrategieAction{
     @Override
     public Action firstActionType(Game game) {
         if(!game.getDeck().isEmpty()){
-            return Action.Plot;
+            return Action.Card;
         }else{
             int nb = (int) (Math.random() * 1 );
             switch (nb){

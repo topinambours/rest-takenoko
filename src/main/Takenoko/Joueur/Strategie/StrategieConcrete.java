@@ -11,6 +11,7 @@ import Takenoko.Joueur.Strategie.StrategiePanda.StrategiePanda;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
+import Takenoko.Util.Console;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +35,15 @@ public class StrategieConcrete extends AbstractStrategie {
         this.strategieAction = strategieAction;
     }
 
+    public StrategieConcrete(StrategieCoord strategieCoord, StrategieIrrig strategieIrrig) {
+        this.strategieCoord = strategieCoord;
+        this.strategieIrrig = strategieIrrig;
+        this.strategiePanda = null;
+        this.strategieJardinier = null;
+        this.strategieAction = null;
+    }
+
+
     public StrategieConcrete() {
         this.strategieCoord = null;
         this.strategieIrrig = null;
@@ -52,6 +62,11 @@ public class StrategieConcrete extends AbstractStrategie {
         this.strategiePanda = strategiePanda;
         this.strategieJardinier = strategieJardinier;
         this.strategieAction = strategieAction;
+    }
+
+    public void initialize(StrategieCoord strategieCoord, StrategieIrrig strategieIrrig) {
+        this.strategieCoord = strategieCoord;
+        this.strategieIrrig = strategieIrrig;
     }
 
     @Override
