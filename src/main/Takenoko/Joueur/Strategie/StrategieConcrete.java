@@ -1,6 +1,8 @@
 package Takenoko.Joueur.Strategie;
 
 import Takenoko.Joueur.Joueur;
+import Takenoko.Joueur.Strategie.StrategieAction.Action;
+import Takenoko.Joueur.Strategie.StrategieAction.StrategieAction;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoord;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrig;
 import Takenoko.Joueur.Strategie.StrategieJardinier.StrategieJardinier;
@@ -17,12 +19,18 @@ public class StrategieConcrete extends AbstractStrategie {
     private StrategieIrrig strategieIrrig;
     private StrategiePanda strategiePanda;
     private StrategieJardinier strategieJardinier;
+    private StrategieAction strategieAction;
 
-    public StrategieConcrete(StrategieCoord strategieCoord, StrategieIrrig strategieIrrig, StrategiePanda strategiePanda, StrategieJardinier strategieJardinier) {
+    public StrategieConcrete(StrategieCoord strategieCoord,
+                             StrategieIrrig strategieIrrig,
+                             StrategiePanda strategiePanda,
+                             StrategieJardinier strategieJardinier,
+                             StrategieAction strategieAction) {
         this.strategieCoord = strategieCoord;
         this.strategieIrrig = strategieIrrig;
         this.strategiePanda = strategiePanda;
         this.strategieJardinier = strategieJardinier;
+        this.strategieAction = strategieAction
     }
 
     public StrategieConcrete() {
@@ -30,13 +38,19 @@ public class StrategieConcrete extends AbstractStrategie {
         this.strategieIrrig = null;
         this.strategiePanda = null;
         this.strategieJardinier = null;
+        this.strategieAction = null;
     }
 
-    public void initialize(StrategieCoord strategieCoord, StrategieIrrig strategieIrrig, StrategiePanda strategiePanda, StrategieJardinier strategieJardinier) {
+    public void initialize(StrategieCoord strategieCoord,
+                           StrategieIrrig strategieIrrig,
+                           StrategiePanda strategiePanda,
+                           StrategieJardinier strategieJardinier,
+                           StrategieAction strategieAction) {
         this.strategieCoord = strategieCoord;
         this.strategieIrrig = strategieIrrig;
         this.strategiePanda = strategiePanda;
         this.strategieJardinier = strategieJardinier;
+        this.strategieAction = strategieAction;
     }
 
     @Override
@@ -97,5 +111,20 @@ public class StrategieConcrete extends AbstractStrategie {
     @Override
     public String getStrategiePandaLabel() {
         return strategiePanda.getStrategiePandaLabel();
+    }
+
+    @Override
+    public Action firstActionType(Plateau plat) {
+        return strategieAction.firstActionType(plat);
+    }
+
+    @Override
+    public Action secondActionType(Plateau plat) {
+        return strategieAction.secondActionType(plat);
+    }
+
+    @Override
+    public Action thirdActionType(Plateau plat) {
+        return strategieAction.thirdActionType(plat);
     }
 }

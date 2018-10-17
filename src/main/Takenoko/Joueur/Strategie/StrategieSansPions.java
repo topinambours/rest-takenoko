@@ -1,6 +1,7 @@
 package Takenoko.Joueur.Strategie;
 
 import Takenoko.Joueur.Joueur;
+import Takenoko.Joueur.Strategie.StrategieAction.Action;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoord;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrig;
 import Takenoko.Plateau;
@@ -87,5 +88,20 @@ public class StrategieSansPions extends AbstractStrategie {
     @Override
     public String getStrategiePandaLabel() {
         return "Dummy Panda";
+    }
+
+    @Override
+    public Action firstActionType(Plateau plateau) {
+        return null;
+    }
+
+    @Override
+    public Action secondActionType(Plateau plateau) {
+        return null;
+    }
+
+    @Override
+    public Action thirdActionType(Plateau plateau) {
+        return null;
     }
 }

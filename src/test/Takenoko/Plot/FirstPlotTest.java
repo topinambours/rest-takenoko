@@ -2,8 +2,7 @@ package Takenoko.Plot;
 
 import Takenoko.Game;
 import Takenoko.Joueur.Joueur;
-import Takenoko.Joueur.Strategie.Action;
-import Takenoko.Joueur.Strategie.StrategieConcrete;
+import Takenoko.Joueur.Strategie.StrategieAction.Action;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Joueur.Strategie.StrategieSansPions;

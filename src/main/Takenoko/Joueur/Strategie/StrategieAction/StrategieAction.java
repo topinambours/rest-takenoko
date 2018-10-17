@@ -1,8 +1,8 @@
-package Takenoko.Joueur.Strategie;
+package Takenoko.Joueur.Strategie.StrategieAction;
 
 import Takenoko.Plateau;
 
-public interface StrategieActions {
+public interface StrategieAction {
 
     Action firstActionType(Plateau plat);
     Action secondActionType(Plateau plat);
