@@ -5,24 +5,21 @@ import Takenoko.Deque.ObjectivesPandaDeck;
 import Takenoko.Deque.ObjectivesPatternDeck;
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Joueur;
+import Takenoko.Joueur.Strategie.Action;
 import Takenoko.Joueur.Strategie.StrategieConcrete;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordAdjacent;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordBamboo;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordColor;
-import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrig;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigComparator;
 import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Objectives.PatternObjectiveCard;
-import Takenoko.Objectives.Patterns.CoordCube;
-import Takenoko.Objectives.Patterns.Pattern;
-import Takenoko.Objectives.Patterns.PatternTile;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import Takenoko.Properties.Couleur;
-import Takenoko.Util.Comparators.ComparateurPosBambooAdj;
 import Takenoko.Util.Console;
 import Takenoko.Util.Exceptions.EmptyDeckException;
+import Takenoko.Util.Exceptions.NoActionSelectedException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -145,41 +142,22 @@ public class Game {
     /**
      * La fonction principale qui permet de lancer et faire la game
      */
-    public void play() throws EmptyDeckException {
+    public void play() throws EmptyDeckException, NoActionSelectedException {
         while(!end()){ //Tant que la partie n'est pas terminée
             for (Joueur j : joueurs){
                 Console.Log.println("----");
                 if (end()){
                     break;
                 }
-                // Le joueur pioche une parcelle
-                Plot pose = turn(j);
 
-                irrigTurn(j);
+                turn(j,Action.Card);
+                turn(j,Action.Plot);
+                turn(j,Action.Irrig);
+                turn(j,Action.Panda);
+                turn(j,Action.Gardener);
 
-                List<Plot> legalMovesPanda = plateau.getLinePlots(plateau.getPosPanda());
-                // On prend la première position légale
-                List<Plot> legalMovesPandaWithBamboo = legalMovesPanda.stream().filter(Plot::haveBambou).collect(Collectors.toList());
 
-                CoordAxial newPosPanda = legalMovesPanda.get(new Random().nextInt(legalMovesPanda.size())).getCoord();
-                if (!legalMovesPandaWithBamboo.isEmpty()) {
-                    newPosPanda = legalMovesPandaWithBamboo.get(0).getCoord();
-                }
-                Couleur eatedColor = plateau.movePanda(newPosPanda);
-
-                if (eatedColor != Couleur.BLEU){
-                    j.setBambooByColor(eatedColor, j.getBambooByColor(eatedColor) + 1);
-                    Console.Log.println(String.format("Robot_%d déplace le panda en %s, il gagne une section de bambou %s", j.getId(), newPosPanda, eatedColor ));
-                }else{
-                    Console.Log.println(String.format("Robot_%d déplace le panda en %s, il ne récolte aucun bambou",j.getId(), newPosPanda));
-                }
-
-                Boolean mooveJard = plateau.moveJardinier(pose.getCoord());
-                if(mooveJard){
-                    Console.Log.println(String.format("Robot_%d déplace le jardinier en %s", j.getId(), plateau.getPosJardinier()));
-                }
-
-                evaluate(j, pose.getCoord());
+                evaluate(j, j.getPlot().getCoord());
             }//Todo : faire piocher -> faire poser
 
 
@@ -190,16 +168,66 @@ public class Game {
         }
     }
 
+
+    /**
+     * Permet de faire jouer le tour jardinier
+     * @param joueur
+     */
+    public void jardinierTurn(Joueur joueur){
+        Boolean mooveJard = plateau.moveJardinier(joueur.getPlot().getCoord());
+        if(mooveJard){
+            Console.Log.println(String.format("Robot_%d déplace le jardinier en %s", joueur.getId(), plateau.getPosJardinier()));
+        }
+    }
+
+    /**
+     * Permet de faire jouer le tour au panda
+     * @param j Joueur
+     */
+    public void pandaTurn(Joueur j){
+        List<Plot> legalMovesPanda = plateau.getLinePlots(plateau.getPosPanda());
+        // On prend la première position légale
+        List<Plot> legalMovesPandaWithBamboo = legalMovesPanda.stream().filter(Plot::haveBambou).collect(Collectors.toList());
+
+        CoordAxial newPosPanda = legalMovesPanda.get(new Random().nextInt(legalMovesPanda.size())).getCoord();
+        if (!legalMovesPandaWithBamboo.isEmpty()) {
+            newPosPanda = legalMovesPandaWithBamboo.get(0).getCoord();
+        }
+        Couleur eatedColor = plateau.movePanda(newPosPanda);
+
+        if (eatedColor != Couleur.BLEU){
+            j.setBambooByColor(eatedColor, j.getBambooByColor(eatedColor) + 1);
+            Console.Log.println(String.format("Robot_%d déplace le panda en %s, il gagne une section de bambou %s", j.getId(), newPosPanda, eatedColor ));
+        }else{
+            Console.Log.println(String.format("Robot_%d déplace le panda en %s, il ne récolte aucun bambou",j.getId(), newPosPanda));
+        }
+    }
+
     /**
      * Effectue le tour d'un joueur
      * @param joueur Joueur un joueur
      * @return Plot la parcelle que le joueur a joué
      */
-    public Plot turn(Joueur joueur) throws EmptyDeckException {
-        Plot pioche = joueur.draw(deck);
-        joueur.putPlot(pioche,plateau);
-        Console.Log.println(String.format("Robot_%d pose une parcelle %s en : %s", joueur.getId(),pioche.getCouleur().toString(), pioche.getCoord()));
-        return pioche;
+    public void turn(Joueur joueur, Action action) throws EmptyDeckException, NoActionSelectedException {
+        switch (action){
+            case Card:
+                joueur.setPlot(joueur.draw(deck));
+                break;
+            case Plot:
+                joueur.putPlot(joueur.getPlot(),plateau);
+                break;
+            case Irrig:
+                irrigTurn(joueur);
+                break;
+            case Panda:
+                pandaTurn(joueur);
+                break;
+            case Gardener:
+                break;
+            default:
+                throw new NoActionSelectedException();
+        }
+
     }
 
     /**

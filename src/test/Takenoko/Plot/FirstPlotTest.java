@@ -2,10 +2,12 @@ package Takenoko.Plot;
 
 import Takenoko.Game;
 import Takenoko.Joueur.Joueur;
+import Takenoko.Joueur.Strategie.Action;
 import Takenoko.Joueur.Strategie.StrategieConcrete;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Util.Exceptions.EmptyDeckException;
+import Takenoko.Util.Exceptions.NoActionSelectedException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,8 +24,9 @@ public class FirstPlotTest {
 
     }
 
-    @Test public void test() throws EmptyDeckException {
-        Plot plot = game.turn(joueur);
-        assertTrue(plot.haveWater());
+    @Test public void test() throws EmptyDeckException, NoActionSelectedException {
+        game.turn(joueur, Action.Card);
+        game.turn(joueur,Action.Plot);
+        assertTrue(joueur.getPlot().haveWater());
     }
 }

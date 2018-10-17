@@ -3,6 +3,7 @@ package Takenoko;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Util.Console;
 import Takenoko.Util.Exceptions.EmptyDeckException;
+import Takenoko.Util.Exceptions.NoActionSelectedException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,7 +22,7 @@ public class GameTest {
         Console.Log.init();
     }
 
-    @Test public void testGame() throws EmptyDeckException {
+    @Test public void testGame() throws EmptyDeckException, NoActionSelectedException {
         game.play();
         assertTrue(game.end());
     }

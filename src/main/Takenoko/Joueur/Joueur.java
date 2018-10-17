@@ -20,6 +20,8 @@ import java.util.*;
  */
 public class Joueur implements Comparable{
 
+    private Plot plot;
+
     /**
      * Identidiant du joueur
      */
@@ -341,4 +343,11 @@ public class Joueur implements Comparable{
         }
     }
 
+    public Plot getPlot() {
+        return this.plot;
+    }
+
+    public void setPlot(Plot nextPlot) {
+        this.plot = nextPlot;
+    }
 }
