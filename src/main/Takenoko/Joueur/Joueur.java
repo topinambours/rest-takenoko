@@ -366,11 +366,10 @@ public class Joueur implements Comparable{
      * @param game Game
      */
     public void jardinierTurn(Game game){
-        Joueur joueur = this;
         Plateau plateau = game.getPlateau();
-        Boolean mooveJard = plateau.moveJardinier(joueur.getPlot().getCoord());
+        Boolean mooveJard = plateau.moveJardinier(this.getPlot().getCoord());
         if(mooveJard){
-            Console.Log.println(String.format("Robot_%d déplace le jardinier en %s", joueur.getId(), plateau.getPosJardinier()));
+            Console.Log.println(String.format("Robot_%d déplace le jardinier en %s", this.getId(), plateau.getPosJardinier()));
         }
     }
 
@@ -379,7 +378,6 @@ public class Joueur implements Comparable{
      * @param game Game le jeu
      */
     public void pandaTurn(Game game){
-        Joueur j = this;
         Plateau plateau = game.getPlateau();
         List<Plot> legalMovesPanda = plateau.getLinePlots(plateau.getPosPanda());
         // On prend la première position légale
@@ -392,17 +390,17 @@ public class Joueur implements Comparable{
         Couleur eatedColor = plateau.movePanda(newPosPanda);
 
         if (eatedColor != Couleur.BLEU){
-            j.setBambooByColor(eatedColor, j.getBambooByColor(eatedColor) + 1);
-            Console.Log.println(String.format("Robot_%d déplace le panda en %s, il gagne une section de bambou %s", j.getId(), newPosPanda, eatedColor ));
+            this.setBambooByColor(eatedColor, this.getBambooByColor(eatedColor) + 1);
+            Console.Log.println(String.format("Robot_%d déplace le panda en %s, il gagne une section de bambou %s", this.getId(), newPosPanda, eatedColor ));
         }else{
-            Console.Log.println(String.format("Robot_%d déplace le panda en %s, il ne récolte aucun bambou",j.getId(), newPosPanda));
+            Console.Log.println(String.format("Robot_%d déplace le panda en %s, il ne récolte aucun bambou",this.getId(), newPosPanda));
         }
     }
 
     /**
-     * Effectue le tour d'un joueur
+     * Le joueur effectue un tour
      * @param game Game la game
-     * @return Plot la parcelle que le joueur a joué
+     * @param action Action une action
      */
     public void turn(Game game, Action action) throws EmptyDeckException, NoActionSelectedException {
         Joueur joueur = this;
@@ -439,10 +437,9 @@ public class Joueur implements Comparable{
      * @return Optional une irrigation si une irrigation a été posée
      */
     public Optional<CoordIrrig> irrigTurn(Plateau plateau) {
-        Joueur joueur = this;
-        Optional<CoordIrrig> coo = joueur.putIrrig(plateau);
+        Optional<CoordIrrig> coo = this.putIrrig(plateau);
         if (coo.isPresent()) {
-            Console.Log.println(String.format("Robot_%d pose une section d'irrigation en : %s",joueur.getId(), coo.get()));
+            Console.Log.println(String.format("Robot_%d pose une section d'irrigation en : %s",this.getId(), coo.get()));
             List<CoordAxial> newIrrigated = coo.get().borders();
             Console.Log.println(String.format("Les parcelles %s et %s sont irriguées", newIrrigated.get(0), newIrrigated.get(1)));
         }
