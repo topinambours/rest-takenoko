@@ -15,6 +15,7 @@ import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordColor;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigComparator;
 import Takenoko.Joueur.Strategie.StrategieSansPions;
+import Takenoko.Objectives.GardenObjectiveCard;
 import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Objectives.PatternObjectiveCard;
 import Takenoko.Plot.CoordAxial;
@@ -229,7 +230,21 @@ public class Game {
         if (evaluatedPandaObjective > 0){
             Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte panda",j.getId(),evaluatedPandaObjective));
         }
-        j.addScore(evaluatePatternObjective(j));
+
+        int evaluatePatternObjective = evaluatePatternObjective(j);
+        j.addScore(evaluatePatternObjective);
+        if (evaluatePatternObjective > 0){
+            Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte Pattern",j.getId(),evaluatePatternObjective));
+        }
+
+        int evaluateGardenObjective = evaluateGardenObjective(j);
+        j.addScore(evaluateGardenObjective);
+        if (evaluateGardenObjective > 0){
+            Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte Jardinier",j.getId(),evaluateGardenObjective));
+        }
+
+
+
 
     }
 
@@ -312,6 +327,19 @@ public class Game {
         }
         return score;
 
+    }
+
+    protected int evaluateGardenObjective(Joueur joueur){
+        int score = 0;
+        HashSet<GardenObjectiveCard> gardenObjectiveCards = (HashSet<GardenObjectiveCard>) joueur.getGardenObjectiveCards().clone();
+        for(GardenObjectiveCard gardenObjectiveCard : gardenObjectiveCards){
+            if(gardenObjectiveCard.isComplete()){
+                score = score + gardenObjectiveCard.getPointValue();
+                joueur.removeGardenObjectiveCard(gardenObjectiveCard);
+                Console.Log.debugPrint(String.format("Le joueur %d stock %d point pour la réalisation d'une carte Jardinier",joueur.getId(), gardenObjectiveCard.getPointValue()));
+            }
+        }
+        return score;
     }
 
 
