@@ -151,11 +151,11 @@ public class Game {
                     break;
                 }
 
-                turn(j,Action.Card);
-                turn(j,Action.Plot);
-                turn(j,Action.Irrig);
-                turn(j,Action.Panda);
-                turn(j,Action.Gardener);
+                j.turn(this,Action.Card);
+                j.turn(this,Action.Plot);
+                j.turn(this,Action.Irrig);
+                j.turn(this,Action.Panda);
+                j.turn(this,Action.Gardener);
 
 
                 evaluate(j, j.getPlot().getCoord());
@@ -169,86 +169,6 @@ public class Game {
         }
     }
 
-
-    /**
-     * Permet de faire jouer le tour jardinier
-     * @param joueur
-     */
-    public void jardinierTurn(Joueur joueur){
-        Boolean mooveJard = plateau.moveJardinier(joueur.getPlot().getCoord());
-        if(mooveJard){
-            Console.Log.println(String.format("Robot_%d déplace le jardinier en %s", joueur.getId(), plateau.getPosJardinier()));
-        }
-    }
-
-    /**
-     * Permet de faire jouer le tour au panda
-     * @param j Joueur
-     */
-    public void pandaTurn(Joueur j){
-        List<Plot> legalMovesPanda = plateau.getLinePlots(plateau.getPosPanda());
-        // On prend la première position légale
-        List<Plot> legalMovesPandaWithBamboo = legalMovesPanda.stream().filter(Plot::haveBambou).collect(Collectors.toList());
-
-        CoordAxial newPosPanda = legalMovesPanda.get(new Random().nextInt(legalMovesPanda.size())).getCoord();
-        if (!legalMovesPandaWithBamboo.isEmpty()) {
-            newPosPanda = legalMovesPandaWithBamboo.get(0).getCoord();
-        }
-        Couleur eatedColor = plateau.movePanda(newPosPanda);
-
-        if (eatedColor != Couleur.BLEU){
-            j.setBambooByColor(eatedColor, j.getBambooByColor(eatedColor) + 1);
-            Console.Log.println(String.format("Robot_%d déplace le panda en %s, il gagne une section de bambou %s", j.getId(), newPosPanda, eatedColor ));
-        }else{
-            Console.Log.println(String.format("Robot_%d déplace le panda en %s, il ne récolte aucun bambou",j.getId(), newPosPanda));
-        }
-    }
-
-    /**
-     * Effectue le tour d'un joueur
-     * @param joueur Joueur un joueur
-     * @return Plot la parcelle que le joueur a joué
-     */
-    public void turn(Joueur joueur, Action action) throws EmptyDeckException, NoActionSelectedException {
-        switch (action){
-            case Card:
-                joueur.draw(deck);
-                Console.Log.debugPrintln("Robot_"+joueur.getId()+" tire une plote : "+joueur.getPlot().toString());
-                break;
-            case Plot:
-                joueur.putPlot(joueur.getPlot(),plateau);
-                Console.Log.println("Robot_"+joueur.getId()+" pose la parcelle "+joueur.getPlot().toString());
-                Console.Log.debugPrintln("plateau : " + plateau.getPlots().toString());
-                break;
-            case Irrig:
-                irrigTurn(joueur);
-                break;
-            case Panda:
-                pandaTurn(joueur);
-                break;
-            case Gardener:
-                jardinierTurn(joueur);
-                break;
-            default:
-                throw new NoActionSelectedException();
-        }
-
-    }
-
-    /**
-     * Effectue le tour de pose d'irrigation d'un joueur
-     * @param joueur Joueur un joueur
-     * @return Optional une irrigation si une irrigation a été posée
-     */
-    public Optional<CoordIrrig> irrigTurn(Joueur joueur) {
-        Optional<CoordIrrig> coo = joueur.putIrrig(plateau);
-        if (coo.isPresent()) {
-            Console.Log.println(String.format("Robot_%d pose une section d'irrigation en : %s",joueur.getId(), coo.get()));
-            List<CoordAxial> newIrrigated = coo.get().borders();
-            Console.Log.println(String.format("Les parcelles %s et %s sont irriguées", newIrrigated.get(0), newIrrigated.get(1)));
-        }
-        return coo;
-    }
 
     //GRADUATE
 

@@ -26,8 +26,8 @@ public class FirstPlotTest {
     }
 
     @Test public void test() throws EmptyDeckException, NoActionSelectedException {
-        game.turn(joueur, Action.Card);
-        game.turn(joueur,Action.Plot);
+        joueur.turn(game, Action.Card);
+        joueur.turn(game,Action.Plot);
         assertTrue(joueur.getPlot().haveWater());
     }
 }
