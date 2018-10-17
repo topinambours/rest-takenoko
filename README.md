@@ -34,8 +34,8 @@ Version textuel n'étant pas destinée à être jouée par des êtres humains ma
  - [x] **Version 4** : Ajouter la possibilité aux robots d'ajouter des canaux d'irrigations. ~~Réaliser plusieurs stratégies liées aux canaux~~. Ajout des couleurs pour les parcelles, les robots marquent des points supplémentaires si la parcelle est posé en bordure d'autres parcelles de la même couleurs.
  - [x] **Version 5** : Les joueurs recoivent des cartes objectifs panda, les joueurs gagnent des points pour chaque carte objectif complétée. Les joueurs adaptent leurs stratégies pour compléter leurs objectifs.
  - [x] **Version 6** : Les joueurs recoivent des cartes objectifs parcelle, un joueur gagne des points en complétant ses cartes. Un joueur va donc adapter ses placements de parcelles pour achever ses objectifs.
- - [ ] **Version 7** : Les joueurs ont maintenant la posibilité de jouer avec le jardinier ainsi que le Panda. De plus, le joueur respect la règle des 2 actions maximum par tours.
- - [ ] **Version 8** : Les joueurs peuvent piocher et placer des aménagements
+ - [ ] **Version 7** : Les joueurs ont maintenant la posibilité de jouer avec le jardinier, les cartes jardinier, et le Panda. De plus, le joueur respecte la règle des 2 actions maximum par tours.
+ - [ ] **Version 8** : Les joueurs peuvent piocher et placer des aménagements. Le dé météo affecte le déroulement du tour
 
 ## Y'a quoi dans la boite ?
 
