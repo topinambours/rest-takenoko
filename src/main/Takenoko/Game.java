@@ -176,6 +176,7 @@ public class Game {
                     break;
                 }
 
+                j.trowDice();
                 j.turn(this);
                 j.turn(this,Action.Irrig);
                 j.turn(this,Action.Gardener);

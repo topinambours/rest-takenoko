@@ -28,8 +28,7 @@ public enum WeatherDice {
             case WIND: return "Vent";
             case THUNDER: return "Orage";
             case CLOUD: return "Nuages";
-            default: return "";
-            //@TODO adapter l'affichage dans le cas où le joueur choisi la météo
+            default: return "?";
         }
     }
 }

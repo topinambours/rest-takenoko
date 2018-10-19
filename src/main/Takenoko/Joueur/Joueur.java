@@ -16,6 +16,7 @@ import Takenoko.Properties.Couleur;
 import Takenoko.Util.Console;
 import Takenoko.Util.Exceptions.EmptyDeckException;
 import Takenoko.Util.Exceptions.NoActionSelectedException;
+import Takenoko.WeatherDice;
 
 import java.security.CodeSource;
 import java.util.*;
@@ -482,4 +483,14 @@ public class Joueur implements Comparable{
         }
         return coo;
     }
+
+    public void trowDice(){
+        WeatherDice dice = WeatherDice.throwDice();
+        Console.Log.print(String.format("Robot_%d obtient %s en lançant le dé météo. ", id, dice.toString()));
+        if (dice == WeatherDice.PLAYER_DECIDE){
+            Console.Log.print("Il peut choisir la condition climatique.");
+        }
+        Console.Log.println("");
+    }
+
 }
