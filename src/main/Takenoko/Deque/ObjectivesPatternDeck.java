@@ -2,7 +2,6 @@ package Takenoko.Deque;
 
 import Takenoko.Objectives.ObjectiveCard;
 import Takenoko.Objectives.PatternObjectiveCard;
-import Takenoko.Plot.CoordAxial;
 import Takenoko.Util.Console;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;

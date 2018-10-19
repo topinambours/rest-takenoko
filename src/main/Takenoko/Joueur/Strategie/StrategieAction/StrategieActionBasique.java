@@ -1,7 +1,6 @@
 package Takenoko.Joueur.Strategie.StrategieAction;
 
 import Takenoko.Game;
-import Takenoko.Plateau;
 
 public class StrategieActionBasique implements StrategieAction{
 

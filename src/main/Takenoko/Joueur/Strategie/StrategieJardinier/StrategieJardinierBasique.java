@@ -5,9 +5,7 @@ import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import Takenoko.Util.Comparators.CompPosJardinier;
-import Takenoko.Util.Comparators.ComparateurPosBambooAdj;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

@@ -4,22 +4,17 @@ import Takenoko.Deque.Deck;
 import Takenoko.Deque.ObjectivesGardenDeck;
 import Takenoko.Deque.ObjectivesPandaDeck;
 import Takenoko.Deque.ObjectivesPatternDeck;
-import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieAction.Action;
 import Takenoko.Joueur.Strategie.StrategieAction.StrategieActionBasique;
 import Takenoko.Joueur.Strategie.StrategieConcrete;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordAdjacent;
-import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordBamboo;
-import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordColor;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
-import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigComparator;
 import Takenoko.Joueur.Strategie.StrategieJardinier.StrategieJardinierBasique;
 import Takenoko.Joueur.Strategie.StrategieJardinier.StrategieJardinierRandom;
 import Takenoko.Joueur.Strategie.StrategiePanda.StrategiePandaBasique;
 import Takenoko.Joueur.Strategie.StrategiePanda.StrategiePandaRandom;
-import Takenoko.Joueur.Strategie.StrategieSansPions;
 import Takenoko.Objectives.GardenObjectiveCard;
 import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Objectives.PatternObjectiveCard;
@@ -31,7 +26,6 @@ import Takenoko.Util.Exceptions.EmptyDeckException;
 import Takenoko.Util.Exceptions.NoActionSelectedException;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * La classe Game permet de créer une partie

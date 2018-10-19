@@ -2,9 +2,7 @@ package Takenoko;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class WeatherDiceTest {
 
@@ -48,6 +46,6 @@ public class WeatherDiceTest {
         assertEquals("Vent", WeatherDice.WIND.toString());
         assertEquals("Orage", WeatherDice.THUNDER.toString());
         assertEquals("Nuages", WeatherDice.CLOUD.toString());
-        assertEquals("", WeatherDice.PLAYER_DECIDE.toString());
+        assertEquals("?", WeatherDice.PLAYER_DECIDE.toString());
     }
 }

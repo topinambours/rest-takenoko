@@ -5,10 +5,9 @@ import Takenoko.Joueur.Strategie.StrategieConcrete;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
-import Takenoko.Util.Comparators.CompPosPanda;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class StrategiePandaBasiqueTest {
 

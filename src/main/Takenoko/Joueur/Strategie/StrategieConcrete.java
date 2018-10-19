@@ -11,7 +11,6 @@ import Takenoko.Joueur.Strategie.StrategiePanda.StrategiePanda;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
-import Takenoko.Util.Console;
 
 import java.util.List;
 import java.util.Optional;

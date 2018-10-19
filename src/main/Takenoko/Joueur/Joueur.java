@@ -4,7 +4,7 @@ import Takenoko.Deque.Deck;
 import Takenoko.Game;
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Strategie.AbstractStrategie;
-import Takenoko.Joueur.Strategie.StrategieAction.*;
+import Takenoko.Joueur.Strategie.StrategieAction.Action;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoord;
 import Takenoko.Objectives.GardenObjectiveCard;
 import Takenoko.Objectives.PandaObjectiveCard;
@@ -18,9 +18,7 @@ import Takenoko.Util.Exceptions.EmptyDeckException;
 import Takenoko.Util.Exceptions.NoActionSelectedException;
 import Takenoko.WeatherDice;
 
-import java.security.CodeSource;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Le robot, joue au jeu en utilisant une stratégie spécifique

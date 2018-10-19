@@ -3,6 +3,7 @@ package Takenoko.Objectives;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Plateau;
 import Takenoko.Properties.Couleur;
+
 import java.util.EnumMap;
 import java.util.Objects;
 

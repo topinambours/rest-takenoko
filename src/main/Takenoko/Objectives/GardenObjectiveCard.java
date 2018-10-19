@@ -1,8 +1,8 @@
 package Takenoko.Objectives;
 
 import Takenoko.Joueur.Joueur;
-import Takenoko.Properties.Couleur;
 import Takenoko.Plateau;
+import Takenoko.Properties.Couleur;
 
 public class GardenObjectiveCard extends ObjectiveCard{
 
