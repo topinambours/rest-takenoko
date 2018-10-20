@@ -172,7 +172,14 @@ public class Game {
 
                 j.trowDice();
                 j.turn(this);
-                j.turn(this,Action.Irrig);
+
+                if(plateau.getCanalIrrigation() > 0){
+                    j.addCanalIrrigation();
+                    plateau.removeCanalIrrigation();
+                    j.turn(this,Action.Irrig);
+
+                }
+
                 j.turn(this,Action.Gardener);
                 j.turn(this,Action.Panda);
 
@@ -307,25 +314,6 @@ public class Game {
         return score;
     }
 
-
-    /**
-     * Permet d'avoir la couleur de ses voisins
-     * @param coordAxial CoordAxial une coordonnée
-     * @param plateau Plateau le plateau
-     * @return HashSet ensemble de couleurs
-     */
-    private HashSet<Couleur> getNeighborColor(CoordAxial coordAxial,Plateau plateau){
-        HashSet<Couleur> couleurs = new HashSet<>();
-
-        List<Plot> neighbors = plateau.getNeighbors(coordAxial);
-
-        for (Plot current : neighbors){
-                couleurs.add(plateau.getPlot(current.getCoord()).getCouleur());
-
-        }
-        return couleurs;
-
-    }
 
     /**
      * Permet de faire pousser les bambous

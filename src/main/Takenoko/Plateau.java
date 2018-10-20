@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class Plateau {
     private final CoordAxial _STARTING_COORDINATE_ = new CoordAxial(0,0);
     private final List<CoordAxial> posInit = _STARTING_COORDINATE_.getNeighborCoords();
+    private final int NB_CANAL_IRRIGATION = 20;
 
     private HashMap<CoordAxial, Plot> plots;
     private Plot lastPlop;
@@ -29,6 +30,7 @@ public class Plateau {
     private CoordAxial posJardinier;
 
     private HashSet<CoordIrrig> irrigations;
+    private int canalIrrigation;
 
     /**
      * Constructeur par défaut, instancie un plateau vide
@@ -44,6 +46,8 @@ public class Plateau {
 
         posPanda = _STARTING_COORDINATE_;
         posJardinier = _STARTING_COORDINATE_;
+
+        canalIrrigation = NB_CANAL_IRRIGATION;
     }
 
     /**
@@ -61,6 +65,15 @@ public class Plateau {
     }
 
     public CoordAxial getPosJardinier(){return posJardinier;}
+
+    public int getCanalIrrigation(){
+        return canalIrrigation;
+    }
+    public void removeCanalIrrigation(){
+        if (canalIrrigation > 0) {
+            canalIrrigation = canalIrrigation - 1;
+        }
+    }
 
     /**
      * getter de parcelle, prend les coordonnées mises ensemble

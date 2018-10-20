@@ -61,6 +61,8 @@ public class Joueur implements Comparable{
 
     private HashSet<GardenObjectiveCard> gardenObjectiveCards;
 
+    private int canalIrrigation;
+
     /**
      * Un joueur est initialisé avec un identifiant
      * @param id identifiant (unique)
@@ -76,6 +78,7 @@ public class Joueur implements Comparable{
         this.pandaObjectiveCards = new HashSet<PandaObjectiveCard>();
         this.patternObjectiveCards = new ArrayList<PatternObjectiveCard>();
         this.gardenObjectiveCards = new HashSet<GardenObjectiveCard>();
+        this.canalIrrigation = 0;
     }
 
     /**
@@ -375,6 +378,18 @@ public class Joueur implements Comparable{
         }
     }
 
+    public int getCanalIrrigation(){
+        return canalIrrigation;
+    }
+    public void addCanalIrrigation(){
+        canalIrrigation = canalIrrigation + 1;
+    }
+    public void removeCanalIrrigation(){
+        if(canalIrrigation > 0) {
+            canalIrrigation = canalIrrigation - 1;
+        }
+    }
+
     public Plot getPlot() {
         return this.plot;
     }
@@ -382,8 +397,6 @@ public class Joueur implements Comparable{
     public void setPlot(Plot nextPlot) {
         this.plot = nextPlot;
     }
-
-
 
     /**
      * Permet de faire jouer le tour jardinier
@@ -472,8 +485,9 @@ public class Joueur implements Comparable{
      */
     public Optional<CoordIrrig> irrigTurn(Plateau plateau) {
         Optional<CoordIrrig> coo = this.putIrrig(plateau);
-        if (coo.isPresent()) {
+        if (coo.isPresent() && getCanalIrrigation() > 0) {
             Console.Log.println(String.format("Il pose une section d'irrigation en : %s", coo.get()));
+            removeCanalIrrigation();
             List<CoordAxial> newIrrigated = coo.get().borders();
             Console.Log.println(String.format("Les parcelles %s et %s sont irriguées", newIrrigated.get(0), newIrrigated.get(1)));
         }else{
