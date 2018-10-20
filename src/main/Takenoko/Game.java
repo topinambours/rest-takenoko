@@ -172,6 +172,11 @@ public class Game {
         }
     }
 
+    /**
+     * Effectue un tour de jeu pour chaque joueur
+     * @throws EmptyDeckException
+     * @throws NoActionSelectedException
+     */
     public void gameturn() throws EmptyDeckException, NoActionSelectedException{
         for (Joueur j : joueurs){
             Console.Log.println("----");
@@ -200,6 +205,11 @@ public class Game {
         }
     }
 
+    /**
+     * Effectue le dernier tour de jeu
+     * @throws EmptyDeckException
+     * @throws NoActionSelectedException
+     */
     public void lastTurn() throws EmptyDeckException, NoActionSelectedException{
         for (Joueur j : joueurs){
             Console.Log.println("----");
@@ -234,7 +244,6 @@ public class Game {
         return deck.isEmpty();
     }
 
-
     /**
      * La fonction principale qui permet de lancer et faire la game
      */
@@ -252,7 +261,6 @@ public class Game {
             Console.Log.println(String.format("Robot_%d a marqué %d points avec une %s", j.getId(), j.getScore(), j.getStrategieLabel()));
         }
     }
-
 
     //GRADUATE
 
