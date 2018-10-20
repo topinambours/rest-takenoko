@@ -38,6 +38,7 @@ public class Game {
     private ObjectivesGardenDeck gardenObjDeck;
     private ArrayList<Joueur> joueurs;
     private Plateau plateau;
+    private boolean empereur;
 
     public Game() {
         this.deck = new Deck();
@@ -47,6 +48,7 @@ public class Game {
         this.plateau.addStartingPlot(new Plot(Couleur.BLEU));
         this.patternObjDeck = new ObjectivesPatternDeck();
         this.gardenObjDeck = new ObjectivesGardenDeck();
+        this.empereur = false;
 
 
         Boolean deckBool = deck.init();
@@ -150,6 +152,15 @@ public class Game {
         return deck;
     }
 
+    public boolean isLastTurn(){
+        for(Joueur j : joueurs){
+            if(j.getObjectifComplete() == 9){
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * La fonction end permet de savoir si la partie est terminée
      * @return boolean true|false
@@ -185,6 +196,11 @@ public class Game {
 
 
                 evaluate(j, j.getPlot().getCoord());
+                if(j.getObjectifComplete()==9 && empereur==false){
+                    j.addScore(2);
+                    empereur = true;
+                    Console.Log.println(String.format("Robot_%d a marqué 2 points grâce à l'Empereur, le dernier tour est engagé.", j.getId()));
+                }
             }//Todo : faire piocher -> faire poser
 
 
@@ -206,18 +222,21 @@ public class Game {
         int evaluatedPandaObjective = evaluatePandaObjective(j);
         j.addScore(evaluatedPandaObjective);
         if (evaluatedPandaObjective > 0){
+            j.addObjectifComplete();
             Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte panda",j.getId(),evaluatedPandaObjective));
         }
 
         int evaluatePatternObjective = evaluatePatternObjective(j);
         j.addScore(evaluatePatternObjective);
         if (evaluatePatternObjective > 0){
+            j.addObjectifComplete();
             Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte Pattern",j.getId(),evaluatePatternObjective));
         }
 
         int evaluateGardenObjective = evaluateGardenObjective(j);
         j.addScore(evaluateGardenObjective);
         if (evaluateGardenObjective > 0){
+            j.addObjectifComplete();
             Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte Jardinier",j.getId(),evaluateGardenObjective));
         }
 

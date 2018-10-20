@@ -62,6 +62,7 @@ public class Joueur implements Comparable{
     private HashSet<GardenObjectiveCard> gardenObjectiveCards;
 
     private int canalIrrigation;
+    private int objectifComplete;
 
     /**
      * Un joueur est initialisé avec un identifiant
@@ -79,6 +80,7 @@ public class Joueur implements Comparable{
         this.patternObjectiveCards = new ArrayList<PatternObjectiveCard>();
         this.gardenObjectiveCards = new HashSet<GardenObjectiveCard>();
         this.canalIrrigation = 0;
+        this.objectifComplete = 0;
     }
 
     /**
@@ -390,6 +392,12 @@ public class Joueur implements Comparable{
         }
     }
 
+    public int getObjectifComplete(){
+        return objectifComplete;
+    }
+    public void addObjectifComplete(){
+        objectifComplete = objectifComplete + 1;
+    }
     public Plot getPlot() {
         return this.plot;
     }
