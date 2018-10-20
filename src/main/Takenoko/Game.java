@@ -24,6 +24,7 @@ import Takenoko.Properties.Couleur;
 import Takenoko.Util.Console;
 import Takenoko.Util.Exceptions.EmptyDeckException;
 import Takenoko.Util.Exceptions.NoActionSelectedException;
+import javafx.util.Pair;
 
 import java.util.*;
 
@@ -32,13 +33,16 @@ import java.util.*;
  */
 public class Game {
 
+
+
     private Deck deck;
     private ObjectivesPandaDeck pandObjDeck;
     private ObjectivesPatternDeck patternObjDeck;
     private ObjectivesGardenDeck gardenObjDeck;
     private ArrayList<Joueur> joueurs;
     private Plateau plateau;
-    private boolean empereur;
+    private Pair<Boolean, Joueur> empereur;
+    private int objneedtobecomplete;
 
     public Game() {
         this.deck = new Deck();
@@ -48,7 +52,7 @@ public class Game {
         this.plateau.addStartingPlot(new Plot(Couleur.BLEU));
         this.patternObjDeck = new ObjectivesPatternDeck();
         this.gardenObjDeck = new ObjectivesGardenDeck();
-        this.empereur = false;
+        this.empereur = new Pair<>(false, null);
 
 
         Boolean deckBool = deck.init();
@@ -64,6 +68,8 @@ public class Game {
 
         joueurs.add(j1);
         joueurs.add(j2);
+
+        this.objneedtobecomplete = setObjNeedToBeComplete();
 
         firstDrawObjectif(joueurs);
 
@@ -152,13 +158,72 @@ public class Game {
         return deck;
     }
 
-    public boolean isLastTurn(){
-        for(Joueur j : joueurs){
-            if(j.getObjectifComplete() == 9){
-                return true;
+    public int setObjNeedToBeComplete(){
+        int nbrJoueur = joueurs.size();
+        switch (nbrJoueur){
+            case 2 :
+                return 9;
+            case 3 :
+                return 8;
+            case 4 :
+                return 7;
+            default:
+                return 0;
+        }
+    }
+
+    public void gameturn() throws EmptyDeckException, NoActionSelectedException{
+        for (Joueur j : joueurs){
+            Console.Log.println("----");
+            if (end()){
+                break;
+            }
+
+            j.trowDice();
+            j.turn(this);
+
+            if(plateau.getCanalIrrigation() > 0){
+                j.addCanalIrrigation();
+                plateau.removeCanalIrrigation();
+                j.turn(this,Action.Irrig);
+            }
+
+            j.turn(this,Action.Gardener);
+            j.turn(this,Action.Panda);
+
+            evaluate(j, j.getPlot().getCoord());
+            if(j.getObjectifComplete()== objneedtobecomplete && empereur==null){
+                j.addScore(2);
+                empereur = new Pair(true, j);
+                Console.Log.println(String.format("Robot_%d a marqué 2 points grâce à l'Empereur, le dernier tour est engagé.", j.getId()));
             }
         }
-        return false;
+    }
+
+    public void lastTurn() throws EmptyDeckException, NoActionSelectedException{
+        for (Joueur j : joueurs){
+            Console.Log.println("----");
+            if (end()){
+                break;
+            }
+
+            if(!empereur.getValue().equals(j)) {
+
+                j.trowDice();
+                j.turn(this);
+
+                if (plateau.getCanalIrrigation() > 0) {
+                    j.addCanalIrrigation();
+                    plateau.removeCanalIrrigation();
+                    j.turn(this, Action.Irrig);
+                }
+
+                j.turn(this, Action.Gardener);
+                j.turn(this, Action.Panda);
+
+                evaluate(j, j.getPlot().getCoord());
+            }
+        }
     }
 
     /**
@@ -175,35 +240,12 @@ public class Game {
      */
     public void play() throws EmptyDeckException, NoActionSelectedException {
         while(!end()){ //Tant que la partie n'est pas terminée
-            for (Joueur j : joueurs){
-                Console.Log.println("----");
-                if (end()){
-                    break;
-                }
-
-                j.trowDice();
-                j.turn(this);
-
-                if(plateau.getCanalIrrigation() > 0){
-                    j.addCanalIrrigation();
-                    plateau.removeCanalIrrigation();
-                    j.turn(this,Action.Irrig);
-
-                }
-
-                j.turn(this,Action.Gardener);
-                j.turn(this,Action.Panda);
-
-
-                evaluate(j, j.getPlot().getCoord());
-                if(j.getObjectifComplete()==9 && empereur==false){
-                    j.addScore(2);
-                    empereur = true;
-                    Console.Log.println(String.format("Robot_%d a marqué 2 points grâce à l'Empereur, le dernier tour est engagé.", j.getId()));
-                }
-            }//Todo : faire piocher -> faire poser
-
-
+            gameturn();
+            //Todo : faire piocher -> faire poser
+            if(empereur.getKey()){
+                lastTurn();
+                break;
+            }
         }
         Console.Log.println("----\nLa partie est terminée");
         for (Joueur j : joueurs){
