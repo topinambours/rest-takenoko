@@ -3,10 +3,12 @@ package Takenoko.Objectives;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Plateau;
 import Takenoko.Properties.Couleur;
+import org.springframework.stereotype.Component;
 
 import java.util.EnumMap;
 import java.util.Objects;
 
+@Component
 public class PandaObjectiveCard extends ObjectiveCard {
     public int getVertRequis() {
         return vertRequis;

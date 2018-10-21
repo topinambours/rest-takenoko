@@ -1,8 +1,8 @@
 package Takenoko;
 
 import Takenoko.Deque.Deck;
+import Takenoko.Deque.ObjectivesDeck;
 import Takenoko.Deque.ObjectivesGardenDeck;
-import Takenoko.Deque.ObjectivesPandaDeck;
 import Takenoko.Deque.ObjectivesPatternDeck;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieAction.Action;
@@ -25,18 +25,31 @@ import Takenoko.Util.Console;
 import Takenoko.Util.Exceptions.EmptyDeckException;
 import Takenoko.Util.Exceptions.NoActionSelectedException;
 import javafx.util.Pair;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 /**
  * La classe Game permet de créer une partie
  */
+@Configurable
+@Component
+@Scope(value = "prototype")
+@Import(ObjectivesDeck.class)
 public class Game {
 
-
-
     private Deck deck;
-    private ObjectivesPandaDeck pandObjDeck;
+
+    public ObjectivesDeck getPandObjDeck() {
+        return pandObjDeck;
+    }
+
+    private ObjectivesDeck pandObjDeck;
+
     private ObjectivesPatternDeck patternObjDeck;
     private ObjectivesGardenDeck gardenObjDeck;
     private ArrayList<Joueur> joueurs;
@@ -44,9 +57,10 @@ public class Game {
     private Pair<Boolean, Joueur> empereur;
     private int objneedtobecomplete;
 
-    public Game() {
+    @Autowired()
+    public Game(ObjectivesDeck pandObjDeck) {
         this.deck = new Deck();
-        this.pandObjDeck = new ObjectivesPandaDeck();
+        this.pandObjDeck = pandObjDeck;
         this.joueurs = new ArrayList<>();
         this.plateau = new Plateau();
         this.plateau.addStartingPlot(new Plot(Couleur.BLEU));
@@ -55,7 +69,7 @@ public class Game {
         this.empereur = new Pair<>(false, null);
 
 
-        Boolean deckBool = deck.init();
+        boolean deckBool = deck.init();
         Console.Log.debugPrint("Deck init : "+ deckBool+"\n");
 
         StrategieConcrete strategieJ1 = new StrategieConcrete(new StrategieCoordAdjacent(),new StrategieIrrigComparator(plateau));
@@ -76,6 +90,7 @@ public class Game {
         firstDrawPattern(joueurs);
         
         firstDrawGarden(joueurs);
+
 
 
     }
@@ -111,7 +126,7 @@ public class Game {
      * @return Boolean true|false
      */
     public boolean drawObjectif(Joueur joueur){
-        Boolean bool = !pandObjDeck.isEmpty();
+        boolean bool = !pandObjDeck.isEmpty();
         if (bool){
             pandObjDeck.pop().instanciate(plateau,joueur);
         }
@@ -410,4 +425,5 @@ public class Game {
     public Plateau getPlateau() {
         return plateau;
     }
+
 }

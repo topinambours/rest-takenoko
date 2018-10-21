@@ -6,6 +6,11 @@ import Takenoko.Util.Exceptions.EmptyDeckException;
 import Takenoko.Util.Exceptions.NoActionSelectedException;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,13 +18,16 @@ import java.util.Iterator;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class GameTest {
+    @Autowired
     private Game game;
 
 
     @Before
+    @Required
     public void setUp() throws Exception {
-        game = new Game();
         Console.Log.init();
     }
 

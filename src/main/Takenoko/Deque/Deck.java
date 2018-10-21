@@ -67,6 +67,7 @@ public class Deck {
      * Permet d'initialiser le deck
      * @return boolean true|false
      */
+
     public boolean init() {
         List<Plot> preDeck = new ArrayList<>();
         for (int i = 0;i < NB_COLOR; i++){

@@ -1,7 +1,11 @@
 package Takenoko.Deque;
 
 import Takenoko.Objectives.ObjectiveCard;
+import Takenoko.Objectives.PandaObjectiveCard;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
@@ -9,6 +13,7 @@ import java.util.Stack;
 /**
  * Pioche réservée aux cartes objectifs
  */
+@Component
 public class ObjectivesDeck {
 
     /**
@@ -20,6 +25,18 @@ public class ObjectivesDeck {
      * La taille de la pioche
      */
     private int size;
+
+    public ObjectivesDeck(List<ObjectiveCard> initDeck){
+        Collections.shuffle(initDeck);
+        stack = new Stack<>();
+        for (ObjectiveCard card : initDeck){
+            push(card);
+        }
+        size = initDeck.size();
+    }
+
+    public ObjectivesDeck() {
+    }
 
     /**
      * Une pioche est initialisé à partir d'une liste de cartes
@@ -67,6 +84,31 @@ public class ObjectivesDeck {
      */
     public int getSize(){
         return size;
+    }
+
+    @Bean
+    public ObjectivesDeck pandObjDeck(){
+        ArrayList<ObjectiveCard> out = new ArrayList<>();
+
+        for (int i = 0; i <= 14; i++){
+            if (i >=  12){
+                out.add(new PandaObjectiveCard(1,1,1,6));
+                continue;
+            }
+            if (i >=  9){
+                out.add(new PandaObjectiveCard(0,0,2,5));
+                continue;
+            }
+            if (i >=  5){
+                out.add(new PandaObjectiveCard(0,2,0,4));
+
+            }
+            else {
+                out.add(new PandaObjectiveCard(1,1,1,6));
+            }
+        }
+        Collections.shuffle(out);
+        return new ObjectivesDeck(out);
     }
 
 }

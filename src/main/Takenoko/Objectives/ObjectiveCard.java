@@ -2,10 +2,12 @@ package Takenoko.Objectives;
 
 import Takenoko.Joueur.Joueur;
 import Takenoko.Plateau;
+import org.springframework.stereotype.Component;
 
 /**
  * Classe abstraite pour représenter les cartes objectif
  */
+@Component
 public abstract class ObjectiveCard {
     /**
      * rend la valeur en points de la carte

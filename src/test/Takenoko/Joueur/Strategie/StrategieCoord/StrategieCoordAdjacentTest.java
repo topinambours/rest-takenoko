@@ -8,17 +8,23 @@ import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class StrategieCoordAdjacentTest {
-    private Game game;
+    @Autowired private Game game;
     private Joueur joueur;
     private StrategieCoord strategieCoord;
     private StrategieSansPions strategie;
 
-    @Before public void StrategieAdjacentTest(){
-         game = new Game();
+    @Before @Required public void StrategieAdjacentTest(){
          strategieCoord = new StrategieCoordAdjacent();
          strategie = new StrategieSansPions(strategieCoord, new StrategieIrrigBase(game.getPlateau()));
          joueur = new Joueur(1, strategie);
