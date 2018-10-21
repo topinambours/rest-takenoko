@@ -7,8 +7,11 @@
     <context:annotation-config />
     <context:component-scan base-package="Takenoko"/>
 
+    <import resource="ObjectivesGarden.xml"/>
+
     <bean name="game" class="Takenoko.Game" scope="prototype">
         <constructor-arg index="0" ref="pandObjDeck"/>
+        <constructor-arg index="1" ref="gardenObjDeck"/>
     </bean>
 
 </beans>

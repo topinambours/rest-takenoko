@@ -2,7 +2,6 @@ package Takenoko;
 
 import Takenoko.Deque.Deck;
 import Takenoko.Deque.ObjectivesDeck;
-import Takenoko.Deque.ObjectivesGardenDeck;
 import Takenoko.Deque.ObjectivesPatternDeck;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieAction.Action;
@@ -27,6 +26,7 @@ import Takenoko.Util.Exceptions.NoActionSelectedException;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -36,6 +36,7 @@ import java.util.*;
 /**
  * La classe Game permet de créer une partie
  */
+@Configuration
 @Configurable
 @Component
 @Scope(value = "prototype")
@@ -44,28 +45,27 @@ public class Game {
 
     private Deck deck;
 
-    public ObjectivesDeck getPandObjDeck() {
-        return pandObjDeck;
-    }
-
     private ObjectivesDeck pandObjDeck;
 
     private ObjectivesPatternDeck patternObjDeck;
-    private ObjectivesGardenDeck gardenObjDeck;
+
+    private ObjectivesDeck gardenObjDeck;
+
     private ArrayList<Joueur> joueurs;
     private Plateau plateau;
     private Pair<Boolean, Joueur> empereur;
     private int objneedtobecomplete;
 
     @Autowired()
-    public Game(ObjectivesDeck pandObjDeck) {
+    public Game(ObjectivesDeck pandObjDeck, ObjectivesDeck gardenObjDeck) {
         this.deck = new Deck();
         this.pandObjDeck = pandObjDeck;
         this.joueurs = new ArrayList<>();
         this.plateau = new Plateau();
         this.plateau.addStartingPlot(new Plot(Couleur.BLEU));
         this.patternObjDeck = new ObjectivesPatternDeck();
-        this.gardenObjDeck = new ObjectivesGardenDeck();
+        this.gardenObjDeck = gardenObjDeck;
+
         this.empereur = new Pair<>(false, null);
 
 
@@ -90,9 +90,6 @@ public class Game {
         firstDrawPattern(joueurs);
         
         firstDrawGarden(joueurs);
-
-
-
     }
 
     /**

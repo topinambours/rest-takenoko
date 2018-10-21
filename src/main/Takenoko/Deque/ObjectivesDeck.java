@@ -2,7 +2,10 @@ package Takenoko.Deque;
 
 import Takenoko.Objectives.ObjectiveCard;
 import Takenoko.Objectives.PandaObjectiveCard;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,6 +17,8 @@ import java.util.Stack;
  * Pioche réservée aux cartes objectifs
  */
 @Component
+@Configurable
+@ImportResource("ObjectivesGarden.xml")
 public class ObjectivesDeck {
 
     /**
@@ -26,6 +31,7 @@ public class ObjectivesDeck {
      */
     private int size;
 
+    @Autowired
     public ObjectivesDeck(List<ObjectiveCard> initDeck){
         Collections.shuffle(initDeck);
         stack = new Stack<>();
