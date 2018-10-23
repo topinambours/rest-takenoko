@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="centerCube" class="Takenoko.Objectives.Patterns.CoordCube">
+        <constructor-arg name="q" value="0"/>
+        <constructor-arg name="r" value="0"/>
+        <constructor-arg name="s" value="0"/>
+    </bean>
+
+    <bean id="cube-12-1" class="Takenoko.Objectives.Patterns.CoordCube">
+        <constructor-arg name="q" value="-1"/>
+        <constructor-arg name="r" value="2"/>
+        <constructor-arg name="s" value="-1"/>
+    </bean>
+    <bean id="cube-110" class="Takenoko.Objectives.Patterns.CoordCube">
+        <constructor-arg name="q" value="-1"/>
+        <constructor-arg name="r" value="1"/>
+        <constructor-arg name="s" value="0"/>
+    </bean>
+    <bean id="cube01-1" class="Takenoko.Objectives.Patterns.CoordCube">
+        <constructor-arg name="q" value="0"/>
+        <constructor-arg name="r" value="1"/>
+        <constructor-arg name="s" value="-1"/>
+    </bean>
+    <bean id="cube0-11" class="Takenoko.Objectives.Patterns.CoordCube">
+        <constructor-arg name="q" value="0"/>
+        <constructor-arg name="r" value="-1"/>
+        <constructor-arg name="s" value="1"/>
+    </bean>
+
+    <bean id="centerTileGreen" class="Takenoko.Objectives.Patterns.PatternTile">
+        <constructor-arg name="offset" ref="centerCube"/>
+        <constructor-arg name="couleur" value="VERT"/>
+    </bean>
+    <bean id="centerTileYellow" class="Takenoko.Objectives.Patterns.PatternTile">
+        <constructor-arg name="offset" ref="centerCube"/>
+        <constructor-arg name="couleur" value="JAUNE"/>
+    </bean>
+    <bean id="centerTilePink" class="Takenoko.Objectives.Patterns.PatternTile">
+        <constructor-arg name="offset" ref="centerCube"/>
+        <constructor-arg name="couleur" value="ROSE"/>
+    </bean>
+
+    <bean id="tileGreen-110" class="Takenoko.Objectives.Patterns.PatternTile">
+        <constructor-arg name="offset" ref="cube-110"/>
+        <constructor-arg name="couleur" value="VERT"/>
+    </bean>
+    <bean id="tileYellow-110" class="Takenoko.Objectives.Patterns.PatternTile">
+        <constructor-arg name="offset" ref="cube-110"/>
+        <constructor-arg name="couleur" value="JAUNE"/>
+    </bean>
+    <bean id="tilePink-110" class="Takenoko.Objectives.Patterns.PatternTile">
+        <constructor-arg name="offset" ref="cube-110"/>
+        <constructor-arg name="couleur" value="ROSE"/>
+    </bean>
+
+    <bean id="tileGreen-12-1" class="Takenoko.Objectives.Patterns.PatternTile">
+        <constructor-arg name="offset" ref="cube-12-1"/>
+        <constructor-arg name="couleur" value="VERT"/>
+    </bean>
+    <bean id="tileYellow-12-1" class="Takenoko.Objectives.Patterns.PatternTile">
+        <constructor-arg name="offset" ref="cube-12-1"/>
+        <constructor-arg name="couleur" value="JAUNE"/>
+    </bean>
+    <bean id="tilePink-12-1" class="Takenoko.Objectives.Patterns.PatternTile">
+        <constructor-arg name="offset" ref="cube01-1"/>
+        <constructor-arg name="couleur" value="ROSE"/>
+    </bean>
+
+    <bean id="tileGreen01-1" class="Takenoko.Objectives.Patterns.PatternTile">
+        <constructor-arg name="offset" ref="cube-12-1"/>
+        <constructor-arg name="couleur" value="VERT"/>
+    </bean>
+    <bean id="tileYellow01-1" class="Takenoko.Objectives.Patterns.PatternTile">
+        <constructor-arg name="offset" ref="cube01-1"/>
+        <constructor-arg name="couleur" value="JAUNE"/>
+    </bean>
+    <bean id="tilePink01-1" class="Takenoko.Objectives.Patterns.PatternTile">
+        <constructor-arg name="offset" ref="cube01-1"/>
+        <constructor-arg name="couleur" value="ROSE"/>
+    </bean>
+
+    <bean id="tileGreen0-11" class="Takenoko.Objectives.Patterns.PatternTile">
+        <constructor-arg name="offset" ref="cube0-11"/>
+        <constructor-arg name="couleur" value="VERT"/>
+    </bean>
+    <bean id="tileYellow0-11" class="Takenoko.Objectives.Patterns.PatternTile">
+        <constructor-arg name="offset" ref="cube0-11"/>
+        <constructor-arg name="couleur" value="JAUNE"/>
+    </bean>
+    <bean id="tilePink0-11" class="Takenoko.Objectives.Patterns.PatternTile">
+        <constructor-arg name="offset" ref="cube0-11"/>
+        <constructor-arg name="couleur" value="ROSE"/>
+    </bean>
+
+    <bean id="patternObjCard1" class="Takenoko.Objectives.PatternObjectiveCard">
+        <constructor-arg name="pattern">
+            <bean class="Takenoko.Objectives.Patterns.Pattern">
+                <constructor-arg name="tiles">
+                    <list>
+                        <ref bean="centerTileGreen"/>
+                        <ref bean="tileGreen-110"/>
+                        <ref bean="tileGreen01-1"/>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="pointValue" value="2"/>
+    </bean>
+
+    <bean id="patternObjCard2" class="Takenoko.Objectives.PatternObjectiveCard">
+        <constructor-arg name="pattern">
+            <bean class="Takenoko.Objectives.Patterns.Pattern">
+                <constructor-arg name="tiles">
+                    <list>
+                        <ref bean="centerTileYellow"/>
+                        <ref bean="tileYellow-110"/>
+                        <ref bean="tileYellow01-1"/>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="pointValue" value="3"/>
+    </bean>
+
+    <bean id="patternObjCard3" class="Takenoko.Objectives.PatternObjectiveCard">
+        <constructor-arg name="pattern">
+            <bean class="Takenoko.Objectives.Patterns.Pattern">
+                <constructor-arg name="tiles">
+                    <list>
+                        <ref bean="centerTilePink"/>
+                        <ref bean="tilePink-110"/>
+                        <ref bean="tilePink01-1"/>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="pointValue" value="4"/>
+    </bean>
+
+    <bean id="patternObjCard4" class="Takenoko.Objectives.PatternObjectiveCard">
+        <constructor-arg name="pattern">
+            <bean class="Takenoko.Objectives.Patterns.Pattern">
+                <constructor-arg name="tiles">
+                    <list>
+                        <ref bean="centerTileGreen"/>
+                        <ref bean="tileGreen-110"/>
+                        <ref bean="tileGreen01-1"/>
+                        <ref bean="tileGreen-12-1"/>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="pointValue" value="3"/>
+    </bean>
+
+    <bean id="patternObjCard5" class="Takenoko.Objectives.PatternObjectiveCard">
+        <constructor-arg name="pattern">
+            <bean class="Takenoko.Objectives.Patterns.Pattern">
+                <constructor-arg name="tiles">
+                    <list>
+                        <ref bean="centerTileYellow"/>
+                        <ref bean="tileYellow-110"/>
+                        <ref bean="tileYellow01-1"/>
+                        <ref bean="tileYellow-12-1"/>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="pointValue" value="4"/>
+    </bean>
+
+    <bean id="patternObjCard6" class="Takenoko.Objectives.PatternObjectiveCard">
+        <constructor-arg name="pattern">
+            <bean class="Takenoko.Objectives.Patterns.Pattern">
+                <constructor-arg name="tiles">
+                    <list>
+                        <ref bean="centerTilePink"/>
+                        <ref bean="tilePink-110"/>
+                        <ref bean="tilePink01-1"/>
+                        <ref bean="tilePink-12-1"/>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="pointValue" value="5"/>
+    </bean>
+
+
+    <bean id="patternObjCard7" class="Takenoko.Objectives.PatternObjectiveCard">
+        <constructor-arg name="pattern">
+            <bean class="Takenoko.Objectives.Patterns.Pattern">
+                <constructor-arg name="tiles">
+                    <list>
+                        <ref bean="centerTilePink"/>
+                        <ref bean="tileYellow-110"/>
+                        <ref bean="tilePink01-1"/>
+                        <ref bean="tileYellow-12-1"/>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="pointValue" value="5"/>
+    </bean>
+
+    <bean id="patternObjCard8" class="Takenoko.Objectives.PatternObjectiveCard">
+        <constructor-arg name="pattern">
+            <bean class="Takenoko.Objectives.Patterns.Pattern">
+                <constructor-arg name="tiles">
+                    <list>
+                        <ref bean="centerTileGreen"/>
+                        <ref bean="tilePink-110"/>
+                        <ref bean="tileGreen01-1"/>
+                        <ref bean="tilePink-12-1"/>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="pointValue" value="4"/>
+    </bean>
+
+    <bean id="patternObjCard9" class="Takenoko.Objectives.PatternObjectiveCard">
+        <constructor-arg name="pattern">
+            <bean class="Takenoko.Objectives.Patterns.Pattern">
+                <constructor-arg name="tiles">
+                    <list>
+                        <ref bean="centerTileGreen"/>
+                        <ref bean="tileYellow-110"/>
+                        <ref bean="tileGreen01-1"/>
+                        <ref bean="tileYellow-12-1"/>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="pointValue" value="3"/>
+    </bean>
+
+    <bean id="patternObjCard10" class="Takenoko.Objectives.PatternObjectiveCard">
+        <constructor-arg name="pattern">
+            <bean class="Takenoko.Objectives.Patterns.Pattern">
+                <constructor-arg name="tiles">
+                    <list>
+                        <ref bean="centerTileYellow"/>
+                        <ref bean="tileYellow-110"/>
+                        <ref bean="tileYellow-12-1"/>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="pointValue" value="3"/>
+    </bean>
+
+    <bean id="patternObjCard11" class="Takenoko.Objectives.PatternObjectiveCard">
+        <constructor-arg name="pattern">
+            <bean class="Takenoko.Objectives.Patterns.Pattern">
+                <constructor-arg name="tiles">
+                    <list>
+                        <ref bean="centerTileGreen"/>
+                        <ref bean="tileGreen-110"/>
+                        <ref bean="tileGreen-12-1"/>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="pointValue" value="2"/>
+    </bean>
+
+    <bean id="patternObjCard12" class="Takenoko.Objectives.PatternObjectiveCard">
+        <constructor-arg name="pattern">
+            <bean class="Takenoko.Objectives.Patterns.Pattern">
+                <constructor-arg name="tiles">
+                    <list>
+                        <ref bean="centerTilePink"/>
+                        <ref bean="tilePink-110"/>
+                        <ref bean="tilePink-12-1"/>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="pointValue" value="2"/>
+    </bean>
+
+    <bean id="patternObjCard13" class="Takenoko.Objectives.PatternObjectiveCard">
+        <constructor-arg name="pattern">
+            <bean class="Takenoko.Objectives.Patterns.Pattern">
+                <constructor-arg name="tiles">
+                    <list>
+                        <ref bean="centerTileYellow"/>
+                        <ref bean="tileYellow0-11"/>
+                        <ref bean="tileYellow01-1"/>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="pointValue" value="3"/>
+    </bean>
+
+    <bean id="patternObjCard14" class="Takenoko.Objectives.PatternObjectiveCard">
+        <constructor-arg name="pattern">
+            <bean class="Takenoko.Objectives.Patterns.Pattern">
+                <constructor-arg name="tiles">
+                    <list>
+                        <ref bean="centerTileGreen"/>
+                        <ref bean="tileGreen0-11"/>
+                        <ref bean="tileGreen01-1"/>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="pointValue" value="2"/>
+    </bean>
+
+    <bean id="patternObjCard15" class="Takenoko.Objectives.PatternObjectiveCard">
+        <constructor-arg name="pattern">
+            <bean class="Takenoko.Objectives.Patterns.Pattern">
+                <constructor-arg name="tiles">
+                    <list>
+                        <ref bean="centerTilePink"/>
+                        <ref bean="tilePink0-11"/>
+                        <ref bean="tilePink01-1"/>
+                    </list>
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="pointValue" value="4"/>
+    </bean>
+
+    <bean id="patternObjDeck" class="Takenoko.Deque.ObjectivesDeck">
+        <constructor-arg name="initDeck">
+            <list>
+                <ref bean="patternObjCard1"/>
+                <ref bean="patternObjCard2"/>
+                <ref bean="patternObjCard3"/>
+                <ref bean="patternObjCard4"/>
+                <ref bean="patternObjCard5"/>
+                <ref bean="patternObjCard6"/>
+                <ref bean="patternObjCard7"/>
+                <ref bean="patternObjCard8"/>
+                <ref bean="patternObjCard9"/>
+                <ref bean="patternObjCard10"/>
+                <ref bean="patternObjCard11"/>
+                <ref bean="patternObjCard12"/>
+                <ref bean="patternObjCard13"/>
+                <ref bean="patternObjCard14"/>
+                <ref bean="patternObjCard15"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+</beans>

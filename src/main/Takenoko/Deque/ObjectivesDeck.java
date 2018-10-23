@@ -18,7 +18,7 @@ import java.util.Stack;
  */
 @Component
 @Configurable
-@ImportResource("ObjectivesGarden.xml")
+@ImportResource(locations = {"ObjectivesGarden.xml", "ObjectivesPattern.xml"})
 public class ObjectivesDeck {
 
     /**
@@ -35,9 +35,7 @@ public class ObjectivesDeck {
     public ObjectivesDeck(List<ObjectiveCard> initDeck){
         Collections.shuffle(initDeck);
         stack = new Stack<>();
-        for (ObjectiveCard card : initDeck){
-            push(card);
-        }
+        initDeck.forEach(this::push);
         size = initDeck.size();
     }
 

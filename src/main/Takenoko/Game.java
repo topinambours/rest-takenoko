@@ -2,7 +2,6 @@ package Takenoko;
 
 import Takenoko.Deque.Deck;
 import Takenoko.Deque.ObjectivesDeck;
-import Takenoko.Deque.ObjectivesPatternDeck;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieAction.Action;
 import Takenoko.Joueur.Strategie.StrategieAction.StrategieActionBasique;
@@ -47,7 +46,7 @@ public class Game {
 
     private ObjectivesDeck pandObjDeck;
 
-    private ObjectivesPatternDeck patternObjDeck;
+    private ObjectivesDeck patternObjDeck;
 
     private ObjectivesDeck gardenObjDeck;
 
@@ -57,15 +56,14 @@ public class Game {
     private int objneedtobecomplete;
 
     @Autowired()
-    public Game(ObjectivesDeck pandObjDeck, ObjectivesDeck gardenObjDeck) {
+    public Game(ObjectivesDeck pandObjDeck, ObjectivesDeck gardenObjDeck, ObjectivesDeck patternObjDeck) {
         this.deck = new Deck();
         this.pandObjDeck = pandObjDeck;
         this.joueurs = new ArrayList<>();
         this.plateau = new Plateau();
         this.plateau.addStartingPlot(new Plot(Couleur.BLEU));
-        this.patternObjDeck = new ObjectivesPatternDeck();
+        this.patternObjDeck = patternObjDeck;
         this.gardenObjDeck = gardenObjDeck;
-
         this.empereur = new Pair<>(false, null);
 
 

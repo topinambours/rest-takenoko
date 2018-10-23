@@ -12,6 +12,7 @@
     <bean name="game" class="Takenoko.Game" scope="prototype">
         <constructor-arg index="0" ref="pandObjDeck"/>
         <constructor-arg index="1" ref="gardenObjDeck"/>
+        <constructor-arg index="2" ref="patternObjDeck"/>
     </bean>
 
 </beans>
