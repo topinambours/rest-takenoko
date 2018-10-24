@@ -1,6 +1,7 @@
 package Takenoko.Joueur;
 
 import Takenoko.Deque.Deck;
+import Takenoko.Deque.ObjectivesDeck;
 import Takenoko.Game;
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Strategie.AbstractStrategie;
@@ -472,6 +473,9 @@ public class Joueur implements Comparable{
             case Gardener:
                 jardinierTurn(game);
                 break;
+            case ObjCard:
+                ObjCardTurn(game);
+                break;
             default:
                 throw new NoActionSelectedException();
         }
@@ -513,6 +517,60 @@ public class Joueur implements Comparable{
             Console.Log.print("Il peut choisir la condition climatique.");
         }
         Console.Log.println("");
+    }
+
+    public void ObjCardTurn(Game game) throws EmptyDeckException {
+        Random random = new Random();
+        int rnd;
+
+        List<ObjectivesDeck> list = new ArrayList<>();
+
+        list.add(game.getGardenObjDeck());
+        list.add(game.getPandObjDeck());
+        list.add(game.getPatternObjDeck());
+
+
+
+        if(getPandaObjectiveCards().isEmpty() && getPatternObjectiveCards().isEmpty() && getGardenObjectiveCards().isEmpty()){
+            rnd = 4;
+        }
+        else if(getGardenObjectiveCards().isEmpty() && getPatternObjectiveCards().isEmpty()){
+            rnd = 1;
+        }
+        else if(getGardenObjectiveCards().isEmpty() && getPandaObjectiveCards().isEmpty()){
+            rnd = 2;
+        }
+        else if(getPandaObjectiveCards().isEmpty() && getPatternObjectiveCards().isEmpty()){
+            rnd = 0;
+        }
+        if(getGardenObjectiveCards().isEmpty()){
+            rnd = random.nextInt(1) + 1;
+        }
+        else if(getPatternObjectiveCards().isEmpty()){
+            rnd = random.nextInt(1);
+        }
+        else if(getPandaObjectiveCards().isEmpty()){
+            rnd = random.nextInt(1)*2;
+        }
+        else{
+            rnd = random.nextInt(2);
+        }
+
+
+        switch(rnd){
+            case 0:
+                game.drawGarden(this);
+                break;
+            case 1:
+                game.drawObjectifPanda(this);
+                break;
+            case 2:
+                game.drawPattern(this);
+                break;
+            default:
+                throw new EmptyDeckException();
+        }
+
     }
 
 }

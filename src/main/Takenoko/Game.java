@@ -162,7 +162,15 @@ public class Game {
 
 
 
-
+    public ObjectivesDeck getPandObjDeck(){
+        return pandObjDeck;
+    }
+    public ObjectivesDeck getPatternObjDeck(){
+        return patternObjDeck;
+    }
+    public ObjectivesDeck getGardenObjDeck(){
+        return gardenObjDeck;
+    }
 
 
     /**
@@ -209,6 +217,7 @@ public class Game {
                 j.turn(this,Action.Irrig);
             }
 
+            j.turn(this,Action.ObjCard);
             j.turn(this,Action.Gardener);
             j.turn(this,Action.Panda);
 
@@ -255,16 +264,15 @@ public class Game {
      * @return boolean true|false
      */
     public boolean end(){
-        return deck.isEmpty();
+        return empereur.getValue()!=null;
     }
 
     /**
      * La fonction principale qui permet de lancer et faire la game
      */
     public void play() throws EmptyDeckException, NoActionSelectedException {
-        while(true){ //Tant que la partie n'est pas terminée
+        while(!end()){ //Tant que la partie n'est pas terminée
             gameturn();
-            //Todo : faire piocher -> faire poser
             if(empereur.getKey()){
                 lastTurn();
                 break;
@@ -275,7 +283,7 @@ public class Game {
             Console.Log.println(String.format("Robot_%d a marqué %d points avec une %s", j.getId(), j.getScore(), j.getStrategieLabel()));
         }
     }
-    
+
     /**
      * evaluate permet d'évaluer les points à chaque tour
      */

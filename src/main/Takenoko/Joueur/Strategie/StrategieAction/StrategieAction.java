@@ -20,6 +20,8 @@ public interface StrategieAction {
                 return Action.Panda;
             case Card:
                 return Action.Plot;
+            case ObjCard:
+                return Action.ObjCard;
             default:
                 return Action.Plot;
 

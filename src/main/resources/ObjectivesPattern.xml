@@ -327,7 +327,7 @@
         <constructor-arg name="pointValue" value="4"/>
     </bean>
 
-    <bean id="patternObjDeck" class="Takenoko.Deque.ObjectivesDeck">
+    <bean id="patternObjDeck" class="Takenoko.Deque.ObjectivesDeck" scope="prototype">
         <constructor-arg name="initDeck">
             <list>
                 <ref bean="patternObjCard1"/>

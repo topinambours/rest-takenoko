@@ -43,7 +43,7 @@
         <constructor-arg name="pointValue" value="7"/>
     </bean>
 
-    <bean id="gardenObjDeck" name="objectivesDeck2" class="Takenoko.Deque.ObjectivesDeck">
+    <bean id="gardenObjDeck" name="objectivesDeck2" class="Takenoko.Deque.ObjectivesDeck" scope="prototype">
         <constructor-arg name="initDeck">
             <list>
                 <ref bean="objGardenJaune1"/>

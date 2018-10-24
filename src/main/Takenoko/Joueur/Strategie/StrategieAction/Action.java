@@ -5,5 +5,6 @@ public enum Action {
     Irrig,
     Panda,
     Gardener,
-    Card
+    Card,
+    ObjCard
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -91,6 +92,7 @@ public class ObjectivesDeck {
     }
 
     @Bean
+    @Scope("prototype")
     public ObjectivesDeck pandObjDeck(){
         ArrayList<ObjectiveCard> out = new ArrayList<>();
 
