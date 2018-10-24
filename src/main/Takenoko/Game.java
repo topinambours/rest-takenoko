@@ -92,6 +92,8 @@ public class Game {
         firstDrawGarden(joueurs);
     }
 
+
+
     /**
      * Permet de faire piocher un pattern au joueur
      * @param joueur Joueur le joueur
@@ -157,6 +159,11 @@ public class Game {
             drawGarden(iterator.next());
         }
     }
+
+
+
+
+
 
     /**
      * Permet d'avoir la liste des joueurs
@@ -268,11 +275,9 @@ public class Game {
             Console.Log.println(String.format("Robot_%d a marqué %d points avec une %s", j.getId(), j.getScore(), j.getStrategieLabel()));
         }
     }
-
-    //GRADUATE
-
+    
     /**
-     * Graduate permet d'évaluer les points à chaque tour
+     * evaluate permet d'évaluer les points à chaque tour
      */
     protected void evaluate(Joueur j, CoordAxial coord){
 
@@ -297,39 +302,6 @@ public class Game {
             Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte Jardinier",j.getId(),evaluateGardenObjective));
         }
 
-    }
-
-    /**
-     * permet d'evaluer les bambous
-     * @param j Joueur le joueur
-     * @param coord CoordAxial la coordonnée
-     * @return int l'évaluation
-     */
-    protected int evaluateBambou(Joueur j,CoordAxial coord){
-
-        int vert = plateau.getNeighbors(coord)
-                .stream()
-                .filter(p -> p.getCouleur() == Couleur.VERT)
-                .mapToInt(p -> p.getBambou())
-                .sum();
-        int jaune = plateau.getNeighbors(coord)
-                .stream()
-                .filter(p -> p.getCouleur() == Couleur.JAUNE)
-                .mapToInt(p -> p.getBambou())
-                .sum();
-        int rose = plateau.getNeighbors(coord)
-                .stream()
-                .filter(p -> p.getCouleur() == Couleur.ROSE)
-                .mapToInt(p -> p.getBambou())
-                .sum();
-        int n = vert + jaune + rose;
-
-
-        j.setBambousVerts(j.getBambousVerts() + vert);
-        j.setBambousJaunes(j.getBambousJaunes() + jaune);
-        j.setBambousRoses(j.getBambousRoses() + rose);
-
-        return n;
     }
 
     /**
