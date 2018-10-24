@@ -22,4 +22,7 @@ public enum Amenagement {
     public String getString() {
         return string;
     }
+
+
+
 }

@@ -42,7 +42,7 @@ import java.util.*;
 @Configurable
 @Component
 @Scope(value = "prototype")
-@Import(ObjectivesDeck.class)
+@Import(value = {ObjectivesDeck.class, Plot.class})
 public class Game {
 
     private Deck deck;
@@ -59,8 +59,8 @@ public class Game {
     private int objneedtobecomplete;
 
     @Autowired()
-    public Game(ObjectivesDeck pandObjDeck, ObjectivesDeck gardenObjDeck, ObjectivesDeck patternObjDeck) {
-        this.deck = new Deck();
+    public Game(ObjectivesDeck pandObjDeck, ObjectivesDeck gardenObjDeck, ObjectivesDeck patternObjDeck, Deck deck) {
+        this.deck = deck;
         this.joueurs = new ArrayList<>();
         this.plateau = new Plateau();
         this.plateau.addStartingPlot(new Plot(Couleur.BLEU));
@@ -71,20 +71,21 @@ public class Game {
 
         this.empereur = null;
 
-
-        boolean deckBool = deck.init();
-        Console.Log.debugPrint("Deck init : "+ deckBool+"\n");
-
         StrategieConcrete strategieJ1 = new StrategieConcrete(new StrategieCoordAdjacent(),new StrategieIrrigComparator(plateau));
         strategieJ1.setStrategieAction(new StrategieActionBasique());
 
         Joueur j1 = new Joueur(1, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaBasique(), new StrategieJardinierBasique(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
 
         Joueur j2 = new Joueur(2, new StrategieConcrete(new StrategieCoordRandom(), new StrategieIrrigComparator(plateau), new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
+        Joueur j3 = new Joueur(3, new StrategieConcrete(new StrategieCoordRandom(), new StrategieIrrigComparator(plateau), new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
+
+        Joueur j4 = new Joueur(4, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaBasique(), new StrategieJardinierBasique(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
 
 
         joueurs.add(j1);
         joueurs.add(j2);
+        joueurs.add(j3);
+        joueurs.add(j4);
 
         this.objneedtobecomplete = setObjNeedToBeComplete();
 
@@ -93,6 +94,7 @@ public class Game {
         firstDrawPattern(joueurs);
         
         firstDrawGarden(joueurs);
+
     }
 
 
@@ -192,14 +194,14 @@ public class Game {
         int nbrJoueur = joueurs.size();
         switch (nbrJoueur){
             case 2 :
-                return 4;
-                //return 9;
+                //return 4;
+                return 9;
             case 3 :
-                return 3;
-                //return 8;
+                //return 3;
+                return 8;
             case 4 :
-                return 2;
-                //return 7;
+                //return 2;
+                return 7;
             default:
                 return 0;
         }

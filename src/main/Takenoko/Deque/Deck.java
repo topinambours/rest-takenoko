@@ -3,6 +3,8 @@ package Takenoko.Deque;
 import Takenoko.Plot.Plot;
 import Takenoko.Properties.Couleur;
 import Takenoko.Util.Exceptions.EmptyDeckException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
@@ -14,6 +16,7 @@ import java.util.*;
  * at the top or at the end.
  * It contains a deque and the size of the deck.
  */
+@Component
 public class Deck {
 
     /**
@@ -50,6 +53,16 @@ public class Deck {
      * Dictionnaire associant à une couleur, le nombre de parcelles correspondantes
      */
     private HashMap<Couleur, Integer> nbPlotByColor;
+
+    /**
+     * Constructeur se chargeant de construire les stuctures de données
+     */
+    @Autowired
+    public Deck(List<Plot> plots){
+        List<Plot> cpy = new ArrayList<>(plots);
+        Collections.shuffle(cpy);
+        deck = new ArrayDeque<>(cpy);
+    }
 
     /**
      * Constructeur se chargeant de construire les stuctures de données

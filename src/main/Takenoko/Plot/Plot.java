@@ -2,12 +2,15 @@ package Takenoko.Plot;
 
 import Takenoko.Objectives.Amenagement.Amenagement;
 import Takenoko.Properties.Couleur;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 /**
  * Cette classe represente les parcelles
  */
+@Component
 public class Plot {
 
     private CoordAxial coord;
@@ -15,6 +18,17 @@ public class Plot {
     private boolean water;
     private Couleur couleur;
     private Amenagement amenagement;
+
+    public Plot(Couleur couleur, Amenagement amenagement){
+        this.couleur = couleur;
+        this.amenagement = amenagement;
+        water = false;
+        if (amenagement.equals(Amenagement.BASSIN)){
+            water = true;
+        }
+        this.coord = new CoordAxial(0,0);
+        this.bambou = 0;
+    }
 
     public Plot(int q, int r,Couleur couleur){
         this.coord = new CoordAxial(q,r);

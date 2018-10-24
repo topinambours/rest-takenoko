@@ -410,6 +410,9 @@ public class Plateau {
             getPlot(coord).pousserBambou();
             for(CoordAxial coordAxial : neighborColor(coord)){
                 getPlot(coordAxial).pousserBambou();
+                if (getPlot(coordAxial).getAmenagement() == Amenagement.ENGRAIS){
+                    getPlot(coordAxial).pousserBambou();
+                }
             }
             return true;
         }

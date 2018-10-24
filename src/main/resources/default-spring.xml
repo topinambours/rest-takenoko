@@ -11,6 +11,7 @@
 
     <import resource="ObjectivesGarden.xml"/>
     <import resource="ObjectivesPattern.xml"/>
+    <import resource="Plots.xml"/>
 
     <bean name="gameStarter" class="Takenoko.GameStarter">
         <constructor-arg name="game" ref="standardGame"/>
@@ -20,6 +21,7 @@
         <constructor-arg index="0" ref="pandObjDeck"/>
         <constructor-arg index="1" ref="gardenObjDeck"/>
         <constructor-arg index="2" ref="patternObjDeck"/>
+        <constructor-arg name="deck" ref="deck" />
     </bean>
 
 </beans>
