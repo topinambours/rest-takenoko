@@ -92,7 +92,12 @@ public class CoordAxial {
         int rabs = Math.abs(rsous);
 
         if((q==qn) || (r==rn) || (qabs==rabs && qsous != rsous)){
-            return true;
+            if(q==qn && r == rn){
+                return false;
+            }
+            else {
+                return true;
+            }
         }
         else{
             return false;

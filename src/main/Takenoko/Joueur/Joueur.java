@@ -412,7 +412,9 @@ public class Joueur implements Comparable{
      */
     public void jardinierTurn(Game game){
         Plateau plateau = game.getPlateau();
-        Boolean mooveJard = plateau.moveJardinier(this.getPlot().getCoord());
+        CoordAxial newPosJardinier = strategie.getJardinierMove(plateau, this);
+
+        Boolean mooveJard = plateau.moveJardinier(newPosJardinier);
         if(mooveJard){
             Console.Log.println(String.format("Robot_%d déplace le jardinier en %s", this.getId(), plateau.getPosJardinier()));
         }

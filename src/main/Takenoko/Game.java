@@ -190,9 +190,6 @@ public class Game {
     public void gameturn() throws EmptyDeckException, NoActionSelectedException{
         for (Joueur j : joueurs){
             Console.Log.println("----");
-            if (end()){
-                break;
-            }
 
             j.trowDice();
             j.turn(this);
@@ -207,7 +204,8 @@ public class Game {
             j.turn(this,Action.Panda);
 
             evaluate(j, j.getPlot().getCoord());
-            if(j.getObjectifComplete()== objneedtobecomplete && empereur==null){
+            Pair<Boolean, Joueur> tmp = new Pair<>(false, null);
+            if(j.getObjectifComplete()== objneedtobecomplete && empereur.equals(tmp)){
                 j.addScore(2);
                 empereur = new Pair(true, j);
                 Console.Log.println(String.format("Robot_%d a marqué 2 points grâce à l'Empereur, le dernier tour est engagé.", j.getId()));
@@ -223,9 +221,6 @@ public class Game {
     public void lastTurn() throws EmptyDeckException, NoActionSelectedException{
         for (Joueur j : joueurs){
             Console.Log.println("----");
-            if (end()){
-                break;
-            }
 
             if(!empereur.getValue().equals(j)) {
 
@@ -258,7 +253,7 @@ public class Game {
      * La fonction principale qui permet de lancer et faire la game
      */
     public void play() throws EmptyDeckException, NoActionSelectedException {
-        while(!end()){ //Tant que la partie n'est pas terminée
+        while(true){ //Tant que la partie n'est pas terminée
             gameturn();
             //Todo : faire piocher -> faire poser
             if(empereur.getKey()){
