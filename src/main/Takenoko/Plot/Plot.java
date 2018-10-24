@@ -1,5 +1,6 @@
 package Takenoko.Plot;
 
+import Takenoko.Objectives.Amenagement.Amenagement;
 import Takenoko.Properties.Couleur;
 
 import java.util.Objects;
@@ -13,12 +14,14 @@ public class Plot {
     private int bambou;
     private boolean water;
     private Couleur couleur;
+    private Amenagement amenagement;
 
     public Plot(int q, int r,Couleur couleur){
         this.coord = new CoordAxial(q,r);
         this.bambou = 0;
         this.water = false;
         this.couleur = couleur;
+        this.amenagement = Amenagement.NON;
     }
 
     public Plot(CoordAxial coordAxial,Couleur couleur){
@@ -154,6 +157,22 @@ public class Plot {
             this.bambou -= n;
         }
         return out;
+    }
+
+    /**
+     * Permet de retourner l'amenagement courant
+     * @return Amenagement
+     */
+    public Amenagement getAmenagement() {
+        return amenagement;
+    }
+
+    /**
+     * Permet de definir l'amenagement
+     * @param amenagement Amenagement
+     */
+    public void setAmenagement(Amenagement amenagement) {
+        this.amenagement = amenagement;
     }
 
     /**
