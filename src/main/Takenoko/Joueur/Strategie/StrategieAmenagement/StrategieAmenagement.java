@@ -1,10 +1,10 @@
-package Takenoko.Joueur.Strategie.StrategieAmenagement;
+package takenoko.joueur.strategie.StrategieAmenagement;
 
-import Takenoko.Joueur.Joueur;
-import Takenoko.Objectives.Amenagement.Amenagement;
-import Takenoko.Objectives.Amenagement.DeckAmenagement;
-import Takenoko.Plateau;
-import Takenoko.Plot.Plot;
+import takenoko.joueur.Joueur;
+import takenoko.objectives.amenagement.Amenagement;
+import takenoko.objectives.amenagement.DeckAmenagement;
+import takenoko.Plateau;
+import takenoko.Plot.Plot;
 
 import java.util.Optional;
 

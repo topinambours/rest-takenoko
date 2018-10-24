@@ -1,8 +1,8 @@
-package Takenoko.Util.Comparators;
+package takenoko.util.comparators;
 
-import Takenoko.Irrigation.CoordIrrig;
-import Takenoko.Plateau;
-import Takenoko.Plot.Plot;
+import takenoko.irrigation.CoordIrrig;
+import takenoko.Plateau;
+import takenoko.Plot.Plot;
 
 import java.util.Comparator;
 import java.util.stream.Collectors;

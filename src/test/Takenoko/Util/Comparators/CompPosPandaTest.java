@@ -1,8 +1,8 @@
-package Takenoko.Util.Comparators;
+package takenoko.util.comparators;
 
-import Takenoko.Plateau;
-import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Plot;
+import takenoko.Plateau;
+import takenoko.Plot.CoordAxial;
+import takenoko.Plot.Plot;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;

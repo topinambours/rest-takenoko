@@ -1,13 +1,14 @@
-package Takenoko;
+package takenoko;
 
-import Takenoko.Joueur.Joueur;
-import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
-import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
-import Takenoko.Joueur.Strategie.StrategieSansPions;
-import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Plot;
-import Takenoko.Properties.Couleur;
-import Takenoko.Util.Console;
+import takenoko.joueur.Joueur;
+import takenoko.joueur.strategie.StrategieCoord.StrategieCoordRandom;
+import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigBase;
+import takenoko.joueur.strategie.StrategieSansPions;
+import takenoko.Plot.CoordAxial;
+import takenoko.Plot.Plot;
+import takenoko.properties.Couleur;
+import takenoko.util.Console;
+import takenoko.util.exceptions.EmptyDeckException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +33,7 @@ public class ScoreTest {
         joueur = new Joueur(1, new StrategieSansPions(new StrategieCoordRandom(),new StrategieIrrigBase(gameTest.getPlateau())));
     }
 
-    @Test public void test(){
+    @Test public void test() throws EmptyDeckException {
         CoordAxial coordAxial = new CoordAxial(1,0);
         Plot plot = new Plot(coordAxial, Couleur.BLEU);
         joueur.setPlot(plot);

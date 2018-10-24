@@ -1,8 +1,8 @@
-package Takenoko.Joueur.Strategie.StrategieJardinier;
+package takenoko.joueur.strategie.StrategieJardinier;
 
-import Takenoko.Joueur.Joueur;
-import Takenoko.Plateau;
-import Takenoko.Plot.CoordAxial;
+import takenoko.joueur.Joueur;
+import takenoko.Plateau;
+import takenoko.Plot.CoordAxial;
 
 public interface StrategieJardinier {
     public String getStrategieJardinierLabel();

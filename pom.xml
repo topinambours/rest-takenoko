@@ -63,7 +63,7 @@
                             <goal>java</goal>
                         </goals>
                         <configuration>
-                            <mainClass>Takenoko.Main</mainClass>
+                            <mainClass>takenoko.Main</mainClass>
                             <arguments>
                                 <argument>debug</argument>
                             </arguments>
@@ -76,7 +76,7 @@
                             <goal>java</goal>
                         </goals>
                         <configuration>
-                            <mainClass>Takenoko.Main</mainClass>
+                            <mainClass>takenoko.Main</mainClass>
                             <arguments>
                                 <argument>release</argument>
                             </arguments>
@@ -89,7 +89,7 @@
                             <goal>java</goal>
                         </goals>
                         <configuration>
-                            <mainClass>Takenoko.Main</mainClass>
+                            <mainClass>takenoko.Main</mainClass>
                             <arguments>
                                 <argument>release</argument>
                             </arguments>
@@ -102,7 +102,7 @@
                             <goal>java</goal>
                         </goals>
                         <configuration>
-                            <mainClass>Takenoko.Main</mainClass>
+                            <mainClass>takenoko.Main</mainClass>
                             <arguments>
                                 <argument>test</argument>
                             </arguments>

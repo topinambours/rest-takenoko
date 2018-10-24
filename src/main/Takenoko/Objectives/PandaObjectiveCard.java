@@ -1,8 +1,8 @@
-package Takenoko.Objectives;
+package takenoko.objectives;
 
-import Takenoko.Joueur.Joueur;
-import Takenoko.Plateau;
-import Takenoko.Properties.Couleur;
+import takenoko.joueur.Joueur;
+import takenoko.Plateau;
+import takenoko.properties.Couleur;
 import org.springframework.stereotype.Component;
 
 import java.util.EnumMap;
@@ -121,7 +121,10 @@ public class PandaObjectiveCard extends ObjectiveCard {
         joueur.addPandaObjectiveCard(this);
     }
 
-
+    @Override
+    public String getTypeName() {
+        return "Panda";
+    }
 
 
     @Override

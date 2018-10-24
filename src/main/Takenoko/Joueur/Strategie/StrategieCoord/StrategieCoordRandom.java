@@ -1,8 +1,8 @@
-package Takenoko.Joueur.Strategie.StrategieCoord;
+package takenoko.joueur.strategie.StrategieCoord;
 
-import Takenoko.Plateau;
-import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Plot;
+import takenoko.Plateau;
+import takenoko.Plot.CoordAxial;
+import takenoko.Plot.Plot;
 
 import java.util.List;
 import java.util.Random;

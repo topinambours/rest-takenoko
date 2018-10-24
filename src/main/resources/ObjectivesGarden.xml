@@ -5,45 +5,45 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:annotation-config />
-    <context:component-scan base-package="Takenoko"/>
+    <context:component-scan base-package="takenoko"/>
 
-    <bean id="objGardenJaune1" class="Takenoko.Objectives.GardenObjectiveCard" scope="prototype">
+    <bean id="objGardenJaune1" class="takenoko.objectives.GardenObjectiveCard" scope="prototype">
         <constructor-arg name="color" value="JAUNE"/>
         <constructor-arg name="nbTower" value="1"/>
         <constructor-arg name="pointValue" value="5"/>
     </bean>
 
-    <bean id="objGardenVert1" class="Takenoko.Objectives.GardenObjectiveCard" scope="prototype">
+    <bean id="objGardenVert1" class="takenoko.objectives.GardenObjectiveCard" scope="prototype">
         <constructor-arg name="color" value="VERT"/>
         <constructor-arg name="nbTower" value="1"/>
         <constructor-arg name="pointValue" value="5"/>
     </bean>
 
-    <bean id="objGardenRose1" class="Takenoko.Objectives.GardenObjectiveCard" scope="prototype">
+    <bean id="objGardenRose1" class="takenoko.objectives.GardenObjectiveCard" scope="prototype">
         <constructor-arg name="color" value="ROSE"/>
         <constructor-arg name="nbTower" value="1"/>
         <constructor-arg name="pointValue" value="5"/>
     </bean>
 
-    <bean id="objGardenVert4" class="Takenoko.Objectives.GardenObjectiveCard" scope="prototype">
+    <bean id="objGardenVert4" class="takenoko.objectives.GardenObjectiveCard" scope="prototype">
         <constructor-arg name="color" value="VERT"/>
         <constructor-arg name="nbTower" value="4"/>
         <constructor-arg name="pointValue" value="8"/>
     </bean>
 
-    <bean id="objGardenRose2" class="Takenoko.Objectives.GardenObjectiveCard" scope="prototype">
+    <bean id="objGardenRose2" class="takenoko.objectives.GardenObjectiveCard" scope="prototype">
         <constructor-arg name="color" value="VERT"/>
         <constructor-arg name="nbTower" value="4"/>
         <constructor-arg name="pointValue" value="6"/>
     </bean>
 
-    <bean id="objGardenJaune3" class="Takenoko.Objectives.GardenObjectiveCard" scope="prototype">
+    <bean id="objGardenJaune3" class="takenoko.objectives.GardenObjectiveCard" scope="prototype">
         <constructor-arg name="color" value="VERT"/>
         <constructor-arg name="nbTower" value="3"/>
         <constructor-arg name="pointValue" value="7"/>
     </bean>
 
-    <bean id="gardenObjDeck" name="objectivesDeck2" class="Takenoko.Deque.ObjectivesDeck" scope="prototype">
+    <bean id="gardenObjDeck" name="objectivesDeck2" class="takenoko.deck.ObjectivesDeck" scope="prototype">
         <constructor-arg name="initDeck">
             <list>
                 <ref bean="objGardenJaune1"/>

@@ -1,6 +1,6 @@
-package Takenoko;
+package takenoko;
 
-import Takenoko.Util.Console;
+import takenoko.util.Console;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;

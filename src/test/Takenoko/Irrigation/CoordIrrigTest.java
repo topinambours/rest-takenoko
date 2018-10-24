@@ -1,6 +1,6 @@
-package Takenoko.Irrigation;
+package takenoko.irrigation;
 
-import Takenoko.Plot.CoordAxial;
+import takenoko.Plot.CoordAxial;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

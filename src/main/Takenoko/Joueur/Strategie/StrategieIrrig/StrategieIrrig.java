@@ -1,6 +1,6 @@
-package Takenoko.Joueur.Strategie.StrategieIrrig;
+package takenoko.joueur.strategie.StrategieIrrig;
 
-import Takenoko.Plateau;
+import takenoko.Plateau;
 
 import java.util.Optional;
 

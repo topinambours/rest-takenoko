@@ -1,7 +1,7 @@
-package Takenoko.Plot;
+package takenoko.Plot;
 
-import Takenoko.Irrigation.CoordIrrig;
-import Takenoko.Irrigation.Orient;
+import takenoko.irrigation.CoordIrrig;
+import takenoko.irrigation.Orient;
 
 import java.util.ArrayList;
 import java.util.List;

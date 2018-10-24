@@ -1,9 +1,9 @@
-package Takenoko.Joueur.Strategie.StrategieIrrig;
+package takenoko.joueur.strategie.StrategieIrrig;
 
-import Takenoko.Irrigation.CoordIrrig;
-import Takenoko.Plateau;
-import Takenoko.Plot.CoordAxial;
-import Takenoko.Util.Comparators.ComparateurIrig;
+import takenoko.irrigation.CoordIrrig;
+import takenoko.Plateau;
+import takenoko.Plot.CoordAxial;
+import takenoko.util.comparators.ComparateurIrig;
 
 import java.util.List;
 import java.util.Optional;

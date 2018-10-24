@@ -1,9 +1,9 @@
-package Takenoko;
+package takenoko;
 
-import Takenoko.Joueur.Joueur;
-import Takenoko.Util.Console;
-import Takenoko.Util.Exceptions.EmptyDeckException;
-import Takenoko.Util.Exceptions.NoActionSelectedException;
+import takenoko.joueur.Joueur;
+import takenoko.util.Console;
+import takenoko.util.exceptions.EmptyDeckException;
+import takenoko.util.exceptions.NoActionSelectedException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

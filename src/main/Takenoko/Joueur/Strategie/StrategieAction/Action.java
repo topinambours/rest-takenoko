@@ -1,4 +1,4 @@
-package Takenoko.Joueur.Strategie.StrategieAction;
+package takenoko.joueur.strategie.StrategieAction;
 
 public enum Action {
     Plot,

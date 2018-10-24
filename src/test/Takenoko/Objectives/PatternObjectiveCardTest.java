@@ -1,17 +1,17 @@
-package Takenoko.Objectives;
+package takenoko.objectives;
 
-import Takenoko.Irrigation.CoordIrrig;
-import Takenoko.Irrigation.Orient;
-import Takenoko.Joueur.Joueur;
-import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
-import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
-import Takenoko.Joueur.Strategie.StrategieSansPions;
-import Takenoko.Objectives.Patterns.CoordCube;
-import Takenoko.Objectives.Patterns.Pattern;
-import Takenoko.Objectives.Patterns.PatternTile;
-import Takenoko.Plateau;
-import Takenoko.Plot.Plot;
-import Takenoko.Properties.Couleur;
+import takenoko.irrigation.CoordIrrig;
+import takenoko.irrigation.Orient;
+import takenoko.joueur.Joueur;
+import takenoko.joueur.strategie.StrategieCoord.StrategieCoordRandom;
+import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigBase;
+import takenoko.joueur.strategie.StrategieSansPions;
+import takenoko.objectives.patterns.CoordCube;
+import takenoko.objectives.patterns.Pattern;
+import takenoko.objectives.patterns.PatternTile;
+import takenoko.Plateau;
+import takenoko.Plot.Plot;
+import takenoko.properties.Couleur;
 import org.junit.Before;
 import org.junit.Test;
 

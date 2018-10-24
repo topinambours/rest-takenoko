@@ -1,24 +1,23 @@
-package Takenoko.Joueur;
+package takenoko.joueur;
 
-import Takenoko.Deque.Deck;
-import Takenoko.Deque.ObjectivesDeck;
-import Takenoko.Game;
-import Takenoko.Irrigation.CoordIrrig;
-import Takenoko.Joueur.Strategie.AbstractStrategie;
-import Takenoko.Joueur.Strategie.StrategieAction.Action;
-import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoord;
-import Takenoko.Objectives.Amenagement.Amenagement;
-import Takenoko.Objectives.GardenObjectiveCard;
-import Takenoko.Objectives.PandaObjectiveCard;
-import Takenoko.Objectives.PatternObjectiveCard;
-import Takenoko.Plateau;
-import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Plot;
-import Takenoko.Properties.Couleur;
-import Takenoko.Util.Console;
-import Takenoko.Util.Exceptions.EmptyDeckException;
-import Takenoko.Util.Exceptions.NoActionSelectedException;
-import Takenoko.WeatherDice;
+import takenoko.deck.PlotsDeck;
+import takenoko.Game;
+import takenoko.irrigation.CoordIrrig;
+import takenoko.joueur.strategie.AbstractStrategie;
+import takenoko.joueur.strategie.StrategieAction.Action;
+import takenoko.joueur.strategie.StrategieCoord.StrategieCoord;
+import takenoko.objectives.amenagement.Amenagement;
+import takenoko.objectives.GardenObjectiveCard;
+import takenoko.objectives.PandaObjectiveCard;
+import takenoko.objectives.PatternObjectiveCard;
+import takenoko.Plateau;
+import takenoko.Plot.CoordAxial;
+import takenoko.Plot.Plot;
+import takenoko.properties.Couleur;
+import takenoko.util.Console;
+import takenoko.util.exceptions.EmptyDeckException;
+import takenoko.util.exceptions.NoActionSelectedException;
+import takenoko.WeatherDice;
 
 import java.util.*;
 
@@ -36,7 +35,7 @@ public class Joueur implements Comparable{
     private int id;
 
     /**
-     * Stratégie globale du Joueur englobant tous les types d'action possibles
+     * Stratégie globale du joueur englobant tous les types d'action possibles
      */
     private AbstractStrategie strategie;
 
@@ -54,14 +53,14 @@ public class Joueur implements Comparable{
     /**
      * Registre des cartes objectifs dont dispose le joueur.
      */
-    private HashSet<PandaObjectiveCard> pandaObjectiveCards;
+    private List<PandaObjectiveCard> pandaObjectiveCards;
 
     /**
      * Déclaration du paquet de carte objectif pattern du joueur sous forme d'un HashSet
      */
-    private ArrayList<PatternObjectiveCard> patternObjectiveCards;
+    private List<PatternObjectiveCard> patternObjectiveCards;
 
-    private HashSet<GardenObjectiveCard> gardenObjectiveCards;
+    private List<GardenObjectiveCard> gardenObjectiveCards;
 
     private int canalIrrigation;
     private int objectifComplete;
@@ -81,9 +80,9 @@ public class Joueur implements Comparable{
             this.bambooByColor.put(c, 0);
         }
         this.strategie = strategie;
-        this.pandaObjectiveCards = new HashSet<PandaObjectiveCard>();
+        this.pandaObjectiveCards = new ArrayList<PandaObjectiveCard>();
         this.patternObjectiveCards = new ArrayList<PatternObjectiveCard>();
-        this.gardenObjectiveCards = new HashSet<GardenObjectiveCard>();
+        this.gardenObjectiveCards = new ArrayList<GardenObjectiveCard>();
         this.canalIrrigation = 0;
         this.objectifComplete = 0;
     }
@@ -92,11 +91,11 @@ public class Joueur implements Comparable{
      * Permet d'avoir la liste des cartes en main
      * @return HashSet les cartes
      */
-    public HashSet<PandaObjectiveCard> getPandaObjectiveCards() {
+    public List<PandaObjectiveCard> getPandaObjectiveCards() {
         return pandaObjectiveCards;
     }
 
-    public HashSet<GardenObjectiveCard> getGardenObjectiveCards() {
+    public List<GardenObjectiveCard> getGardenObjectiveCards() {
         return gardenObjectiveCards;
     }
 
@@ -121,7 +120,7 @@ public class Joueur implements Comparable{
      * Renvoie les cartes pattern objectifs du joueur sous forme d'un HashSet
      * @return le SashSet
      */
-    public ArrayList<PatternObjectiveCard> getPatternObjectiveCards(){
+    public List<PatternObjectiveCard> getPatternObjectiveCards(){
         return patternObjectiveCards;
     }
 
@@ -167,11 +166,11 @@ public class Joueur implements Comparable{
 
     /**
      * Permet de piocher
-     * @param deck Deck le deck
+     * @param plotsDeck Deck le deck
      * @return Plot une parcelle
      */
-    public Plot draw(Deck deck) throws EmptyDeckException {
-        Plot plot = deck.popLast();
+    public Plot draw(PlotsDeck plotsDeck) throws EmptyDeckException {
+        Plot plot = plotsDeck.draw();
         this.setPlot(plot);
         return plot;
     }
@@ -179,14 +178,14 @@ public class Joueur implements Comparable{
     /**
      * Permet de piocher plusieurs parcelles en même temps
      * Si n > h la hauteur de la pioche , le joueur récupère h cartes
-     * @param deck deck dans lequel le joueur pioche
+     * @param plotsDeck deck dans lequel le joueur pioche
      * @param n nombre de cartes à piocher
      * @return list contenant les cartes
      */
-    public List<Plot> multiDraw(Deck deck,int n) throws EmptyDeckException {
+    public List<Plot> multiDraw(PlotsDeck plotsDeck, int n) throws EmptyDeckException {
         List<Plot> out = new ArrayList<>();
-        while (!deck.isEmpty() && n > 0){
-            out.add(draw(deck));
+        while (!plotsDeck.isEmpty() && n > 0){
+            out.add(draw(plotsDeck));
             n--;
         }
         return out;
@@ -194,12 +193,12 @@ public class Joueur implements Comparable{
 
     /**
      * Permet de replacer dans la pioche une parcelle
-     * @param deck Deck le deck
+     * @param plotsDeck Deck le deck
      * @param plot Plot une parcelle
      * @return Plot la parcelle replacée
      */
-    public Plot replaceInDeck(Deck deck, Plot plot){
-        deck.addFirst(plot);
+    public Plot replaceInDeck(PlotsDeck plotsDeck, Plot plot){
+        plotsDeck.insertBottom(plot);
         return plot;
     }
 
@@ -288,7 +287,7 @@ public class Joueur implements Comparable{
 
     /**
      * Le comparateur permet de comparer le nombre de point de differeence entre 2 bots
-     * @param o Joueur
+     * @param o joueur
      * @return int resultat
      */
     @Override
@@ -304,7 +303,7 @@ public class Joueur implements Comparable{
 
     /**
      * Permet de savoir si un joueur a plus de points qu'un autre
-     * @param joueur Joueur un joueur
+     * @param joueur joueur un joueur
      * @return boolean true|false
      */
     public boolean isUpper(Joueur joueur){
@@ -459,7 +458,7 @@ public class Joueur implements Comparable{
      */
     public void turn(Game game, Action action) throws EmptyDeckException, NoActionSelectedException {
         Joueur joueur = this;
-        Deck deck = game.getDeck();
+        PlotsDeck plotsDeck = game.getPlotsDeck();
         Plateau plateau = game.getPlateau();
         if(action == null){
             throw new NoActionSelectedException();
@@ -467,7 +466,7 @@ public class Joueur implements Comparable{
         Console.Log.debugPrintln("Robot_"+joueur.getId()+" choisit l'action "+action.toString());
         switch (action){
             case Card:
-                joueur.draw(deck);
+                joueur.draw(plotsDeck);
                 Console.Log.println("Robot_"+joueur.getId()+" pioche une parcelle : "+joueur.getPlot().getCouleur());
                 break;
             case Plot:
@@ -532,55 +531,18 @@ public class Joueur implements Comparable{
     }
 
     public void ObjCardTurn(Game game) throws EmptyDeckException {
-        Random random = new Random();
-        int rnd;
+        // Le robot choisi selon un ordre de priorité
 
-        List<ObjectivesDeck> list = new ArrayList<>();
-
-        list.add(game.getGardenObjDeck());
-        list.add(game.getPandObjDeck());
-        list.add(game.getPatternObjDeck());
-
-
-
-        if(getPandaObjectiveCards().isEmpty() && getPatternObjectiveCards().isEmpty() && getGardenObjectiveCards().isEmpty()){
-            rnd = 4;
+        if (!game.getPandObjDeck().isEmpty()) {
+            game.drawObjectifPanda(this);
         }
-        else if(getGardenObjectiveCards().isEmpty() && getPatternObjectiveCards().isEmpty()){
-            rnd = 1;
+        else if (!game.getGardenObjDeck().isEmpty()) {
+            game.drawGarden(this);
         }
-        else if(getGardenObjectiveCards().isEmpty() && getPandaObjectiveCards().isEmpty()){
-            rnd = 2;
-        }
-        else if(getPandaObjectiveCards().isEmpty() && getPatternObjectiveCards().isEmpty()){
-            rnd = 0;
-        }
-        if(getGardenObjectiveCards().isEmpty()){
-            rnd = random.nextInt(1) + 1;
-        }
-        else if(getPatternObjectiveCards().isEmpty()){
-            rnd = random.nextInt(1);
-        }
-        else if(getPandaObjectiveCards().isEmpty()){
-            rnd = random.nextInt(1)*2;
-        }
-        else{
-            rnd = random.nextInt(2);
-        }
-
-
-        switch(rnd){
-            case 0:
-                game.drawGarden(this);
-                break;
-            case 1:
-                game.drawObjectifPanda(this);
-                break;
-            case 2:
-                game.drawPattern(this);
-                break;
-            default:
-                throw new EmptyDeckException();
+        else if (!game.getPatternObjDeck().isEmpty()){
+            game.drawGarden(this);
+        }else {
+            throw new EmptyDeckException();
         }
 
     }

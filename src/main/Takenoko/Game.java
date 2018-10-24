@@ -1,28 +1,29 @@
-package Takenoko;
+package takenoko;
 
-import Takenoko.Deque.Deck;
-import Takenoko.Deque.ObjectivesDeck;
-import Takenoko.Joueur.Joueur;
-import Takenoko.Joueur.Strategie.StrategieAction.Action;
-import Takenoko.Joueur.Strategie.StrategieAction.StrategieActionBasique;
-import Takenoko.Joueur.Strategie.StrategieAmenagement.StrategieAmenagementBasique;
-import Takenoko.Joueur.Strategie.StrategieConcrete;
-import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordAdjacent;
-import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
-import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigComparator;
-import Takenoko.Joueur.Strategie.StrategieJardinier.StrategieJardinierBasique;
-import Takenoko.Joueur.Strategie.StrategieJardinier.StrategieJardinierRandom;
-import Takenoko.Joueur.Strategie.StrategiePanda.StrategiePandaBasique;
-import Takenoko.Joueur.Strategie.StrategiePanda.StrategiePandaRandom;
-import Takenoko.Objectives.GardenObjectiveCard;
-import Takenoko.Objectives.PandaObjectiveCard;
-import Takenoko.Objectives.PatternObjectiveCard;
-import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Plot;
-import Takenoko.Properties.Couleur;
-import Takenoko.Util.Console;
-import Takenoko.Util.Exceptions.EmptyDeckException;
-import Takenoko.Util.Exceptions.NoActionSelectedException;
+import takenoko.objectives.ObjectiveCard;
+import takenoko.deck.PlotsDeck;
+import takenoko.deck.ObjectivesDeck;
+import takenoko.joueur.Joueur;
+import takenoko.joueur.strategie.StrategieAction.Action;
+import takenoko.joueur.strategie.StrategieAction.StrategieActionBasique;
+import takenoko.joueur.strategie.StrategieAmenagement.StrategieAmenagementBasique;
+import takenoko.joueur.strategie.StrategieConcrete;
+import takenoko.joueur.strategie.StrategieCoord.StrategieCoordAdjacent;
+import takenoko.joueur.strategie.StrategieCoord.StrategieCoordRandom;
+import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigComparator;
+import takenoko.joueur.strategie.StrategieJardinier.StrategieJardinierBasique;
+import takenoko.joueur.strategie.StrategieJardinier.StrategieJardinierRandom;
+import takenoko.joueur.strategie.StrategiePanda.StrategiePandaBasique;
+import takenoko.joueur.strategie.StrategiePanda.StrategiePandaRandom;
+import takenoko.objectives.GardenObjectiveCard;
+import takenoko.objectives.PandaObjectiveCard;
+import takenoko.objectives.PatternObjectiveCard;
+import takenoko.Plot.CoordAxial;
+import takenoko.Plot.Plot;
+import takenoko.properties.Couleur;
+import takenoko.util.Console;
+import takenoko.util.exceptions.EmptyDeckException;
+import takenoko.util.exceptions.NoActionSelectedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Configuration;
@@ -42,7 +43,7 @@ import java.util.*;
 @Import(value = {ObjectivesDeck.class, Plot.class})
 public class Game {
 
-    private Deck deck;
+    private PlotsDeck plotsDeck;
 
     private ObjectivesDeck pandObjDeck;
 
@@ -56,8 +57,8 @@ public class Game {
     private int objneedtobecomplete;
 
     @Autowired()
-    public Game(ObjectivesDeck pandObjDeck, ObjectivesDeck gardenObjDeck, ObjectivesDeck patternObjDeck, Deck deck) {
-        this.deck = deck;
+    public Game(ObjectivesDeck pandObjDeck, ObjectivesDeck gardenObjDeck, ObjectivesDeck patternObjDeck, PlotsDeck plotsDeck) throws EmptyDeckException {
+        this.plotsDeck = plotsDeck;
         this.joueurs = new ArrayList<>();
         this.plateau = new Plateau();
         this.plateau.addStartingPlot(new Plot(Couleur.BLEU));
@@ -98,12 +99,12 @@ public class Game {
 
     /**
      * Permet de faire piocher un pattern au joueur
-     * @param joueur Joueur le joueur
+     * @param joueur joueur le joueur
      * @return Boolean true|false
      */
-    public boolean drawPattern(Joueur joueur){
+    public boolean drawPattern(Joueur joueur) throws EmptyDeckException {
         if(!patternObjDeck.isEmpty()){
-            patternObjDeck.pop().instanciate(plateau,joueur);
+            ((ObjectiveCard) patternObjDeck.draw()).instanciate(plateau,joueur);
             return true;
         }
         return false;
@@ -114,7 +115,7 @@ public class Game {
      * Permet de faire piocher un pattern à chaque joueur. Utile pour l'initialisation de la partie
      * @param joueurs ArrayList liste des joueurs
      */
-    private void firstDrawPattern(ArrayList<Joueur> joueurs){
+    private void firstDrawPattern(ArrayList<Joueur> joueurs) throws EmptyDeckException {
         Iterator<Joueur> iterator = joueurs.iterator();
         while (iterator.hasNext()){
             drawPattern(iterator.next());
@@ -123,13 +124,13 @@ public class Game {
 
     /**
      * Permet de faire piocher un objectif au joueur
-     * @param joueur Joueur le joueur
+     * @param joueur joueur le joueur
      * @return Boolean true|false
      */
-    public boolean drawObjectifPanda(Joueur joueur){
+    public boolean drawObjectifPanda(Joueur joueur) throws EmptyDeckException {
         boolean bool = !pandObjDeck.isEmpty();
         if (bool){
-            pandObjDeck.pop().instanciate(plateau,joueur);
+            ((ObjectiveCard) pandObjDeck.draw()).instanciate(plateau,joueur);
         }
         return bool;
 
@@ -139,23 +140,23 @@ public class Game {
      * Permet de faire piocher un objectif à chaque joueur. Utile pour l'initialisation de la partie
      * @param joueurs ArrayList liste des joueurs
      */
-    private void firstDrawObjectifPanda(ArrayList<Joueur> joueurs){
+    private void firstDrawObjectifPanda(ArrayList<Joueur> joueurs) throws EmptyDeckException {
         Iterator<Joueur> iterator = joueurs.iterator();
         while (iterator.hasNext()){
             drawObjectifPanda(iterator.next());
         }
     }
 
-    public boolean drawGarden(Joueur joueur){
+    public boolean drawGarden(Joueur joueur) throws EmptyDeckException {
         Boolean bool = !gardenObjDeck.isEmpty();
         if (bool){
-            gardenObjDeck.pop().instanciate(plateau,joueur);
+            ((ObjectiveCard) gardenObjDeck.draw()).instanciate(plateau,joueur);
         }
         return bool;
 
     }
 
-    private void firstDrawGarden(ArrayList<Joueur> joueurs){
+    private void firstDrawGarden(ArrayList<Joueur> joueurs) throws EmptyDeckException {
         Iterator<Joueur> iterator = joueurs.iterator();
         while (iterator.hasNext()){
             drawGarden(iterator.next());
@@ -183,8 +184,8 @@ public class Game {
         return joueurs;
     }
 
-    public Deck getDeck(){
-        return deck;
+    public PlotsDeck getPlotsDeck(){
+        return plotsDeck;
     }
 
     public int setObjNeedToBeComplete(){
@@ -225,6 +226,7 @@ public class Game {
             j.turn(this,Action.ObjCard);
             j.turn(this,Action.Gardener);
             j.turn(this,Action.Panda);
+            j.turn(this, Action.ObjCard);
 
             evaluate(j, j.getPlot().getCoord());
             if(j.getObjectifComplete()== objneedtobecomplete && empereur == null){
@@ -288,7 +290,7 @@ public class Game {
     /**
      * evaluate permet d'évaluer les points à chaque tour
      */
-    protected void evaluate(Joueur j, CoordAxial coord){
+    protected void evaluate(Joueur j, CoordAxial coord) throws EmptyDeckException {
 
         int evaluatedPandaObjective = evaluatePandaObjective(j);
         j.addScore(evaluatedPandaObjective);
@@ -315,12 +317,12 @@ public class Game {
 
     /**
      * Permet d'evaluer
-     * @param joueur Joueur le joueur
+     * @param joueur joueur le joueur
      * @return int Le score resultant
      */
     protected int evaluatePandaObjective(Joueur joueur){
         int score  = 0;
-        HashSet<PandaObjectiveCard> pandas = (HashSet<PandaObjectiveCard>) joueur.getPandaObjectiveCards().clone();
+        List<PandaObjectiveCard> pandas = new ArrayList<>(joueur.getPandaObjectiveCards());
         for (PandaObjectiveCard pandaObjectiveCard : pandas){
             if (pandaObjectiveCard.isComplete()){
                 score = score + pandaObjectiveCard.getPointValue();
@@ -337,10 +339,10 @@ public class Game {
      * @param joueur Le joueur jouant le tour
      * @return le score sous forme d'entier int
      */
-    protected int evaluatePatternObjective(Joueur joueur){
+    protected int evaluatePatternObjective(Joueur joueur) throws EmptyDeckException {
         int score = 0;
         ArrayList<PatternObjectiveCard> patternObjectiveCard1 = new ArrayList<>();
-        ArrayList<PatternObjectiveCard> patternCards = joueur.getPatternObjectiveCards();
+        List<PatternObjectiveCard> patternCards = joueur.getPatternObjectiveCards();
         int i = 0;
         for(PatternObjectiveCard patternObjectiveCard : patternCards){
             if(patternObjectiveCard.isComplete()){
@@ -361,7 +363,7 @@ public class Game {
 
     protected int evaluateGardenObjective(Joueur joueur){
         int score = 0;
-        HashSet<GardenObjectiveCard> gardenObjectiveCards = (HashSet<GardenObjectiveCard>) joueur.getGardenObjectiveCards().clone();
+        List<GardenObjectiveCard> gardenObjectiveCards = new ArrayList<>(joueur.getGardenObjectiveCards());
         for(GardenObjectiveCard gardenObjectiveCard : gardenObjectiveCards){
             if(gardenObjectiveCard.isComplete()){
                 score = score + gardenObjectiveCard.getPointValue();

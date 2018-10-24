@@ -1,4 +1,4 @@
-package Takenoko.Util.Exceptions;
+package takenoko.util.exceptions;
 
 import org.junit.Test;
 

@@ -1,7 +1,7 @@
-package Takenoko.Plot;
+package takenoko.Plot;
 
-import Takenoko.Objectives.Amenagement.Amenagement;
-import Takenoko.Properties.Couleur;
+import takenoko.objectives.amenagement.Amenagement;
+import takenoko.properties.Couleur;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -174,7 +174,7 @@ public class Plot {
 
     /**
      * Permet de retourner l'amenagement courant
-     * @return Amenagement
+     * @return amenagement
      */
     public Amenagement getAmenagement() {
         return amenagement;
@@ -182,7 +182,7 @@ public class Plot {
 
     /**
      * Permet de definir l'amenagement
-     * @param amenagement Amenagement
+     * @param amenagement amenagement
      */
     public void setAmenagement(Amenagement amenagement) {
         this.amenagement = amenagement;

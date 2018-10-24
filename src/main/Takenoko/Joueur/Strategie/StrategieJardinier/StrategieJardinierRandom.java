@@ -1,10 +1,10 @@
-package Takenoko.Joueur.Strategie.StrategieJardinier;
+package takenoko.joueur.strategie.StrategieJardinier;
 
-import Takenoko.Joueur.Joueur;
-import Takenoko.Plateau;
-import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Plot;
-import Takenoko.Properties.Couleur;
+import takenoko.joueur.Joueur;
+import takenoko.Plateau;
+import takenoko.Plot.CoordAxial;
+import takenoko.Plot.Plot;
+import takenoko.properties.Couleur;
 
 import java.util.List;
 import java.util.Random;

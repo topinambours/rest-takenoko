@@ -1,19 +1,19 @@
-package Takenoko.Joueur;
+package takenoko.joueur;
 
-import Takenoko.Deque.Deck;
-import Takenoko.Game;
-import Takenoko.Joueur.Strategie.StrategieAction.Action;
-import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
-import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
-import Takenoko.Joueur.Strategie.StrategieSansPions;
-import Takenoko.Objectives.GardenObjectiveCard;
-import Takenoko.Objectives.PandaObjectiveCard;
-import Takenoko.Plateau;
-import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Plot;
-import Takenoko.Properties.Couleur;
-import Takenoko.Util.Exceptions.EmptyDeckException;
-import Takenoko.Util.Exceptions.NoActionSelectedException;
+import takenoko.deck.PlotsDeck;
+import takenoko.Game;
+import takenoko.joueur.strategie.StrategieAction.Action;
+import takenoko.joueur.strategie.StrategieCoord.StrategieCoordRandom;
+import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigBase;
+import takenoko.joueur.strategie.StrategieSansPions;
+import takenoko.objectives.GardenObjectiveCard;
+import takenoko.objectives.PandaObjectiveCard;
+import takenoko.Plateau;
+import takenoko.Plot.CoordAxial;
+import takenoko.Plot.Plot;
+import takenoko.properties.Couleur;
+import takenoko.util.exceptions.EmptyDeckException;
+import takenoko.util.exceptions.NoActionSelectedException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +22,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +32,8 @@ import static org.junit.Assert.*;
 public class JoueurTest {
 
     private final int DECK_SIZE = 120;
-    private Deck dtest;
+
+    private PlotsDeck dtest;
     private Joueur joueur1;
     private Joueur joueur2;
     private PandaObjectiveCard pandaObjectiveCard;
@@ -45,7 +45,7 @@ public class JoueurTest {
 
     @Before
     public void setUp() throws Exception {
-        dtest = new Deck();
+        dtest = new PlotsDeck();
         p = new Plateau();
         joueur1 = new Joueur(1, new StrategieSansPions(new StrategieCoordRandom(),new StrategieIrrigBase(p)));
         joueur2 = new Joueur(2, new StrategieSansPions(new StrategieCoordRandom(),new StrategieIrrigBase(p)));
@@ -53,7 +53,7 @@ public class JoueurTest {
         pandaObjectiveCard = new PandaObjectiveCard(1, 1, 1, 1);
         gardenObjectiveCard = new GardenObjectiveCard(Couleur.VERT, 1, 4);
         for (int i = 0; i < DECK_SIZE; i++){
-            dtest.addFirst(new Plot(i,0));
+            dtest.insertBottom(new Plot(i,0));
         }
     }
 
@@ -106,17 +106,6 @@ public class JoueurTest {
     }
 
     @Test
-    public void replaceInDeck() throws EmptyDeckException {
-        assertEquals(new Plot(0,0), dtest.getLast());
-        Plot pioche = joueur1.draw(dtest);
-        assertEquals(new Plot(0,0), pioche);
-
-        assertEquals(pioche, joueur1.replaceInDeck(dtest, pioche));
-
-        assertEquals(pioche, dtest.getFirst());
-    }
-
-    @Test
     public void putPlot() throws EmptyDeckException {
         Plateau pTest = new Plateau();
         CoordAxial currentPlotPos;
@@ -159,50 +148,50 @@ public class JoueurTest {
 
     @Test
     public void getPandaObjectiveCard(){
-        HashSet<PandaObjectiveCard> hashSet = new HashSet<>();
-        assertEquals(hashSet, joueur1.getPandaObjectiveCards());
+        List<PandaObjectiveCard> list = new ArrayList<>();
+        assertEquals(list, joueur1.getPandaObjectiveCards());
 
         joueur1.addPandaObjectiveCard(pandaObjectiveCard);
-        hashSet.add(pandaObjectiveCard);
-        assertEquals(hashSet, joueur1.getPandaObjectiveCards());
+        list.add(pandaObjectiveCard);
+        assertEquals(list, joueur1.getPandaObjectiveCards());
 
         joueur1.removePandaObjectiveCard(pandaObjectiveCard);
-        hashSet.remove(pandaObjectiveCard);
-        assertEquals(hashSet, joueur1.getPandaObjectiveCards());
+        list.remove(pandaObjectiveCard);
+        assertEquals(list, joueur1.getPandaObjectiveCards());
 
     }
 
     @Test
     public void addPandaObjectiveCard(){
-        HashSet<PandaObjectiveCard> hashSet = new HashSet<>();
-        assertEquals(hashSet, joueur1.getPandaObjectiveCards());
+        List<PandaObjectiveCard> list = new ArrayList<>();
+        assertEquals(list, joueur1.getPandaObjectiveCards());
 
         joueur1.addPandaObjectiveCard(pandaObjectiveCard);
-        hashSet.add(pandaObjectiveCard);
-        assertEquals(hashSet, joueur1.getPandaObjectiveCards());
+        list.add(pandaObjectiveCard);
+        assertEquals(list, joueur1.getPandaObjectiveCards());
 
         joueur1.removePandaObjectiveCard(pandaObjectiveCard);
-        hashSet.remove(pandaObjectiveCard);
-        assertEquals(hashSet, joueur1.getPandaObjectiveCards());
+        list.remove(pandaObjectiveCard);
+        assertEquals(list, joueur1.getPandaObjectiveCards());
     }
 
     @Test
     public void removePandaObjectiveCard(){
-        HashSet<PandaObjectiveCard> hashSet = new HashSet<>();
-        assertEquals(hashSet, joueur1.getPandaObjectiveCards());
+        List<PandaObjectiveCard> list = new ArrayList<>();
+        assertEquals(list, joueur1.getPandaObjectiveCards());
 
         joueur1.addPandaObjectiveCard(pandaObjectiveCard);
-        hashSet.add(pandaObjectiveCard);
-        assertEquals(hashSet, joueur1.getPandaObjectiveCards());
+        list.add(pandaObjectiveCard);
+        assertEquals(list, joueur1.getPandaObjectiveCards());
 
         joueur1.removePandaObjectiveCard(pandaObjectiveCard);
-        hashSet.remove(pandaObjectiveCard);
-        assertEquals(hashSet, joueur1.getPandaObjectiveCards());
+        list.remove(pandaObjectiveCard);
+        assertEquals(list, joueur1.getPandaObjectiveCards());
     }
 
     @Test
     public void addGardenObjectiveCard(){
-        HashSet<GardenObjectiveCard> list = new HashSet<>();
+        List<GardenObjectiveCard> list = new ArrayList<>();
         assertEquals(list, joueur1.getGardenObjectiveCards());
 
         joueur1.addGardenObjectiveCard(gardenObjectiveCard);
@@ -216,7 +205,7 @@ public class JoueurTest {
 
     @Test
     public void removeGardenObjectiveCard(){
-        HashSet<GardenObjectiveCard> list = new HashSet<>();
+        List<GardenObjectiveCard> list = new ArrayList<>();
         assertEquals(list, joueur1.getGardenObjectiveCards());
 
         joueur1.addGardenObjectiveCard(gardenObjectiveCard);

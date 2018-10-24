@@ -1,4 +1,4 @@
-package Takenoko.Objectives.Amenagement;
+package takenoko.objectives.amenagement;
 
 import org.junit.Before;
 import org.junit.Test;

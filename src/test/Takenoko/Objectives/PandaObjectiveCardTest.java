@@ -1,10 +1,10 @@
-package Takenoko.Objectives;
+package takenoko.objectives;
 
-import Takenoko.Joueur.Joueur;
-import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
-import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
-import Takenoko.Joueur.Strategie.StrategieSansPions;
-import Takenoko.Plateau;
+import takenoko.joueur.Joueur;
+import takenoko.joueur.strategie.StrategieCoord.StrategieCoordRandom;
+import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigBase;
+import takenoko.joueur.strategie.StrategieSansPions;
+import takenoko.Plateau;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

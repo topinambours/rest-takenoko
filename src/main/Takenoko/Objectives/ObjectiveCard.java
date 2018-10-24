@@ -1,7 +1,7 @@
-package Takenoko.Objectives;
+package takenoko.objectives;
 
-import Takenoko.Joueur.Joueur;
-import Takenoko.Plateau;
+import takenoko.joueur.Joueur;
+import takenoko.Plateau;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,4 +33,6 @@ public abstract class ObjectiveCard {
      * @param joueur le propriétaire
      */
     public abstract void instanciate(Plateau plateau, Joueur joueur);
+
+    public abstract String getTypeName();
 }

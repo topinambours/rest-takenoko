@@ -1,8 +1,8 @@
-package Takenoko.Objectives;
+package takenoko.objectives;
 
-import Takenoko.Joueur.Joueur;
-import Takenoko.Objectives.Patterns.Pattern;
-import Takenoko.Plateau;
+import takenoko.joueur.Joueur;
+import takenoko.objectives.patterns.Pattern;
+import takenoko.Plateau;
 
 public class PatternObjectiveCard extends ObjectiveCard {
     private int pointValue;
@@ -84,5 +84,10 @@ public class PatternObjectiveCard extends ObjectiveCard {
                 ", pattern=" + pattern +
                 ", plateau=" + plateau +
                 '}';
+    }
+
+    @Override
+    public String getTypeName() {
+        return "Parcelles";
     }
 }

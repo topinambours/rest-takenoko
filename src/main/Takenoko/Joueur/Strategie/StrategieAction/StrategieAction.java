@@ -1,6 +1,6 @@
-package Takenoko.Joueur.Strategie.StrategieAction;
+package takenoko.joueur.strategie.StrategieAction;
 
-import Takenoko.Game;
+import takenoko.Game;
 
 public interface StrategieAction {
 

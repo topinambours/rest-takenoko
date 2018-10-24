@@ -1,4 +1,4 @@
-package Takenoko.Util;
+package takenoko.util;
 
 import org.junit.BeforeClass;
 import org.junit.Test;

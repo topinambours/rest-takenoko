@@ -1,9 +1,9 @@
-package Takenoko.Objectives.Patterns;
+package takenoko.objectives.patterns;
 
-import Takenoko.Plateau;
-import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Plot;
-import Takenoko.Properties.Couleur;
+import takenoko.Plateau;
+import takenoko.Plot.CoordAxial;
+import takenoko.Plot.Plot;
+import takenoko.properties.Couleur;
 
 import java.util.Objects;
 

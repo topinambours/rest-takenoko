@@ -1,4 +1,4 @@
-package Takenoko.Irrigation;
+package takenoko.irrigation;
 
 /**
  * Permet de definir les orientations de l'irrigation.

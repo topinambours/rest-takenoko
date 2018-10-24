@@ -1,14 +1,14 @@
-package Takenoko;
+package takenoko;
 
-import Takenoko.Irrigation.CoordIrrig;
-import Takenoko.Irrigation.Orient;
-import Takenoko.Joueur.Joueur;
-import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
-import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
-import Takenoko.Joueur.Strategie.StrategieSansPions;
-import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Plot;
-import Takenoko.Properties.Couleur;
+import takenoko.irrigation.CoordIrrig;
+import takenoko.irrigation.Orient;
+import takenoko.joueur.Joueur;
+import takenoko.joueur.strategie.StrategieCoord.StrategieCoordRandom;
+import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigBase;
+import takenoko.joueur.strategie.StrategieSansPions;
+import takenoko.Plot.CoordAxial;
+import takenoko.Plot.Plot;
+import takenoko.properties.Couleur;
 import org.junit.Test;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package Takenoko.Util.Exceptions;
+package takenoko.util.exceptions;
 
 public class EmptyDeckException extends Exception {
 

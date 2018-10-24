@@ -1,6 +1,6 @@
-package Takenoko.Irrigation;
+package takenoko.irrigation;
 
-import Takenoko.Plot.CoordAxial;
+import takenoko.Plot.CoordAxial;
 
 import java.util.ArrayList;
 import java.util.List;

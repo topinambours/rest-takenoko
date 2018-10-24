@@ -1,10 +1,10 @@
-package Takenoko.Joueur.Strategie.StrategieIrrig;
+package takenoko.joueur.strategie.StrategieIrrig;
 
-import Takenoko.Irrigation.CoordIrrig;
-import Takenoko.Irrigation.Orient;
-import Takenoko.Plateau;
-import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Plot;
+import takenoko.irrigation.CoordIrrig;
+import takenoko.irrigation.Orient;
+import takenoko.Plateau;
+import takenoko.Plot.CoordAxial;
+import takenoko.Plot.Plot;
 import org.junit.Before;
 import org.junit.Test;
 

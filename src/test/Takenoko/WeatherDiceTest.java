@@ -1,4 +1,4 @@
-package Takenoko;
+package takenoko;
 
 import org.junit.Test;
 

@@ -1,6 +1,6 @@
-package Takenoko.Joueur.Strategie.StrategieAction;
+package takenoko.joueur.strategie.StrategieAction;
 
-import Takenoko.Game;
+import takenoko.Game;
 
 public class StrategieActionBasique implements StrategieAction{
 
@@ -9,7 +9,7 @@ public class StrategieActionBasique implements StrategieAction{
 
     @Override
     public Action firstActionType(Game game) {
-        if(!game.getDeck().isEmpty()){
+        if(!game.getPlotsDeck().isEmpty()){
             return Action.Card;
         }else{
             int nb = (int) (Math.random() * 1 );

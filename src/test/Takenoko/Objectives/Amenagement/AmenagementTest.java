@@ -1,6 +1,6 @@
-package Takenoko.Objectives.Amenagement;
+package takenoko.objectives.amenagement;
 
-import Takenoko.Plot.Plot;
+import takenoko.Plot.Plot;
 import org.junit.Before;
 import org.junit.Test;
 

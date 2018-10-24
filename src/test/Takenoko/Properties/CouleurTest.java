@@ -1,7 +1,7 @@
-package Takenoko.Properties;
+package takenoko.properties;
 
-import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Plot;
+import takenoko.Plot.CoordAxial;
+import takenoko.Plot.Plot;
 import org.junit.Before;
 import org.junit.Test;
 

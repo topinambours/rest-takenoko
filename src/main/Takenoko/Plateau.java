@@ -1,11 +1,11 @@
-package Takenoko;
+package takenoko;
 
-import Takenoko.Irrigation.CoordIrrig;
-import Takenoko.Objectives.Amenagement.Amenagement;
-import Takenoko.Objectives.Patterns.CoordCube;
-import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Plot;
-import Takenoko.Properties.Couleur;
+import takenoko.irrigation.CoordIrrig;
+import takenoko.objectives.amenagement.Amenagement;
+import takenoko.objectives.patterns.CoordCube;
+import takenoko.Plot.CoordAxial;
+import takenoko.Plot.Plot;
+import takenoko.properties.Couleur;
 
 import java.util.*;
 import java.util.stream.Collectors;

@@ -1,4 +1,4 @@
-package Takenoko.Objectives.Amenagement;
+package takenoko.objectives.amenagement;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,7 +59,7 @@ public class DeckAmenagement {
 
     /**
      * Permet de tirer un aménagement
-     * @return Amenagement
+     * @return amenagement
      */
     public Amenagement drawAmenagement(){
         return amenagements.remove(0);
@@ -67,7 +67,7 @@ public class DeckAmenagement {
 
     /**
      * Permet de tirer un aménagement en particulier
-     * @param amenagement Amenagement
+     * @param amenagement amenagement
      * @return Boolean true|false
      */
     public boolean drawAmenagement(Amenagement amenagement){

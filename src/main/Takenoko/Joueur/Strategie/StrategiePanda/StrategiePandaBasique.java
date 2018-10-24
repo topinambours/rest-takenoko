@@ -1,10 +1,10 @@
-package Takenoko.Joueur.Strategie.StrategiePanda;
+package takenoko.joueur.strategie.StrategiePanda;
 
-import Takenoko.Joueur.Joueur;
-import Takenoko.Plateau;
-import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Plot;
-import Takenoko.Util.Comparators.CompPosPanda;
+import takenoko.joueur.Joueur;
+import takenoko.Plateau;
+import takenoko.Plot.CoordAxial;
+import takenoko.Plot.Plot;
+import takenoko.util.comparators.CompPosPanda;
 
 import java.util.List;
 import java.util.stream.Collectors;

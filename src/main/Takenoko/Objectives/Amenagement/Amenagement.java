@@ -1,4 +1,4 @@
-package Takenoko.Objectives.Amenagement;
+package takenoko.objectives.amenagement;
 
 /**
  * Ajout des aménagements qui sont les suivants :

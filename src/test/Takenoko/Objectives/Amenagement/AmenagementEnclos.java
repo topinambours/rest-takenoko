@@ -1,12 +1,12 @@
-package Takenoko.Objectives.Amenagement;
+package takenoko.objectives.amenagement;
 
 
-import Takenoko.Game;
-import Takenoko.Joueur.Joueur;
-import Takenoko.Joueur.Strategie.StrategieConcrete;
-import Takenoko.Plot.Plot;
-import Takenoko.Util.Exceptions.EmptyDeckException;
-import Takenoko.Util.Exceptions.NoActionSelectedException;
+import takenoko.Game;
+import takenoko.joueur.Joueur;
+import takenoko.joueur.strategie.StrategieConcrete;
+import takenoko.Plot.Plot;
+import takenoko.util.exceptions.EmptyDeckException;
+import takenoko.util.exceptions.NoActionSelectedException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,14 +1,14 @@
-package Takenoko.Objectives.Patterns;
+package takenoko.objectives.patterns;
 
-import Takenoko.Joueur.Joueur;
-import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
-import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
-import Takenoko.Joueur.Strategie.StrategieSansPions;
-import Takenoko.Objectives.GardenObjectiveCard;
-import Takenoko.Objectives.ObjectiveCard;
-import Takenoko.Plateau;
-import Takenoko.Plot.Plot;
-import Takenoko.Properties.Couleur;
+import takenoko.joueur.Joueur;
+import takenoko.joueur.strategie.StrategieCoord.StrategieCoordRandom;
+import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigBase;
+import takenoko.joueur.strategie.StrategieSansPions;
+import takenoko.objectives.GardenObjectiveCard;
+import takenoko.objectives.ObjectiveCard;
+import takenoko.Plateau;
+import takenoko.Plot.Plot;
+import takenoko.properties.Couleur;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

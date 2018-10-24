@@ -1,11 +1,11 @@
-package Takenoko.Joueur.Strategie.StrategieCoord;
+package takenoko.joueur.strategie.StrategieCoord;
 
-import Takenoko.Game;
-import Takenoko.Joueur.Joueur;
-import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
-import Takenoko.Joueur.Strategie.StrategieSansPions;
-import Takenoko.Plot.CoordAxial;
-import Takenoko.Plot.Plot;
+import takenoko.Game;
+import takenoko.joueur.Joueur;
+import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigBase;
+import takenoko.joueur.strategie.StrategieSansPions;
+import takenoko.Plot.CoordAxial;
+import takenoko.Plot.Plot;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

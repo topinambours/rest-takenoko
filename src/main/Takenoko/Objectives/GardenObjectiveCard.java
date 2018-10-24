@@ -1,9 +1,8 @@
-package Takenoko.Objectives;
+package takenoko.objectives;
 
-import Takenoko.Joueur.Joueur;
-import Takenoko.Plateau;
-import Takenoko.Properties.Couleur;
-import org.springframework.beans.factory.annotation.Autowired;
+import takenoko.joueur.Joueur;
+import takenoko.Plateau;
+import takenoko.properties.Couleur;
 
 public class GardenObjectiveCard extends ObjectiveCard{
 
@@ -15,7 +14,6 @@ public class GardenObjectiveCard extends ObjectiveCard{
 
     private Plateau plateau;
 
-    @Autowired
     public GardenObjectiveCard(Couleur color, int nbTower, int pointValue){
         this.color = color;
         this.nbTower = nbTower;
@@ -59,5 +57,10 @@ public class GardenObjectiveCard extends ObjectiveCard{
                 ", pointValue=" + pointValue +
                 ", plateau=" + plateau +
                 '}';
+    }
+
+    @Override
+    public String getTypeName() {
+        return "Jardinier";
     }
 }

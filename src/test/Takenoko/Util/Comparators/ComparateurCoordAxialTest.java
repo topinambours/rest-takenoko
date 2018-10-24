@@ -1,6 +1,6 @@
-package Takenoko.Util.Comparators;
+package takenoko.util.comparators;
 
-import Takenoko.Plot.CoordAxial;
+import takenoko.Plot.CoordAxial;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

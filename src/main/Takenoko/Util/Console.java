@@ -1,4 +1,4 @@
-package Takenoko.Util;
+package takenoko.util;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
