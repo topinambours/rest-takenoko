@@ -58,12 +58,14 @@ public class Game {
     @Autowired()
     public Game(ObjectivesDeck pandObjDeck, ObjectivesDeck gardenObjDeck, ObjectivesDeck patternObjDeck) {
         this.deck = new Deck();
-        this.pandObjDeck = pandObjDeck;
         this.joueurs = new ArrayList<>();
         this.plateau = new Plateau();
         this.plateau.addStartingPlot(new Plot(Couleur.BLEU));
+
         this.patternObjDeck = patternObjDeck;
         this.gardenObjDeck = gardenObjDeck;
+        this.pandObjDeck = pandObjDeck;
+
         this.empereur = new Pair<>(false, null);
 
 
@@ -83,7 +85,7 @@ public class Game {
 
         this.objneedtobecomplete = setObjNeedToBeComplete();
 
-        firstDrawObjectif(joueurs);
+        firstDrawObjectifPanda(joueurs);
 
         firstDrawPattern(joueurs);
         
@@ -120,7 +122,7 @@ public class Game {
      * @param joueur Joueur le joueur
      * @return Boolean true|false
      */
-    public boolean drawObjectif(Joueur joueur){
+    public boolean drawObjectifPanda(Joueur joueur){
         boolean bool = !pandObjDeck.isEmpty();
         if (bool){
             pandObjDeck.pop().instanciate(plateau,joueur);
@@ -133,10 +135,10 @@ public class Game {
      * Permet de faire piocher un objectif à chaque joueur. Utile pour l'initialisation de la partie
      * @param joueurs ArrayList liste des joueurs
      */
-    private void firstDrawObjectif(ArrayList<Joueur> joueurs){
+    private void firstDrawObjectifPanda(ArrayList<Joueur> joueurs){
         Iterator<Joueur> iterator = joueurs.iterator();
         while (iterator.hasNext()){
-            drawObjectif(iterator.next());
+            drawObjectifPanda(iterator.next());
         }
     }
 
