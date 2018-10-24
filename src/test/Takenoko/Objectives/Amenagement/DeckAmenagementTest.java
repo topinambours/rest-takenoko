@@ -19,4 +19,20 @@ public class DeckAmenagementTest {
     @Test public void getter(){
         assertEquals(deckAmenagement.getAmenagements().get(0),deckAmenagement.drawAmenagement());
     }
+
+    @Test public void specialDraw(){
+        int size = deckAmenagement.size();
+        deckAmenagement.drawAmenagement(Amenagement.BASSIN);
+
+        assertEquals(--size,deckAmenagement.size());
+    }
+
+    @Test public void specialDrawOver(){
+        deckAmenagement.drawAmenagement(Amenagement.BASSIN);
+        deckAmenagement.drawAmenagement(Amenagement.BASSIN);
+        deckAmenagement.drawAmenagement(Amenagement.BASSIN);
+
+        assertEquals(false,deckAmenagement.drawAmenagement(Amenagement.BASSIN));
+
+    }
 }

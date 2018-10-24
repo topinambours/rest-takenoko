@@ -65,12 +65,23 @@ public class DeckAmenagement {
     }
 
     /**
+     * Permet de tirer un aménagement en particulier
+     * @param amenagement Amenagement
+     * @return Boolean true|false
+     */
+    public boolean drawAmenagement(Amenagement amenagement){
+        return this.amenagements.remove(amenagement);
+    }
+
+    /**
      * ermet de connaitre la taille de la pioche
      * @return int
      */
     public int size(){
         return amenagements.size();
     }
+
+
 
 
     @Override
