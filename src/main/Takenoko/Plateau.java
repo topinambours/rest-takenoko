@@ -2,6 +2,7 @@ package Takenoko;
 
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Objectives.Amenagement.Amenagement;
+import Takenoko.Objectives.Patterns.CoordCube;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import Takenoko.Properties.Couleur;
@@ -321,6 +322,53 @@ public class Plateau {
     }
 
     /**
+     * Vérifie si deux parcelles sont alignées et ont un chemin droit ininterrompu entre elles
+     * @param coo1 la coordonnée de la première parcelle
+     * @param coo2 la coordonnée de la seconde parcelle
+     * @return vrai s'il y a un chemin, faux sinon
+     */
+    public boolean hasStraightPath(CoordAxial coo1, CoordAxial coo2) {
+        CoordCube diffCub = new CoordCube(coo2.getQ() - coo1.getQ(), coo2.getR() - coo1.getR());
+        if (diffCub.getQ() == 0) {
+            if (diffCub.getR() >= 0) {
+                for (int i = 0; i < diffCub.getR(); i++) {
+                    if (getPlot(new CoordAxial(coo1.getQ(), coo1.getR() + i)) == null) return false;
+                }
+                return true;
+            } else {
+                for (int i = 0; i < diffCub.getS(); i++) {
+                    if (getPlot(new CoordAxial(coo1.getQ(), coo1.getR() - i)) == null) return false;
+                }
+                return true;
+            }
+        } else if (diffCub.getR() == 0) {
+            if (diffCub.getQ() >= 0) {
+                for (int i = 0; i < diffCub.getQ(); i++) {
+                    if (getPlot(new CoordAxial(coo1.getQ() + i, coo1.getR())) == null) return false;
+                }
+                return true;
+            } else {
+                for (int i = 0; i < diffCub.getS(); i++) {
+                    if (getPlot(new CoordAxial(coo1.getQ() - i, coo1.getR())) == null) return false;
+                }
+                return true;
+            }
+        } else if (diffCub.getS() == 0) {
+            if (diffCub.getQ() >= 0) {
+                for (int i = 0; i < diffCub.getQ(); i++) {
+                    if (getPlot(new CoordAxial(coo1.getQ() + i, coo1.getR() - i)) == null) return false;
+                }
+                return true;
+            } else {
+                for (int i = 0; i < diffCub.getR(); i++) {
+                    if (getPlot(new CoordAxial(coo1.getQ() - i, coo1.getR() + i)) == null) return false;
+                }
+                return true;
+            }
+        } else return false;
+    }
+
+    /**
      * RELATIF AU PANDA
      */
 
@@ -330,7 +378,7 @@ public class Plateau {
      * @return la couleur du bambou récupéré après le passage du panda
      */
     public Couleur movePanda(CoordAxial coord){
-        if (plots.containsKey(coord) && coord.isInLine(posPanda)){
+        if (plots.containsKey(coord) && coord.isInLine(posPanda) && hasStraightPath(coord, posPanda)){
             posPanda = coord;
             Plot current = plots.get(coord);
             if (current.getBambou() > 0 && !(current.getAmenagement().equals(Amenagement.ENCLOS))) { //Ne mange pas en cas d'enclos
@@ -357,7 +405,7 @@ public class Plateau {
      * @return true si le jardinier est bien bougé sinon false
      */
     public boolean moveJardinier(CoordAxial coord){
-        if(coord.isInLine(posJardinier) && plots.containsKey(coord)){
+        if(coord.isInLine(posJardinier) && hasStraightPath(coord, posJardinier)&& plots.containsKey(coord)){
             posJardinier = coord;
             getPlot(coord).pousserBambou();
             for(CoordAxial coordAxial : neighborColor(coord)){
