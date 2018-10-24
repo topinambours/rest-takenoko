@@ -1,6 +1,7 @@
 package Takenoko;
 
 import Takenoko.Irrigation.CoordIrrig;
+import Takenoko.Objectives.Amenagement.Amenagement;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import Takenoko.Properties.Couleur;
@@ -332,7 +333,7 @@ public class Plateau {
         if (plots.containsKey(coord) && coord.isInLine(posPanda)){
             posPanda = coord;
             Plot current = plots.get(coord);
-            if (current.getBambou() > 0) {
+            if (current.getBambou() > 0 && !(current.getAmenagement().equals(Amenagement.ENCLOS))) { //Ne mange pas en cas d'enclos
                 plots.get(coord).removeBambou(1);
 
                 return plots.get(coord).getCouleur();

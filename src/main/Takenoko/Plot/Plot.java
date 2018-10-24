@@ -108,8 +108,8 @@ public class Plot {
      * Permet de savoir si la parcelle est irriguée, utile pour le bambou
      * @return boolean true|false
      */
-    public boolean haveWater() {
-        return water;
+    public boolean haveWater() { //Le bambous à le bassin
+        return amenagement.equals(Amenagement.BASSIN)||water;
     }
 
     /**
@@ -183,6 +183,9 @@ public class Plot {
     public boolean pousserBambou(){
         if(haveWater() && bambou < 4){
             bambou++;
+            if(amenagement.equals(Amenagement.ENGRAIS) && bambou < 4){ //Ajout Bambou
+                bambou++;
+            }
             return true;
         }
         return false;
