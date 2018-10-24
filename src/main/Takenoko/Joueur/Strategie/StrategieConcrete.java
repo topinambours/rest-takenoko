@@ -8,13 +8,18 @@ import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoord;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrig;
 import Takenoko.Joueur.Strategie.StrategieJardinier.StrategieJardinier;
 import Takenoko.Joueur.Strategie.StrategiePanda.StrategiePanda;
+import Takenoko.Joueur.Strategie.StrategiePanda.StrategiePandaBasique;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class StrategieConcrete extends AbstractStrategie {
     private StrategieCoord strategieCoord;
     private StrategieIrrig strategieIrrig;
@@ -166,5 +171,13 @@ public class StrategieConcrete extends AbstractStrategie {
     @Override
     public void setStrategieAction(StrategieAction strategieAction) {
         this.strategieAction = strategieAction;
+    }
+
+    @Bean
+    @Scope("prototype")
+    public StrategieConcrete createStratRandom() {
+        StrategieConcrete strategieConcrete = new StrategieConcrete();
+        strategieConcrete.setStrategiePanda(new StrategiePandaBasique());
+        return strategieConcrete;
     }
 }
