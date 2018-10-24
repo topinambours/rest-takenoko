@@ -431,7 +431,7 @@ public class Plateau {
     }
 
     public List<Plot> getLinePlots(CoordAxial coord){
-        return plots.values().stream().filter(p -> coord.isInLine(p.getCoord())).collect(Collectors.toList());
+        return plots.values().stream().filter(p -> hasStraightPath(coord, p.getCoord())).collect(Collectors.toList());
     }
 
     public boolean isMotifInAll(Couleur color, int tower){
