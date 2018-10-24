@@ -4,11 +4,14 @@ import Takenoko.Game;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieAction.Action;
 import Takenoko.Joueur.Strategie.StrategieAction.StrategieAction;
+import Takenoko.Joueur.Strategie.StrategieAmenagement.StrategieAmenagement;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoord;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrig;
 import Takenoko.Joueur.Strategie.StrategieJardinier.StrategieJardinier;
 import Takenoko.Joueur.Strategie.StrategiePanda.StrategiePanda;
 import Takenoko.Joueur.Strategie.StrategiePanda.StrategiePandaBasique;
+import Takenoko.Objectives.Amenagement.Amenagement;
+import Takenoko.Objectives.Amenagement.DeckAmenagement;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
@@ -26,17 +29,19 @@ public class StrategieConcrete extends AbstractStrategie {
     private StrategiePanda strategiePanda;
     private StrategieJardinier strategieJardinier;
     private StrategieAction strategieAction;
+    private StrategieAmenagement strategieAmenagement;
 
     public StrategieConcrete(StrategieCoord strategieCoord,
                              StrategieIrrig strategieIrrig,
                              StrategiePanda strategiePanda,
                              StrategieJardinier strategieJardinier,
-                             StrategieAction strategieAction) {
+                             StrategieAction strategieAction,StrategieAmenagement strategieAmenagement) {
         this.strategieCoord = strategieCoord;
         this.strategieIrrig = strategieIrrig;
         this.strategiePanda = strategiePanda;
         this.strategieJardinier = strategieJardinier;
         this.strategieAction = strategieAction;
+        this.strategieAmenagement = strategieAmenagement;
     }
 
     public StrategieConcrete(StrategieCoord strategieCoord, StrategieIrrig strategieIrrig) {
@@ -171,6 +176,21 @@ public class StrategieConcrete extends AbstractStrategie {
     @Override
     public void setStrategieAction(StrategieAction strategieAction) {
         this.strategieAction = strategieAction;
+    }
+
+    @Override
+    public void setStrategieAmenagement(StrategieAmenagement strategieAmenagement) {
+        this.strategieAmenagement = strategieAmenagement;
+    }
+
+    @Override
+    public Amenagement chooseAmenagement(DeckAmenagement deckAmenagement) {
+        return this.strategieAmenagement.chooseAmenagement(deckAmenagement);
+    }
+
+    @Override
+    public Optional<Plot> plotAmenagement(Joueur joueur, Plateau plateau) {
+        return this.strategieAmenagement.plotAmenagement(joueur, plateau);
     }
 
     @Bean

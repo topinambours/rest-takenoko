@@ -2,6 +2,8 @@ package Takenoko.Objectives.Amenagement;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Permet de créer un deck d'aménagement
@@ -82,6 +84,9 @@ public class DeckAmenagement {
     }
 
 
+    public HashSet<Amenagement> getAmenagementSet(){
+        return new HashSet<Amenagement>(amenagements);
+    }
 
 
     @Override
@@ -90,4 +95,6 @@ public class DeckAmenagement {
                 "amenagements=" + amenagements.toString() +
                 '}';
     }
+
+
 }

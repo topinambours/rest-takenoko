@@ -35,4 +35,9 @@ public class DeckAmenagementTest {
         assertEquals(false,deckAmenagement.drawAmenagement(Amenagement.BASSIN));
 
     }
+
+    @Test public void testGetSet(){
+        assertEquals(3,deckAmenagement.getAmenagementSet().size());
+
+    }
 }

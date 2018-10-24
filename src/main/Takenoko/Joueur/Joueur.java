@@ -7,6 +7,7 @@ import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Strategie.AbstractStrategie;
 import Takenoko.Joueur.Strategie.StrategieAction.Action;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoord;
+import Takenoko.Objectives.Amenagement.Amenagement;
 import Takenoko.Objectives.GardenObjectiveCard;
 import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Objectives.PatternObjectiveCard;
@@ -64,6 +65,9 @@ public class Joueur implements Comparable{
 
     private int canalIrrigation;
     private int objectifComplete;
+    private ArrayList<Amenagement> amenagements;
+
+
 
     /**
      * Un joueur est initialisé avec un identifiant
@@ -249,6 +253,14 @@ public class Joueur implements Comparable{
      */
     public int getScore() {
         return score;
+    }
+
+    /**
+     * Permet d'avoir la liste des Amenagements stockés
+     * @return ArrayList
+     */
+    public ArrayList<Amenagement> getAmenagements() {
+        return amenagements;
     }
 
     /**

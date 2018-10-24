@@ -5,6 +5,7 @@ import Takenoko.Deque.ObjectivesDeck;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieAction.Action;
 import Takenoko.Joueur.Strategie.StrategieAction.StrategieActionBasique;
+import Takenoko.Joueur.Strategie.StrategieAmenagement.StrategieAmenagementBasique;
 import Takenoko.Joueur.Strategie.StrategieConcrete;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordAdjacent;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
@@ -75,9 +76,9 @@ public class Game {
         StrategieConcrete strategieJ1 = new StrategieConcrete(new StrategieCoordAdjacent(),new StrategieIrrigComparator(plateau));
         strategieJ1.setStrategieAction(new StrategieActionBasique());
 
-        Joueur j1 = new Joueur(1, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaBasique(), new StrategieJardinierBasique(), new StrategieActionBasique()));
+        Joueur j1 = new Joueur(1, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaBasique(), new StrategieJardinierBasique(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
 
-        Joueur j2 = new Joueur(2, new StrategieConcrete(new StrategieCoordRandom(), new StrategieIrrigComparator(plateau), new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique()));
+        Joueur j2 = new Joueur(2, new StrategieConcrete(new StrategieCoordRandom(), new StrategieIrrigComparator(plateau), new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
 
 
         joueurs.add(j1);
