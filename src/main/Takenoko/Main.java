@@ -16,7 +16,7 @@ public class Main {
         // On initialise la console avec le mode souhaité {release, debug, test}
         String consoleModeLabel = args[0];
         Console.Log.init(consoleModeLabel);
-        SpringApplication.run(GameStarter.class);
+        SpringApplication.run(GameStarter.class, args);
 
         System.exit(1);
     }

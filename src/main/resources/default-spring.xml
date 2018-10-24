@@ -7,6 +7,8 @@
     <context:annotation-config />
     <context:component-scan base-package="Takenoko"/>
 
+    <context:property-override location="classpath*:resources/application.properties"/>
+
     <import resource="ObjectivesGarden.xml"/>
     <import resource="ObjectivesPattern.xml"/>
 
