@@ -18,13 +18,13 @@ import static org.junit.Assert.assertTrue;
 public class FirstPlotTest {
 
     @Autowired
-    private Game game;
+    private Game gameTest;
 
     @Test public void test() throws EmptyDeckException, NoActionSelectedException {
-        Joueur joueur = game.getJoueurs().get(0);
+        Joueur joueur = gameTest.getJoueurs().get(0);
 
-        joueur.turn(game, Action.Card);
-        joueur.turn(game, Action.Plot);
+        joueur.turn(gameTest, Action.Card);
+        joueur.turn(gameTest, Action.Plot);
         assertTrue(joueur.getPlot().haveWater());
     }
 }

@@ -17,5 +17,7 @@ public class Main {
         String consoleModeLabel = args[0];
         Console.Log.init(consoleModeLabel);
         SpringApplication.run(GameStarter.class);
+
+        System.exit(1);
     }
 }

@@ -42,7 +42,7 @@ public class JoueurTest {
     private GardenObjectiveCard gardenObjectiveCard;
 
     @Autowired
-    private Game game;
+    private Game gameTest;
 
     @Before
     public void setUp() throws Exception {
@@ -338,11 +338,11 @@ public class JoueurTest {
 
     @Test
     public void ObjCardTurn() throws NoActionSelectedException, EmptyDeckException {
-        Joueur j1 = game.getJoueurs().get(0);
+        Joueur j1 = gameTest.getJoueurs().get(0);
         int nbCarte = j1.getPandaObjectiveCards().size()+j1.getPatternObjectiveCards().size()+j1.getGardenObjectiveCards().size();
         assertEquals(3, nbCarte);
 
-        j1.turn(game, Action.ObjCard);
+        j1.turn(gameTest, Action.ObjCard);
         nbCarte = j1.getPandaObjectiveCards().size()+j1.getPatternObjectiveCards().size()+j1.getGardenObjectiveCards().size();
         assertEquals(4, nbCarte);
 

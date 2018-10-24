@@ -26,6 +26,8 @@ import Takenoko.Util.Exceptions.NoActionSelectedException;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
@@ -53,7 +55,7 @@ public class Game {
 
     private ArrayList<Joueur> joueurs;
     private Plateau plateau;
-    private Pair<Boolean, Joueur> empereur;
+    private Joueur empereur;
     private int objneedtobecomplete;
 
     @Autowired()
@@ -67,7 +69,7 @@ public class Game {
         this.gardenObjDeck = gardenObjDeck;
         this.pandObjDeck = pandObjDeck;
 
-        this.empereur = new Pair<>(false, null);
+        this.empereur = null;
 
 
         boolean deckBool = deck.init();
@@ -190,11 +192,14 @@ public class Game {
         int nbrJoueur = joueurs.size();
         switch (nbrJoueur){
             case 2 :
-                return 9;
+                return 4;
+                //return 9;
             case 3 :
-                return 8;
+                return 3;
+                //return 8;
             case 4 :
-                return 7;
+                return 2;
+                //return 7;
             default:
                 return 0;
         }
@@ -223,10 +228,9 @@ public class Game {
             j.turn(this,Action.Panda);
 
             evaluate(j, j.getPlot().getCoord());
-            Pair<Boolean, Joueur> tmp = new Pair<>(false, null);
-            if(j.getObjectifComplete()== objneedtobecomplete && empereur.equals(tmp)){
+            if(j.getObjectifComplete()== objneedtobecomplete && empereur == null){
                 j.addScore(2);
-                empereur = new Pair(true, j);
+                empereur = j;
                 Console.Log.println(String.format("Robot_%d a marqué 2 points grâce à l'Empereur, le dernier tour est engagé.", j.getId()));
             }
         }
@@ -241,7 +245,7 @@ public class Game {
         for (Joueur j : joueurs){
             Console.Log.println("----");
 
-            if(!empereur.getValue().equals(j)) {
+            if(!empereur.equals(j)) {
 
                 j.trowDice();
                 j.turn(this);
@@ -265,7 +269,7 @@ public class Game {
      * @return boolean true|false
      */
     public boolean end(){
-        return empereur.getValue()!=null;
+        return empereur !=null;
     }
 
     /**
@@ -274,11 +278,8 @@ public class Game {
     public void play() throws EmptyDeckException, NoActionSelectedException {
         while(!end()){ //Tant que la partie n'est pas terminée
             gameturn();
-            if(empereur.getKey()){
-                lastTurn();
-                break;
-            }
         }
+        lastTurn();
         Console.Log.println("----\nLa partie est terminée");
         for (Joueur j : joueurs){
             Console.Log.println(String.format("Robot_%d a marqué %d points avec une %s", j.getId(), j.getScore(), j.getStrategieLabel()));

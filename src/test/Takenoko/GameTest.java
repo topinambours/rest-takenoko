@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest
 public class GameTest {
     @Autowired
-    private Game game;
+    private Game gameTest;
 
 
     @Before
@@ -32,12 +32,12 @@ public class GameTest {
     }
 
     @Test public void testGame() throws EmptyDeckException, NoActionSelectedException {
-        game.play();
-        assertTrue(game.end());
+        gameTest.play();
+        assertTrue(gameTest.end());
     }
 
     @Test public void testInitDraw(){
-        ArrayList<Joueur> joueurs = game.getJoueurs();
+        ArrayList<Joueur> joueurs = gameTest.getJoueurs();
         Iterator<Joueur> iterator = joueurs.iterator();
 
         while (iterator.hasNext()){

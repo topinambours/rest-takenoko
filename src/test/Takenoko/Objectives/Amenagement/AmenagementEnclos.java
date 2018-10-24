@@ -24,7 +24,6 @@ import static org.junit.Assert.*;
 public class AmenagementEnclos {
 
     @Autowired
-    @Qualifier("game")
     private Game gameTest;
 
     private Joueur joueur;

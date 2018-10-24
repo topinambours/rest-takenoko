@@ -8,8 +8,13 @@
     <context:component-scan base-package="Takenoko"/>
 
     <import resource="ObjectivesGarden.xml"/>
+    <import resource="ObjectivesPattern.xml"/>
 
-    <bean name="game" class="Takenoko.Game" scope="prototype">
+    <bean name="gameStarter" class="Takenoko.GameStarter">
+        <constructor-arg name="game" ref="standardGame"/>
+    </bean>
+
+    <bean name="standardGame" class="Takenoko.Game" scope="prototype">
         <constructor-arg index="0" ref="pandObjDeck"/>
         <constructor-arg index="1" ref="gardenObjDeck"/>
         <constructor-arg index="2" ref="patternObjDeck"/>
