@@ -1,7 +1,6 @@
 package Takenoko.Joueur;
 
 import Takenoko.Deque.Deck;
-import Takenoko.Deque.ObjectivesDeck;
 import Takenoko.Game;
 import Takenoko.Joueur.Strategie.StrategieAction.Action;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;

@@ -2,7 +2,6 @@ package Takenoko.Plot;
 
 import Takenoko.Objectives.Amenagement.Amenagement;
 import Takenoko.Properties.Couleur;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;

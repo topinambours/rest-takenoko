@@ -4,19 +4,18 @@ package Takenoko.Objectives.Amenagement;
 import Takenoko.Game;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieConcrete;
-import Takenoko.Joueur.Strategie.StrategiePanda.StrategiePandaBasique;
 import Takenoko.Plot.Plot;
-import Takenoko.Util.Exceptions.*;
+import Takenoko.Util.Exceptions.EmptyDeckException;
+import Takenoko.Util.Exceptions.NoActionSelectedException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
