@@ -35,8 +35,8 @@ Version textuel n'étant pas destinée à être jouée par des êtres humains ma
  - [x] **Version 5** : Les joueurs recoivent des cartes objectifs panda, les joueurs gagnent des points pour chaque carte objectif complétée. Les joueurs adaptent leurs stratégies pour compléter leurs objectifs.
  - [x] **Version 6** : Les joueurs recoivent des cartes objectifs parcelle, un joueur gagne des points en complétant ses cartes. Un joueur va donc adapter ses placements de parcelles pour achever ses objectifs.
  - [x] **Version 7** : Les joueurs ont maintenant la posibilité de jouer avec le jardinier, les cartes jardinier, et le Panda. ~~De plus, le joueur respecte la règle des 2 actions maximum par tours.~~
- - [ ] **Version 8** : Les joueurs peuvent piocher et placer des aménagements. Le dé météo affecte le déroulement du tour, les joueurs doivent effectuer deux actions par tours.
-
+ - [ ] **Version 8** : Les joueurs peuvent piocher et placer des aménagements. Le dé météo affecte le déroulement du tour, les joueurs doivent effectuer deux actions par tours. 
+ - [ ] **Version 9** : Finir le moteur & renforcer l'intégration Spring.
 ## Y'a quoi dans la boite ?
 
 |Nombre| Nom | Image 
