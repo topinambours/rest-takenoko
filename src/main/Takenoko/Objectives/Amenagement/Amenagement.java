@@ -1,4 +1,4 @@
-package Takenoko.Plot.Amenagement;
+package Takenoko.Objectives.Amenagement;
 
 /**
  * Ajout des aménagements qui sont les suivants :
