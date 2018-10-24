@@ -1,6 +1,8 @@
 package Takenoko.Joueur;
 
 import Takenoko.Deque.Deck;
+import Takenoko.Game;
+import Takenoko.Joueur.Strategie.StrategieAction.Action;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Joueur.Strategie.StrategieSansPions;
@@ -11,8 +13,13 @@ import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
 import Takenoko.Properties.Couleur;
 import Takenoko.Util.Exceptions.EmptyDeckException;
+import Takenoko.Util.Exceptions.NoActionSelectedException;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,6 +28,8 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class JoueurTest {
 
     private final int DECK_SIZE = 120;
@@ -30,6 +39,9 @@ public class JoueurTest {
     private PandaObjectiveCard pandaObjectiveCard;
     private Plateau p;
     private GardenObjectiveCard gardenObjectiveCard;
+
+    @Autowired
+    private Game gameTest;
 
     @Before
     public void setUp() throws Exception {
@@ -321,5 +333,17 @@ public class JoueurTest {
         assertEquals(5, joueur1.getBambousRoses());
         joueur1.setBambousRoses(-5);
         assertEquals(0, joueur1.getBambousRoses());
+    }
+
+    @Test
+    public void ObjCardTurn() throws NoActionSelectedException, EmptyDeckException {
+        Joueur j1 = gameTest.getJoueurs().get(0);
+        int nbCarte = j1.getPandaObjectiveCards().size()+j1.getPatternObjectiveCards().size()+j1.getGardenObjectiveCards().size();
+        assertEquals(3, nbCarte);
+
+        j1.turn(gameTest, Action.ObjCard);
+        nbCarte = j1.getPandaObjectiveCards().size()+j1.getPatternObjectiveCards().size()+j1.getGardenObjectiveCards().size();
+        assertEquals(4, nbCarte);
+
     }
 }

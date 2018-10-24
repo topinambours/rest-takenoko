@@ -1,7 +1,6 @@
 package Takenoko.Joueur.Strategie.StrategieAction;
 
 import Takenoko.Game;
-import Takenoko.Plateau;
 
 public interface StrategieAction {
 
@@ -21,6 +20,8 @@ public interface StrategieAction {
                 return Action.Panda;
             case Card:
                 return Action.Plot;
+            case ObjCard:
+                return Action.ObjCard;
             default:
                 return Action.Plot;
 

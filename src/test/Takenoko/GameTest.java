@@ -6,29 +6,40 @@ import Takenoko.Util.Exceptions.EmptyDeckException;
 import Takenoko.Util.Exceptions.NoActionSelectedException;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class GameTest {
-    private Game game;
+    @Autowired
+    private Game gameTest;
 
 
     @Before
+    @Required
     public void setUp() throws Exception {
-        game = new Game();
         Console.Log.init();
     }
 
+     //@TODO améliorer les ia pour qu'elles complètes plus facilement les objectifs
+    // test bloquant dans le cas ou la partie ne se termine jamais
     @Test public void testGame() throws EmptyDeckException, NoActionSelectedException {
-        game.play();
-        assertTrue(game.end());
+        gameTest.play();
+        assertTrue(gameTest.end());
     }
 
     @Test public void testInitDraw(){
-        ArrayList<Joueur> joueurs = game.getJoueurs();
+        ArrayList<Joueur> joueurs = gameTest.getJoueurs();
         Iterator<Joueur> iterator = joueurs.iterator();
 
         while (iterator.hasNext()){

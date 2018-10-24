@@ -3,7 +3,6 @@ package Takenoko;
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Irrigation.Orient;
 import Takenoko.Joueur.Joueur;
-import Takenoko.Joueur.Strategie.StrategieConcrete;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Joueur.Strategie.StrategieSansPions;
@@ -14,9 +13,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class PlateauTest {
 
@@ -72,7 +69,7 @@ public class PlateauTest {
     public void movePanda() {
         Plateau p = new Plateau();
 
-        CoordAxial coordTest = new CoordAxial(10,-10);
+        CoordAxial coordTest = new CoordAxial(1,-1);
 
         // Pas de parcelle à cet emplacement
         assertEquals(Couleur.BLEU, p.movePanda(coordTest));
@@ -88,6 +85,11 @@ public class PlateauTest {
 
         // Tuile qui n'est pas en "ligne" avec la position du panda
         p.putPlot(new Plot(new CoordAxial(10,-12)));
+
+        assertEquals(Couleur.BLEU, p.movePanda(new CoordAxial(11,-12)));
+
+        // Tuile qui est en ligne avec le panda, mais avec du vide
+        p.putPlot(new Plot(new CoordAxial(3,-3)));
 
         assertEquals(Couleur.BLEU, p.movePanda(new CoordAxial(11,-12)));
 

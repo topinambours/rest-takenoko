@@ -1,11 +1,13 @@
 package Takenoko.Joueur;
 
 import Takenoko.Deque.Deck;
+import Takenoko.Deque.ObjectivesDeck;
 import Takenoko.Game;
 import Takenoko.Irrigation.CoordIrrig;
 import Takenoko.Joueur.Strategie.AbstractStrategie;
-import Takenoko.Joueur.Strategie.StrategieAction.*;
+import Takenoko.Joueur.Strategie.StrategieAction.Action;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoord;
+import Takenoko.Objectives.Amenagement.Amenagement;
 import Takenoko.Objectives.GardenObjectiveCard;
 import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Objectives.PatternObjectiveCard;
@@ -16,10 +18,9 @@ import Takenoko.Properties.Couleur;
 import Takenoko.Util.Console;
 import Takenoko.Util.Exceptions.EmptyDeckException;
 import Takenoko.Util.Exceptions.NoActionSelectedException;
+import Takenoko.WeatherDice;
 
-import java.security.CodeSource;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Le robot, joue au jeu en utilisant une stratégie spécifique
@@ -62,6 +63,12 @@ public class Joueur implements Comparable{
 
     private HashSet<GardenObjectiveCard> gardenObjectiveCards;
 
+    private int canalIrrigation;
+    private int objectifComplete;
+    private ArrayList<Amenagement> amenagements;
+
+
+
     /**
      * Un joueur est initialisé avec un identifiant
      * @param id identifiant (unique)
@@ -77,6 +84,8 @@ public class Joueur implements Comparable{
         this.pandaObjectiveCards = new HashSet<PandaObjectiveCard>();
         this.patternObjectiveCards = new ArrayList<PatternObjectiveCard>();
         this.gardenObjectiveCards = new HashSet<GardenObjectiveCard>();
+        this.canalIrrigation = 0;
+        this.objectifComplete = 0;
     }
 
     /**
@@ -247,6 +256,14 @@ public class Joueur implements Comparable{
     }
 
     /**
+     * Permet d'avoir la liste des Amenagements stockés
+     * @return ArrayList
+     */
+    public ArrayList<Amenagement> getAmenagements() {
+        return amenagements;
+    }
+
+    /**
      * fonction privée Setter score
      * @param score int le score
      */
@@ -376,6 +393,24 @@ public class Joueur implements Comparable{
         }
     }
 
+    public int getCanalIrrigation(){
+        return canalIrrigation;
+    }
+    public void addCanalIrrigation(){
+        canalIrrigation = canalIrrigation + 1;
+    }
+    public void removeCanalIrrigation(){
+        if(canalIrrigation > 0) {
+            canalIrrigation = canalIrrigation - 1;
+        }
+    }
+
+    public int getObjectifComplete(){
+        return objectifComplete;
+    }
+    public void addObjectifComplete(){
+        objectifComplete = objectifComplete + 1;
+    }
     public Plot getPlot() {
         return this.plot;
     }
@@ -384,15 +419,15 @@ public class Joueur implements Comparable{
         this.plot = nextPlot;
     }
 
-
-
     /**
      * Permet de faire jouer le tour jardinier
      * @param game Game
      */
     public void jardinierTurn(Game game){
         Plateau plateau = game.getPlateau();
-        Boolean mooveJard = plateau.moveJardinier(this.getPlot().getCoord());
+        CoordAxial newPosJardinier = strategie.getJardinierMove(plateau, this);
+
+        Boolean mooveJard = plateau.moveJardinier(newPosJardinier);
         if(mooveJard){
             Console.Log.println(String.format("Robot_%d déplace le jardinier en %s", this.getId(), plateau.getPosJardinier()));
         }
@@ -450,6 +485,9 @@ public class Joueur implements Comparable{
             case Gardener:
                 jardinierTurn(game);
                 break;
+            case ObjCard:
+                ObjCardTurn(game);
+                break;
             default:
                 throw new NoActionSelectedException();
         }
@@ -473,8 +511,9 @@ public class Joueur implements Comparable{
      */
     public Optional<CoordIrrig> irrigTurn(Plateau plateau) {
         Optional<CoordIrrig> coo = this.putIrrig(plateau);
-        if (coo.isPresent()) {
+        if (coo.isPresent() && getCanalIrrigation() > 0) {
             Console.Log.println(String.format("Il pose une section d'irrigation en : %s", coo.get()));
+            removeCanalIrrigation();
             List<CoordAxial> newIrrigated = coo.get().borders();
             Console.Log.println(String.format("Les parcelles %s et %s sont irriguées", newIrrigated.get(0), newIrrigated.get(1)));
         }else{
@@ -482,4 +521,68 @@ public class Joueur implements Comparable{
         }
         return coo;
     }
+
+    public void trowDice(){
+        WeatherDice dice = WeatherDice.throwDice();
+        Console.Log.print(String.format("Robot_%d obtient %s en lançant le dé météo. ", id, dice.toString()));
+        if (dice == WeatherDice.PLAYER_DECIDE){
+            Console.Log.print("Il peut choisir la condition climatique.");
+        }
+        Console.Log.println("");
+    }
+
+    public void ObjCardTurn(Game game) throws EmptyDeckException {
+        Random random = new Random();
+        int rnd;
+
+        List<ObjectivesDeck> list = new ArrayList<>();
+
+        list.add(game.getGardenObjDeck());
+        list.add(game.getPandObjDeck());
+        list.add(game.getPatternObjDeck());
+
+
+
+        if(getPandaObjectiveCards().isEmpty() && getPatternObjectiveCards().isEmpty() && getGardenObjectiveCards().isEmpty()){
+            rnd = 4;
+        }
+        else if(getGardenObjectiveCards().isEmpty() && getPatternObjectiveCards().isEmpty()){
+            rnd = 1;
+        }
+        else if(getGardenObjectiveCards().isEmpty() && getPandaObjectiveCards().isEmpty()){
+            rnd = 2;
+        }
+        else if(getPandaObjectiveCards().isEmpty() && getPatternObjectiveCards().isEmpty()){
+            rnd = 0;
+        }
+        if(getGardenObjectiveCards().isEmpty()){
+            rnd = random.nextInt(1) + 1;
+        }
+        else if(getPatternObjectiveCards().isEmpty()){
+            rnd = random.nextInt(1);
+        }
+        else if(getPandaObjectiveCards().isEmpty()){
+            rnd = random.nextInt(1)*2;
+        }
+        else{
+            rnd = random.nextInt(2);
+        }
+
+
+        switch(rnd){
+            case 0:
+                game.drawGarden(this);
+                break;
+            case 1:
+                game.drawObjectifPanda(this);
+                break;
+            case 2:
+                game.drawPattern(this);
+                break;
+            default:
+                throw new EmptyDeckException();
+        }
+
+    }
+
 }

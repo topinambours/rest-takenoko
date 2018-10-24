@@ -3,7 +3,6 @@ package Takenoko.Objectives;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Objectives.Patterns.Pattern;
 import Takenoko.Plateau;
-import Takenoko.Plot.CoordAxial;
 
 public class PatternObjectiveCard extends ObjectiveCard {
     private int pointValue;

@@ -1,25 +1,19 @@
 package Takenoko;
 
 import Takenoko.Deque.Deck;
-import Takenoko.Deque.ObjectivesGardenDeck;
-import Takenoko.Deque.ObjectivesPandaDeck;
-import Takenoko.Deque.ObjectivesPatternDeck;
-import Takenoko.Irrigation.CoordIrrig;
+import Takenoko.Deque.ObjectivesDeck;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieAction.Action;
 import Takenoko.Joueur.Strategie.StrategieAction.StrategieActionBasique;
+import Takenoko.Joueur.Strategie.StrategieAmenagement.StrategieAmenagementBasique;
 import Takenoko.Joueur.Strategie.StrategieConcrete;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordAdjacent;
-import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordBamboo;
-import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordColor;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoordRandom;
-import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigComparator;
 import Takenoko.Joueur.Strategie.StrategieJardinier.StrategieJardinierBasique;
 import Takenoko.Joueur.Strategie.StrategieJardinier.StrategieJardinierRandom;
 import Takenoko.Joueur.Strategie.StrategiePanda.StrategiePandaBasique;
 import Takenoko.Joueur.Strategie.StrategiePanda.StrategiePandaRandom;
-import Takenoko.Joueur.Strategie.StrategieSansPions;
 import Takenoko.Objectives.GardenObjectiveCard;
 import Takenoko.Objectives.PandaObjectiveCard;
 import Takenoko.Objectives.PatternObjectiveCard;
@@ -29,54 +23,78 @@ import Takenoko.Properties.Couleur;
 import Takenoko.Util.Console;
 import Takenoko.Util.Exceptions.EmptyDeckException;
 import Takenoko.Util.Exceptions.NoActionSelectedException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * La classe Game permet de créer une partie
  */
+@Configuration
+@Configurable
+@Component
+@Scope(value = "prototype")
+@Import(value = {ObjectivesDeck.class, Plot.class})
 public class Game {
 
     private Deck deck;
-    private ObjectivesPandaDeck pandObjDeck;
-    private ObjectivesPatternDeck patternObjDeck;
-    private ObjectivesGardenDeck gardenObjDeck;
+
+    private ObjectivesDeck pandObjDeck;
+
+    private ObjectivesDeck patternObjDeck;
+
+    private ObjectivesDeck gardenObjDeck;
+
     private ArrayList<Joueur> joueurs;
     private Plateau plateau;
+    private Joueur empereur;
+    private int objneedtobecomplete;
 
-    public Game() {
-        this.deck = new Deck();
-        this.pandObjDeck = new ObjectivesPandaDeck();
+    @Autowired()
+    public Game(ObjectivesDeck pandObjDeck, ObjectivesDeck gardenObjDeck, ObjectivesDeck patternObjDeck, Deck deck) {
+        this.deck = deck;
         this.joueurs = new ArrayList<>();
         this.plateau = new Plateau();
         this.plateau.addStartingPlot(new Plot(Couleur.BLEU));
-        this.patternObjDeck = new ObjectivesPatternDeck();
-        this.gardenObjDeck = new ObjectivesGardenDeck();
 
+        this.patternObjDeck = patternObjDeck;
+        this.gardenObjDeck = gardenObjDeck;
+        this.pandObjDeck = pandObjDeck;
 
-        Boolean deckBool = deck.init();
-        Console.Log.debugPrint("Deck init : "+ deckBool+"\n");
+        this.empereur = null;
 
         StrategieConcrete strategieJ1 = new StrategieConcrete(new StrategieCoordAdjacent(),new StrategieIrrigComparator(plateau));
         strategieJ1.setStrategieAction(new StrategieActionBasique());
 
-        Joueur j1 = new Joueur(1, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaBasique(), new StrategieJardinierBasique(), new StrategieActionBasique()));
+        Joueur j1 = new Joueur(1, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaBasique(), new StrategieJardinierBasique(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
 
-        Joueur j2 = new Joueur(2, new StrategieConcrete(new StrategieCoordRandom(), new StrategieIrrigComparator(plateau), new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique()));
+        Joueur j2 = new Joueur(2, new StrategieConcrete(new StrategieCoordRandom(), new StrategieIrrigComparator(plateau), new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
+        Joueur j3 = new Joueur(3, new StrategieConcrete(new StrategieCoordRandom(), new StrategieIrrigComparator(plateau), new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
+
+        Joueur j4 = new Joueur(4, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaBasique(), new StrategieJardinierBasique(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
 
 
         joueurs.add(j1);
         joueurs.add(j2);
+        joueurs.add(j3);
+        joueurs.add(j4);
 
-        firstDrawObjectif(joueurs);
+        this.objneedtobecomplete = setObjNeedToBeComplete();
+
+        firstDrawObjectifPanda(joueurs);
 
         firstDrawPattern(joueurs);
         
         firstDrawGarden(joueurs);
 
-
     }
+
+
 
     /**
      * Permet de faire piocher un pattern au joueur
@@ -108,8 +126,8 @@ public class Game {
      * @param joueur Joueur le joueur
      * @return Boolean true|false
      */
-    public boolean drawObjectif(Joueur joueur){
-        Boolean bool = !pandObjDeck.isEmpty();
+    public boolean drawObjectifPanda(Joueur joueur){
+        boolean bool = !pandObjDeck.isEmpty();
         if (bool){
             pandObjDeck.pop().instanciate(plateau,joueur);
         }
@@ -121,10 +139,10 @@ public class Game {
      * Permet de faire piocher un objectif à chaque joueur. Utile pour l'initialisation de la partie
      * @param joueurs ArrayList liste des joueurs
      */
-    private void firstDrawObjectif(ArrayList<Joueur> joueurs){
+    private void firstDrawObjectifPanda(ArrayList<Joueur> joueurs){
         Iterator<Joueur> iterator = joueurs.iterator();
         while (iterator.hasNext()){
-            drawObjectif(iterator.next());
+            drawObjectifPanda(iterator.next());
         }
     }
 
@@ -144,6 +162,19 @@ public class Game {
         }
     }
 
+
+
+    public ObjectivesDeck getPandObjDeck(){
+        return pandObjDeck;
+    }
+    public ObjectivesDeck getPatternObjDeck(){
+        return patternObjDeck;
+    }
+    public ObjectivesDeck getGardenObjDeck(){
+        return gardenObjDeck;
+    }
+
+
     /**
      * Permet d'avoir la liste des joueurs
      * @return ArrayList Joueurs
@@ -156,102 +187,130 @@ public class Game {
         return deck;
     }
 
+    public int setObjNeedToBeComplete(){
+        int nbrJoueur = joueurs.size();
+        switch (nbrJoueur){
+            case 2 :
+                //return 4;
+                return 9;
+            case 3 :
+                //return 3;
+                return 8;
+            case 4 :
+                //return 2;
+                return 7;
+            default:
+                return 0;
+        }
+    }
+
+    /**
+     * Effectue un tour de jeu pour chaque joueur
+     * @throws EmptyDeckException
+     * @throws NoActionSelectedException
+     */
+    public void gameturn() throws EmptyDeckException, NoActionSelectedException{
+        for (Joueur j : joueurs){
+            Console.Log.println("----");
+
+            j.trowDice();
+            j.turn(this);
+
+            if(plateau.getCanalIrrigation() > 0){
+                j.addCanalIrrigation();
+                plateau.removeCanalIrrigation();
+                j.turn(this,Action.Irrig);
+            }
+
+            j.turn(this,Action.ObjCard);
+            j.turn(this,Action.Gardener);
+            j.turn(this,Action.Panda);
+
+            evaluate(j, j.getPlot().getCoord());
+            if(j.getObjectifComplete()== objneedtobecomplete && empereur == null){
+                j.addScore(2);
+                empereur = j;
+                Console.Log.println(String.format("Robot_%d a marqué 2 points grâce à l'Empereur, le dernier tour est engagé.", j.getId()));
+            }
+        }
+    }
+
+    /**
+     * Effectue le dernier tour de jeu
+     * @throws EmptyDeckException
+     * @throws NoActionSelectedException
+     */
+    public void lastTurn() throws EmptyDeckException, NoActionSelectedException{
+        for (Joueur j : joueurs){
+            Console.Log.println("----");
+
+            if(!empereur.equals(j)) {
+
+                j.trowDice();
+                j.turn(this);
+
+                if (plateau.getCanalIrrigation() > 0) {
+                    j.addCanalIrrigation();
+                    plateau.removeCanalIrrigation();
+                    j.turn(this, Action.Irrig);
+                }
+
+                j.turn(this, Action.Gardener);
+                j.turn(this, Action.Panda);
+
+                evaluate(j, j.getPlot().getCoord());
+            }
+        }
+    }
+
     /**
      * La fonction end permet de savoir si la partie est terminée
      * @return boolean true|false
      */
     public boolean end(){
-        return deck.isEmpty();
+        return empereur !=null;
     }
-
 
     /**
      * La fonction principale qui permet de lancer et faire la game
      */
     public void play() throws EmptyDeckException, NoActionSelectedException {
         while(!end()){ //Tant que la partie n'est pas terminée
-            for (Joueur j : joueurs){
-                Console.Log.println("----");
-                if (end()){
-                    break;
-                }
-
-                j.turn(this);
-                j.turn(this,Action.Irrig);
-                j.turn(this,Action.Gardener);
-                j.turn(this,Action.Panda);
-
-
-                evaluate(j, j.getPlot().getCoord());
-            }//Todo : faire piocher -> faire poser
-
-
+            gameturn();
         }
+        lastTurn();
         Console.Log.println("----\nLa partie est terminée");
         for (Joueur j : joueurs){
             Console.Log.println(String.format("Robot_%d a marqué %d points avec une %s", j.getId(), j.getScore(), j.getStrategieLabel()));
         }
     }
 
-
-    //GRADUATE
-
     /**
-     * Graduate permet d'évaluer les points à chaque tour
+     * evaluate permet d'évaluer les points à chaque tour
      */
     protected void evaluate(Joueur j, CoordAxial coord){
 
         int evaluatedPandaObjective = evaluatePandaObjective(j);
         j.addScore(evaluatedPandaObjective);
         if (evaluatedPandaObjective > 0){
+            j.addObjectifComplete();
             Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte panda",j.getId(),evaluatedPandaObjective));
         }
 
         int evaluatePatternObjective = evaluatePatternObjective(j);
         j.addScore(evaluatePatternObjective);
         if (evaluatePatternObjective > 0){
+            j.addObjectifComplete();
             Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte Pattern",j.getId(),evaluatePatternObjective));
         }
 
         int evaluateGardenObjective = evaluateGardenObjective(j);
         j.addScore(evaluateGardenObjective);
         if (evaluateGardenObjective > 0){
+            j.addObjectifComplete();
             Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte Jardinier",j.getId(),evaluateGardenObjective));
         }
 
-    }
-
-    /**
-     * permet d'evaluer les bambous
-     * @param j Joueur le joueur
-     * @param coord CoordAxial la coordonnée
-     * @return int l'évaluation
-     */
-    protected int evaluateBambou(Joueur j,CoordAxial coord){
-
-        int vert = plateau.getNeighbors(coord)
-                .stream()
-                .filter(p -> p.getCouleur() == Couleur.VERT)
-                .mapToInt(p -> p.getBambou())
-                .sum();
-        int jaune = plateau.getNeighbors(coord)
-                .stream()
-                .filter(p -> p.getCouleur() == Couleur.JAUNE)
-                .mapToInt(p -> p.getBambou())
-                .sum();
-        int rose = plateau.getNeighbors(coord)
-                .stream()
-                .filter(p -> p.getCouleur() == Couleur.ROSE)
-                .mapToInt(p -> p.getBambou())
-                .sum();
-        int n = vert + jaune + rose;
-
-
-        j.setBambousVerts(j.getBambousVerts() + vert);
-        j.setBambousJaunes(j.getBambousJaunes() + jaune);
-        j.setBambousRoses(j.getBambousRoses() + rose);
-
-        return n;
     }
 
     /**
@@ -314,25 +373,6 @@ public class Game {
 
 
     /**
-     * Permet d'avoir la couleur de ses voisins
-     * @param coordAxial CoordAxial une coordonnée
-     * @param plateau Plateau le plateau
-     * @return HashSet ensemble de couleurs
-     */
-    private HashSet<Couleur> getNeighborColor(CoordAxial coordAxial,Plateau plateau){
-        HashSet<Couleur> couleurs = new HashSet<>();
-
-        List<Plot> neighbors = plateau.getNeighbors(coordAxial);
-
-        for (Plot current : neighbors){
-                couleurs.add(plateau.getPlot(current.getCoord()).getCouleur());
-
-        }
-        return couleurs;
-
-    }
-
-    /**
      * Permet de faire pousser les bambous
      * @param plateau Plateau le plateau
      */
@@ -358,4 +398,5 @@ public class Game {
     public Plateau getPlateau() {
         return plateau;
     }
+
 }

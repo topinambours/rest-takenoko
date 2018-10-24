@@ -1,7 +1,6 @@
 package Takenoko.Joueur.Strategie.StrategieCoord;
 
 import Takenoko.Joueur.Joueur;
-import Takenoko.Joueur.Strategie.StrategieConcrete;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrigBase;
 import Takenoko.Joueur.Strategie.StrategieSansPions;
 import Takenoko.Plateau;

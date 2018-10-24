@@ -4,10 +4,13 @@ import Takenoko.Game;
 import Takenoko.Joueur.Joueur;
 import Takenoko.Joueur.Strategie.StrategieAction.Action;
 import Takenoko.Joueur.Strategie.StrategieAction.StrategieAction;
+import Takenoko.Joueur.Strategie.StrategieAmenagement.StrategieAmenagement;
 import Takenoko.Joueur.Strategie.StrategieCoord.StrategieCoord;
 import Takenoko.Joueur.Strategie.StrategieIrrig.StrategieIrrig;
 import Takenoko.Joueur.Strategie.StrategieJardinier.StrategieJardinier;
 import Takenoko.Joueur.Strategie.StrategiePanda.StrategiePanda;
+import Takenoko.Objectives.Amenagement.Amenagement;
+import Takenoko.Objectives.Amenagement.DeckAmenagement;
 import Takenoko.Plateau;
 import Takenoko.Plot.CoordAxial;
 import Takenoko.Plot.Plot;
@@ -129,5 +132,20 @@ public class StrategieSansPions extends AbstractStrategie {
 
     @Override
     public void setStrategieAction(StrategieAction strategieAction) {
+    }
+
+    @Override
+    public Amenagement chooseAmenagement(DeckAmenagement deckAmenagement) {
+        return null;
+    }
+
+    @Override
+    public Optional<Plot> plotAmenagement(Joueur joueur, Plateau plateau) {
+        return Optional.empty();
+    }
+
+    @Override
+    public void setStrategieAmenagement(StrategieAmenagement strategieAmenagement) {
+
     }
 }

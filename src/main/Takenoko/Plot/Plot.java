@@ -1,24 +1,40 @@
 package Takenoko.Plot;
 
+import Takenoko.Objectives.Amenagement.Amenagement;
 import Takenoko.Properties.Couleur;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 /**
  * Cette classe represente les parcelles
  */
+@Component
 public class Plot {
 
     private CoordAxial coord;
     private int bambou;
     private boolean water;
     private Couleur couleur;
+    private Amenagement amenagement;
+
+    public Plot(Couleur couleur, Amenagement amenagement){
+        this.couleur = couleur;
+        this.amenagement = amenagement;
+        water = false;
+        if (amenagement.equals(Amenagement.BASSIN)){
+            water = true;
+        }
+        this.coord = new CoordAxial(0,0);
+        this.bambou = 0;
+    }
 
     public Plot(int q, int r,Couleur couleur){
         this.coord = new CoordAxial(q,r);
         this.bambou = 0;
         this.water = false;
         this.couleur = couleur;
+        this.amenagement = Amenagement.NON;
     }
 
     public Plot(CoordAxial coordAxial,Couleur couleur){
@@ -105,8 +121,8 @@ public class Plot {
      * Permet de savoir si la parcelle est irriguée, utile pour le bambou
      * @return boolean true|false
      */
-    public boolean haveWater() {
-        return water;
+    public boolean haveWater() { //Le bambous à le bassin
+        return amenagement.equals(Amenagement.BASSIN)||water;
     }
 
     /**
@@ -157,6 +173,22 @@ public class Plot {
     }
 
     /**
+     * Permet de retourner l'amenagement courant
+     * @return Amenagement
+     */
+    public Amenagement getAmenagement() {
+        return amenagement;
+    }
+
+    /**
+     * Permet de definir l'amenagement
+     * @param amenagement Amenagement
+     */
+    public void setAmenagement(Amenagement amenagement) {
+        this.amenagement = amenagement;
+    }
+
+    /**
      * Fait pousser de 1 le bambou sur le plot
      * si le plot est irrigué.
      * @return true si un nouveau bambou a été ajouté false sinon.
@@ -164,6 +196,9 @@ public class Plot {
     public boolean pousserBambou(){
         if(haveWater() && bambou < 4){
             bambou++;
+            if(amenagement.equals(Amenagement.ENGRAIS) && bambou < 4){ //Ajout Bambou
+                bambou++;
+            }
             return true;
         }
         return false;
