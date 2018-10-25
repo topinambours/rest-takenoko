@@ -18,6 +18,17 @@ public class Plot {
     private Couleur couleur;
     private Amenagement amenagement;
 
+    public Plot(int q, int r, Couleur couleur, Amenagement amenagement){
+        this.couleur = couleur;
+        this.amenagement = amenagement;
+        water = false;
+        if (amenagement.equals(Amenagement.BASSIN)){
+            water = true;
+        }
+        this.coord = new CoordAxial(q,r);
+        this.bambou = 0;
+    }
+
     public Plot(Couleur couleur, Amenagement amenagement){
         this.couleur = couleur;
         this.amenagement = amenagement;

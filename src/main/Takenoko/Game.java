@@ -1,5 +1,6 @@
 package takenoko;
 
+import takenoko.joueur.strategie.StrategiePanda.StrategiePandaObjectifs;
 import takenoko.objectives.ObjectiveCard;
 import takenoko.deck.PlotsDeck;
 import takenoko.deck.ObjectivesDeck;
@@ -72,25 +73,23 @@ public class Game {
         StrategieConcrete strategieJ1 = new StrategieConcrete(new StrategieCoordAdjacent(),new StrategieIrrigComparator(plateau));
         strategieJ1.setStrategieAction(new StrategieActionBasique());
 
-        Joueur j1 = new Joueur(1, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaBasique(), new StrategieJardinierBasique(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
+        Joueur j1 = new Joueur(1, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaObjectifs(), new StrategieJardinierBasique(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
 
         Joueur j2 = new Joueur(2, new StrategieConcrete(new StrategieCoordRandom(), new StrategieIrrigComparator(plateau), new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
-        Joueur j3 = new Joueur(3, new StrategieConcrete(new StrategieCoordRandom(), new StrategieIrrigComparator(plateau), new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
+        //Joueur j3 = new Joueur(3, new StrategieConcrete(new StrategieCoordRandom(), new StrategieIrrigComparator(plateau), new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
 
-        Joueur j4 = new Joueur(4, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaBasique(), new StrategieJardinierBasique(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
+        //Joueur j4 = new Joueur(4, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaBasique(), new StrategieJardinierBasique(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
 
 
         joueurs.add(j1);
         joueurs.add(j2);
-        joueurs.add(j3);
-        joueurs.add(j4);
+        //joueurs.add(j3);
+        //joueurs.add(j4);
 
         this.objneedtobecomplete = setObjNeedToBeComplete();
 
         firstDrawObjectifPanda(joueurs);
-
         firstDrawPattern(joueurs);
-        
         firstDrawGarden(joueurs);
 
     }
@@ -192,14 +191,14 @@ public class Game {
         int nbrJoueur = joueurs.size();
         switch (nbrJoueur){
             case 2 :
-                //return 4;
-                return 9;
+                return 5;
+                //return 9;
             case 3 :
-                //return 3;
-                return 8;
+                return 4;
+                //return 8;
             case 4 :
-                //return 2;
-                return 7;
+                return 3;
+                //return 7;
             default:
                 return 0;
         }
