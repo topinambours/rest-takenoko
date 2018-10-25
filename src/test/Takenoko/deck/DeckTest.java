@@ -11,11 +11,22 @@ import static org.junit.Assert.*;
 
 public class DeckTest {
 
-    private Deck<Integer> deck;
+    private DeckTestInteger deck;
+
+    private class DeckTestInteger extends Deck {
+        public DeckTestInteger(List<Integer> list){
+            super(list);
+        }
+
+        public DeckTestInteger(){
+            super();
+        }
+    }
+
 
     @Before
     public void setUp() {
-        deck = new Deck<Integer>();
+        deck = new DeckTestInteger();
     }
 
     @Test
@@ -24,23 +35,52 @@ public class DeckTest {
         for (int i = 0; i < 1500; i++){
             list.add(i);
         }
-        deck = new Deck<Integer>(list);
+        deck = new DeckTestInteger(list);
 
         assertEquals(1500, deck.size());
     }
 
     @Test
-    public void listConstructorShuffleTest() throws EmptyDeckException {
+    public void listConstructorShuffleBigSizeTest() throws EmptyDeckException {
         List<Integer> list = new ArrayList<>();
         for (int i = 0; i < 15000; i++){
             list.add(i);
         }
-        deck = new Deck<Integer>(list);
+        deck = new DeckTestInteger(list);
 
         assertEquals(15000, deck.size());
 
-        for (int i = 0; i < 1500; i++){
-            assertNotEquals(java.util.Optional.of(i).get(), deck.draw());
+        int atSamePlace = 0;
+        for (int i = 0; i < 15000; i++){
+            if (java.util.Optional.of(i).get().equals(deck.draw())){
+                atSamePlace += 1;
+            }
+        }
+        assertEquals(0.01, atSamePlace / 15000.0, 0.01);
+
+    }
+
+    /**
+     * On souhaite garantir un maximum de 25% d'élément à la même place pour une pioche de 27 elements.
+     * @throws EmptyDeckException
+     */
+    @Test
+    public void listConstructorShuffleTakenokoSizeTest() throws EmptyDeckException {
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < 27; i++){
+            list.add(i);
+        }
+
+        for (int j =0; j < 1000; j++) {
+            deck = new DeckTestInteger(list);
+            assertEquals(27, deck.size());
+            int atSamePlace = 0;
+            for (int i = 0; i < 27; i++) {
+                if (java.util.Optional.of(i).get().equals(deck.draw())) {
+                    atSamePlace += 1;
+                }
+            }
+            assertEquals(0.125, atSamePlace / 27.0, 0.125);
         }
 
     }
@@ -66,8 +106,6 @@ public class DeckTest {
 
         List<Integer> draws = deck.draw(2);
 
-        System.out.println(deck.size());
-
         assertTrue(deck.isEmpty());
 
         assertTrue(draws.contains(1));
@@ -87,6 +125,21 @@ public class DeckTest {
         assertTrue(draws.contains(1));
         assertTrue(draws.contains(4));
 
+        deck.insertBottom(1);
+        deck.insertBottom(4);
+
+        draws = deck.draw(1);
+
+        assertEquals(1, draws.size());
+        assertTrue(draws.contains(1));
+
+        assertEquals(1, deck.size());
+
+    }
+
+    @Test(expected=EmptyDeckException.class)
+    public void drawEmptyDeck() throws EmptyDeckException {
+        deck.draw();
     }
 
     @Test
@@ -103,7 +156,7 @@ public class DeckTest {
         for (int i = 0; i < 1500; i++){
             list.add(i);
         }
-        deck = new Deck<Integer>(list);
+        deck = new DeckTestInteger(list);
 
         assertEquals(1500, deck.size());
     }

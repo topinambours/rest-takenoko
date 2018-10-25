@@ -1,7 +1,6 @@
 package takenoko.deck;
 
 import takenoko.util.exceptions.EmptyDeckException;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -11,8 +10,7 @@ import java.util.*;
  * @param <T> Classe des objets composants la pioche
  */
 @Component
-@Configurable
-public class Deck<T> {
+public abstract class Deck<T> {
 
     private Deque<T> deque;
 
@@ -54,7 +52,8 @@ public class Deck<T> {
     public List<T> draw(int n) throws EmptyDeckException {
         List<T> out = new ArrayList<>();
         if (n >= size()){
-            for (int i = 0; i <= size(); i++){
+            int tmpSize = size();
+            for (int i = 0; i != tmpSize; i++){
                 out.add(draw());
             }
         }else{
