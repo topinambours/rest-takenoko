@@ -17,7 +17,7 @@ public enum Couleur {
     BLEU("Bleu(Lac)",3);
     //BLANC("Blanc"),NOIR("Noir");
 
-    private String name ="";
+    private String name;
     private int id;
 
     Couleur(String name,int id) {
@@ -25,10 +25,6 @@ public enum Couleur {
         this.id = id;
 
     }
-
-    Couleur() {
-    }
-
 
     @Override
     public String toString() {

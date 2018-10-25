@@ -4,6 +4,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 
 import static org.junit.Assert.assertFalse;
@@ -77,5 +78,12 @@ public class ConsoleTest {
         assertTrue(Console.Log.println("test"));
         assertTrue(Console.Log.debugPrint("test"));
         assertTrue(Console.Log.debugPrintln("test"));
+    }
+
+    @Test
+    public void closedStdOut() throws IOException {
+        assertTrue(Console.Log.init("release"));
+        Console.Log.close();
+        Console.Log.println("NO");
     }
 }

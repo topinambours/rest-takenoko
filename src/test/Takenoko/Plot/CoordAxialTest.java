@@ -7,6 +7,8 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 
 public class CoordAxialTest {
@@ -52,5 +54,24 @@ public class CoordAxialTest {
 
         assertEquals(finalCoo, myCoo1.add(myCoo2));
         assertEquals(finalCoo, myCoo2.add(myCoo1));
+    }
+
+    @Test
+    public void isInLine() {
+
+        CoordAxial orig = new CoordAxial(0,0);
+
+        for (CoordAxial c : orig.getNeighborCoords()){
+            assertTrue(c.isInLine(orig));
+        }
+
+        assertFalse(orig.isInLine(new CoordAxial(1,-2)));
+        assertFalse(orig.isInLine(new CoordAxial(2,-1)));
+        assertFalse(orig.isInLine(new CoordAxial(-1,-1)));
+        assertFalse(orig.isInLine(new CoordAxial(-2,1)));
+        assertFalse(orig.isInLine(new CoordAxial(-1,2)));
+        assertFalse(orig.isInLine(new CoordAxial(1,1)));
+
+        assertFalse(orig.isInLine(orig));
     }
 }

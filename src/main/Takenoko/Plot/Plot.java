@@ -223,12 +223,13 @@ public class Plot {
         return bambou == plot.bambou &&
                 water == plot.water &&
                 Objects.equals(coord, plot.coord) &&
-                couleur == plot.couleur;
+                couleur == plot.couleur &&
+                amenagement == plot.amenagement;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(coord, bambou, water, couleur);
+        return Objects.hash(coord, bambou, water, couleur, amenagement);
     }
 
     @Override

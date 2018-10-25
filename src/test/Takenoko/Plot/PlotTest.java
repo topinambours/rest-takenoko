@@ -1,6 +1,8 @@
 package takenoko.Plot;
 
 import org.junit.Test;
+import takenoko.objectives.amenagement.Amenagement;
+import takenoko.properties.Couleur;
 
 import java.util.Random;
 
@@ -45,6 +47,10 @@ public class PlotTest {
         assertFalse(p.haveWater());
         p.setWater(true);
         assertTrue(p.haveWater());
+
+        Plot p2 = new Plot(10,50,Couleur.JAUNE, Amenagement.BASSIN);
+        assertTrue(p2.haveWater());
+
     }
 
     @Test
@@ -94,6 +100,10 @@ public class PlotTest {
             assertEquals(0, p.removeAllBambou());
             assertFalse(p.haveBambou());
         }
+
+        p.pousserBambou();
+        p.removeBambou(5000);
+        assertFalse(p.haveBambou());
     }
 
     /**
@@ -114,5 +124,41 @@ public class PlotTest {
         }
         // impossible de faire pousser sur une parcelle pleine.
         assertFalse(p.pousserBambou());
+
+
+        // Test de l'aménagement engrais (x2 bambou)
+        p = new Plot(50,50, Couleur.VERT, Amenagement.ENGRAIS);
+        p.setWater(true);
+
+        assertEquals(0, p.getBambou());
+
+        assertTrue(p.pousserBambou());
+
+        assertEquals(2, p.getBambou());
+
+    }
+
+    @Test
+    public void getSetAmenagementCouleur() {
+        Plot p = new Plot(0,0, Couleur.VERT);
+        assertEquals(Amenagement.NON, p.getAmenagement());
+
+        p.setAmenagement(Amenagement.ENGRAIS);
+        assertEquals(Couleur.VERT, p.getCouleur());
+        p.setCouleur(Couleur.ROSE);
+        assertEquals(Couleur.ROSE, p.getCouleur());
+
+        assertEquals(Amenagement.ENGRAIS, p.getAmenagement());
+
+
+    }
+
+    @Test
+    public void equalsTest(){
+        Plot p = new Plot(0,0,Couleur.BLEU, Amenagement.ENGRAIS);
+        Plot p2 = new Plot(0,0,Couleur.BLEU, Amenagement.ENCLOS);
+        assertFalse(p.equals(p2));
+
+        assertNotEquals(p.hashCode(), p2.hashCode());
     }
 }

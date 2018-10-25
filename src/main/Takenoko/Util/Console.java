@@ -103,4 +103,8 @@ public enum Console {
         return debugPrint(str + "\n");
     }
 
+    public void close() throws IOException {
+        this.out.close();
+    }
+
 }

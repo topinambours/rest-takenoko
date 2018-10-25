@@ -1,29 +1,25 @@
 package takenoko.properties;
 
-import takenoko.Plot.CoordAxial;
-import takenoko.Plot.Plot;
-import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class CouleurTest {
-    private Plot plot;
-    private Couleur couleur1;
-    private Couleur couleur2;
 
-    @Before public void CouleurTest(){
-        CoordAxial coordAxial = new CoordAxial(1,0);
-        couleur1 = Couleur.JAUNE;
-        couleur2 = Couleur.VERT;
-
-        plot = new Plot(coordAxial,couleur1);
+    @Test
+    public void toStringTest() {
+        assertEquals("Vert", Couleur.VERT.toString());
+        assertEquals("Jaune", Couleur.JAUNE.toString());
+        assertEquals("Rose", Couleur.ROSE.toString());
+        assertEquals("Bleu(Lac)", Couleur.BLEU.toString());
     }
 
-    @Test public void test(){
-        assertEquals(couleur1,plot.getCouleur());
-
-        plot.setCouleur(couleur2);
-        assertEquals(couleur2,plot.getCouleur());
+    @Test
+    public void getById() {
+        assertEquals(Couleur.VERT,Couleur.getById(0));
+        assertEquals( Couleur.JAUNE,Couleur.getById(2));
+        assertEquals(Couleur.ROSE,Couleur.getById(1));
+        assertEquals(Couleur.BLEU,Couleur.getById(3));
+        assertEquals(null,Couleur.getById(4));
     }
 }
