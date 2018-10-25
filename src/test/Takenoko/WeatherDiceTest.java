@@ -23,7 +23,7 @@ public class WeatherDiceTest {
 
         for (int i = 0; i < 6; i++) {
             trowsSum += trowsById[i];
-            assertEquals(1.0 / 6, trowsById[i] / 1000000.0 , 0.001);
+            assertEquals(1.0 / 6, trowsById[i] / 1000000.0 , 0.01);
         }
 
         assertEquals(1000000, trowsSum);

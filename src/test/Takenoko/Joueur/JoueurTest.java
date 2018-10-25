@@ -147,7 +147,7 @@ public class JoueurTest {
     }
 
     @Test
-    public void getPandaObjectiveCard(){
+    public void movementsPandaObjectiveCard(){
         List<PandaObjectiveCard> list = new ArrayList<>();
         assertEquals(list, joueur1.getPandaObjectiveCards());
 
@@ -162,35 +162,7 @@ public class JoueurTest {
     }
 
     @Test
-    public void addPandaObjectiveCard(){
-        List<PandaObjectiveCard> list = new ArrayList<>();
-        assertEquals(list, joueur1.getPandaObjectiveCards());
-
-        joueur1.addPandaObjectiveCard(pandaObjectiveCard);
-        list.add(pandaObjectiveCard);
-        assertEquals(list, joueur1.getPandaObjectiveCards());
-
-        joueur1.removePandaObjectiveCard(pandaObjectiveCard);
-        list.remove(pandaObjectiveCard);
-        assertEquals(list, joueur1.getPandaObjectiveCards());
-    }
-
-    @Test
-    public void removePandaObjectiveCard(){
-        List<PandaObjectiveCard> list = new ArrayList<>();
-        assertEquals(list, joueur1.getPandaObjectiveCards());
-
-        joueur1.addPandaObjectiveCard(pandaObjectiveCard);
-        list.add(pandaObjectiveCard);
-        assertEquals(list, joueur1.getPandaObjectiveCards());
-
-        joueur1.removePandaObjectiveCard(pandaObjectiveCard);
-        list.remove(pandaObjectiveCard);
-        assertEquals(list, joueur1.getPandaObjectiveCards());
-    }
-
-    @Test
-    public void addGardenObjectiveCard(){
+    public void movementsGardenObjectiveCard(){
         List<GardenObjectiveCard> list = new ArrayList<>();
         assertEquals(list, joueur1.getGardenObjectiveCards());
 
@@ -204,30 +176,7 @@ public class JoueurTest {
     }
 
     @Test
-    public void removeGardenObjectiveCard(){
-        List<GardenObjectiveCard> list = new ArrayList<>();
-        assertEquals(list, joueur1.getGardenObjectiveCards());
-
-        joueur1.addGardenObjectiveCard(gardenObjectiveCard);
-        list.add(gardenObjectiveCard);
-        assertEquals(list, joueur1.getGardenObjectiveCards());
-
-        joueur1.removeGardenObjectiveCard(gardenObjectiveCard);
-        list.remove(gardenObjectiveCard);
-        assertEquals(list, joueur1.getGardenObjectiveCards());
-    }
-
-    @Test
-    public void getScore(){
-        assertEquals(0, joueur1.getScore());
-        joueur1.addScore(3);
-        assertEquals(3, joueur1.getScore());
-        joueur1.addScore(2);
-        assertEquals(5, joueur1.getScore());
-    }
-
-    @Test
-    public void addScore(){
+    public void getGetScore(){
         assertEquals(0, joueur1.getScore());
         joueur1.addScore(3);
         assertEquals(3, joueur1.getScore());
@@ -245,7 +194,7 @@ public class JoueurTest {
     }
 
     @Test
-    public void setBambousVerts(){
+    public void setGetBambousVerts(){
         assertEquals(0, joueur1.getBambousVerts());
         joueur1.setBambousVerts(1);
         assertEquals(1, joueur1.getBambousVerts());
@@ -258,7 +207,7 @@ public class JoueurTest {
     }
 
     @Test
-    public void setBambousJaunes(){
+    public void setGetBambousJaunes(){
         assertEquals(0, joueur1.getBambousJaunes());
         joueur1.setBambousJaunes(1);
         assertEquals(1, joueur1.getBambousJaunes());
@@ -272,47 +221,7 @@ public class JoueurTest {
     }
 
     @Test
-    public void setBambousRoses(){
-        assertEquals(0, joueur1.getBambousRoses());
-        joueur1.setBambousRoses(1);
-        assertEquals(1, joueur1.getBambousRoses());
-        joueur1.setBambousRoses(2);
-        assertEquals(2, joueur1.getBambousRoses());
-        joueur1.setBambousRoses(5);
-        assertEquals(5, joueur1.getBambousRoses());
-        joueur1.setBambousRoses(-5);
-        assertEquals(0, joueur1.getBambousRoses());
-    }
-
-    @Test
-    public void getBambousVerts(){
-        assertEquals(0, joueur1.getBambousVerts());
-        joueur1.setBambousVerts(1);
-        assertEquals(1, joueur1.getBambousVerts());
-        joueur1.setBambousVerts(2);
-        assertEquals(2, joueur1.getBambousVerts());
-        joueur1.setBambousVerts(5);
-        assertEquals(5, joueur1.getBambousVerts());
-        joueur1.setBambousVerts(-5);
-        assertEquals(0, joueur1.getBambousVerts());
-    }
-
-    @Test
-    public void getBambousJaunes(){
-        assertEquals(0, joueur1.getBambousJaunes());
-        joueur1.setBambousJaunes(1);
-        assertEquals(1, joueur1.getBambousJaunes());
-        joueur1.setBambousJaunes(2);
-        assertEquals(2, joueur1.getBambousJaunes());
-        joueur1.setBambousJaunes(5);
-        assertEquals(5, joueur1.getBambousJaunes());
-        joueur1.setBambousJaunes(-5);
-        assertEquals(0, joueur1.getBambousJaunes());
-
-    }
-
-    @Test
-    public void getBambousRoses(){
+    public void setGetBambousRoses(){
         assertEquals(0, joueur1.getBambousRoses());
         joueur1.setBambousRoses(1);
         assertEquals(1, joueur1.getBambousRoses());

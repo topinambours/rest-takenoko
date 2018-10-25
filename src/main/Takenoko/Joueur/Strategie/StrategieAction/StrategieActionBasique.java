@@ -2,6 +2,8 @@ package takenoko.joueur.strategie.StrategieAction;
 
 import takenoko.Game;
 
+import java.util.Random;
+
 public class StrategieActionBasique implements StrategieAction{
 
     public StrategieActionBasique() {
@@ -12,17 +14,14 @@ public class StrategieActionBasique implements StrategieAction{
         if(!game.getPlotsDeck().isEmpty()){
             return Action.Card;
         }else{
-            int nb = (int) (Math.random() * 1 );
-            switch (nb){
-                case 0:
-                    return Action.Irrig;
-                case 1:
-                    return Action.Panda;
-                default:
-                    return Action.Panda;
+            Random rd = new Random();
+            int nb = rd.nextInt(2);
+            if (nb == 0){
+                return Action.Irrig;
+            }else{
+                return Action.Panda;
             }
         }
-
     }
 
     @Override

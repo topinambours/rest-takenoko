@@ -3,8 +3,7 @@ package takenoko.irrigation;
 import takenoko.Plot.CoordAxial;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class CoordIrrigTest {
 
@@ -27,12 +26,47 @@ public class CoordIrrigTest {
     @Test
     public void continuesTest() {
         var continues = new CoordIrrig(3, 3, Orient.N).continues();
-        assertEquals(continues.get(0), new CoordIrrig(3, 3, Orient.W));
+        assertEquals(new CoordIrrig(3, 3, Orient.W), continues.get(0));
+        assertEquals(new CoordIrrig(3, 2, Orient.S), continues.get(1));
+        assertEquals(new CoordIrrig(4, 2, Orient.W), continues.get(2));
+        assertEquals(new CoordIrrig(4, 2, Orient.S), continues.get(3));
+
+
+        continues = new CoordIrrig(3, 3, Orient.W).continues();
+        assertEquals(new CoordIrrig(3, 3, Orient.S), continues.get(0));
+        assertEquals(new CoordIrrig(2, 4, Orient.N), continues.get(1));
+        assertEquals(new CoordIrrig(3, 2, Orient.S), continues.get(2));
+        assertEquals(new CoordIrrig(3, 3, Orient.N), continues.get(3));
+
+        continues = new CoordIrrig(3, 3, Orient.S).continues();
+        assertEquals(new CoordIrrig(3, 3, Orient.W), continues.get(0));
+        assertEquals(new CoordIrrig(2, 4, Orient.N), continues.get(1));
+        assertEquals(new CoordIrrig(3, 4, Orient.W), continues.get(2));
+        assertEquals(new CoordIrrig(3, 4, Orient.N), continues.get(3));
     }
 
     @Test
     public void joinTest() {
         var join = CoordIrrig.join(new CoordAxial(0, 3), new CoordAxial(1, 3));
         assertEquals(join, new CoordIrrig(1, 3, Orient.W));
+    }
+
+    @Test
+    public void noJoinTest() {
+        var join = CoordIrrig.join(new CoordAxial(0, 0), new CoordAxial(1, 3));
+        assertNull(join);
+    }
+
+    @Test
+    public void hashCodeTest(){
+        assertNotEquals(new CoordIrrig(1,2, Orient.N).hashCode(), new CoordIrrig(1,2, Orient.W).hashCode());
+        assertNotEquals(null, new CoordIrrig(0,0, Orient.W).hashCode());
+        assertNotEquals(new CoordIrrig(0,0, Orient.N).hashCode(), new CoordIrrig(0,0, Orient.W).hashCode());
+        assertNotEquals(new CoordIrrig(1,2, Orient.N).hashCode(), new CoordIrrig(0,2, Orient.N).hashCode());
+    }
+
+    @Test
+    public void toStringTest(){
+        assertEquals("((1,2), W)", new CoordIrrig(1,2,Orient.W).toString());
     }
 }

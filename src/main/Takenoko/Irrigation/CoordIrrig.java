@@ -10,46 +10,50 @@ import java.util.Objects;
  * La classe CoorIrrig permet de calculer les coordonnées des irrigations
  */
 public class CoordIrrig {
-    private int u;
-    private int v;
-    private Orient o;
+    /**
+     * Une coordonnée d'irigation est placé sur une {@link CoordAxial}
+     */
+    private CoordAxial coordAxial;
+    /**
+     * Une coordonné d'irrigation dispose d'une orientation parmis {@link Orient}
+     */
+    private final Orient o;
 
-    public CoordIrrig(CoordAxial uv, Orient o) {
-        u = uv.getQ();
-        v = uv.getR();
+    public CoordIrrig(CoordAxial coordAxial, Orient o) {
+        this.coordAxial = coordAxial;
         this.o = o;
     }
 
-    public CoordIrrig(int u, int v, Orient o) {
-        this.u = u;
-        this.v = v;
-        this.o = o;
+    public CoordIrrig(int q, int r, Orient o) {
+        this(new CoordAxial(q,r), o);
     }
 
     /**
      * prend les coordonnées d'une arête et rend les coordonnées des 2 espaces adjacents
-     * @return
+     * @return les coordonées partageant la coordonée d'irrigation
      */
     public List<CoordAxial> borders() {
-        List<CoordAxial> res = new ArrayList<CoordAxial>();
+        List<CoordAxial> res = new ArrayList<>();
+
+        int q = coordAxial.getQ();
+        int r = coordAxial.getR();
+
         switch (o) {
             case N: {
-                res.add(new CoordAxial(u, v - 1));
-                res.add(new CoordAxial(u, v));
+                res.add(new CoordAxial(q, r - 1));
                 break;
             }
             case W: {
-                res.add(new CoordAxial(u - 1, v));
-                res.add(new CoordAxial(u, v));
+                res.add(new CoordAxial(q - 1, r));
                 break;
             }
             case S: {
-                res.add(new CoordAxial(u, v));
-                res.add(new CoordAxial(u - 1, v + 1));
+                res.add(new CoordAxial(q - 1, r + 1));
                 break;
             }
-            default: throw new IllegalArgumentException("Invalid orientation given");
         }
+        res.add(new CoordAxial(q, r));
+
         return res;
     }
 
@@ -72,33 +76,34 @@ public class CoordIrrig {
 
     /**
      * prend les coordonnées d'une arête et rend les coordonnées des 4 arêtes qui y sont connectées bout à bout
-     * @return
+     * @return les quatres arretes composants la continuité d'une coordIrrig
      */
     public List<CoordIrrig> continues() {
-        List<CoordIrrig> res = new ArrayList<CoordIrrig>();
+        List<CoordIrrig> res = new ArrayList<>();
+        int q = coordAxial.getQ();
+        int r = coordAxial.getR();
         switch (o) {
             case N: {
-                res.add(new CoordIrrig(u, v, Orient.W));
-                res.add(new CoordIrrig(u, v - 1, Orient.S));
-                res.add(new CoordIrrig(u + 1, v - 1, Orient.W));
-                res.add(new CoordIrrig(u + 1, v - 1, Orient.S));
+                res.add(new CoordIrrig(q, r, Orient.W));
+                res.add(new CoordIrrig(q, r - 1, Orient.S));
+                res.add(new CoordIrrig(q + 1, r - 1, Orient.W));
+                res.add(new CoordIrrig(q + 1, r - 1, Orient.S));
                 break;
             }
             case W: {
-                res.add(new CoordIrrig(u, v, Orient.S));
-                res.add(new CoordIrrig(u - 1, v + 1, Orient.N));
-                res.add(new CoordIrrig(u, v - 1, Orient.S));
-                res.add(new CoordIrrig(u, v, Orient.N));
+                res.add(new CoordIrrig(q, r, Orient.S));
+                res.add(new CoordIrrig(q - 1, r + 1, Orient.N));
+                res.add(new CoordIrrig(q, r - 1, Orient.S));
+                res.add(new CoordIrrig(q, r, Orient.N));
                 break;
             }
             case S: {
-                res.add(new CoordIrrig(u, v, Orient.W));
-                res.add(new CoordIrrig(u - 1, v + 1, Orient.N));
-                res.add(new CoordIrrig(u, v + 1, Orient.W));
-                res.add(new CoordIrrig(u, v + 1, Orient.N));
+                res.add(new CoordIrrig(q, r, Orient.W));
+                res.add(new CoordIrrig(q - 1, r + 1, Orient.N));
+                res.add(new CoordIrrig(q, r + 1, Orient.W));
+                res.add(new CoordIrrig(q, r + 1, Orient.N));
                 break;
             }
-            default: throw new IllegalArgumentException("Invalid orientation given");
         }
         return res;
     }
@@ -108,22 +113,17 @@ public class CoordIrrig {
         if (this == o1) return true;
         if (o1 == null || getClass() != o1.getClass()) return false;
         CoordIrrig that = (CoordIrrig) o1;
-        return u == that.u &&
-                v == that.v &&
+        return Objects.equals(coordAxial, that.coordAxial) &&
                 o == that.o;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(u, v, o);
+        return Objects.hash(coordAxial, o);
     }
 
     @Override
     public String toString() {
-        return "(" +
-                "u=" + u +
-                ", v=" + v +
-                ", o=" + o +
-                ')';
+        return String.format("(%s, %s)", coordAxial.toString(), o.toString());
     }
 }

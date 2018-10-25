@@ -26,7 +26,6 @@ import java.util.*;
  */
 public class Joueur implements Comparable{
 
-
     private Plot plot;
 
     /**
@@ -521,13 +520,14 @@ public class Joueur implements Comparable{
         return coo;
     }
 
-    public void trowDice(){
+    public WeatherDice trowDice(){
         WeatherDice dice = WeatherDice.throwDice();
         Console.Log.print(String.format("Robot_%d obtient %s en lançant le dé météo. ", id, dice.toString()));
         if (dice == WeatherDice.PLAYER_DECIDE){
             Console.Log.print("Il peut choisir la condition climatique.");
         }
         Console.Log.println("");
+        return dice;
     }
 
     public void ObjCardTurn(Game game) throws EmptyDeckException {
