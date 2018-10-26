@@ -33,6 +33,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * La classe Game permet de créer une partie
@@ -293,9 +294,10 @@ public class Game {
 
         int evaluatedPandaObjective = evaluatePandaObjective(j);
         j.addScore(evaluatedPandaObjective);
-        if (evaluatedPandaObjective > 0){
+        while (evaluatedPandaObjective > 0){
             j.addObjectifComplete();
             Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte panda",j.getId(),evaluatedPandaObjective));
+            evaluatedPandaObjective = evaluatePandaObjective(j);
         }
 
         int evaluatePatternObjective = evaluatePatternObjective(j);
@@ -321,13 +323,21 @@ public class Game {
      */
     protected int evaluatePandaObjective(Joueur joueur){
         int score  = 0;
-        List<PandaObjectiveCard> pandas = new ArrayList<>(joueur.getPandaObjectiveCards());
-        for (PandaObjectiveCard pandaObjectiveCard : pandas){
-            if (pandaObjectiveCard.isComplete()){
-                score = score + pandaObjectiveCard.getPointValue();
-                joueur.removePandaObjectiveCard(pandaObjectiveCard);
+
+        List<PandaObjectiveCard> completedObjPanda = joueur.getPandaObjectiveCards().stream().filter(PandaObjectiveCard::isComplete).collect(Collectors.toList());
+
+        if (!completedObjPanda.isEmpty()) {
+            PandaObjectiveCard maxpoints = completedObjPanda.get(0);
+            for (PandaObjectiveCard card : completedObjPanda) {
+                if (card.getPointValue() > maxpoints.getPointValue()) {
+                    maxpoints = card;
+                }
             }
+            maxpoints.validate();
+            score = score + maxpoints.getPointValue();
+            joueur.removePandaObjectiveCard(maxpoints);
         }
+
         return score;
     }
 
