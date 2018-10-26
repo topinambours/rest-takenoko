@@ -10,40 +10,25 @@ import java.util.Objects;
 
 @Component
 public class PandaObjectiveCard extends ObjectiveCard {
+
+
+    private final int vertRequis;
+    private final int jauneRequis;
+    private final int roseRequis;
+
+    private final int pointValue;
+    private Joueur owner;
+
+
     public int getVertRequis() {
         return vertRequis;
     }
-
-    public void setVertRequis(int vertRequis) {
-        this.vertRequis = vertRequis;
-    }
-
     public int getJauneRequis() {
         return jauneRequis;
     }
-
-    public void setJauneRequis(int jauneRequis) {
-        this.jauneRequis = jauneRequis;
-    }
-
     public int getRoseRequis() {
         return roseRequis;
     }
-
-    public void setRoseRequis(int roseRequis) {
-        this.roseRequis = roseRequis;
-    }
-
-    public void setPointValue(int pointValue) {
-        this.pointValue = pointValue;
-    }
-
-    private int vertRequis;
-    private int jauneRequis;
-    private int roseRequis;
-
-    private int pointValue;
-    private Joueur owner;
 
     /**
      * getter pour la valeur en points de la carte

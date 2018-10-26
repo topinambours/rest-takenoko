@@ -5,11 +5,10 @@ import takenoko.objectives.patterns.Pattern;
 import takenoko.Plateau;
 
 public class PatternObjectiveCard extends ObjectiveCard {
-    private int pointValue;
 
+    private final int pointValue;
 
-
-    private Pattern pattern;
+    private final Pattern pattern;
 
     private Plateau plateau;
 
@@ -42,14 +41,6 @@ public class PatternObjectiveCard extends ObjectiveCard {
     @Override
     public int getPointValue() {
         return pointValue;
-    }
-
-    public void setPointValue(int pointValue) {
-        this.pointValue = pointValue;
-    }
-
-    public void setPattern(Pattern pattern) {
-        this.pattern = pattern;
     }
 
     /**

@@ -61,7 +61,7 @@ public class DeckTest {
     }
 
     /**
-     * On souhaite garantir un maximum de 25% d'élément à la même place pour une pioche de 27 elements.
+     * On peut garantir un maximum de 30% d'élément à la même position pour une pioche de 27 elements.
      * @throws EmptyDeckException
      */
     @Test
@@ -71,7 +71,7 @@ public class DeckTest {
             list.add(i);
         }
 
-        for (int j =0; j < 1000; j++) {
+        for (int j =0; j < 100000; j++) {
             deck = new DeckTestInteger(list);
             assertEquals(27, deck.size());
             int atSamePlace = 0;
@@ -80,7 +80,7 @@ public class DeckTest {
                     atSamePlace += 1;
                 }
             }
-            assertEquals(0.125, atSamePlace / 27.0, 0.125);
+            assertEquals(0.15, atSamePlace / 27.0, 0.15);
         }
 
     }

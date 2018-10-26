@@ -20,14 +20,6 @@ public class GardenObjectiveCard extends ObjectiveCard{
         this.pointValue = pointValue;
     }
 
-    public Couleur getColor(){
-        return color;
-    }
-
-    public int getTower(){
-        return nbTower;
-    }
-
     @Override
     public int getPointValue(){
         return pointValue;

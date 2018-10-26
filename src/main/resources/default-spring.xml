@@ -21,7 +21,7 @@
         <constructor-arg index="0" ref="pandObjDeck"/>
         <constructor-arg index="1" ref="gardenObjDeck"/>
         <constructor-arg index="2" ref="patternObjDeck"/>
-        <constructor-arg name="deck" ref="deck" />
+        <constructor-arg name="plotsDeck" ref="plotsDeckTakenoko" />
     </bean>
 
 </beans>

@@ -19,5 +19,11 @@ public class AmenagementTest {
         assertEquals(Amenagement.BASSIN,plot.getAmenagement());
     }
 
+    @Test public void getString(){
+        assertEquals("BASSIN", Amenagement.BASSIN.getString());
+        assertEquals("ENCLOS", Amenagement.ENCLOS.getString());
+        assertEquals("NON", Amenagement.NON.getString());
+        assertEquals("ENGRAIS", Amenagement.ENGRAIS.getString());
+    }
 
 }

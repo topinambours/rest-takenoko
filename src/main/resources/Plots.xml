@@ -67,7 +67,7 @@
         <constructor-arg name="amenagement" value="ENGRAIS"/>
     </bean>
 
-    <bean id="deck" class="takenoko.deck.PlotsDeck" scope="prototype">
+    <bean id="plotsDeckTakenoko" class="takenoko.deck.PlotsDeck" scope="prototype">
         <constructor-arg name="plots">
             <list>
                 <ref bean="plotGreen"/>

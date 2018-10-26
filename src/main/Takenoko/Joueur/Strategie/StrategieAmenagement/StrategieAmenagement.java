@@ -1,10 +1,11 @@
 package takenoko.joueur.strategie.StrategieAmenagement;
 
+import takenoko.deck.AmenagementDecks;
 import takenoko.joueur.Joueur;
 import takenoko.objectives.amenagement.Amenagement;
-import takenoko.objectives.amenagement.DeckAmenagement;
 import takenoko.Plateau;
 import takenoko.Plot.Plot;
+import takenoko.util.exceptions.EmptyDeckException;
 
 import java.util.Optional;
 
@@ -18,7 +19,7 @@ import java.util.Optional;
  */
 public interface StrategieAmenagement {
 
-    Amenagement chooseAmenagement(DeckAmenagement deckAmenagement);
+    Amenagement chooseAmenagement(AmenagementDecks deckAmenagement) throws EmptyDeckException;
     Optional<Plot> plotAmenagement(Joueur joueur, Plateau plateau);
 
 }

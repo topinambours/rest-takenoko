@@ -1,6 +1,7 @@
 package takenoko.joueur.strategie;
 
 import takenoko.Game;
+import takenoko.deck.AmenagementDecks;
 import takenoko.joueur.Joueur;
 import takenoko.joueur.strategie.StrategieAction.Action;
 import takenoko.joueur.strategie.StrategieAction.StrategieAction;
@@ -10,7 +11,6 @@ import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrig;
 import takenoko.joueur.strategie.StrategieJardinier.StrategieJardinier;
 import takenoko.joueur.strategie.StrategiePanda.StrategiePanda;
 import takenoko.objectives.amenagement.Amenagement;
-import takenoko.objectives.amenagement.DeckAmenagement;
 import takenoko.Plateau;
 import takenoko.Plot.CoordAxial;
 import takenoko.Plot.Plot;
@@ -135,7 +135,7 @@ public class StrategieSansPions extends AbstractStrategie {
     }
 
     @Override
-    public Amenagement chooseAmenagement(DeckAmenagement deckAmenagement) {
+    public Amenagement chooseAmenagement(AmenagementDecks deckAmenagement) {
         return null;
     }
 

@@ -1,6 +1,7 @@
 package takenoko.joueur.strategie;
 
 import takenoko.Game;
+import takenoko.deck.AmenagementDecks;
 import takenoko.joueur.Joueur;
 import takenoko.joueur.strategie.StrategieAction.Action;
 import takenoko.joueur.strategie.StrategieAction.StrategieAction;
@@ -11,13 +12,13 @@ import takenoko.joueur.strategie.StrategieJardinier.StrategieJardinier;
 import takenoko.joueur.strategie.StrategiePanda.StrategiePanda;
 import takenoko.joueur.strategie.StrategiePanda.StrategiePandaBasique;
 import takenoko.objectives.amenagement.Amenagement;
-import takenoko.objectives.amenagement.DeckAmenagement;
 import takenoko.Plateau;
 import takenoko.Plot.CoordAxial;
 import takenoko.Plot.Plot;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import takenoko.util.exceptions.EmptyDeckException;
 
 import java.util.List;
 import java.util.Optional;
@@ -184,8 +185,14 @@ public class StrategieConcrete extends AbstractStrategie {
     }
 
     @Override
-    public Amenagement chooseAmenagement(DeckAmenagement deckAmenagement) {
-        return this.strategieAmenagement.chooseAmenagement(deckAmenagement);
+    public Amenagement chooseAmenagement(AmenagementDecks deckAmenagement) {
+        Amenagement choice = null;
+        try {
+            choice = strategieAmenagement.chooseAmenagement(deckAmenagement);
+        } catch (EmptyDeckException e) {
+            e.printStackTrace();
+        }
+        return choice;
     }
 
     @Override

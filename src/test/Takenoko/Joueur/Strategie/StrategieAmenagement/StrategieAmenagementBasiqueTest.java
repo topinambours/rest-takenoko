@@ -1,34 +1,40 @@
 package takenoko.joueur.strategie.StrategieAmenagement;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import takenoko.deck.AmenagementDecks;
 import takenoko.objectives.amenagement.Amenagement;
-import takenoko.objectives.amenagement.DeckAmenagement;
+import takenoko.util.exceptions.EmptyDeckException;
 
 import static org.junit.Assert.*;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class StrategieAmenagementBasiqueTest {
 
-    @Test
-    public void chooseAmenagement() {
-        StrategieAmenagementBasique st = new StrategieAmenagementBasique();
-        DeckAmenagement dc = new DeckAmenagement();
-        dc.init();
+    @Autowired
+    @Qualifier("defaultTakenokoAmDeck")
+    private AmenagementDecks dc;
 
-        while (dc.getAmenagementSet().contains(Amenagement.BASSIN)) {
+    @Test
+    public void chooseAmenagement() throws EmptyDeckException {
+        StrategieAmenagementBasique st = new StrategieAmenagementBasique();
+
+        while (!dc.isEmpty(Amenagement.BASSIN)) {
             assertEquals(Amenagement.BASSIN,st.chooseAmenagement(dc));
         }
-        assertFalse(dc.getAmenagementSet().contains(Amenagement.BASSIN));
 
-        while (dc.getAmenagementSet().contains(Amenagement.ENGRAIS)) {
+        while (!dc.isEmpty(Amenagement.ENGRAIS)) {
             assertEquals(Amenagement.ENGRAIS,st.chooseAmenagement(dc));
         }
-        assertFalse(dc.getAmenagementSet().contains(Amenagement.ENGRAIS));
 
-        while (dc.getAmenagementSet().contains(Amenagement.ENCLOS)) {
+        while (!dc.isEmpty(Amenagement.ENCLOS)) {
             assertEquals(Amenagement.ENCLOS,st.chooseAmenagement(dc));
         }
-        assertFalse(dc.getAmenagementSet().contains(Amenagement.ENCLOS));
-
 
         assertEquals(Amenagement.NON,st.chooseAmenagement(dc));
     }

@@ -33,9 +33,6 @@ public class PatternTile {
         this.couleur = couleur;
     }
 
-    public PatternTile() {
-    }
-
     /**
      * Applique une rotation de 60 degrés à la coordonnée de la tuile
      * @return renvoi une nouvelle PatternTile après rotation

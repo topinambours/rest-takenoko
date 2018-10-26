@@ -1,10 +1,11 @@
 package takenoko.joueur.strategie.StrategieAmenagement;
 
+import takenoko.deck.AmenagementDecks;
 import takenoko.joueur.Joueur;
 import takenoko.objectives.amenagement.Amenagement;
-import takenoko.objectives.amenagement.DeckAmenagement;
 import takenoko.Plateau;
 import takenoko.Plot.Plot;
+import takenoko.util.exceptions.EmptyDeckException;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -12,19 +13,18 @@ import java.util.Optional;
 public class StrategieAmenagementBasique implements StrategieAmenagement {
 
     @Override
-    public Amenagement chooseAmenagement(DeckAmenagement deckAmenagement) {
-        HashSet<Amenagement> hashSet = deckAmenagement.getAmenagementSet();
+    public Amenagement chooseAmenagement(AmenagementDecks deckAmenagement) throws EmptyDeckException {
 
-        if (hashSet.contains(Amenagement.BASSIN)){
-            deckAmenagement.drawAmenagement(Amenagement.BASSIN);
+        if (!deckAmenagement.isEmpty(Amenagement.BASSIN)){
+            deckAmenagement.draw(Amenagement.BASSIN);
             return Amenagement.BASSIN;
         }else{
-            if (hashSet.contains(Amenagement.ENGRAIS)){
-                deckAmenagement.drawAmenagement(Amenagement.ENGRAIS);
+            if (!deckAmenagement.isEmpty(Amenagement.ENGRAIS)){
+                deckAmenagement.draw(Amenagement.ENGRAIS);
                 return Amenagement.ENGRAIS;
             }else{
-                if (hashSet.contains(Amenagement.ENCLOS)){
-                    deckAmenagement.drawAmenagement(Amenagement.ENCLOS);
+                if (!deckAmenagement.isEmpty(Amenagement.ENCLOS)){
+                    deckAmenagement.draw(Amenagement.ENCLOS);
                     return Amenagement.ENCLOS;
                 }else{
                     return Amenagement.NON;

@@ -20,6 +20,8 @@ public abstract class Deck<T> {
      */
     public Deck(List<T> elements){
         List<T> cpy = new ArrayList<>(elements);
+
+        Collections.shuffle(cpy);
         Collections.shuffle(cpy);
         deque = new ArrayDeque<>(cpy);
     }
