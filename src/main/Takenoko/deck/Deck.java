@@ -16,10 +16,24 @@ public abstract class Deck<T> {
 
     /**
      * Création d'une pioche à partir d'une liste d'objets
+     * On garantit que moins de 30% d'elements sont à la même place
      * @param elements éléments de base composant la pioche au départ
      */
     public Deck(List<T> elements){
         List<T> cpy = new ArrayList<>(elements);
+
+        double similarity = 1;
+
+        while (similarity > 0.30){
+            Collections.shuffle(cpy);
+            double samePlace = 0.0;
+            for (int i = 0; i < elements.size(); i++){
+                if (elements.get(i).equals(cpy.get(i))){
+                    samePlace += 1.0;
+                }
+            }
+            similarity = samePlace / elements.size();
+        }
 
         Collections.shuffle(cpy);
         Collections.shuffle(cpy);
