@@ -18,6 +18,7 @@ import takenoko.Plot.Plot;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import takenoko.util.Console;
 import takenoko.util.exceptions.EmptyDeckException;
 
 import java.util.List;
@@ -190,7 +191,7 @@ public class StrategieConcrete extends AbstractStrategie {
         try {
             choice = strategieAmenagement.chooseAmenagement(deckAmenagement);
         } catch (EmptyDeckException e) {
-            e.printStackTrace();
+            Console.Log.debugPrint(e.getMessage());
         }
         return choice;
     }
