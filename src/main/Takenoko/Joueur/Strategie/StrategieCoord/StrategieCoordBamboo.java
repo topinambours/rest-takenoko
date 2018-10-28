@@ -3,14 +3,11 @@ package takenoko.joueur.strategie.StrategieCoord;
 import takenoko.joueur.Joueur;
 import takenoko.objectives.PandaObjectiveCard;
 import takenoko.Plateau;
-import takenoko.Plot.CoordAxial;
-import takenoko.Plot.Plot;
+import takenoko.plot.CoordAxial;
+import takenoko.plot.Plot;
 import takenoko.properties.Couleur;
 
-import java.util.EnumMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -53,7 +50,6 @@ public class StrategieCoordBamboo implements StrategieCoord {
         List<CoordAxial> legPosFilteredByMaxBambooAdj =  legPos.stream().collect(Collectors.groupingBy
                 (pos -> p.getNeighbors(pos).stream().mapToInt(Plot::getBambou).sum(),
                         TreeMap::new, toList())).lastEntry().getValue();
-
 
 
         return legPosFilteredByMaxBambooAdj;

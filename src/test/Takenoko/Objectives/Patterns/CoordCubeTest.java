@@ -1,6 +1,6 @@
 package takenoko.objectives.patterns;
 
-import takenoko.Plot.CoordAxial;
+import takenoko.plot.CoordAxial;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

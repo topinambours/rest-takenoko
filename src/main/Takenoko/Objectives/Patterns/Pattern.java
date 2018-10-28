@@ -1,7 +1,7 @@
 package takenoko.objectives.patterns;
 
 import takenoko.Plateau;
-import takenoko.Plot.CoordAxial;
+import takenoko.plot.CoordAxial;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,4 +1,4 @@
-package takenoko.Plot;
+package takenoko.plot;
 
 import takenoko.Game;
 import takenoko.joueur.Joueur;

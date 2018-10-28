@@ -11,8 +11,8 @@ import takenoko.objectives.GardenObjectiveCard;
 import takenoko.objectives.PandaObjectiveCard;
 import takenoko.objectives.PatternObjectiveCard;
 import takenoko.Plateau;
-import takenoko.Plot.CoordAxial;
-import takenoko.Plot.Plot;
+import takenoko.plot.CoordAxial;
+import takenoko.plot.Plot;
 import takenoko.properties.Couleur;
 import takenoko.util.Console;
 import takenoko.util.exceptions.EmptyDeckException;
@@ -166,7 +166,7 @@ public class Joueur implements Comparable{
     /**
      * Permet de piocher
      * @param plotsDeck Deck le deck
-     * @return Plot une parcelle
+     * @return plot une parcelle
      */
     public Plot draw(PlotsDeck plotsDeck) throws EmptyDeckException {
         Plot plot = plotsDeck.draw();
@@ -193,8 +193,8 @@ public class Joueur implements Comparable{
     /**
      * Permet de replacer dans la pioche une parcelle
      * @param plotsDeck Deck le deck
-     * @param plot Plot une parcelle
-     * @return Plot la parcelle replacée
+     * @param plot plot une parcelle
+     * @return plot la parcelle replacée
      */
     public Plot replaceInDeck(PlotsDeck plotsDeck, Plot plot){
         plotsDeck.insertBottom(plot);
@@ -238,7 +238,7 @@ public class Joueur implements Comparable{
             if (plot != null) plot.setWater(true);
             Plot plot2 = plateau.getPlot(borders.get(1));
             if (plot2 != null ) plot2.setWater(true);
-            plateau.putIrrigation(coo);
+            plateau.addIrrigation(coo);
             return Optional.of(coo);
         } else {
             return Optional.empty();

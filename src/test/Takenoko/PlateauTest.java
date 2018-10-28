@@ -1,121 +1,39 @@
 package takenoko;
 
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.irrigation.Orient;
 import takenoko.joueur.Joueur;
 import takenoko.joueur.strategie.StrategieCoord.StrategieCoordRandom;
 import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigBase;
 import takenoko.joueur.strategie.StrategieSansPions;
-import takenoko.Plot.CoordAxial;
-import takenoko.Plot.Plot;
+import takenoko.objectives.amenagement.Amenagement;
+import takenoko.plot.CoordAxial;
+import takenoko.plot.Plot;
 import takenoko.properties.Couleur;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class PlateauTest {
 
-    @Test
-    public void getputPlot() {
-        Plateau plat = new Plateau();
-        Plot parc = new Plot(3, 5);
-        CoordAxial coo = new CoordAxial(3, 5);
-        plat.putPlot(parc, coo);
-        assertEquals(parc, plat.getPlot(3, 5));
-    }
-
-    @Test
-    public void newputPlot() {
-        Plateau plat = new Plateau();
-        Plot parc = new Plot();
-        Joueur bot = new Joueur(1, new StrategieSansPions(new StrategieCoordRandom(),new StrategieIrrigBase(plat)));
-        bot.setPlot(parc);
-        CoordAxial coo = bot.putPlot(parc, plat);
-        assertEquals(coo.getQ(), parc.getq());
-        assertEquals(coo.getR(), parc.getr());
-    }
-
-    @Test public void irrigationInit(){
-        Plateau plateau = new Plateau();
-        assertEquals(6,plateau.getIrrigations().size());
-    }
-
-    @Test
-    public void getPlotsFromIrig() {
-        Plateau p = new Plateau();
-
-        List<Plot> listPlots = p.getPlotsFromIrig(new CoordIrrig(0,0,Orient.N));
-
-        assertEquals(1, listPlots.size());
-
-        assertTrue(listPlots.contains(p.getPlot(0,0)));
-
-        p.putPlot(new Plot(new CoordAxial(0,-1)));
-
-        listPlots = p.getPlotsFromIrig(new CoordIrrig(0,0,Orient.N));
-        assertEquals(2, listPlots.size());
-        assertTrue(listPlots.contains(p.getPlot(0,0)));
-        assertTrue(listPlots.contains(p.getPlot(0,-1)));
-
-
-        listPlots = p.getPlotsFromIrig(new CoordIrrig(50,50,Orient.W));
-
-        assertTrue(listPlots.isEmpty());
-    }
-
-    @Test
-    public void movePanda() {
-        Plateau p = new Plateau();
-
-        CoordAxial coordTest = new CoordAxial(1,-1);
-
-        // Pas de parcelle à cet emplacement
-        assertEquals(Couleur.BLEU, p.movePanda(coordTest));
-
-
-        p.putPlot(new Plot(Couleur.VERT), coordTest);
-        assertFalse(p.getPlot(coordTest).haveBambou());
-        p.getPlot(coordTest).setWater(true);
-        p.getPlot(coordTest).pousserBambou();
-        assertTrue(p.getPlot(coordTest).haveBambou());
-        assertEquals(Couleur.VERT, p.movePanda(coordTest));
-        assertFalse(p.getPlot(coordTest).haveBambou());
-
-        // Tuile qui n'est pas en "ligne" avec la position du panda
-        p.putPlot(new Plot(new CoordAxial(10,-12)));
-
-        assertEquals(Couleur.BLEU, p.movePanda(new CoordAxial(11,-12)));
-
-        // Tuile qui est en ligne avec le panda, mais avec du vide
-        p.putPlot(new Plot(new CoordAxial(3,-3)));
-
-        assertEquals(Couleur.BLEU, p.movePanda(new CoordAxial(11,-12)));
-
-    }
-
-    @Test
-    public void moveJardinier() {
-        Plateau p = new Plateau();
-
-        assertFalse(p.moveJardinier(new CoordAxial(1,1)));
-
-        p.putPlot(new Plot(), 1,1);
-
-        assertFalse(p.moveJardinier(new CoordAxial(1,1)));
-        p.putPlot(new Plot(), 1,0);
-        assertTrue(p.moveJardinier(new CoordAxial(1,0)));
-
-        p.putPlot(new Plot(), 1,1);
-
-    }
+    @Autowired
+    @Qualifier("plateauTakenoko")
+    Plateau p;
 
     @Test
     public void isMotifInAll(){
-        Plateau p = new Plateau();
+
         p.putPlot(new Plot(Couleur.VERT), 0, 1);
-        p.getPlot(0,1).pousserBambou();
         p.getPlot(0,1).pousserBambou();
         p.getPlot(0,1).pousserBambou();
         assertFalse(p.isMotifInAll(Couleur.VERT, 1));
@@ -133,7 +51,6 @@ public class PlateauTest {
         p.getPlot(-1,1).pousserBambou();
 
         assertFalse(p.isMotifInAll(Couleur.JAUNE, 2));
-        p.getPlot(-1,1).pousserBambou();
         p.getPlot(-1,1).pousserBambou();
 
         assertTrue(p.isMotifInAll(Couleur.JAUNE, 2));
@@ -158,5 +75,179 @@ public class PlateauTest {
 
         assertFalse(p.isMotifInAll(Couleur.JAUNE, 6));
 
+    }
+
+    @Test
+    public void getPosPanda() {
+    }
+
+    @Test
+    public void getPosJardinier() {
+    }
+
+    @Test
+    public void getCanalIrrigation() {
+    }
+
+    @Test
+    public void removeCanalIrrigation() {
+    }
+
+    @Test
+    public void getPlot() {
+    }
+
+    @Test
+    public void getPlot1() {
+    }
+
+    @Test
+    public void getLastPlot() {
+    }
+
+    @Test
+    public void putPlot() {
+    }
+
+    @Test
+    public void getIrrigations() {
+    }
+
+    @Test
+    public void addIrrigation() {
+    }
+
+    @Test
+    public void getNeighbors() {
+    }
+
+    @Test
+    public void legalPositions() {
+    }
+
+    @Test
+    public void nbAdajcent() {
+    }
+
+    @Test
+    public void legalIrrigPositions() {
+    }
+
+    @Test
+    public void getPlotsFromIrig() {
+    }
+
+    @Test
+    public void isIrrigPositionLegal() {
+    }
+
+    @Test
+    public void checkPlotWater() {
+
+        assertTrue(p.checkPlotWater(new CoordAxial(-1,1)));
+
+        assertFalse(p.checkPlotWater(new CoordAxial(-1,2)));
+
+        p.addIrrigation(new CoordIrrig(-1,2, Orient.S));
+
+        assertTrue(p.checkPlotWater(new CoordAxial(-1,2)));
+
+    }
+
+    @Test
+    public void hasStraightPath() {
+        Plot inLine = new Plot(-1,1, Couleur.VERT);
+        Plot inLineNotStraight = new Plot(-3,3, Couleur.VERT);
+        p.putPlot(inLine);
+        p.putPlot(inLineNotStraight);
+
+        assertTrue(p.hasStraightPath(new CoordAxial(0,0), inLine.getCoord()));
+
+        assertFalse(p.hasStraightPath(new CoordAxial(0,0), inLineNotStraight.getCoord()));
+
+    }
+
+    @Test
+    public void movePanda() {
+        assertEquals(new CoordAxial(0,0), p.getPosPanda());
+
+        assertEquals(Couleur.BLEU, p.movePanda(new CoordAxial(1,-1)));
+        assertEquals(new CoordAxial(0,0), p.getPosPanda());
+
+        p.putPlot(new Plot(1,-1, Couleur.VERT));
+
+        // Pas de bambou donc bleu
+        assertEquals(Couleur.VERT, p.movePanda(new CoordAxial(1,-1)));
+        assertEquals(new CoordAxial(1,-1), p.getPosPanda());
+
+        assertEquals(Couleur.BLEU, p.movePanda(new CoordAxial(0,0)));
+
+        assertEquals(Couleur.BLEU, p.movePanda(new CoordAxial(1,-1)));
+    }
+
+    @Test
+    public void moveJardinier() {
+        assertEquals(new CoordAxial(0,0), p.getPosJardinier());
+
+        assertFalse(p.moveJardinier(new CoordAxial(1,-1)));
+        assertEquals(new CoordAxial(0,0), p.getPosJardinier());
+
+        p.putPlot(new Plot(1,-1, Couleur.VERT));
+
+        assertTrue(p.moveJardinier(new CoordAxial(1,-1)));
+        assertEquals(new CoordAxial(1,-1), p.getPosJardinier());
+
+        p.putPlot(new Plot(-1,1, Couleur.JAUNE, Amenagement.ENGRAIS));
+
+        assertEquals(1, p.getPlot(-1,1).getBambou());
+
+        assertTrue(p.moveJardinier(new CoordAxial(-1,1)));
+
+        assertEquals(3, p.getPlot(-1,1).getBambou());
+    }
+
+    @Test
+    public void neighborColor() {
+        Plot baseColor = new Plot(-1,1, Couleur.VERT);
+        Plot sameColor = new Plot(-2,2, Couleur.VERT);
+        Plot notSame = new Plot(-1,2, Couleur.JAUNE);
+        p.putPlot(baseColor);
+        p.putPlot(sameColor);
+        p.putPlot(notSame);
+
+        assertTrue(p.neighborColor(new CoordAxial(0,0)).isEmpty());
+
+        assertTrue(p.neighborColor(new CoordAxial(-1,1)).contains(sameColor.getCoord()));
+        assertFalse(p.neighborColor(new CoordAxial(-1,1)).contains(notSame.getCoord()));
+    }
+
+    @Test
+    public void getLinePlots() {
+
+        Plot inLine = new Plot(-1,1, Couleur.VERT);
+        Plot inLine2 = new Plot(-2,2, Couleur.VERT);
+        Plot notInLine = new Plot(-1,2, Couleur.VERT);
+        p.putPlot(inLine);
+        p.putPlot(inLine2);
+        p.putPlot(notInLine);
+
+        assertTrue(p.getLinePlots(new CoordAxial(0,0)).contains(inLine));
+        assertTrue(p.getLinePlots(new CoordAxial(0,0)).contains(inLine2));
+        assertFalse(p.getLinePlots(new CoordAxial(0,0)).contains(notInLine));
+    }
+
+    @Test
+    public void plateauTakenoko() {
+
+        assertEquals(new CoordAxial(0,0), p.getPosPanda());
+        assertEquals(new CoordAxial(0,0), p.getPosJardinier());
+
+        assertEquals(6, p.getIrrigations().size());
+        assertEquals(20, p.getCanalIrrigation());
+
+        assertEquals(new Plot(0,0, Couleur.BLEU), p.getLastPlot());
+        assertEquals(new Plot(0,0, Couleur.BLEU), p.getPlot(0,0));
+
+        assertEquals(1, p.getPlots().size());
     }
 }

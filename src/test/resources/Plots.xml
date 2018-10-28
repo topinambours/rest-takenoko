@@ -7,62 +7,62 @@
     <context:annotation-config />
     <context:component-scan base-package="takenoko"/>
 
-    <bean id="plotGreen" class="takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotGreen" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="VERT"/>
         <constructor-arg name="amenagement" value="NON"/>
     </bean>
 
-    <bean id="plotGreenBassin" class="takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotGreenBassin" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="VERT"/>
         <constructor-arg name="amenagement" value="BASSIN"/>
     </bean>
 
-    <bean id="plotGreenEnclos" class="takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotGreenEnclos" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="VERT"/>
         <constructor-arg name="amenagement" value="ENCLOS"/>
     </bean>
 
-    <bean id="plotGreenEngrais" class="takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotGreenEngrais" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="VERT"/>
         <constructor-arg name="amenagement" value="ENGRAIS"/>
     </bean>
 
-    <bean id="plotPink" class="takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotPink" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="ROSE"/>
         <constructor-arg name="amenagement" value="NON"/>
     </bean>
 
-    <bean id="plotPinkBassin" class="takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotPinkBassin" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="ROSE"/>
         <constructor-arg name="amenagement" value="BASSIN"/>
     </bean>
 
-    <bean id="plotPinkEnclos" class="takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotPinkEnclos" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="ROSE"/>
         <constructor-arg name="amenagement" value="ENCLOS"/>
     </bean>
 
-    <bean id="plotPinkEngrais" class="takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotPinkEngrais" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="ROSE"/>
         <constructor-arg name="amenagement" value="ENGRAIS"/>
     </bean>
 
-    <bean id="plotYellow" class="takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotYellow" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="JAUNE"/>
         <constructor-arg name="amenagement" value="NON"/>
     </bean>
 
-    <bean id="plotYellowBassin" class="takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotYellowBassin" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="JAUNE"/>
         <constructor-arg name="amenagement" value="BASSIN"/>
     </bean>
 
-    <bean id="plotYellowEnclos" class="takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotYellowEnclos" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="JAUNE"/>
         <constructor-arg name="amenagement" value="ENCLOS"/>
     </bean>
 
-    <bean id="plotYellowEngrais" class="takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotYellowEngrais" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="JAUNE"/>
         <constructor-arg name="amenagement" value="ENGRAIS"/>
     </bean>

@@ -4,8 +4,8 @@ import takenoko.joueur.Joueur;
 import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigBase;
 import takenoko.joueur.strategie.StrategieSansPions;
 import takenoko.Plateau;
-import takenoko.Plot.CoordAxial;
-import takenoko.Plot.Plot;
+import takenoko.plot.CoordAxial;
+import takenoko.plot.Plot;
 import takenoko.properties.Couleur;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,13 +33,13 @@ public class StrategieCoordColorTest {
 
     @Test
     public void getCoord(){
-        p.addStartingPlot(new Plot(0, 0, Couleur.VERT));
+        p.putPlot(new Plot(0, 0, Couleur.VERT));
 
         p.putPlot(new Plot(1,0));
         p.putPlot(new Plot(1,1));
         p.putPlot(new Plot(1,-1));
 
-        //assertEquals(new CoordAxial(0,1), strategieColor.getCoord(p, new Plot()));
+        //assertEquals(new CoordAxial(0,1), strategieColor.getCoord(p, new plot()));
 
         p.putPlot(new Plot(2,0));
         p.putPlot(new Plot(3,-1));
@@ -53,7 +53,7 @@ public class StrategieCoordColorTest {
 
     @Test
     public void getCoords(){
-        p.addStartingPlot(new Plot(0, 0, Couleur.VERT));
+        p.putPlot(new Plot(0, 0, Couleur.VERT));
 
         p.putPlot(new Plot(1,0));
         p.putPlot(new Plot(1,1));
@@ -62,7 +62,7 @@ public class StrategieCoordColorTest {
         List<CoordAxial> liste = new ArrayList<>();
         liste.add(new CoordAxial(0,1));
 
-        //assertArrayEquals(liste.toArray(), strategieColor.getCoords(p, new Plot()).toArray());
+        //assertArrayEquals(liste.toArray(), strategieColor.getCoords(p, new plot()).toArray());
     }
 
 

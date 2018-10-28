@@ -1,8 +1,8 @@
 package takenoko.util.comparators;
 
 import takenoko.Plateau;
-import takenoko.Plot.CoordAxial;
-import takenoko.Plot.Plot;
+import takenoko.plot.CoordAxial;
+import takenoko.plot.Plot;
 
 import java.util.Comparator;
 

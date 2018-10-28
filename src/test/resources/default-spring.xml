@@ -17,10 +17,11 @@
     </bean>
 
     <bean name="gameTest" class="takenoko.Game" scope="prototype">
-        <constructor-arg index="0" ref="pandObjDeck"/>
-        <constructor-arg index="1" ref="gardenObjDeckTest"/>
-        <constructor-arg index="2" ref="patternObjDeckTest"/>
-        <constructor-arg index="3" ref="plotsDeckTest"/>
+        <constructor-arg index="0" ref="plateauTakenoko"/>
+        <constructor-arg index="1" ref="pandObjDeck"/>
+        <constructor-arg index="2" ref="gardenObjDeckTest"/>
+        <constructor-arg index="3" ref="patternObjDeckTest"/>
+        <constructor-arg index="4" ref="plotsDeckTest"/>
     </bean>
 
 </beans>

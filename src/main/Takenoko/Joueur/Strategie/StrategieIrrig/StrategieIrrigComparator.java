@@ -2,7 +2,7 @@ package takenoko.joueur.strategie.StrategieIrrig;
 
 import takenoko.irrigation.CoordIrrig;
 import takenoko.Plateau;
-import takenoko.Plot.CoordAxial;
+import takenoko.plot.CoordAxial;
 import takenoko.util.comparators.ComparateurIrig;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class StrategieIrrigComparator implements StrategieIrrig {
     @Override
     public Optional<CoordIrrig> getIrrig(Plateau P) {
         List<CoordIrrig> legalPos = p.legalIrrigPositions();
-        if(!P.getLastPlop().getCoord().equals(new CoordAxial(0,0))) {
+        if(!P.getLastPlot().getCoord().equals(new CoordAxial(0,0))) {
             // le robot cherche à maximiser le nombre de nouvelles parcelles irriguées
             // On cherche donc la position maximisant le nombre de nouvelles parcelles
 

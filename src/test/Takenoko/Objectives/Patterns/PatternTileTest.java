@@ -1,6 +1,6 @@
 package takenoko.objectives.patterns;
 
-import takenoko.Plot.CoordAxial;
+import takenoko.plot.CoordAxial;
 import takenoko.properties.Couleur;
 import org.junit.Test;
 

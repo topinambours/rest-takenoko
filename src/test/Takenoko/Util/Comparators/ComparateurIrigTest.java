@@ -3,8 +3,8 @@ package takenoko.util.comparators;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.irrigation.Orient;
 import takenoko.Plateau;
-import takenoko.Plot.CoordAxial;
-import takenoko.Plot.Plot;
+import takenoko.plot.CoordAxial;
+import takenoko.plot.Plot;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -33,7 +33,7 @@ public class ComparateurIrigTest {
         }
 
         // On ajoute l'irrigation à la tuile (5,0)
-        p.putIrrigation( new CoordIrrig(5,0,Orient.W));
+        p.addIrrigation( new CoordIrrig(5,0,Orient.W));
 
         // Egalité entre (5,0) et (0,-1)
         assertEquals(0, cp.compare(new CoordIrrig(5,0,Orient.N), new CoordIrrig(0,-1,Orient.N)));

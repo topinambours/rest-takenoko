@@ -1,9 +1,14 @@
 package takenoko.joueur.strategie.StrategiePanda;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import takenoko.Plateau;
-import takenoko.Plot.CoordAxial;
-import takenoko.Plot.Plot;
+import takenoko.plot.CoordAxial;
+import takenoko.plot.Plot;
 import takenoko.joueur.Joueur;
 import takenoko.joueur.strategie.StrategieAction.StrategieActionBasique;
 import takenoko.joueur.strategie.StrategieAmenagement.StrategieAmenagementBasique;
@@ -11,19 +16,22 @@ import takenoko.joueur.strategie.StrategieConcrete;
 import takenoko.joueur.strategie.StrategieCoord.StrategieCoordAdjacent;
 import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigComparator;
 import takenoko.joueur.strategie.StrategieJardinier.StrategieJardinierBasique;
-import takenoko.joueur.strategie.StrategieSansPions;
 import takenoko.objectives.PandaObjectiveCard;
 import takenoko.objectives.amenagement.Amenagement;
 import takenoko.properties.Couleur;
 
 import static org.junit.Assert.*;
-
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class StrategiePandaObjectifsTest {
+
+    @Autowired
+    @Qualifier("plateauTakenoko")
+    Plateau p;
 
     @Test
     public void getPandaMove() {
         StrategiePandaObjectifs st = new StrategiePandaObjectifs();
-        Plateau p = new Plateau();
 
         Joueur j = new Joueur(1, new StrategieConcrete(
                 new StrategieCoordAdjacent(),

@@ -1,8 +1,8 @@
 package takenoko.joueur.strategie.StrategiePanda;
 
 import takenoko.Plateau;
-import takenoko.Plot.CoordAxial;
-import takenoko.Plot.Plot;
+import takenoko.plot.CoordAxial;
+import takenoko.plot.Plot;
 import takenoko.joueur.Joueur;
 import takenoko.objectives.PandaObjectiveCard;
 import takenoko.objectives.amenagement.Amenagement;

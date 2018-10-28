@@ -4,10 +4,9 @@ import takenoko.deck.AmenagementDecks;
 import takenoko.joueur.Joueur;
 import takenoko.objectives.amenagement.Amenagement;
 import takenoko.Plateau;
-import takenoko.Plot.Plot;
+import takenoko.plot.Plot;
 import takenoko.util.exceptions.EmptyDeckException;
 
-import java.util.HashSet;
 import java.util.Optional;
 
 public class StrategieAmenagementBasique implements StrategieAmenagement {
@@ -37,7 +36,7 @@ public class StrategieAmenagementBasique implements StrategieAmenagement {
     @Override
     public Optional<Plot> plotAmenagement(Joueur joueur,Plateau plateau) {
         if (!joueur.getAmenagements().isEmpty()){
-            return Optional.of(plateau.getLastPlop());
+            return Optional.of(plateau.getLastPlot());
         }else{
             return Optional.empty();
         }

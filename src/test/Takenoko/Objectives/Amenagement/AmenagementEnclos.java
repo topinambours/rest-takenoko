@@ -4,7 +4,7 @@ package takenoko.objectives.amenagement;
 import takenoko.Game;
 import takenoko.joueur.Joueur;
 import takenoko.joueur.strategie.StrategieConcrete;
-import takenoko.Plot.Plot;
+import takenoko.plot.Plot;
 import takenoko.util.exceptions.EmptyDeckException;
 import takenoko.util.exceptions.NoActionSelectedException;
 import org.junit.Test;
@@ -42,7 +42,6 @@ public class AmenagementEnclos {
 
         plot.setAmenagement(Amenagement.ENCLOS);
         plot.setWater(true);
-        plot.pousserBambou();
 
 
         gameTest.getPlateau().putPlot(plot,1,0);
@@ -50,8 +49,6 @@ public class AmenagementEnclos {
 
         joueur.pandaTurn(gameTest);
 
-
-        System.out.println(gameTest.getPlateau().getPlot(1,0).getBambou());
         assertEquals(1,gameTest.getPlateau().getPlot(1,0).getBambou());
 
 
@@ -65,7 +62,6 @@ public class AmenagementEnclos {
         joueur = new Joueur(1,this.strategieConcrete);
 
         plot.setWater(true);
-        plot.pousserBambou();
 
 
         gameTest.getPlateau().putPlot(plot,1,0);
@@ -73,8 +69,6 @@ public class AmenagementEnclos {
 
         joueur.pandaTurn(gameTest);
 
-
-        System.out.println(gameTest.getPlateau().getPlot(1,0).getBambou());
         assertEquals(0,gameTest.getPlateau().getPlot(1,0).getBambou());
 
 

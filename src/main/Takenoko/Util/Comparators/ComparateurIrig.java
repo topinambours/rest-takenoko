@@ -2,7 +2,7 @@ package takenoko.util.comparators;
 
 import takenoko.irrigation.CoordIrrig;
 import takenoko.Plateau;
-import takenoko.Plot.Plot;
+import takenoko.plot.Plot;
 
 import java.util.Comparator;
 import java.util.stream.Collectors;

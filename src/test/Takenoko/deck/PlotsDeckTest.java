@@ -1,7 +1,7 @@
 package takenoko.deck;
 
 import takenoko.objectives.amenagement.Amenagement;
-import takenoko.Plot.Plot;
+import takenoko.plot.Plot;
 import takenoko.properties.Couleur;
 import takenoko.util.exceptions.EmptyDeckException;
 import org.junit.Assert;

@@ -1,6 +1,6 @@
 package takenoko.objectives.patterns;
 
-import takenoko.Plot.CoordAxial;
+import takenoko.plot.CoordAxial;
 
 import java.util.Objects;
 

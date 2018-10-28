@@ -1,5 +1,6 @@
 package takenoko;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import takenoko.joueur.strategie.StrategiePanda.StrategiePandaObjectifs;
 import takenoko.objectives.ObjectiveCard;
 import takenoko.deck.PlotsDeck;
@@ -14,13 +15,12 @@ import takenoko.joueur.strategie.StrategieCoord.StrategieCoordRandom;
 import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigComparator;
 import takenoko.joueur.strategie.StrategieJardinier.StrategieJardinierBasique;
 import takenoko.joueur.strategie.StrategieJardinier.StrategieJardinierRandom;
-import takenoko.joueur.strategie.StrategiePanda.StrategiePandaBasique;
 import takenoko.joueur.strategie.StrategiePanda.StrategiePandaRandom;
 import takenoko.objectives.GardenObjectiveCard;
 import takenoko.objectives.PandaObjectiveCard;
 import takenoko.objectives.PatternObjectiveCard;
-import takenoko.Plot.CoordAxial;
-import takenoko.Plot.Plot;
+import takenoko.plot.CoordAxial;
+import takenoko.plot.Plot;
 import takenoko.properties.Couleur;
 import takenoko.util.Console;
 import takenoko.util.exceptions.EmptyDeckException;
@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
 @Configurable
 @Component
 @Scope(value = "prototype")
-@Import(value = {ObjectivesDeck.class, Plot.class})
+@Import(value = {ObjectivesDeck.class, Plot.class, Plateau.class})
 public class Game {
 
     private PlotsDeck plotsDeck;
@@ -59,11 +59,10 @@ public class Game {
     private int objneedtobecomplete;
 
     @Autowired()
-    public Game(ObjectivesDeck pandObjDeck, ObjectivesDeck gardenObjDeck, ObjectivesDeck patternObjDeck, PlotsDeck plotsDeck) throws EmptyDeckException {
+    public Game( Plateau plateau, ObjectivesDeck pandObjDeck, ObjectivesDeck gardenObjDeck, ObjectivesDeck patternObjDeck, PlotsDeck plotsDeck) throws EmptyDeckException {
         this.plotsDeck = plotsDeck;
         this.joueurs = new ArrayList<>();
-        this.plateau = new Plateau();
-        this.plateau.addStartingPlot(new Plot(Couleur.BLEU));
+        this.plateau = plateau;
 
         this.patternObjDeck = patternObjDeck;
         this.gardenObjDeck = gardenObjDeck;

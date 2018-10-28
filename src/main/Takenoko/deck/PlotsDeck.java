@@ -1,6 +1,6 @@
 package takenoko.deck;
 
-import takenoko.Plot.Plot;
+import takenoko.plot.Plot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

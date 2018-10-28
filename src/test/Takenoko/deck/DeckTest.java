@@ -61,7 +61,7 @@ public class DeckTest {
     }
 
     /**
-     * On peut garantir un maximum de 30% d'élément à la même position pour une pioche de 27 elements.
+     * On peut garantir un maximum de 35% d'élément à la même position pour une pioche de 27 elements.
      * @throws EmptyDeckException
      */
     @Test
@@ -80,7 +80,7 @@ public class DeckTest {
                     atSamePlace += 1;
                 }
             }
-            assertEquals(0.15, atSamePlace / 27.0, 0.15);
+            assertEquals(0.175, atSamePlace / 27.0, 0.175);
         }
 
     }

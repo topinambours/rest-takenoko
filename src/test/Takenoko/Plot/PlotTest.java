@@ -1,4 +1,4 @@
-package takenoko.Plot;
+package takenoko.plot;
 
 import org.junit.Test;
 import takenoko.objectives.amenagement.Amenagement;

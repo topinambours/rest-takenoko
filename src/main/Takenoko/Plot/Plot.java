@@ -1,4 +1,4 @@
-package takenoko.Plot;
+package takenoko.plot;
 
 import takenoko.objectives.amenagement.Amenagement;
 import takenoko.properties.Couleur;

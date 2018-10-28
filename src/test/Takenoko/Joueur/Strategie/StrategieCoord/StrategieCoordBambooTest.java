@@ -1,13 +1,19 @@
 package takenoko.joueur.strategie.StrategieCoord;
 
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import takenoko.Plateau;
-import takenoko.Plot.CoordAxial;
-import takenoko.Plot.Plot;
+import takenoko.plot.CoordAxial;
+import takenoko.plot.Plot;
 import takenoko.util.comparators.ComparateurCoordAxial;
 import takenoko.util.comparators.ComparateurPosBambooAdj;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -19,15 +25,18 @@ import static org.junit.Assert.assertEquals;
  * Cette stratégie cherche à trouver le meilleur placement en maximisant le nombre de bambous déjà présent
  * sur les parcelles adjacentes.
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class StrategieCoordBambooTest {
 
     StrategieCoordBamboo st;
+    @Autowired
+    @Qualifier("plateauTakenoko")
     Plateau p;
 
     @Before
     public void setUp() throws Exception {
         st = new StrategieCoordBamboo(false);
-        p = new Plateau();
     }
 
 
@@ -38,8 +47,6 @@ public class StrategieCoordBambooTest {
      */
     @Test
     public void getCoordSinglePlot() {
-
-        p.addStartingPlot(new Plot());
 
         ComparateurCoordAxial cpCoord = new ComparateurCoordAxial();
 
@@ -68,7 +75,6 @@ public class StrategieCoordBambooTest {
         /**
          * initialisation du plateau
          */
-        p.addStartingPlot(new Plot());
         StrategieCoordRandom randomStrat = new StrategieCoordRandom();
 
         List<CoordAxial> legalPos;
@@ -77,9 +83,6 @@ public class StrategieCoordBambooTest {
         for (int i = 0 ; i < 500; i++){
             p.putPlot(new Plot(randomStrat.getCoord(p)));
             legalPos = p.legalPositions();
-
-
-            computePos = st.getCoords(p);
 
             /**
              * Nombres de bambous proposé par la stratégie
@@ -94,14 +97,6 @@ public class StrategieCoordBambooTest {
             /** On compare */
             assertEquals(bestChoiceBambou, bestChoiceInPlate);
 
-
-            /**
-             * On trie ensuite toute les possibilités de pose, afin de déterminé si l'enssemble des positions est présente dans la solution
-             * proposé par la stratégie.
-             */
-            computePos.sort(cpCoord);
-            legalPos.sort(cpCoord);
-            assertArrayEquals(legalPos.toArray(), computePos.toArray());
         }
     }
 

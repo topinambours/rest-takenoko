@@ -7,7 +7,7 @@ import takenoko.joueur.strategie.StrategieSansPions;
 import takenoko.objectives.GardenObjectiveCard;
 import takenoko.objectives.ObjectiveCard;
 import takenoko.Plateau;
-import takenoko.Plot.Plot;
+import takenoko.plot.Plot;
 import takenoko.properties.Couleur;
 import org.junit.Test;
 
@@ -35,8 +35,6 @@ public class GardenObjectiveCardTest {
         goal.instanciate(p, j);
 
         p.putPlot(new Plot(0, 1, Couleur.VERT));
-        p.getPlot(0, 1).setWater(true);
-        p.getPlot(0, 1).pousserBambou();
         p.getPlot(0, 1).pousserBambou();
         p.getPlot(0, 1).pousserBambou();
 
@@ -50,8 +48,6 @@ public class GardenObjectiveCardTest {
         goal.instanciate(p, j);
 
         p.putPlot(new Plot(0, 1, Couleur.JAUNE));
-        p.getPlot(0, 1).setWater(true);
-        p.getPlot(0, 1).pousserBambou();
         p.getPlot(0, 1).pousserBambou();
         p.getPlot(0, 1).pousserBambou();
 

@@ -1,6 +1,6 @@
 package takenoko.objectives.amenagement;
 
-import takenoko.Plot.Plot;
+import takenoko.plot.Plot;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -10,7 +10,7 @@ import takenoko.objectives.patterns.CoordCube;
 import takenoko.objectives.patterns.Pattern;
 import takenoko.objectives.patterns.PatternTile;
 import takenoko.Plateau;
-import takenoko.Plot.Plot;
+import takenoko.plot.Plot;
 import takenoko.properties.Couleur;
 import org.junit.Before;
 import org.junit.Test;
@@ -57,8 +57,8 @@ public class PatternObjectiveCardTest {
         plateau.putPlot(new Plot(0, 1, Couleur.ROSE), 0, 1);
         plateau.putPlot(new Plot(1, 1, Couleur.VERT), 1, 1);
 
-        plateau.putIrrigation(new CoordIrrig(1,0, Orient.S));
-        plateau.putIrrigation(new CoordIrrig(1,1, Orient.S));
+        plateau.addIrrigation(new CoordIrrig(1,0, Orient.S));
+        plateau.addIrrigation(new CoordIrrig(1,1, Orient.S));
 
         assertTrue(!patternObjectiveCard.isComplete());
 

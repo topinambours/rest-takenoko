@@ -9,8 +9,8 @@ import takenoko.joueur.strategie.StrategieSansPions;
 import takenoko.objectives.GardenObjectiveCard;
 import takenoko.objectives.PandaObjectiveCard;
 import takenoko.Plateau;
-import takenoko.Plot.CoordAxial;
-import takenoko.Plot.Plot;
+import takenoko.plot.CoordAxial;
+import takenoko.plot.Plot;
 import takenoko.properties.Couleur;
 import takenoko.util.exceptions.EmptyDeckException;
 import takenoko.util.exceptions.NoActionSelectedException;
@@ -108,6 +108,7 @@ public class JoueurTest {
     @Test
     public void putPlot() throws EmptyDeckException {
         Plateau pTest = new Plateau();
+        pTest = pTest.plateauTakenoko();
         CoordAxial currentPlotPos;
         for (int i = 0; i < DECK_SIZE; i++){
             currentPlotPos = joueur1.putPlot(joueur1.draw(dtest), pTest);
