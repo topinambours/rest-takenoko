@@ -100,7 +100,7 @@
         <constructor-arg name="couleur" value="ROSE"/>
     </bean>
 
-    <bean id="patternObjCard1" class="takenoko.objectives.PatternObjectiveCard">
+    <bean id="patternObjCard1" class="takenoko.objectives.PatternObjectiveCard" scope="prototype">
         <constructor-arg name="pattern">
             <bean class="takenoko.objectives.patterns.Pattern">
                 <constructor-arg name="tiles">
@@ -115,7 +115,7 @@
         <constructor-arg name="pointValue" value="2"/>
     </bean>
 
-    <bean id="patternObjCard2" class="takenoko.objectives.PatternObjectiveCard">
+    <bean id="patternObjCard2" class="takenoko.objectives.PatternObjectiveCard" scope="prototype">
         <constructor-arg name="pattern">
             <bean class="takenoko.objectives.patterns.Pattern">
                 <constructor-arg name="tiles">
@@ -130,7 +130,7 @@
         <constructor-arg name="pointValue" value="3"/>
     </bean>
 
-    <bean id="patternObjCard3" class="takenoko.objectives.PatternObjectiveCard">
+    <bean id="patternObjCard3" class="takenoko.objectives.PatternObjectiveCard" scope="prototype">
         <constructor-arg name="pattern">
             <bean class="takenoko.objectives.patterns.Pattern">
                 <constructor-arg name="tiles">
@@ -145,7 +145,7 @@
         <constructor-arg name="pointValue" value="4"/>
     </bean>
 
-    <bean id="patternObjCard4" class="takenoko.objectives.PatternObjectiveCard">
+    <bean id="patternObjCard4" class="takenoko.objectives.PatternObjectiveCard" scope="prototype">
         <constructor-arg name="pattern">
             <bean class="takenoko.objectives.patterns.Pattern">
                 <constructor-arg name="tiles">
@@ -161,7 +161,7 @@
         <constructor-arg name="pointValue" value="3"/>
     </bean>
 
-    <bean id="patternObjCard5" class="takenoko.objectives.PatternObjectiveCard">
+    <bean id="patternObjCard5" class="takenoko.objectives.PatternObjectiveCard" scope="prototype">
         <constructor-arg name="pattern">
             <bean class="takenoko.objectives.patterns.Pattern">
                 <constructor-arg name="tiles">
@@ -177,7 +177,7 @@
         <constructor-arg name="pointValue" value="4"/>
     </bean>
 
-    <bean id="patternObjCard6" class="takenoko.objectives.PatternObjectiveCard">
+    <bean id="patternObjCard6" class="takenoko.objectives.PatternObjectiveCard" scope="prototype">
         <constructor-arg name="pattern">
             <bean class="takenoko.objectives.patterns.Pattern">
                 <constructor-arg name="tiles">
@@ -194,7 +194,7 @@
     </bean>
 
 
-    <bean id="patternObjCard7" class="takenoko.objectives.PatternObjectiveCard">
+    <bean id="patternObjCard7" class="takenoko.objectives.PatternObjectiveCard" scope="prototype">
         <constructor-arg name="pattern">
             <bean class="takenoko.objectives.patterns.Pattern">
                 <constructor-arg name="tiles">
@@ -210,7 +210,7 @@
         <constructor-arg name="pointValue" value="5"/>
     </bean>
 
-    <bean id="patternObjCard8" class="takenoko.objectives.PatternObjectiveCard">
+    <bean id="patternObjCard8" class="takenoko.objectives.PatternObjectiveCard" scope="prototype">
         <constructor-arg name="pattern">
             <bean class="takenoko.objectives.patterns.Pattern">
                 <constructor-arg name="tiles">
@@ -226,7 +226,7 @@
         <constructor-arg name="pointValue" value="4"/>
     </bean>
 
-    <bean id="patternObjCard9" class="takenoko.objectives.PatternObjectiveCard">
+    <bean id="patternObjCard9" class="takenoko.objectives.PatternObjectiveCard" scope="prototype">
         <constructor-arg name="pattern">
             <bean class="takenoko.objectives.patterns.Pattern">
                 <constructor-arg name="tiles">
@@ -242,7 +242,7 @@
         <constructor-arg name="pointValue" value="3"/>
     </bean>
 
-    <bean id="patternObjCard10" class="takenoko.objectives.PatternObjectiveCard">
+    <bean id="patternObjCard10" class="takenoko.objectives.PatternObjectiveCard" scope="prototype">
         <constructor-arg name="pattern">
             <bean class="takenoko.objectives.patterns.Pattern">
                 <constructor-arg name="tiles">
@@ -257,7 +257,7 @@
         <constructor-arg name="pointValue" value="3"/>
     </bean>
 
-    <bean id="patternObjCard11" class="takenoko.objectives.PatternObjectiveCard">
+    <bean id="patternObjCard11" class="takenoko.objectives.PatternObjectiveCard" scope="prototype">
         <constructor-arg name="pattern">
             <bean class="takenoko.objectives.patterns.Pattern">
                 <constructor-arg name="tiles">
@@ -272,7 +272,7 @@
         <constructor-arg name="pointValue" value="2"/>
     </bean>
 
-    <bean id="patternObjCard12" class="takenoko.objectives.PatternObjectiveCard">
+    <bean id="patternObjCard12" class="takenoko.objectives.PatternObjectiveCard" scope="prototype">
         <constructor-arg name="pattern">
             <bean class="takenoko.objectives.patterns.Pattern">
                 <constructor-arg name="tiles">
@@ -287,7 +287,7 @@
         <constructor-arg name="pointValue" value="2"/>
     </bean>
 
-    <bean id="patternObjCard13" class="takenoko.objectives.PatternObjectiveCard">
+    <bean id="patternObjCard13" class="takenoko.objectives.PatternObjectiveCard" scope="prototype">
         <constructor-arg name="pattern">
             <bean class="takenoko.objectives.patterns.Pattern">
                 <constructor-arg name="tiles">
@@ -302,7 +302,7 @@
         <constructor-arg name="pointValue" value="3"/>
     </bean>
 
-    <bean id="patternObjCard14" class="takenoko.objectives.PatternObjectiveCard">
+    <bean id="patternObjCard14" class="takenoko.objectives.PatternObjectiveCard" scope="prototype">
         <constructor-arg name="pattern">
             <bean class="takenoko.objectives.patterns.Pattern">
                 <constructor-arg name="tiles">
@@ -317,7 +317,7 @@
         <constructor-arg name="pointValue" value="2"/>
     </bean>
 
-    <bean id="patternObjCard15" class="takenoko.objectives.PatternObjectiveCard">
+    <bean id="patternObjCard15" class="takenoko.objectives.PatternObjectiveCard" scope="prototype">
         <constructor-arg name="pattern">
             <bean class="takenoko.objectives.patterns.Pattern">
                 <constructor-arg name="tiles">
