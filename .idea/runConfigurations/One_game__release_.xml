@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Main (debug)" type="MavenRunConfiguration" factoryName="Maven">
+  <configuration default="false" name="One game (release)" type="MavenRunConfiguration" factoryName="Maven">
     <MavenSettings>
       <option name="myGeneralSettings" />
       <option name="myRunnerSettings" />
@@ -11,7 +11,7 @@
           <option name="goals">
             <list>
               <option value="compile" />
-              <option value="exec:java@debug" />
+              <option value="exec:java@release" />
             </list>
           </option>
           <option name="pomFileName" />

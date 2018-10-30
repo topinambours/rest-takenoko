@@ -13,9 +13,7 @@
     <import resource="ObjectivesPattern.xml"/>
     <import resource="Plots.xml"/>
 
-    <bean name="gameStarter" class="takenoko.GameStarter" >
-        <constructor-arg name="nbGame" value="1000"/>
-    </bean>
+    <bean name="gameStarter" class="takenoko.GameStarter" />
 
     <bean name="standardGame" class="takenoko.Game" scope="prototype">
         <constructor-arg index="0" ref="plateauTakenoko"/>

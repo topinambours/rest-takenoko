@@ -529,7 +529,6 @@ public class Joueur implements Comparable{
     public void turn(Game game) throws EmptyDeckException, NoActionSelectedException {
         turn(game,strategie.firstActionType(game));
         turn(game,strategie.secondActionType(game));
-
     }
 
     /**

@@ -63,9 +63,10 @@
                             <goal>java</goal>
                         </goals>
                         <configuration>
-                            <mainClass>takenoko.Main</mainClass>
+                            <mainClass>takenoko.GameStarter</mainClass>
                             <arguments>
-                                <argument>debug</argument>
+                                <argument>--consoleMode=debug</argument>
+                                <argument>--n=1</argument>
                             </arguments>
                         </configuration>
                     </execution>
@@ -76,9 +77,10 @@
                             <goal>java</goal>
                         </goals>
                         <configuration>
-                            <mainClass>takenoko.Main</mainClass>
+                            <mainClass>takenoko.GameStarter</mainClass>
                             <arguments>
-                                <argument>release</argument>
+                                <argument>--consoleMode=release</argument>
+                                <argument>--n=1</argument>
                             </arguments>
                         </configuration>
                     </execution>
@@ -89,9 +91,10 @@
                             <goal>java</goal>
                         </goals>
                         <configuration>
-                            <mainClass>takenoko.Main</mainClass>
+                            <mainClass>takenoko.GameStarter</mainClass>
                             <arguments>
-                                <argument>release</argument>
+                                <argument>--consoleMode=test</argument>
+                                <argument>--n=1000</argument>
                             </arguments>
                         </configuration>
                     </execution>

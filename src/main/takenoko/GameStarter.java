@@ -1,41 +1,38 @@
 package takenoko;
 
 import dnl.utils.text.table.TextTable;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import takenoko.util.Console;
 import takenoko.util.exceptions.EmptyDeckException;
 import takenoko.util.exceptions.NoActionSelectedException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
-import org.springframework.stereotype.Component;
-
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-@Component
-@ImportResource("classpath*:resources/default-config.xml")
-@Import(Game.class)
+
+@ImportResource("default-spring.xml")
+@SpringBootApplication
 public class GameStarter {
 
     private List<Game> games;
 
-    @Autowired
-    public GameStarter(int nbGame ,ApplicationContext appContext) throws EmptyDeckException, NoActionSelectedException {
+    private int nbGame;
 
-        if (nbGame > 1){
-            Console.Log.init("test");
-        }
+    @Autowired
+    public GameStarter(ApplicationContext appContext, ApplicationArguments appArgs) {
+        Console.Log.init(appArgs.getOptionValues("consoleMode").get(0));
+        this.nbGame = Integer.parseInt(appArgs.getOptionValues("n").get(0));
 
         games = new ArrayList<>();
-
         IntStream.range(0,nbGame).forEach(i -> games.add(appContext.getBean("standardGame", Game.class)));
 
-        int i = 0;
-
-        games.stream().forEach(game1 -> {
+        games.forEach(game1 -> {
             try {
                 game1.play();
             } catch (EmptyDeckException e) {
@@ -46,6 +43,7 @@ public class GameStarter {
         });
 
         System.out.println("Bench Complete");
+
         report();
     }
 
@@ -120,6 +118,11 @@ public class GameStarter {
         TextTable tt = new TextTable(columnNames, data);
         tt.setSort(2, SortOrder.DESCENDING);
         tt.printTable();
+    }
+
+    public static void main(String[] args) {
+        // On initialise la console avec le mode souhaité {release, debug, test}
+        SpringApplication.run(GameStarter.class, args);
     }
 
 }
