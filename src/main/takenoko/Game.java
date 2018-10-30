@@ -86,9 +86,7 @@ public class Game {
 
         this.objneedtobecomplete = setObjNeedToBeComplete();
 
-        firstDrawObjectifPanda(joueurs);
-        firstDrawPattern(joueurs);
-        firstDrawGarden(joueurs);
+
     }
 
     /**
@@ -273,6 +271,9 @@ public class Game {
      * La fonction principale qui permet de lancer et faire la game
      */
     public void play() throws EmptyDeckException, NoActionSelectedException {
+        firstDrawObjectifPanda(joueurs);
+        firstDrawPattern(joueurs);
+        firstDrawGarden(joueurs);
         while(!end()){ //Tant que la partie n'est pas terminée
             gameturn();
         }
@@ -391,35 +392,8 @@ public class Game {
 
         return score;
     }
-
-
-    /**
-     * Permet de faire pousser les bambous
-     * @param plateau Plateau le plateau
-     */
-   private void grow(Plateau plateau){
-
-       HashMap<CoordAxial, Plot> hashMap = plateau.getPlots();
-       Iterator iterator = hashMap.entrySet().iterator();
-       while (iterator.hasNext()){
-           Map.Entry<CoordAxial, Plot> pair = (Map.Entry<CoordAxial, Plot>) iterator.next();
-           Console.Log.debugPrint(pair.getKey() +"=" +pair.getValue()+"\n");
-           Plot current = pair.getValue();
-
-           if (!current.getCoord().equals(new CoordAxial(0, 0))) {
-               current.pousserBambou();
-           }
-       }
-   }
-
-   protected void grow(){
-       grow(this.plateau);
-   }
-
+    
     public Plateau getPlateau() {
         return plateau;
     }
-
-
-
 }
