@@ -3,6 +3,8 @@ package takenoko;
 import dnl.utils.text.table.TextTable;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import takenoko.joueur.strategie.StrategieJardinier.StratégieJardinierObjectifs;
+import takenoko.joueur.strategie.StrategiePanda.StrategiePandaBasique;
 import takenoko.joueur.strategie.StrategiePanda.StrategiePandaObjectifs;
 import takenoko.objectives.ObjectiveCard;
 import takenoko.deck.PlotsDeck;
@@ -75,17 +77,17 @@ public class Game {
         StrategieConcrete strategieJ1 = new StrategieConcrete(new StrategieCoordAdjacent(),new StrategieIrrigComparator(plateau));
         strategieJ1.setStrategieAction(new StrategieActionBasique());
 
-        Joueur j1 = new Joueur(1, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaObjectifs(), new StrategieJardinierBasique(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
+        Joueur j1 = new Joueur(1, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaObjectifs(), new StratégieJardinierObjectifs(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
 
         Joueur j2 = new Joueur(2, new StrategieConcrete(new StrategieCoordRandom(), new StrategieIrrigComparator(plateau), new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
-        Joueur j3 = new Joueur(3, new StrategieConcrete(new StrategieCoordRandom(), new StrategieIrrigComparator(plateau), new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
+        //Joueur j3 = new Joueur(3, new StrategieConcrete(new StrategieCoordRandom(), new StrategieIrrigComparator(plateau), new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
 
         //Joueur j4 = new Joueur(4, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaObjectifs(), new StrategieJardinierBasique(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
 
 
         joueurs.add(j1);
         joueurs.add(j2);
-        joueurs.add(j3);
+        //joueurs.add(j3);
         //joueurs.add(j4);
 
         this.objneedtobecomplete = setObjNeedToBeComplete();

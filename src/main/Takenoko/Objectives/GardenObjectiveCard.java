@@ -6,6 +6,10 @@ import takenoko.properties.Couleur;
 
 public class GardenObjectiveCard extends ObjectiveCard{
 
+    public Couleur getColor() {
+        return color;
+    }
+
     //private AmenagementType amenagement;
     private Couleur color;
     private int nbTower;

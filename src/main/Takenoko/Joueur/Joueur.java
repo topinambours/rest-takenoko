@@ -33,6 +33,10 @@ public class Joueur implements Comparable{
      */
     private int id;
 
+    public AbstractStrategie getStrategie() {
+        return strategie;
+    }
+
     /**
      * Stratégie globale du joueur englobant tous les types d'action possibles
      */
