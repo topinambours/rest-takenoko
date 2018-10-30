@@ -1,6 +1,10 @@
 package takenoko;
 
+import dnl.utils.text.table.TextTable;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import takenoko.joueur.strategie.StrategieJardinier.StratégieJardinierObjectifs;
+import takenoko.joueur.strategie.StrategiePanda.StrategiePandaBasique;
 import takenoko.joueur.strategie.StrategiePanda.StrategiePandaObjectifs;
 import takenoko.objectives.ObjectiveCard;
 import takenoko.deck.PlotsDeck;
@@ -73,12 +77,12 @@ public class Game {
         StrategieConcrete strategieJ1 = new StrategieConcrete(new StrategieCoordAdjacent(),new StrategieIrrigComparator(plateau));
         strategieJ1.setStrategieAction(new StrategieActionBasique());
 
-        Joueur j1 = new Joueur(1, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaObjectifs(), new StrategieJardinierBasique(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
+        Joueur j1 = new Joueur(1, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaObjectifs(), new StratégieJardinierObjectifs(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
 
         Joueur j2 = new Joueur(2, new StrategieConcrete(new StrategieCoordRandom(), new StrategieIrrigComparator(plateau), new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
         //Joueur j3 = new Joueur(3, new StrategieConcrete(new StrategieCoordRandom(), new StrategieIrrigComparator(plateau), new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
 
-        //Joueur j4 = new Joueur(4, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaBasique(), new StrategieJardinierBasique(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
+        //Joueur j4 = new Joueur(4, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaObjectifs(), new StrategieJardinierBasique(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
 
 
         joueurs.add(j1);
@@ -91,10 +95,7 @@ public class Game {
         firstDrawObjectifPanda(joueurs);
         firstDrawPattern(joueurs);
         firstDrawGarden(joueurs);
-
     }
-
-
 
     /**
      * Permet de faire piocher un pattern au joueur
@@ -191,14 +192,11 @@ public class Game {
         int nbrJoueur = joueurs.size();
         switch (nbrJoueur){
             case 2 :
-                return 5;
-                //return 9;
+                return 9;
             case 3 :
-                return 4;
-                //return 8;
+                return 8;
             case 4 :
-                return 3;
-                //return 7;
+                return 7;
             default:
                 return 0;
         }
@@ -228,10 +226,11 @@ public class Game {
             j.turn(this, Action.ObjCard);
 
             evaluate(j, j.getPlot().getCoord());
-            if(j.getObjectifComplete()== objneedtobecomplete && empereur == null){
+            if(j.getObjectifComplete() >= objneedtobecomplete && empereur == null){
                 j.addScore(2);
                 empereur = j;
                 Console.Log.println(String.format("Robot_%d a marqué 2 points grâce à l'Empereur, le dernier tour est engagé.", j.getId()));
+                lastTurn();
             }
         }
     }
@@ -301,16 +300,18 @@ public class Game {
 
         int evaluatePatternObjective = evaluatePatternObjective(j);
         j.addScore(evaluatePatternObjective);
-        if (evaluatePatternObjective > 0){
+        while (evaluatePatternObjective > 0){
             j.addObjectifComplete();
             Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte Pattern",j.getId(),evaluatePatternObjective));
+            evaluatePatternObjective = evaluatePatternObjective(j);
         }
 
         int evaluateGardenObjective = evaluateGardenObjective(j);
         j.addScore(evaluateGardenObjective);
-        if (evaluateGardenObjective > 0){
+        while (evaluateGardenObjective > 0){
             j.addObjectifComplete();
             Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte Jardinier",j.getId(),evaluateGardenObjective));
+            evaluateGardenObjective = evaluateGardenObjective(j);
         }
 
     }
@@ -349,22 +350,22 @@ public class Game {
      */
     protected int evaluatePatternObjective(Joueur joueur) throws EmptyDeckException {
         int score = 0;
-        ArrayList<PatternObjectiveCard> patternObjectiveCard1 = new ArrayList<>();
         List<PatternObjectiveCard> patternCards = joueur.getPatternObjectiveCards();
-        int i = 0;
-        for(PatternObjectiveCard patternObjectiveCard : patternCards){
-            if(patternObjectiveCard.isComplete()){
-                patternObjectiveCard1.add(patternObjectiveCard);
-                score = score + patternObjectiveCard.getPointValue();
-                i+= 1;
+
+        List<PatternObjectiveCard> completed = patternCards.stream().filter(PatternObjectiveCard::isComplete).collect(Collectors.toList());
+
+        if (!completed.isEmpty()){
+            PatternObjectiveCard maxPoint = completed.get(0);
+            for (PatternObjectiveCard card : completed){
+                if (card.getPointValue() > maxPoint.getPointValue()){
+                    maxPoint = card;
+                }
             }
+            maxPoint.validate();
+            score = maxPoint.getPointValue();
+            joueur.removeObjectiveCard(maxPoint);
         }
-        for (int j = 0;j<patternObjectiveCard1.size(); j++) {
-            joueur.removeObjectiveCard(patternObjectiveCard1.get(j));
-        }
-        for(int k = 0; k<i; k++){
-            drawPattern(joueur);
-        }
+
         return score;
 
     }
@@ -372,12 +373,21 @@ public class Game {
     protected int evaluateGardenObjective(Joueur joueur){
         int score = 0;
         List<GardenObjectiveCard> gardenObjectiveCards = new ArrayList<>(joueur.getGardenObjectiveCards());
-        for(GardenObjectiveCard gardenObjectiveCard : gardenObjectiveCards){
-            if(gardenObjectiveCard.isComplete()){
-                score = score + gardenObjectiveCard.getPointValue();
-                joueur.removeGardenObjectiveCard(gardenObjectiveCard);
+
+        List<GardenObjectiveCard> completed = gardenObjectiveCards.stream().filter(GardenObjectiveCard::isComplete).collect(Collectors.toList());
+
+        if (!completed.isEmpty()){
+            GardenObjectiveCard maxPoint = completed.get(0);
+            for (GardenObjectiveCard card : completed){
+                if (card.getPointValue() > maxPoint.getPointValue()){
+                    maxPoint = card;
+                }
             }
+            maxPoint.validate();
+            score = maxPoint.getPointValue();
+            joueur.removeGardenObjectiveCard(maxPoint);
         }
+
         return score;
     }
 
@@ -408,5 +418,7 @@ public class Game {
     public Plateau getPlateau() {
         return plateau;
     }
+
+
 
 }
