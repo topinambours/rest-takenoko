@@ -202,6 +202,10 @@ public class Game {
         }
     }
 
+    public Joueur getEmpereur(){
+        return empereur;
+    }
+
     /**
      * Effectue un tour de jeu pour chaque joueur
      * @throws EmptyDeckException

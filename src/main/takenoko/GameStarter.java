@@ -35,7 +35,7 @@ public class GameStarter {
 
         int i = 0;
 
-        games.parallelStream().forEach(game1 -> {
+        games.stream().forEach(game1 -> {
             try {
                 game1.play();
             } catch (EmptyDeckException e) {
@@ -54,23 +54,30 @@ public class GameStarter {
         Game support = games.get(0);
         int sizeGame = games.size();
 
-        String[] columnNames = new String[7];
+        String[] columnNames = new String[12];
         columnNames[0] = "Joueur";
         columnNames[1] = "Total Points";
         columnNames[2] = "Points/parties (moy)";
-        columnNames[3] = "Objectifs complétés/(moy)";
-        columnNames[4] = "Objectifs Panda/(moy)";
-        columnNames[5] = "Objectifs Pattern/(moy)";
-        columnNames[6] = "Objectifs Jardinier/(moy)";
+        columnNames[3] = "Objectifs";
+        columnNames[4] = "Objectifs/(moy)";
+        columnNames[5] = "Obj Panda";
+        columnNames[6] = "Obj Pand(moy)";
+        columnNames[7] = "Obj Pattern";
+        columnNames[8] = "Obj Patt(moy)";
+        columnNames[9] = "Obj Jardinier";
+        columnNames[10] = "Obj Jard(moy)";
+        columnNames[11] = "Empereur (%)";
 
 
         String[][] data = new String[support.getJoueurs().size()][];
 
         int totalPoint;
         int totalObjectif;
-        int pandaObj;
-        int gardenObj;
-        int patternObj;
+        float pandaObj;
+        float gardenObj;
+        float patternObj;
+        List<Integer> empereur;
+        empereur = new ArrayList<>();
 
         for (int i = 0; i < support.getJoueurs().size(); i++){
             totalPoint = 0;
@@ -78,7 +85,9 @@ public class GameStarter {
             pandaObj  =0;
             gardenObj = 0;
             patternObj = 0;
-            data[i] = new String[7];
+            data[i] = new String[12];
+
+            int emp = 0;
 
             data[i][0] = "Robot_" + support.getJoueurs().get(i).getId();
 
@@ -88,16 +97,25 @@ public class GameStarter {
                 pandaObj += game.getJoueurs().get(i).getObjPanda();
                 patternObj += game.getJoueurs().get(i).getObjPattern();
                 gardenObj += game.getJoueurs().get(i).getObjGarden();
+                if(game.getEmpereur() == game.getJoueurs().get(i)){
+                    emp++;
+                }
             }
-
+            empereur.add(emp);
 
             data[i][1] = "" + totalPoint;
             data[i][2] = "" + totalPoint / sizeGame;
-            data[i][3] = "" + totalObjectif / sizeGame;
-            data[i][4] = "" + pandaObj / sizeGame;
-            data[i][5] = "" + patternObj / sizeGame;
-            data[i][6] = "" + gardenObj / sizeGame;
+            data[i][3] = "" + totalObjectif;
+            data[i][4] = "" + totalObjectif / sizeGame;
+            data[i][5] = "" + (int)pandaObj;
+            data[i][6] = "" + pandaObj / sizeGame;
+            data[i][7] = "" + (int)patternObj;
+            data[i][8] = "" + patternObj / sizeGame;
+            data[i][9] = "" + (int)gardenObj;
+            data[i][10] = "" + gardenObj / sizeGame;
+            data[i][11] = "" + (float)empereur.get(i) / 10;
         }
+
 
         TextTable tt = new TextTable(columnNames, data);
         tt.setSort(2, SortOrder.DESCENDING);
