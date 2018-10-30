@@ -67,6 +67,11 @@ public class Joueur implements Comparable{
 
     private int canalIrrigation;
     private int objectifComplete;
+
+    private int objPanda;
+    private int objPattern;
+    private int objGarden;
+
     private ArrayList<Amenagement> amenagements;
 
 
@@ -413,6 +418,27 @@ public class Joueur implements Comparable{
     public void addObjectifComplete(){
         objectifComplete = objectifComplete + 1;
     }
+
+    public int getObjPanda(){
+        return objPanda;
+    }
+    public int getObjPattern(){
+        return objPattern;
+    }
+    public int getObjGarden(){
+        return objGarden;
+    }
+    public void addObjPanda(){
+        objPanda = objPanda + 1;
+    }
+    public void addObjPattern(){
+        objPattern = objPattern + 1;
+    }
+    public void addObjGarden(){
+        objGarden = objGarden + 1;
+    }
+
+
     public Plot getPlot() {
         return this.plot;
     }

@@ -294,6 +294,7 @@ public class Game {
         j.addScore(evaluatedPandaObjective);
         while (evaluatedPandaObjective > 0){
             j.addObjectifComplete();
+            j.addObjPanda();
             Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte panda",j.getId(),evaluatedPandaObjective));
             evaluatedPandaObjective = evaluatePandaObjective(j);
         }
@@ -302,6 +303,7 @@ public class Game {
         j.addScore(evaluatePatternObjective);
         while (evaluatePatternObjective > 0){
             j.addObjectifComplete();
+            j.addObjPattern();
             Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte Pattern",j.getId(),evaluatePatternObjective));
             evaluatePatternObjective = evaluatePatternObjective(j);
         }
@@ -310,6 +312,7 @@ public class Game {
         j.addScore(evaluateGardenObjective);
         while (evaluateGardenObjective > 0){
             j.addObjectifComplete();
+            j.addObjGarden();
             Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte Jardinier",j.getId(),evaluateGardenObjective));
             evaluateGardenObjective = evaluateGardenObjective(j);
         }
