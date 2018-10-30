@@ -190,14 +190,11 @@ public class Game {
         int nbrJoueur = joueurs.size();
         switch (nbrJoueur){
             case 2 :
-                return 5;
-                //return 9;
+                return 9;
             case 3 :
-                return 4;
-                //return 8;
+                return 8;
             case 4 :
-                return 3;
-                //return 7;
+                return 7;
             default:
                 return 0;
         }
@@ -227,10 +224,11 @@ public class Game {
             j.turn(this, Action.ObjCard);
 
             evaluate(j, j.getPlot().getCoord());
-            if(j.getObjectifComplete()== objneedtobecomplete && empereur == null){
+            if(j.getObjectifComplete() >= objneedtobecomplete && empereur == null){
                 j.addScore(2);
                 empereur = j;
                 Console.Log.println(String.format("Robot_%d a marqué 2 points grâce à l'Empereur, le dernier tour est engagé.", j.getId()));
+                lastTurn();
             }
         }
     }
@@ -300,16 +298,18 @@ public class Game {
 
         int evaluatePatternObjective = evaluatePatternObjective(j);
         j.addScore(evaluatePatternObjective);
-        if (evaluatePatternObjective > 0){
+        while (evaluatePatternObjective > 0){
             j.addObjectifComplete();
             Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte Pattern",j.getId(),evaluatePatternObjective));
+            evaluatePatternObjective = evaluatePatternObjective(j);
         }
 
         int evaluateGardenObjective = evaluateGardenObjective(j);
         j.addScore(evaluateGardenObjective);
-        if (evaluateGardenObjective > 0){
+        while (evaluateGardenObjective > 0){
             j.addObjectifComplete();
             Console.Log.println(String.format("Robot_%d gagne %d points grace à la réalisation d'une carte Jardinier",j.getId(),evaluateGardenObjective));
+            evaluateGardenObjective = evaluateGardenObjective(j);
         }
 
     }
@@ -348,22 +348,22 @@ public class Game {
      */
     protected int evaluatePatternObjective(Joueur joueur) throws EmptyDeckException {
         int score = 0;
-        ArrayList<PatternObjectiveCard> patternObjectiveCard1 = new ArrayList<>();
         List<PatternObjectiveCard> patternCards = joueur.getPatternObjectiveCards();
-        int i = 0;
-        for(PatternObjectiveCard patternObjectiveCard : patternCards){
-            if(patternObjectiveCard.isComplete()){
-                patternObjectiveCard1.add(patternObjectiveCard);
-                score = score + patternObjectiveCard.getPointValue();
-                i+= 1;
+
+        List<PatternObjectiveCard> completed = patternCards.stream().filter(PatternObjectiveCard::isComplete).collect(Collectors.toList());
+
+        if (!completed.isEmpty()){
+            PatternObjectiveCard maxPoint = completed.get(0);
+            for (PatternObjectiveCard card : completed){
+                if (card.getPointValue() > maxPoint.getPointValue()){
+                    maxPoint = card;
+                }
             }
+            maxPoint.validate();
+            score = maxPoint.getPointValue();
+            joueur.removeObjectiveCard(maxPoint);
         }
-        for (int j = 0;j<patternObjectiveCard1.size(); j++) {
-            joueur.removeObjectiveCard(patternObjectiveCard1.get(j));
-        }
-        for(int k = 0; k<i; k++){
-            drawPattern(joueur);
-        }
+
         return score;
 
     }
@@ -371,12 +371,21 @@ public class Game {
     protected int evaluateGardenObjective(Joueur joueur){
         int score = 0;
         List<GardenObjectiveCard> gardenObjectiveCards = new ArrayList<>(joueur.getGardenObjectiveCards());
-        for(GardenObjectiveCard gardenObjectiveCard : gardenObjectiveCards){
-            if(gardenObjectiveCard.isComplete()){
-                score = score + gardenObjectiveCard.getPointValue();
-                joueur.removeGardenObjectiveCard(gardenObjectiveCard);
+
+        List<GardenObjectiveCard> completed = gardenObjectiveCards.stream().filter(GardenObjectiveCard::isComplete).collect(Collectors.toList());
+
+        if (!completed.isEmpty()){
+            GardenObjectiveCard maxPoint = completed.get(0);
+            for (GardenObjectiveCard card : completed){
+                if (card.getPointValue() > maxPoint.getPointValue()){
+                    maxPoint = card;
+                }
             }
+            maxPoint.validate();
+            score = maxPoint.getPointValue();
+            joueur.removeGardenObjectiveCard(maxPoint);
         }
+
         return score;
     }
 
