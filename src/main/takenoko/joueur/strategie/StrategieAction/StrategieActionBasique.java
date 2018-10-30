@@ -12,7 +12,7 @@ public class StrategieActionBasique implements StrategieAction{
     @Override
     public Action firstActionType(Game game) {
         if(!game.getPlotsDeck().isEmpty()){
-            return Action.Card;
+            return Action.Plot;
         }else{
             Random rd = new Random();
             int nb = rd.nextInt(2);

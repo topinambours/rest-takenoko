@@ -18,8 +18,6 @@ public interface StrategieAction {
                 return Action.Gardener;
             case Plot:
                 return Action.Panda;
-            case Card:
-                return Action.Plot;
             //  same as Case ObjCard
             default:
                 return Action.ObjCard;

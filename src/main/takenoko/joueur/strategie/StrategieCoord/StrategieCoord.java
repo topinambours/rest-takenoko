@@ -1,9 +1,12 @@
 package takenoko.joueur.strategie.StrategieCoord;
 
+import takenoko.Game;
 import takenoko.Plateau;
+import takenoko.joueur.Joueur;
 import takenoko.plot.CoordAxial;
 import takenoko.plot.Plot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,6 +19,8 @@ import java.util.List;
  * </ul>
  */
 public interface StrategieCoord {
+    public StrategieCoordResult getDecision(Joueur joueur, Plateau plateau, List<Plot> plots);
+
     public List<CoordAxial> getCoords(Plateau p, Plot plot);
     public List<CoordAxial> getCoords(Plateau p);
 

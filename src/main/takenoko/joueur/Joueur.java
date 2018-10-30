@@ -6,6 +6,7 @@ import takenoko.irrigation.CoordIrrig;
 import takenoko.joueur.strategie.AbstractStrategie;
 import takenoko.joueur.strategie.StrategieAction.Action;
 import takenoko.joueur.strategie.StrategieCoord.StrategieCoord;
+import takenoko.joueur.strategie.StrategieCoord.StrategieCoordResult;
 import takenoko.objectives.amenagement.Amenagement;
 import takenoko.objectives.GardenObjectiveCard;
 import takenoko.objectives.PandaObjectiveCard;
@@ -220,12 +221,19 @@ public class Joueur implements Comparable{
 
     /**
      * Fonction qui permet au joueur de poser un plot sur le board.
-     * @param plot
+     * @param plots
      * @param board
      * @return
      */
-    public CoordAxial putPlot(Plot plot, Plateau board){
-        CoordAxial coor = strategie.getCoord(board, plot);
+    public CoordAxial putPlot(List<Plot> plots, Plateau board, PlotsDeck plotsDeck) {
+        StrategieCoordResult decision = strategie.getDecision(this, board, plots);
+        Plot plot = decision.getPlot();
+        CoordAxial coor = decision.getCoordAxial();
+
+        plots.remove(decision.getPos());
+        for (Plot aPlot : plots) {
+            plotsDeck.insertBottom(aPlot);
+        }
         plot.setCoord(coor.getQ(),coor.getR());
         //plot.setWater(board.checkPlotWater(plot.getCoord())); //Check if have water
         board.putPlot(plot);
@@ -480,6 +488,23 @@ public class Joueur implements Comparable{
         }
     }
 
+    public void plotTurn(Game game) throws EmptyDeckException {
+        List<Plot> plots = multiDraw(game.getPlotsDeck(), 3);
+        logPlots(this, plots);
+        putPlot(plots, game.getPlateau(), game.getPlotsDeck());
+        Console.Log.println("Robot_"+getId()+" pose la parcelle en "+getPlot().getCoord());
+        Console.Log.debugPrintln("plateau : " + game.getPlateau().getPlots().toString());
+    }
+
+    public void logPlots(Joueur joueur, List<Plot> plots) {
+        StringBuilder plog = new StringBuilder();
+        for (int i = 0; i < plots.size(); i++) {
+            plog.append(plots.get(i).getCouleur());
+            plog.append(" ");
+        }
+        Console.Log.println("Robot_"+getId()+" pioche les(s) parcelle(s) : " + plog.toString());
+    }
+
     /**
      * Le joueur effectue un tour
      * @param game Game la game
@@ -494,14 +519,16 @@ public class Joueur implements Comparable{
         }
         Console.Log.debugPrintln("Robot_"+joueur.getId()+" choisit l'action "+action.toString());
         switch (action){
-            case Card:
+            /*case Card:
                 joueur.draw(plotsDeck);
                 Console.Log.println("Robot_"+joueur.getId()+" pioche une parcelle : "+joueur.getPlot().getCouleur());
-                break;
+                break;*/
             case Plot:
+                /*joueur.drawPlots(plotsDeck);
                 joueur.putPlot(joueur.getPlot(),plateau);
                 Console.Log.println("Robot_"+joueur.getId()+" pose la parcelle en "+joueur.getPlot().getCoord());
-                Console.Log.debugPrintln("plateau : " + plateau.getPlots().toString());
+                Console.Log.debugPrintln("plateau : " + plateau.getPlots().toString());*/
+                plotTurn(game);
                 break;
             case Irrig:
                 Console.Log.print("Robot_"+joueur.getId()+" essaie de poser une irrigation... ");
@@ -549,7 +576,7 @@ public class Joueur implements Comparable{
         return coo;
     }
 
-    public WeatherDice trowDice(){
+    public WeatherDice throwDice(){
         WeatherDice dice = WeatherDice.throwDice();
         Console.Log.print(String.format("Robot_%d obtient %s en lançant le dé météo. ", id, dice.toString()));
         if (dice == WeatherDice.PLAYER_DECIDE){

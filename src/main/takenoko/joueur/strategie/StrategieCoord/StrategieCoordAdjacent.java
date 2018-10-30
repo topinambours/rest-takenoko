@@ -1,6 +1,7 @@
 package takenoko.joueur.strategie.StrategieCoord;
 
 import takenoko.Plateau;
+import takenoko.joueur.Joueur;
 import takenoko.plot.CoordAxial;
 import takenoko.plot.Plot;
 
@@ -15,6 +16,14 @@ import static java.util.stream.Collectors.toList;
  * La stratégie Adjacente consiste à poser des parcelles en maximisant le nombre de voisins
  */
 public class StrategieCoordAdjacent implements StrategieCoord {
+
+    @Override
+    public StrategieCoordResult getDecision(Joueur joueur, Plateau plateau, List<Plot> plots) {
+        int pos = 0;
+        Plot plot = plots.get(0);
+        CoordAxial coo = getCoord(plateau);
+        return new StrategieCoordResult(pos, plot, coo);
+    }
 
     @Override
     public List<CoordAxial> getCoords(Plateau p, Plot plot) {
@@ -38,8 +47,6 @@ public class StrategieCoordAdjacent implements StrategieCoord {
 
     public CoordAxial getCoord(Plateau p) {
         List<CoordAxial> posMaxBamboo = getCoords(p);
-
-
         Random rand = new Random();
         return posMaxBamboo.get(rand.nextInt(posMaxBamboo.size()));
     }

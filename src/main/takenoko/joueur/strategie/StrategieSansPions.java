@@ -7,6 +7,7 @@ import takenoko.joueur.strategie.StrategieAction.Action;
 import takenoko.joueur.strategie.StrategieAction.StrategieAction;
 import takenoko.joueur.strategie.StrategieAmenagement.StrategieAmenagement;
 import takenoko.joueur.strategie.StrategieCoord.StrategieCoord;
+import takenoko.joueur.strategie.StrategieCoord.StrategieCoordResult;
 import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrig;
 import takenoko.joueur.strategie.StrategieJardinier.StrategieJardinier;
 import takenoko.joueur.strategie.StrategiePanda.StrategiePanda;
@@ -35,6 +36,11 @@ public class StrategieSansPions extends AbstractStrategie {
     public void initialize(StrategieCoord strategieCoord, StrategieIrrig strategieIrrig) {
         this.strategieCoord = strategieCoord;
         this.strategieIrrig = strategieIrrig;
+    }
+
+    @Override
+    public StrategieCoordResult getDecision(Joueur joueur, Plateau plateau, List<Plot> plots) {
+        return strategieCoord.getDecision(joueur, plateau, plots);
     }
 
     @Override

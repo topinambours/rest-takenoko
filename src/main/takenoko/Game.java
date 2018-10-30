@@ -1,10 +1,6 @@
 package takenoko;
 
-import dnl.utils.text.table.TextTable;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import takenoko.joueur.strategie.StrategieJardinier.StratégieJardinierObjectifs;
-import takenoko.joueur.strategie.StrategiePanda.StrategiePandaBasique;
 import takenoko.joueur.strategie.StrategiePanda.StrategiePandaObjectifs;
 import takenoko.objectives.ObjectiveCard;
 import takenoko.deck.PlotsDeck;
@@ -17,7 +13,6 @@ import takenoko.joueur.strategie.StrategieConcrete;
 import takenoko.joueur.strategie.StrategieCoord.StrategieCoordAdjacent;
 import takenoko.joueur.strategie.StrategieCoord.StrategieCoordRandom;
 import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigComparator;
-import takenoko.joueur.strategie.StrategieJardinier.StrategieJardinierBasique;
 import takenoko.joueur.strategie.StrategieJardinier.StrategieJardinierRandom;
 import takenoko.joueur.strategie.StrategiePanda.StrategiePandaRandom;
 import takenoko.objectives.GardenObjectiveCard;
@@ -25,7 +20,6 @@ import takenoko.objectives.PandaObjectiveCard;
 import takenoko.objectives.PatternObjectiveCard;
 import takenoko.plot.CoordAxial;
 import takenoko.plot.Plot;
-import takenoko.properties.Couleur;
 import takenoko.util.Console;
 import takenoko.util.exceptions.EmptyDeckException;
 import takenoko.util.exceptions.NoActionSelectedException;
@@ -215,7 +209,7 @@ public class Game {
         for (Joueur j : joueurs){
             Console.Log.println("----");
 
-            j.trowDice();
+            j.throwDice();
             j.turn(this);
 
             if(plateau.getCanalIrrigation() > 0){
@@ -250,7 +244,7 @@ public class Game {
 
             if(!empereur.equals(j)) {
 
-                j.trowDice();
+                j.throwDice();
                 j.turn(this);
 
                 if (plateau.getCanalIrrigation() > 0) {
