@@ -111,7 +111,7 @@ public class GameStarter {
             data[i][8] = "" + patternObj / sizeGame;
             data[i][9] = "" + (int)gardenObj;
             data[i][10] = "" + gardenObj / sizeGame;
-            data[i][11] = "" + (float)empereur.get(i) / 10;
+            data[i][11] = "" + (float) (empereur.get(i) * 1.0 / games.size() * 100.0);
         }
 
 

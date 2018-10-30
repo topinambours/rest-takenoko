@@ -55,6 +55,7 @@ public class Game {
     private Plateau plateau;
     private Joueur empereur;
     private int objneedtobecomplete;
+    private int nbTour = 0;
 
     @Autowired()
     public Game( Plateau plateau, ObjectivesDeck pandObjDeck, ObjectivesDeck gardenObjDeck, ObjectivesDeck patternObjDeck, PlotsDeck plotsDeck) throws EmptyDeckException {
@@ -207,7 +208,9 @@ public class Game {
         for (Joueur j : joueurs){
             Console.Log.println("----");
 
-            j.throwDice();
+            if (nbTour > 1) {
+                j.throwDice();
+            }
             j.turn(this);
 
             if(plateau.getCanalIrrigation() > 0){
@@ -226,7 +229,7 @@ public class Game {
                 j.addScore(2);
                 empereur = j;
                 Console.Log.println(String.format("Robot_%d a marqué 2 points grâce à l'Empereur, le dernier tour est engagé.", j.getId()));
-                lastTurn();
+                break;
             }
         }
     }
@@ -276,6 +279,7 @@ public class Game {
         firstDrawGarden(joueurs);
         while(!end()){ //Tant que la partie n'est pas terminée
             gameturn();
+            nbTour += 1;
         }
         lastTurn();
         Console.Log.println("----\nLa partie est terminée");
