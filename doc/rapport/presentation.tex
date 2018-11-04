@@ -1,57 +1,23 @@
+\externaldocument{./string}
+\externaldocument{./conception}
 \chapter{Présentation du projet}
 
-Intro\footnotemark\\
-%note en bas de page
 
 \section{Sujet}
+Le projet consiste à réaliser en Java une version numérique du jeu Takenoko créé par Antoine Bauza. Version textuel n'étant pas destinée à être jouée par des êtres humains mais par des robots jouants de façon autonome. Dans le Takenoko nous allons endosser le rôle d'un jardinier japonais affairé à répondre au mieux aux requêtes du vénérable empereur. Pour ce faire, nous aurons, durant notre tour de jeu, deux choses à faire : Regarder quel temps il fait et effectuer deux actions parmi les possibilités suivantes : agrandir le jardin, irriguer, bouger le jardinier, bouger le panda. 
 
-Bla(cf. fig. 1.1)\\
-
-
-
-%Contenu de la note précédemment marquée avec \footnotemark
-\footnotetext{Note bas de page "intro"}
-
-Bla
-%retour à la ligne (alinea)
-
-Bla\\
-%saut de paragraphe
-
-Bla
-
-%\newpage
+\section{Avancement du projet}
+Le projet en l'état est pratiquement complet, il manque en effet le dès qui pourra être implémenter ultérieurement car nous avons à l'heure actuelle privilégié l'injection de dépendance au dès.  
 
 \section{Problématique soulevée}
+Plusieurs problématiques ont été soulevées durant le projet qui sont les suivantes :
 
-Bla
+\subsection{Le bon partitionnement du code}
+L'organisation du code a été pour nous un assez grand problème notamment à cause de l'apparition de "God classe"\footnotemark\\ comme la classe de Jeu qui concentré un trop grand nombre de fonctions. Nous avons donc fait plusieurs ré-aménagements (Voir paragraphe Conception\ref{conception}) 
 
-\begin{center}
-Problématique du sujet
-\end{center}
+%Contenu de la note précédemment marquée avec \footnotemark
+\footnotetext{La "God classe" est une classe comportant un très grand nombre de fonctions qui pourraient être dispatcher dans d'autre classes}
 
-\section{Hypothèse de solution}
+\subsection{L'injection de dépendance}
 
-%Quoi :
-Bla\\
-
-Voici une liste :
-\begin{itemize}
-\item item 1;
-\item item 2;
-\item item 3;
-\item item 4.
-\end{itemize}
-
-Bla\\
-
-%Comment :
-Bla
-
-Bla\footnotemark\\
-
-%Detail :
-Bla(cf. ref. \cite{cite6}).
-%citation référencé dans le document "bibliographie.bib" inclus à la fin du document
-
-\footnotetext{Note bas de page "bla"}
+Du fait de la nouveauté de l'outils, nous avons rencontrer plusieurs problèmes lors de l'injection de dépendance. (Voir paragraphe Spring\ref{spring})
