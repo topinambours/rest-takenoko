@@ -1,33 +1,38 @@
 \chapter{Organisation du code }
 
-Intro\footnotemark\\
-%note en bas de page
-
 \section{Packages}
 
-Bla(cf. fig. 1.1)\\
+\dirtree{%
+.1 main.
+.2 resources.
+.2 takenoko.
+.3 Deque.
+.3 Irrigation.
+.3 Joueur.
+.4 Strategie.
+.5 StrategieAction.
+.5 StrategieAmenagement.
+.5 StrategieCoord.
+.5 StrategieIrrig.
+.5 StrategieJardinier.
+.5 StrategiePanda.
+.3 Objectives.
+.4 Amenagement.
+.4 Patterns.
+.3 Plot.
+.3 Properties.
+.3 Util.
+.4 Comparators.
+.4 Exceptions.
+}
 
 
-
-%Contenu de la note précédemment marquée avec \footnotemark
-\footnotetext{Note bas de page "intro"}
-
-Bla
-%retour à la ligne (alinea)
-
-Bla\\
-%saut de paragraphe
-
-Bla
-
-%\newpage
+~\\
+  Après de multiples ré-aménagements, nous sommes arrivé à cette structuration des packages car ...
 
 
+\section{Interfaces}
+Les principales Interfaces sont celle des Stratégies, chaque stratégie que ce soit StratégieAction, StratégieAmenagement, etc... ont chacune leur Interfaces car plusieurs implémentations avec des idées différentes sont présentes. Toutes ces interfaces permettant l'implémentation d'une stratégie complexe composée d'une stratégie de chaque catégorie. 
 
-Bla\footnotemark\\
-
-%Detail :
-Bla(cf. ref. \cite{cite6}).
-%citation référencé dans le document "bibliographie.bib" inclus à la fin du document
-
-\footnotetext{Note bas de page "bla"}
+\section{héritage}
+AA
