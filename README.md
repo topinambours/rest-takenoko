@@ -36,7 +36,7 @@ Version textuel n'étant pas destinée à être jouée par des êtres humains ma
  - [x] **Version 6** : Les joueurs recoivent des cartes objectifs parcelle, un joueur gagne des points en complétant ses cartes. Un joueur va donc adapter ses placements de parcelles pour achever ses objectifs.
  - [x] **Version 7** : Les joueurs ont maintenant la posibilité de jouer avec le jardinier, les cartes jardinier, et le Panda. ~~De plus, le joueur respecte la règle des 2 actions maximum par tours.~~
  - [x] **Version 8** : Les joueurs peuvent piocher ~~et placer~~ des aménagements. Le dé météo affecte le déroulement du tour, les joueurs doivent effectuer deux actions par tours.~~ Les aménagements sont désormais intégrés dans le moteur du jeu. Une partie se termine dès lors qu'un joueur à complété un certain nombre d'objectifs selon les règles takenoko. Ajout du dé météo, les joueurs lancent le dé au début de leur tour SANS que cela n'affecte le déroulement du tour. Les joueurs disposent maintenant de stratégies pour les aménagements (décision au moment de la pioche selon le type).
- - [ ] **Version 9** : Limiter le nombre d'action des joueurs, améliorer les robots pour que leurs coups complètent en priorité leurs objectifs.
+ - [x] **Version 9** : Limiter le nombre d'action des joueurs, améliorer les robots pour que leurs coups complètent en priorité leurs objectifs.
  - [ ] **Version 10** : La météo influe sur les décisions des robots.
 ## Y'a quoi dans la boite ?
 

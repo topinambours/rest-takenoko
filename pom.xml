@@ -6,7 +6,7 @@
 
     <groupId>BambooMaster</groupId>
     <artifactId>Takenoko</artifactId>
-    <version>0.9</version>
+    <version>1.0</version>
 
     <!-- Inherit defaults from Spring Boot -->
     <parent>
