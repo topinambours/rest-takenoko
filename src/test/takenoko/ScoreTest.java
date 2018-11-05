@@ -1,5 +1,6 @@
 package takenoko;
 
+import takenoko.deck.PlotsDeck;
 import takenoko.joueur.Joueur;
 import takenoko.joueur.strategie.StrategieCoord.StrategieCoordRandom;
 import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigBase;
@@ -16,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -36,8 +40,10 @@ public class ScoreTest {
     @Test public void test() throws EmptyDeckException {
         CoordAxial coordAxial = new CoordAxial(1,0);
         Plot plot = new Plot(coordAxial, Couleur.BLEU);
+        List<Plot> listetmp = new ArrayList<>();
+        listetmp.add(plot);
         joueur.setPlot(plot);
-        CoordAxial pose = joueur.putPlot(plot,gameTest.getPlateau());
+        CoordAxial pose = joueur.putPlot(listetmp,gameTest.getPlateau(), gameTest.getPlotsDeck());
 
         gameTest.evaluate(joueur,pose);
 

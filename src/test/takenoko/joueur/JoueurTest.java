@@ -111,7 +111,9 @@ public class JoueurTest {
         pTest = pTest.plateauTakenoko();
         CoordAxial currentPlotPos;
         for (int i = 0; i < DECK_SIZE; i++){
-            currentPlotPos = joueur1.putPlot(joueur1.draw(dtest), pTest);
+            List<Plot> listetmp = new ArrayList<>();
+            listetmp.add(joueur1.draw(dtest));
+            currentPlotPos = joueur1.putPlot(listetmp, pTest, gameTest.getPlotsDeck());
             assertTrue(!pTest.legalPositions().contains(currentPlotPos));
         }
     }

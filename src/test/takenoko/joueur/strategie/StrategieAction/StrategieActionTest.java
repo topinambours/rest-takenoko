@@ -15,7 +15,6 @@ public class StrategieActionTest {
         assertEquals(Action.Gardener, st.getLogicalNextAction(Action.Panda));
         assertEquals(Action.Gardener, st.getLogicalNextAction(Action.Irrig));
         assertEquals(Action.Panda, st.getLogicalNextAction(Action.Plot));
-        assertEquals(Action.Plot, st.getLogicalNextAction(Action.Card));
         assertEquals(Action.ObjCard, st.getLogicalNextAction(Action.ObjCard));
     }
 }

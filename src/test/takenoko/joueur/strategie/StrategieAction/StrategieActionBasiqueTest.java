@@ -26,7 +26,7 @@ public class StrategieActionBasiqueTest {
 
     @Test
     public void firstActionType() throws EmptyDeckException {
-        assertEquals(Action.Card, st.firstActionType(gameTest));
+        assertEquals(Action.Plot, st.firstActionType(gameTest));
         // On vide la pile de tuile
         gameTest.getPlotsDeck().draw(27);
         int nbIrrig = 0;
@@ -46,8 +46,8 @@ public class StrategieActionBasiqueTest {
 
     @Test
     public void secondActionType() throws EmptyDeckException {
-        assertEquals(Action.Card, st.firstActionType(gameTest));
-        assertEquals(Action.Plot, st.secondActionType(gameTest));
+        assertEquals(Action.Plot, st.firstActionType(gameTest));
+        assertEquals(Action.Panda, st.secondActionType(gameTest));
         // On vide la pile de tuile
         gameTest.getPlotsDeck().draw(27);
 
