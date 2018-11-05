@@ -1,5 +1,6 @@
 package takenoko;
 
+import takenoko.joueur.strategie.StrategieCoord.StrategiePattern.StrategieCoordPattern;
 import takenoko.joueur.strategie.StrategieJardinier.StratégieJardinierObjectifs;
 import takenoko.joueur.strategie.StrategiePanda.StrategiePandaObjectifs;
 import takenoko.objectives.ObjectiveCard;
@@ -69,10 +70,9 @@ public class Game {
 
         this.empereur = null;
 
-        StrategieConcrete strategieJ1 = new StrategieConcrete(new StrategieCoordAdjacent(),new StrategieIrrigComparator(plateau));
-        strategieJ1.setStrategieAction(new StrategieActionBasique());
-
         Joueur j1 = new Joueur(1, new StrategieConcrete(new StrategieCoordAdjacent(), new StrategieIrrigComparator(plateau), new StrategiePandaObjectifs(), new StratégieJardinierObjectifs(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
+        //Joueur j1 = new Joueur(1, new StrategieConcrete(new StrategieCoordPattern(), new StrategieIrrigComparator(plateau), new StrategiePandaObjectifs(), new StratégieJardinierObjectifs(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
+
 
         Joueur j2 = new Joueur(2, new StrategieConcrete(new StrategieCoordRandom(), new StrategieIrrigComparator(plateau), new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
         //Joueur j3 = new Joueur(3, new StrategieConcrete(new StrategieCoordRandom(), new StrategieIrrigComparator(plateau), new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
@@ -396,7 +396,7 @@ public class Game {
 
         return score;
     }
-    
+
     public Plateau getPlateau() {
         return plateau;
     }

@@ -73,6 +73,8 @@ public class Joueur implements Comparable{
     private int objPattern;
     private int objGarden;
 
+    private WeatherDice meteo;
+
     private ArrayList<Amenagement> amenagements;
 
 
@@ -163,6 +165,10 @@ public class Joueur implements Comparable{
      */
     public void removeGardenObjectiveCard(GardenObjectiveCard gardenObjectiveCard){
         this.gardenObjectiveCards.remove(gardenObjectiveCard);
+    }
+
+    public int countObjectiveCards() {
+        return pandaObjectiveCards.size() + gardenObjectiveCards.size() + patternObjectiveCards.size();
     }
 
     /**
@@ -519,15 +525,7 @@ public class Joueur implements Comparable{
         }
         Console.Log.debugPrintln("Robot_"+joueur.getId()+" choisit l'action "+action.toString());
         switch (action){
-            /*case Card:
-                joueur.draw(plotsDeck);
-                Console.Log.println("Robot_"+joueur.getId()+" pioche une parcelle : "+joueur.getPlot().getCouleur());
-                break;*/
             case Plot:
-                /*joueur.drawPlots(plotsDeck);
-                joueur.putPlot(joueur.getPlot(),plateau);
-                Console.Log.println("Robot_"+joueur.getId()+" pose la parcelle en "+joueur.getPlot().getCoord());
-                Console.Log.debugPrintln("plateau : " + plateau.getPlots().toString());*/
                 plotTurn(game);
                 break;
             case Irrig:
@@ -583,24 +581,28 @@ public class Joueur implements Comparable{
             Console.Log.print("Il peut choisir la condition climatique.");
         }
         Console.Log.println("");
+        meteo = dice;
         return dice;
     }
 
     public void ObjCardTurn(Game game) throws EmptyDeckException {
         // Le robot choisi selon un ordre de priorité
 
-        if (!game.getPandObjDeck().isEmpty()) {
-            game.drawObjectifPanda(this);
+        if (countObjectiveCards() < 5 || true ) { //TODO : enlever le true qui court-circuite
+            if (!game.getPandObjDeck().isEmpty()) {
+                game.drawObjectifPanda(this);
+            }
+            else if (!game.getGardenObjDeck().isEmpty()) {
+                game.drawGarden(this);
+            }
+            else if (!game.getPatternObjDeck().isEmpty()){
+                game.drawGarden(this);
+            } else {
+                throw new EmptyDeckException();
+            }
+        } else {
+            Console.Log.println(String.format("Robot_%d essaie de piocher une carte objectif mais sa main est pleine.", id));
         }
-        else if (!game.getGardenObjDeck().isEmpty()) {
-            game.drawGarden(this);
-        }
-        else if (!game.getPatternObjDeck().isEmpty()){
-            game.drawGarden(this);
-        }else {
-            throw new EmptyDeckException();
-        }
-
     }
 
 }

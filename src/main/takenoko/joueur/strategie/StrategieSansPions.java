@@ -44,26 +44,6 @@ public class StrategieSansPions extends AbstractStrategie {
     }
 
     @Override
-    public List<CoordAxial> getCoords(Plateau p, Plot plot) {
-        return strategieCoord.getCoords(p, plot);
-    }
-
-    @Override
-    public List<CoordAxial> getCoords(Plateau p) {
-        return strategieCoord.getCoords(p);
-    }
-
-    @Override
-    public CoordAxial getCoord(Plateau p, Plot plot) {
-        return strategieCoord.getCoord(p, plot);
-    }
-
-    @Override
-    public CoordAxial getCoord(Plateau p) {
-        return strategieCoord.getCoord(p);
-    }
-
-    @Override
     public String getStrategieLabel() {
         return getStrategieCoordLabel() + " " + getStrategieIrrigLabel();
     }

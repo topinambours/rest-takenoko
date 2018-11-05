@@ -2,7 +2,11 @@ package takenoko.objectives.patterns;
 
 import takenoko.Plateau;
 import takenoko.plot.CoordAxial;
+import takenoko.plot.Plot;
+import takenoko.properties.Couleur;
+import takenoko.util.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,6 +21,8 @@ public class Pattern {
     }
 
     private List<PatternTile> tiles;
+    private CoordAxial bestAnchor;
+    private double bestCompletion;
 
     /**
      * Constructeur de pattern
@@ -92,4 +98,59 @@ public class Pattern {
         return false;
     }
 
+    /**
+     * renvoie le taux de complétion et la coordonnée du meilleur endroit où le pattern existe partiellement
+     * @param plateau le plateau de jeu à examiner
+     * @return une paire contenant le taux de complétion et la coordonnée. taux négatif si le pattern est impossible (ne
+     * devrait que rarement se produire)
+     */
+    public Pair<Double, CoordAxial> bestPartialCompletion(Plateau plateau) {
+        CoordAxial coo = new CoordAxial(0, 0);
+        int score = 0;
+        int oldscore = 0;
+        Pattern pat = new Pattern(this);
+        for (int i = 0; i < 6; i++) {
+            pat = pat.rotate60();
+            for (CoordAxial c : plateau.getPlots().keySet()) {
+                score = Math.max(score, partialCompletionAt(plateau, c));
+                if (score > oldscore) coo = c;
+                oldscore = score;
+            }
+        }
+        double res = (double)score/tiles.size();
+        bestCompletion = res;
+        Pair<Double, CoordAxial> pair = new Pair<Double, CoordAxial>(res, coo);
+
+        return pair;
+    }
+
+    /**
+     * retourne le nombre d'éléments du pattern partiellement complété. renvoie -1 si pattern invalide à cette position
+     * @param plateau le plateau de jeu à examiner
+     * @param coordAxial la coordonnée du plateau à examiner
+     * @return le nombre de parcelles déjà existantes pour ce pattern à cette position. -1 si invalide
+     */
+    public int partialCompletionAt(Plateau plateau, CoordAxial coordAxial) {
+        int points = 0;
+        for (PatternTile tile : tiles) {
+            if (tile.matchPlot(plateau, coordAxial)) points++;
+            if (plateau.getPlot(coordAxial) != null && !tile.matchPlot(plateau, coordAxial)) return -1;
+        }
+        return points;
+    }
+
+    public List<Pair<Couleur, CoordAxial>> nextParcelsToProgress(Plateau plateau) {
+        List <CoordAxial> legalPos = plateau.legalPositions();
+        Pair<Double, CoordAxial> best = bestPartialCompletion(plateau);
+        CoordAxial anchor = best.getRight();
+
+        List<Pair<Couleur, CoordAxial>> res = new ArrayList<>();
+
+        for (PatternTile tile : tiles) {
+            if (legalPos.contains(tile.toConcretePosition(anchor))) {
+                res.add(new Pair<Couleur, CoordAxial>(tile.getCouleur(), tile.toConcretePosition(anchor)));
+            }
+        }
+        return res;
+    }
 }

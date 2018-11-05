@@ -35,6 +35,14 @@ public class PatternObjectiveCard extends ObjectiveCard {
     }
 
     /**
+     * Renvoie le pattern associé à la carte
+     * @return le pattern correspondant
+     */
+    public Pattern getPattern() {
+        return pattern;
+    }
+
+    /**
      * Renvoie la valeur de point de la carte
      * @return
      */

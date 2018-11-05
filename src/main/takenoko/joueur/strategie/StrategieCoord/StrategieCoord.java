@@ -21,12 +21,5 @@ import java.util.List;
 public interface StrategieCoord {
     public StrategieCoordResult getDecision(Joueur joueur, Plateau plateau, List<Plot> plots);
 
-    public List<CoordAxial> getCoords(Plateau p, Plot plot);
-    public List<CoordAxial> getCoords(Plateau p);
-
-
-    public CoordAxial getCoord(Plateau p, Plot plot);
-    public CoordAxial getCoord(Plateau p);
-
     public String getStrategieCoordLabel();
 }

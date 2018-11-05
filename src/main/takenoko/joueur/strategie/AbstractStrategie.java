@@ -20,14 +20,6 @@ import java.util.Optional;
 
 public abstract class AbstractStrategie implements StrategieCoord, StrategieIrrig, StrategieJardinier, StrategiePanda, StrategieAction, StrategieAmenagement {
 
-    public abstract List<CoordAxial> getCoords(Plateau p, Plot plot);
-
-    public abstract List<CoordAxial> getCoords(Plateau p);
-
-    public abstract CoordAxial getCoord(Plateau p, Plot plot);
-
-    public abstract CoordAxial getCoord(Plateau p);
-
     public abstract String getStrategieLabel();
 
     public abstract Optional getIrrig(Plateau P);
