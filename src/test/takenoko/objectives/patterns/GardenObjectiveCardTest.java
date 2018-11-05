@@ -1,15 +1,15 @@
 package takenoko.objectives.patterns;
 
+import org.junit.Test;
+import takenoko.Plateau;
 import takenoko.joueur.Joueur;
 import takenoko.joueur.strategie.StrategieCoord.StrategieCoordRandom;
 import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigBase;
 import takenoko.joueur.strategie.StrategieSansPions;
 import takenoko.objectives.GardenObjectiveCard;
 import takenoko.objectives.ObjectiveCard;
-import takenoko.Plateau;
 import takenoko.plot.Plot;
 import takenoko.properties.Couleur;
-import org.junit.Test;
 
 import static org.junit.Assert.*;
 

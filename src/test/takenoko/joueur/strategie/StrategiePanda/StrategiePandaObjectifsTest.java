@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import takenoko.Plateau;
-import takenoko.plot.CoordAxial;
-import takenoko.plot.Plot;
 import takenoko.joueur.Joueur;
 import takenoko.joueur.strategie.StrategieAction.StrategieActionBasique;
 import takenoko.joueur.strategie.StrategieAmenagement.StrategieAmenagementBasique;
@@ -18,9 +16,11 @@ import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigComparator;
 import takenoko.joueur.strategie.StrategieJardinier.StrategieJardinierBasique;
 import takenoko.objectives.PandaObjectiveCard;
 import takenoko.objectives.amenagement.Amenagement;
+import takenoko.plot.CoordAxial;
+import takenoko.plot.Plot;
 import takenoko.properties.Couleur;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class StrategiePandaObjectifsTest {

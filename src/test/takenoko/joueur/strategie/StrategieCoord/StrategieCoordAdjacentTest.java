@@ -1,11 +1,5 @@
 package takenoko.joueur.strategie.StrategieCoord;
 
-import takenoko.Game;
-import takenoko.joueur.Joueur;
-import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigBase;
-import takenoko.joueur.strategie.StrategieSansPions;
-import takenoko.plot.CoordAxial;
-import takenoko.plot.Plot;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import static org.junit.Assert.assertEquals;
+import takenoko.Game;
+import takenoko.joueur.Joueur;
+import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigBase;
+import takenoko.joueur.strategie.StrategieSansPions;
+import takenoko.plot.Plot;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

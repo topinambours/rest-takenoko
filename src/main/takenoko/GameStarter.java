@@ -1,15 +1,16 @@
 package takenoko;
 
 import dnl.utils.text.table.TextTable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ImportResource;
 import takenoko.util.Console;
 import takenoko.util.exceptions.EmptyDeckException;
 import takenoko.util.exceptions.NoActionSelectedException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ImportResource;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;

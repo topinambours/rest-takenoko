@@ -1,9 +1,9 @@
 package takenoko.joueur.strategie.StrategieAmenagement;
 
+import takenoko.Plateau;
 import takenoko.deck.AmenagementDecks;
 import takenoko.joueur.Joueur;
 import takenoko.objectives.amenagement.Amenagement;
-import takenoko.Plateau;
 import takenoko.plot.Plot;
 import takenoko.util.exceptions.EmptyDeckException;
 

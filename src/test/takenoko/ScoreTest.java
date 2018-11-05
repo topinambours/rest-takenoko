@@ -1,6 +1,12 @@
 package takenoko;
 
-import takenoko.deck.PlotsDeck;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import takenoko.joueur.Joueur;
 import takenoko.joueur.strategie.StrategieCoord.StrategieCoordRandom;
 import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigBase;
@@ -10,13 +16,6 @@ import takenoko.plot.Plot;
 import takenoko.properties.Couleur;
 import takenoko.util.Console;
 import takenoko.util.exceptions.EmptyDeckException;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,7 @@ public class ScoreTest {
         joueur.setPlot(plot);
         CoordAxial pose = joueur.putPlot(listetmp,gameTest.getPlateau(), gameTest.getPlotsDeck());
 
-        gameTest.evaluate(joueur,pose);
+        gameTest.evaluate(joueur);
 
         assertEquals(0,joueur.getScore());
         //@TODO faire une vrai classe de test pour le gain en score

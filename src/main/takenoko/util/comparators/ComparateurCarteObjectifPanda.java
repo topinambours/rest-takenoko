@@ -1,6 +1,5 @@
 package takenoko.util.comparators;
 
-import takenoko.joueur.Joueur;
 import takenoko.objectives.PandaObjectiveCard;
 
 import java.util.Comparator;

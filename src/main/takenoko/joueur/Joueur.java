@@ -1,26 +1,29 @@
 package takenoko.joueur;
 
-import takenoko.deck.PlotsDeck;
 import takenoko.Game;
+import takenoko.Plateau;
+import takenoko.WeatherDice;
+import takenoko.deck.PlotsDeck;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.joueur.strategie.AbstractStrategie;
 import takenoko.joueur.strategie.StrategieAction.Action;
 import takenoko.joueur.strategie.StrategieCoord.StrategieCoord;
 import takenoko.joueur.strategie.StrategieCoord.StrategieCoordResult;
-import takenoko.objectives.amenagement.Amenagement;
 import takenoko.objectives.GardenObjectiveCard;
 import takenoko.objectives.PandaObjectiveCard;
 import takenoko.objectives.PatternObjectiveCard;
-import takenoko.Plateau;
+import takenoko.objectives.amenagement.Amenagement;
 import takenoko.plot.CoordAxial;
 import takenoko.plot.Plot;
 import takenoko.properties.Couleur;
 import takenoko.util.Console;
 import takenoko.util.exceptions.EmptyDeckException;
 import takenoko.util.exceptions.NoActionSelectedException;
-import takenoko.WeatherDice;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Le robot, joue au jeu en utilisant une stratégie spécifique
@@ -91,9 +94,9 @@ public class Joueur implements Comparable{
             this.bambooByColor.put(c, 0);
         }
         this.strategie = strategie;
-        this.pandaObjectiveCards = new ArrayList<PandaObjectiveCard>();
-        this.patternObjectiveCards = new ArrayList<PatternObjectiveCard>();
-        this.gardenObjectiveCards = new ArrayList<GardenObjectiveCard>();
+        this.pandaObjectiveCards = new ArrayList<>();
+        this.patternObjectiveCards = new ArrayList<>();
+        this.gardenObjectiveCards = new ArrayList<>();
         this.canalIrrigation = 0;
         this.objectifComplete = 0;
     }
@@ -238,10 +241,9 @@ public class Joueur implements Comparable{
 
         plots.remove(decision.getPos());
         for (Plot aPlot : plots) {
-            plotsDeck.insertBottom(aPlot);
+            replaceInDeck(plotsDeck, aPlot);
         }
         plot.setCoord(coor.getQ(),coor.getR());
-        //plot.setWater(board.checkPlotWater(plot.getCoord())); //Check if have water
         board.putPlot(plot);
         this.plot.setCoord(coor);
         return coor;

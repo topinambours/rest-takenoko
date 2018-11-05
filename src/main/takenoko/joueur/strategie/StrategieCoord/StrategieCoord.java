@@ -1,12 +1,9 @@
 package takenoko.joueur.strategie.StrategieCoord;
 
-import takenoko.Game;
 import takenoko.Plateau;
 import takenoko.joueur.Joueur;
-import takenoko.plot.CoordAxial;
 import takenoko.plot.Plot;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

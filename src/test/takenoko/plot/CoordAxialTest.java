@@ -1,14 +1,12 @@
 package takenoko.plot;
 
+import org.junit.Test;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.irrigation.Orient;
-import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class CoordAxialTest {

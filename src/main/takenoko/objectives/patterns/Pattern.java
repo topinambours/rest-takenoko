@@ -2,7 +2,6 @@ package takenoko.objectives.patterns;
 
 import takenoko.Plateau;
 import takenoko.plot.CoordAxial;
-import takenoko.plot.Plot;
 import takenoko.properties.Couleur;
 import takenoko.util.Pair;
 

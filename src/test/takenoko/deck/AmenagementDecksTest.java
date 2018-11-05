@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import takenoko.objectives.amenagement.Amenagement;
 import takenoko.util.exceptions.EmptyDeckException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

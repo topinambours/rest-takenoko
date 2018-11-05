@@ -1,8 +1,8 @@
 package takenoko.objectives.amenagement;
 
-import takenoko.plot.Plot;
 import org.junit.Before;
 import org.junit.Test;
+import takenoko.plot.Plot;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,7 +1,7 @@
 package takenoko.irrigation;
 
-import takenoko.plot.CoordAxial;
 import org.junit.Test;
+import takenoko.plot.CoordAxial;
 
 import static org.junit.Assert.*;
 

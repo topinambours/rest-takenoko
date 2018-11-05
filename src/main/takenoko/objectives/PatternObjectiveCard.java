@@ -1,8 +1,8 @@
 package takenoko.objectives;
 
+import takenoko.Plateau;
 import takenoko.joueur.Joueur;
 import takenoko.objectives.patterns.Pattern;
-import takenoko.Plateau;
 
 public class PatternObjectiveCard extends ObjectiveCard {
 

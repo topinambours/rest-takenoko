@@ -10,7 +10,7 @@ import takenoko.deck.AmenagementDecks;
 import takenoko.objectives.amenagement.Amenagement;
 import takenoko.util.exceptions.EmptyDeckException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

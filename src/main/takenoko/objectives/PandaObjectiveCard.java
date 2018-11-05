@@ -1,9 +1,9 @@
 package takenoko.objectives;
 
-import takenoko.joueur.Joueur;
-import takenoko.Plateau;
-import takenoko.properties.Couleur;
 import org.springframework.stereotype.Component;
+import takenoko.Plateau;
+import takenoko.joueur.Joueur;
+import takenoko.properties.Couleur;
 
 import java.util.EnumMap;
 import java.util.Objects;

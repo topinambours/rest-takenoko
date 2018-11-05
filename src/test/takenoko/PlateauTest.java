@@ -1,5 +1,6 @@
 package takenoko;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -7,18 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.irrigation.Orient;
-import takenoko.joueur.Joueur;
-import takenoko.joueur.strategie.StrategieCoord.StrategieCoordRandom;
-import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigBase;
-import takenoko.joueur.strategie.StrategieSansPions;
 import takenoko.objectives.amenagement.Amenagement;
 import takenoko.plot.CoordAxial;
 import takenoko.plot.Plot;
 import takenoko.properties.Couleur;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 

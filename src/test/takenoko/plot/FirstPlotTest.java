@@ -1,15 +1,15 @@
 package takenoko.plot;
 
-import takenoko.Game;
-import takenoko.joueur.Joueur;
-import takenoko.joueur.strategie.StrategieAction.Action;
-import takenoko.util.exceptions.EmptyDeckException;
-import takenoko.util.exceptions.NoActionSelectedException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import takenoko.Game;
+import takenoko.joueur.Joueur;
+import takenoko.joueur.strategie.StrategieAction.Action;
+import takenoko.util.exceptions.EmptyDeckException;
+import takenoko.util.exceptions.NoActionSelectedException;
 
 import static org.junit.Assert.assertTrue;
 
@@ -24,6 +24,6 @@ public class FirstPlotTest {
         Joueur joueur = gameTest.getJoueurs().get(0);
 
         joueur.turn(gameTest, Action.Plot);
-        assertTrue(joueur.getPlot().haveWater());
+        assertTrue(gameTest.getPlateau().getLastPlot().haveWater());
     }
 }

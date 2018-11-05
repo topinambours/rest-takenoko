@@ -3,7 +3,6 @@ package takenoko.joueur.strategie.StrategieJardinier;
 import takenoko.Plateau;
 import takenoko.joueur.Joueur;
 import takenoko.objectives.GardenObjectiveCard;
-import takenoko.objectives.ObjectiveCard;
 import takenoko.objectives.PandaObjectiveCard;
 import takenoko.objectives.amenagement.Amenagement;
 import takenoko.plot.CoordAxial;

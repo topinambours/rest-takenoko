@@ -1,16 +1,16 @@
 package takenoko.joueur.strategie.StrategieJardinier;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import takenoko.Plateau;
 import takenoko.joueur.Joueur;
 import takenoko.joueur.strategie.StrategieConcrete;
-import takenoko.Plateau;
 import takenoko.plot.CoordAxial;
 import takenoko.plot.Plot;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

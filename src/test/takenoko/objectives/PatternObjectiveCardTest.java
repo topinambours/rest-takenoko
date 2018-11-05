@@ -1,5 +1,8 @@
 package takenoko.objectives;
 
+import org.junit.Before;
+import org.junit.Test;
+import takenoko.Plateau;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.irrigation.Orient;
 import takenoko.joueur.Joueur;
@@ -9,11 +12,8 @@ import takenoko.joueur.strategie.StrategieSansPions;
 import takenoko.objectives.patterns.CoordCube;
 import takenoko.objectives.patterns.Pattern;
 import takenoko.objectives.patterns.PatternTile;
-import takenoko.Plateau;
 import takenoko.plot.Plot;
 import takenoko.properties.Couleur;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;

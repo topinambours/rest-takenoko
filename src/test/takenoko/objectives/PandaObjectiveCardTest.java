@@ -1,11 +1,11 @@
 package takenoko.objectives;
 
+import org.junit.Test;
+import takenoko.Plateau;
 import takenoko.joueur.Joueur;
 import takenoko.joueur.strategie.StrategieCoord.StrategieCoordRandom;
 import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigBase;
 import takenoko.joueur.strategie.StrategieSansPions;
-import takenoko.Plateau;
-import org.junit.Test;
 
 import static org.junit.Assert.*;
 

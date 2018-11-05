@@ -1,6 +1,10 @@
 package takenoko.joueur.strategie;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import takenoko.Game;
+import takenoko.Plateau;
 import takenoko.deck.AmenagementDecks;
 import takenoko.joueur.Joueur;
 import takenoko.joueur.strategie.StrategieAction.Action;
@@ -13,12 +17,8 @@ import takenoko.joueur.strategie.StrategieJardinier.StrategieJardinier;
 import takenoko.joueur.strategie.StrategiePanda.StrategiePanda;
 import takenoko.joueur.strategie.StrategiePanda.StrategiePandaBasique;
 import takenoko.objectives.amenagement.Amenagement;
-import takenoko.Plateau;
 import takenoko.plot.CoordAxial;
 import takenoko.plot.Plot;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import takenoko.util.Console;
 import takenoko.util.exceptions.EmptyDeckException;
 

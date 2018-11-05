@@ -12,9 +12,7 @@
     <import resource="classpath*:resources/ObjectivesPattern.xml"/>
     <import resource="Plots.xml"/>
 
-    <bean name="gameStarter" class="takenoko.GameStarter" scope="prototype">
-        <constructor-arg name="game" ref="gameTest"/>
-    </bean>
+    <bean name="gameStarter" class="takenoko.GameStarter" scope="prototype"/>
 
     <bean name="gameTest" class="takenoko.Game" scope="prototype">
         <constructor-arg index="0" ref="plateauTakenoko"/>

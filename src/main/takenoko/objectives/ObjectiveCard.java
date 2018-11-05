@@ -1,8 +1,8 @@
 package takenoko.objectives;
 
-import takenoko.joueur.Joueur;
-import takenoko.Plateau;
 import org.springframework.stereotype.Component;
+import takenoko.Plateau;
+import takenoko.joueur.Joueur;
 
 /**
  * Classe abstraite pour représenter les cartes objectif

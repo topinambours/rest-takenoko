@@ -1,7 +1,7 @@
 package takenoko.deck;
 
-import takenoko.util.exceptions.EmptyDeckException;
 import org.springframework.stereotype.Component;
+import takenoko.util.exceptions.EmptyDeckException;
 
 import java.util.*;
 

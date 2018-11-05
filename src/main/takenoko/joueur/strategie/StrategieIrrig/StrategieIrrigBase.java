@@ -1,7 +1,7 @@
 package takenoko.joueur.strategie.StrategieIrrig;
 
-import takenoko.irrigation.CoordIrrig;
 import takenoko.Plateau;
+import takenoko.irrigation.CoordIrrig;
 
 import java.util.List;
 import java.util.Optional;

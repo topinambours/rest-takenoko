@@ -1,25 +1,25 @@
 package takenoko.joueur;
 
-import takenoko.deck.PlotsDeck;
-import takenoko.Game;
-import takenoko.joueur.strategie.StrategieAction.Action;
-import takenoko.joueur.strategie.StrategieCoord.StrategieCoordRandom;
-import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigBase;
-import takenoko.joueur.strategie.StrategieSansPions;
-import takenoko.objectives.GardenObjectiveCard;
-import takenoko.objectives.PandaObjectiveCard;
-import takenoko.Plateau;
-import takenoko.plot.CoordAxial;
-import takenoko.plot.Plot;
-import takenoko.properties.Couleur;
-import takenoko.util.exceptions.EmptyDeckException;
-import takenoko.util.exceptions.NoActionSelectedException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import takenoko.Game;
+import takenoko.Plateau;
+import takenoko.deck.PlotsDeck;
+import takenoko.joueur.strategie.StrategieAction.Action;
+import takenoko.joueur.strategie.StrategieCoord.StrategieCoordRandom;
+import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigBase;
+import takenoko.joueur.strategie.StrategieSansPions;
+import takenoko.objectives.GardenObjectiveCard;
+import takenoko.objectives.PandaObjectiveCard;
+import takenoko.plot.CoordAxial;
+import takenoko.plot.Plot;
+import takenoko.properties.Couleur;
+import takenoko.util.exceptions.EmptyDeckException;
+import takenoko.util.exceptions.NoActionSelectedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -238,6 +238,7 @@ public class JoueurTest {
 
     @Test
     public void ObjCardTurn() throws NoActionSelectedException, EmptyDeckException {
+        gameTest.firstDrawObjectives();
         Joueur j1 = gameTest.getJoueurs().get(0);
         int nbCarte = j1.getPandaObjectiveCards().size()+j1.getPatternObjectiveCards().size()+j1.getGardenObjectiveCards().size();
         assertEquals(3, nbCarte);

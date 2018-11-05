@@ -1,9 +1,9 @@
 package takenoko.objectives.patterns;
 
-import takenoko.plot.CoordAxial;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import takenoko.plot.CoordAxial;
 
 import static org.junit.Assert.assertEquals;
 

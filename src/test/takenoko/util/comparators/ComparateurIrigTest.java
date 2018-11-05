@@ -1,11 +1,11 @@
 package takenoko.util.comparators;
 
+import org.junit.Test;
+import takenoko.Plateau;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.irrigation.Orient;
-import takenoko.Plateau;
 import takenoko.plot.CoordAxial;
 import takenoko.plot.Plot;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

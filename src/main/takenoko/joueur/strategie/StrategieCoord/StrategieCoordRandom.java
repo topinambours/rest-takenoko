@@ -5,7 +5,6 @@ import takenoko.joueur.Joueur;
 import takenoko.plot.CoordAxial;
 import takenoko.plot.Plot;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 

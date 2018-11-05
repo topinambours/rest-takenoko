@@ -1,13 +1,14 @@
 package takenoko.deck;
 
-import takenoko.objectives.ObjectiveCard;
-import takenoko.objectives.PandaObjectiveCard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import takenoko.objectives.ObjectiveCard;
+import takenoko.objectives.PandaObjectiveCard;
+
 import java.util.ArrayList;
 import java.util.List;
 

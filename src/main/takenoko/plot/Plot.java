@@ -1,8 +1,8 @@
 package takenoko.plot;
 
+import org.springframework.stereotype.Component;
 import takenoko.objectives.amenagement.Amenagement;
 import takenoko.properties.Couleur;
-import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
@@ -234,7 +234,7 @@ public class Plot {
 
     @Override
     public String toString(){
-        return "Parcelle("+getq()+","+getr()+")";
+        return "Parcelle("+getq()+","+getr()+") Irig : " + haveWater();
     }
 
 }

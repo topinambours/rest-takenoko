@@ -1,8 +1,8 @@
 package takenoko.objectives.patterns;
 
+import org.junit.Test;
 import takenoko.plot.CoordAxial;
 import takenoko.properties.Couleur;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

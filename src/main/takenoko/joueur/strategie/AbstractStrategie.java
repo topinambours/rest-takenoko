@@ -1,6 +1,7 @@
 package takenoko.joueur.strategie;
 
 import takenoko.Game;
+import takenoko.Plateau;
 import takenoko.deck.AmenagementDecks;
 import takenoko.joueur.Joueur;
 import takenoko.joueur.strategie.StrategieAction.Action;
@@ -11,11 +12,9 @@ import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrig;
 import takenoko.joueur.strategie.StrategieJardinier.StrategieJardinier;
 import takenoko.joueur.strategie.StrategiePanda.StrategiePanda;
 import takenoko.objectives.amenagement.Amenagement;
-import takenoko.Plateau;
 import takenoko.plot.CoordAxial;
 import takenoko.plot.Plot;
 
-import java.util.List;
 import java.util.Optional;
 
 public abstract class AbstractStrategie implements StrategieCoord, StrategieIrrig, StrategieJardinier, StrategiePanda, StrategieAction, StrategieAmenagement {

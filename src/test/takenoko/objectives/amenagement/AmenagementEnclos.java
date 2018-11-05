@@ -1,12 +1,6 @@
 package takenoko.objectives.amenagement;
 
 
-import takenoko.Game;
-import takenoko.joueur.Joueur;
-import takenoko.joueur.strategie.StrategieConcrete;
-import takenoko.plot.Plot;
-import takenoko.util.exceptions.EmptyDeckException;
-import takenoko.util.exceptions.NoActionSelectedException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +8,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
+import takenoko.Game;
+import takenoko.joueur.Joueur;
+import takenoko.joueur.strategie.StrategieConcrete;
+import takenoko.plot.Plot;
+import takenoko.util.exceptions.EmptyDeckException;
+import takenoko.util.exceptions.NoActionSelectedException;
 
 import static org.junit.Assert.assertEquals;
 
