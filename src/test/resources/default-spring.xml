@@ -6,21 +6,20 @@
 
     <context:property-override location="classpath*:resources/application.properties"/>
     <context:annotation-config />
-    <context:component-scan base-package="Takenoko"/>
+    <context:component-scan base-package="takenoko"/>
 
-    <import resource="ObjectivesGarden.xml"/>
-    <import resource="ObjectivesPattern.xml"/>
+    <import resource="classpath*:resources/ObjectivesGarden.xml"/>
+    <import resource="classpath*:resources/ObjectivesPattern.xml"/>
     <import resource="Plots.xml"/>
 
-    <bean name="gameStarter" class="Takenoko.GameStarter" scope="prototype">
-        <constructor-arg name="game" ref="gameTest"/>
-    </bean>
+    <bean name="gameStarter" class="takenoko.GameStarter" scope="prototype"/>
 
-    <bean name="gameTest" class="Takenoko.Game" scope="prototype">
-        <constructor-arg index="0" ref="pandObjDeck"/>
-        <constructor-arg index="1" ref="gardenObjDeck"/>
-        <constructor-arg index="2" ref="patternObjDeck"/>
-        <constructor-arg index="3" ref="deck"/>
+    <bean name="gameTest" class="takenoko.Game" scope="prototype">
+        <constructor-arg index="0" ref="plateauTakenoko"/>
+        <constructor-arg index="1" ref="pandObjDeck"/>
+        <constructor-arg index="2" ref="gardenObjDeckTest"/>
+        <constructor-arg index="3" ref="patternObjDeckTest"/>
+        <constructor-arg index="4" ref="plotsDeckTest"/>
     </bean>
 
 </beans>

@@ -5,69 +5,69 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:annotation-config />
-    <context:component-scan base-package="Takenoko"/>
+    <context:component-scan base-package="takenoko"/>
 
-    <bean id="plotGreen" class="Takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotGreen" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="VERT"/>
         <constructor-arg name="amenagement" value="NON"/>
     </bean>
 
-    <bean id="plotGreenBassin" class="Takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotGreenBassin" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="VERT"/>
         <constructor-arg name="amenagement" value="BASSIN"/>
     </bean>
 
-    <bean id="plotGreenEnclos" class="Takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotGreenEnclos" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="VERT"/>
         <constructor-arg name="amenagement" value="ENCLOS"/>
     </bean>
 
-    <bean id="plotGreenEngrais" class="Takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotGreenEngrais" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="VERT"/>
         <constructor-arg name="amenagement" value="ENGRAIS"/>
     </bean>
 
-    <bean id="plotPink" class="Takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotPink" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="ROSE"/>
         <constructor-arg name="amenagement" value="NON"/>
     </bean>
 
-    <bean id="plotPinkBassin" class="Takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotPinkBassin" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="ROSE"/>
         <constructor-arg name="amenagement" value="BASSIN"/>
     </bean>
 
-    <bean id="plotPinkEnclos" class="Takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotPinkEnclos" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="ROSE"/>
         <constructor-arg name="amenagement" value="ENCLOS"/>
     </bean>
 
-    <bean id="plotPinkEngrais" class="Takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotPinkEngrais" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="ROSE"/>
         <constructor-arg name="amenagement" value="ENGRAIS"/>
     </bean>
 
-    <bean id="plotYellow" class="Takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotYellow" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="JAUNE"/>
         <constructor-arg name="amenagement" value="NON"/>
     </bean>
 
-    <bean id="plotYellowBassin" class="Takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotYellowBassin" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="JAUNE"/>
         <constructor-arg name="amenagement" value="BASSIN"/>
     </bean>
 
-    <bean id="plotYellowEnclos" class="Takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotYellowEnclos" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="JAUNE"/>
         <constructor-arg name="amenagement" value="ENCLOS"/>
     </bean>
 
-    <bean id="plotYellowEngrais" class="Takenoko.Plot.Plot" scope="prototype">
+    <bean id="plotYellowEngrais" class="takenoko.plot.Plot" scope="prototype">
         <constructor-arg name="couleur" value="JAUNE"/>
         <constructor-arg name="amenagement" value="ENGRAIS"/>
     </bean>
 
-    <bean id="deck" class="Takenoko.Deque.Deck" scope="prototype">
+    <bean id="plotsDeckTakenoko" class="takenoko.deck.PlotsDeck" scope="prototype">
         <constructor-arg name="plots">
             <list>
                 <ref bean="plotGreen"/>

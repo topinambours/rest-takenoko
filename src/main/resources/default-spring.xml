@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:annotation-config />
-    <context:component-scan base-package="Takenoko"/>
+    <context:component-scan base-package="takenoko"/>
 
     <context:property-override location="classpath*:resources/application.properties"/>
 
@@ -13,15 +13,14 @@
     <import resource="ObjectivesPattern.xml"/>
     <import resource="Plots.xml"/>
 
-    <bean name="gameStarter" class="Takenoko.GameStarter">
-        <constructor-arg name="game" ref="standardGame"/>
-    </bean>
+    <bean name="gameStarter" class="takenoko.GameStarter" />
 
-    <bean name="standardGame" class="Takenoko.Game" scope="prototype">
-        <constructor-arg index="0" ref="pandObjDeck"/>
-        <constructor-arg index="1" ref="gardenObjDeck"/>
-        <constructor-arg index="2" ref="patternObjDeck"/>
-        <constructor-arg name="deck" ref="deck" />
+    <bean name="standardGame" class="takenoko.Game" scope="prototype">
+        <constructor-arg index="0" ref="plateauTakenoko"/>
+        <constructor-arg index="1" ref="pandObjDeck"/>
+        <constructor-arg index="2" ref="gardenObjDeck"/>
+        <constructor-arg index="3" ref="patternObjDeck"/>
+        <constructor-arg name="plotsDeck" ref="plotsDeckTakenoko" />
     </bean>
 
 </beans>
