@@ -1,5 +1,8 @@
 package takenoko.joueur;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import takenoko.Game;
 import takenoko.Plateau;
 import takenoko.WeatherDice;
@@ -7,8 +10,18 @@ import takenoko.deck.PlotsDeck;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.joueur.strategie.AbstractStrategie;
 import takenoko.joueur.strategie.StrategieAction.Action;
+import takenoko.joueur.strategie.StrategieAction.StrategieActionBasique;
+import takenoko.joueur.strategie.StrategieAmenagement.StrategieAmenagementBasique;
+import takenoko.joueur.strategie.StrategieConcrete;
 import takenoko.joueur.strategie.StrategieCoord.StrategieCoord;
+import takenoko.joueur.strategie.StrategieCoord.StrategieCoordAdjacent;
+import takenoko.joueur.strategie.StrategieCoord.StrategieCoordRandom;
 import takenoko.joueur.strategie.StrategieCoord.StrategieCoordResult;
+import takenoko.joueur.strategie.StrategieIrrig.StrategieIrrigComparator;
+import takenoko.joueur.strategie.StrategieJardinier.StrategieJardinierRandom;
+import takenoko.joueur.strategie.StrategieJardinier.StratégieJardinierObjectifs;
+import takenoko.joueur.strategie.StrategiePanda.StrategiePandaObjectifs;
+import takenoko.joueur.strategie.StrategiePanda.StrategiePandaRandom;
 import takenoko.objectives.GardenObjectiveCard;
 import takenoko.objectives.PandaObjectiveCard;
 import takenoko.objectives.PatternObjectiveCard;
@@ -28,6 +41,7 @@ import java.util.Optional;
 /**
  * Le robot, joue au jeu en utilisant une stratégie spécifique
  */
+@Component
 public class Joueur implements Comparable{
 
     private Plot plot;
@@ -99,6 +113,12 @@ public class Joueur implements Comparable{
         this.gardenObjectiveCards = new ArrayList<>();
         this.canalIrrigation = 0;
         this.objectifComplete = 0;
+    }
+
+    private Joueur(){}
+
+    public void assignPlateau(Plateau p){
+        this.getStrategie().setStrategieIrrig(new StrategieIrrigComparator(p));
     }
 
     /**
@@ -605,6 +625,38 @@ public class Joueur implements Comparable{
         } else {
             Console.Log.println(String.format("Robot_%d essaie de piocher une carte objectif mais sa main est pleine.", id));
         }
+    }
+
+
+    @Bean
+    @Scope("prototype")
+    public Joueur robotSmart1(){
+        return new Joueur(1, new StrategieConcrete(new StrategieCoordAdjacent(), null, new StrategiePandaObjectifs(), new StratégieJardinierObjectifs(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
+    }
+
+
+    @Bean
+    @Scope("prototype")
+    public Joueur robotSmart2(){
+        return new Joueur(2, new StrategieConcrete(new StrategieCoordAdjacent(), null, new StrategiePandaObjectifs(), new StratégieJardinierObjectifs(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
+    }
+
+    @Bean
+    @Scope("prototype")
+    public Joueur robotSmart3(){
+        return new Joueur(3, new StrategieConcrete(new StrategieCoordAdjacent(), null, new StrategiePandaObjectifs(), new StratégieJardinierObjectifs(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
+    }
+
+    @Bean
+    @Scope("prototype")
+    public Joueur robotRandom2(){
+        return new Joueur(2, new StrategieConcrete(new StrategieCoordRandom(), null, new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
+    }
+
+    @Bean
+    @Scope("prototype")
+    public Joueur robotRandom3(){
+        return new Joueur(3, new StrategieConcrete(new StrategieCoordRandom(), null, new StrategiePandaRandom(), new StrategieJardinierRandom(), new StrategieActionBasique(),new StrategieAmenagementBasique()));
     }
 
 }

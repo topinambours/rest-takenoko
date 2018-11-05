@@ -21,6 +21,28 @@
         <constructor-arg index="2" ref="gardenObjDeck"/>
         <constructor-arg index="3" ref="patternObjDeck"/>
         <constructor-arg name="plotsDeck" ref="plotsDeckTakenoko" />
+        <constructor-arg name="joueurs">
+            <list>
+                <ref bean="robotSmart1"/>
+                <ref bean="robotRandom2"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+
+    <bean name="standardGame2" class="takenoko.Game" scope="prototype">
+        <constructor-arg index="0" ref="plateauTakenoko"/>
+        <constructor-arg index="1" ref="pandObjDeck"/>
+        <constructor-arg index="2" ref="gardenObjDeck"/>
+        <constructor-arg index="3" ref="patternObjDeck"/>
+        <constructor-arg name="plotsDeck" ref="plotsDeckTakenoko" />
+        <constructor-arg name="joueurs">
+            <list>
+                <ref bean="robotSmart1"/>
+                <ref bean="robotSmart2"/>
+                <ref bean="robotRandom3"/>
+            </list>
+        </constructor-arg>
     </bean>
 
 </beans>

@@ -43,9 +43,27 @@ public class GameStarter {
             }
         });
 
-        System.out.println("Bench Complete");
+        System.out.println("Smart vs Random");
 
         report();
+
+        games = new ArrayList<>();
+        IntStream.range(0,nbGame).forEach(i -> games.add(appContext.getBean("standardGame2", Game.class)));
+
+        games.forEach(game1 -> {
+            try {
+                game1.play();
+            } catch (EmptyDeckException e) {
+                e.printStackTrace();
+            } catch (NoActionSelectedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        System.out.println("====================\n\nSmart vs Smart vs Random");
+
+        report();
+        System.exit(1);
     }
 
 

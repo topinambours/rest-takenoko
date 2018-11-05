@@ -15,6 +15,7 @@ import takenoko.util.exceptions.NoActionSelectedException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -34,7 +35,6 @@ public class GameTest {
 
      //@TODO améliorer les ia pour qu'elles complètes plus facilement les objectifs
     // test bloquant dans le cas ou la partie ne se termine jamais
-    @Ignore
     @Test public void testGame() throws EmptyDeckException, NoActionSelectedException {
         gameTest.play();
         assertTrue(gameTest.end());
@@ -42,7 +42,7 @@ public class GameTest {
 
     @Test public void testInitDraw() throws EmptyDeckException {
         gameTest.firstDrawObjectives();
-        ArrayList<Joueur> joueurs = gameTest.getJoueurs();
+        List<Joueur> joueurs = gameTest.getJoueurs();
         Iterator<Joueur> iterator = joueurs.iterator();
 
         while (iterator.hasNext()){
