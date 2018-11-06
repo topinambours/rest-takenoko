@@ -2,6 +2,7 @@
 
 \section{Packages}
 
+\begin{minipage}{0.45\textwidth}
 \dirtree{%
 .1 main.
 .2 resources.
@@ -25,14 +26,14 @@
 .4 Comparators.
 .4 Exceptions.
 }
-
-
-~\\
-  Après de multiples ré-aménagements, nous sommes arrivé à cette structuration des packages car ...
-
+\end{minipage}
+\begin{minipage}{0.45\textwidth}
+  Après de multiples ré-aménagements, nous sommes arrivé à cette structuration des packages.\\
+  
+\end{minipage}
 
 \section{Interfaces}
 Les principales Interfaces sont celle des Stratégies, chaque stratégie que ce soit StratégieAction, StratégieAmenagement, etc... ont chacune leur Interfaces car plusieurs implémentations avec des idées différentes sont présentes. Toutes ces interfaces permettant l'implémentation d'une stratégie complexe composée d'une stratégie de chaque catégorie. 
 
-\section{héritage}
-AA
+\section{Héritage}
+Nous utilisons l'héritage pour les éléments ayant comme dit précédement des besoins fonctionnels similaires, nous avons donc du code générique pour les pioches et les cartes objectifs. Les comportements du type pioche/validation d'une carte étant commun à l'essemble des cartes, il est important que les classes spécifique hérite d'une classe contenant les comportements primaires de ces éléments.

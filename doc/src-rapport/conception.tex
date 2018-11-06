@@ -5,20 +5,15 @@ Intro\footnotemark\\
 
 \section{Patron de conception}
 
-Bla(cf. fig. 1.1)\\
-
-
-
 %Contenu de la note précédemment marquée avec \footnotemark
 \footnotetext{Note bas de page "intro"}
 
-Bla
+Singleton : Utilisé pour notre Logger, un unique objet est instancié lors du premier appel et ce pendant toute la durée de vie du programme.\\
+
+Prototype : Utilisé pour la quasi totalité des beans Spring. Permet d'instancier plusieurs instances d'objets selon une unique spécification. Très utile pour générer les decks.\\
 %retour à la ligne (alinea)
 
-Bla\\
-%saut de paragraphe
-
-Bla
+Strategy : Utilisé pour les stratégies de nos robots. Permet d'encapsuler plusieurs stratégies afin d'avoir une stratégie mère se chargeant de produire le résultat espéré selon une action défini.
 
 %\newpage
 
