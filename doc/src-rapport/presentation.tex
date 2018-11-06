@@ -4,22 +4,23 @@
 
 
 \section{Sujet}
-Le projet consiste à réaliser en Java une version numérique du jeu Takenoko créé par Antoine Bauza. Version textuel n'étant pas destinée à être jouée par des êtres humains mais par des robots jouants de façon autonome. Dans le Takenoko nous allons endosser le rôle d'un jardinier japonais affairé à répondre au mieux aux requêtes du vénérable empereur. Pour ce faire, nous aurons, durant notre tour de jeu, deux choses à faire : Regarder quel temps il fait et effectuer deux actions parmi les possibilités suivantes : agrandir le jardin, irriguer, bouger le jardinier, bouger le panda. 
+Le projet consiste à réaliser en Java une version numérique du jeu Takenoko créé par Antoine Bauza. Version textuelle n'étant pas destinée à être jouée par des êtres humains mais par des robots jouant de façon autonome. Dans le Takenoko nous allons endosser le rôle d'un jardinier japonais affairé à répondre au mieux aux requêtes du vénérable empereur. Pour ce faire, nous aurons, durant notre tour de jeu, deux choses à faire : Regarder quel temps il fait et effectuer deux actions parmi les possibilités suivantes : agrandir le jardin, irriguer, bouger le jardinier, bouger le panda. 
 
 \section{Avancement du projet}
-L'intégralité des fonctionnalités du jeu sont implémentés à l'exception du dé météo. Bien que les joueurs le lancent au début de leur tour, cela n'influe pas sur le déroulé du tour.\\
+L'intégralité des fonctionnalités du jeu est implémentée à l'exception du dé météo. Bien que les joueurs le lancent au début de leur tour, cela n'influe pas sur le dérouler du tour.\\
 Cependant une règle n'est pas respectée par les robots, ils peuvent effectuer plus de deux actions par tours.
-Nous estimons que deux itérations supplémentaires auraient été nécessaire pour terminer le moteur selon les règles du jeu.
+Nous estimons que deux itérations supplémentaires auraient été nécessaires pour terminer le moteur selon les règles du jeu.
 \section{Problématique soulevée}
 
 \subsection{Détecter et réduire la dette technique}
-L'organisation du code a été pour nous un assez grand problème notamment à cause de l'apparition de "God class"\footnotemark\\ comme la classe de Jeu qui concentré un trop grand nombre de fonctions. Nous avons donc fait plusieurs ré-aménagements \textit{Voir paragraphe \hyperref[conception]{Conception}} \\ 
-A l'inverse des "God Class", la méthode agile nous impose de concevoir le projet comme un ensemble de petites briques. Durant la vie du projet il peut s'avérer que plusieurs briques ont des besoins fonctionnels similaires, l'ajout de code générique devient alors nécessaire pour répondre aux bonnes pratique de conception orientés objets. Ces phases d'ajout de généricité n'ajoute aucune plus value au projet d'un point de vue client mais doit être vu comme un investissement pour le développement futur.
+L'organisation du code a été pour nous un assez grand problème notamment à cause de l'apparition de "God class"\footnotemark\\ comme la classe de Jeu qui concentre un trop grand nombre de fonctions. Nous avons donc fait plusieurs réaménagements \textit{voir paragraphe \hyperref[conception]{Conception}} \\ 
+
+À l'inverse des "god classe", la méthode agile nous impose de concevoir le projet comme un ensemble de petites briques. Durant la vie du projet il peut s'avérer que plusieurs briques ont des besoins fonctionnels similaires, l'ajout de code générique devient alors nécessaire pour répondre aux bonnes pratiques de conception orientés objets. Ces phases d'ajout de généricité n'ajoutent aucune plus-value au projet d'un point de vue client mais peux être vues comme un investissement pour le développement futur.
 
 %Contenu de la note précédemment marquée avec \footnotemark
-\footnotetext{La "God Class" est une classe comportant un très grand nombre de fonctions qui pourraient être dispatcher dans d'autre classes}
+\footnotetext{La "god Class" est une classe comportant un très grand nombre de fonctions qui pourraient être dispatchées dans d'autres classes}
 
 \subsection{L'injection de dépendance}
 
-Du fait de la nouveauté de l'outil et de l'avancée du projet, nous avons rencontrer plusieurs problèmes lors de l'injection de dépendance.\\
+Du fait de la nouveauté de l'outil et de l'avancée du projet, nous avons rencontré plusieurs problèmes lors de l'injection de dépendance.\\
 Bien que la détection des classes nécessitant des injections de dépendance soit "facile", l'ajout d'IoC sur une classe à un impact fort sur les classes l'utilisant. Cela implique de réviser l'ensemble des tests et d'adapter le reste du projet. \textit{Voir paragraphe \hyperref[spring]{Spring}}
