@@ -12,7 +12,9 @@ De son côté, l'utilisateur aura accès à des requêtes avec les verbes corres
 #### L'objet plateau
 
 Structure du plateau
+
 | Variable | Type | Description |
+|--|--| -- |
 | plots | HashMap | Structure contenant l'ensemble des tuiles constituantes le plateau |
 | irrigations | HashSet | Contient l'ensembles des canaux d'irrigations déjà posés |
 | lastPlot | Plot | Dernière tuile ayant été posée |
@@ -92,6 +94,7 @@ ___
 ### Ressource Utilisateur
 #### L'objet utilisateur
 Structure d'un utilisateur
+
 | Variable | Type | Description |
 |--|--| -- |
 | id | int | identifiant |
