@@ -13,7 +13,6 @@ De son côté, l'utilisateur aura accès à des requêtes avec les verbes corres
 
 Structure du plateau
 | Variable | Type | Description |
-|--|--| -- |
 | plots | HashMap | Structure contenant l'ensemble des tuiles constituantes le plateau |
 | irrigations | HashSet | Contient l'ensembles des canaux d'irrigations déjà posés |
 | lastPlot | Plot | Dernière tuile ayant été posée |
