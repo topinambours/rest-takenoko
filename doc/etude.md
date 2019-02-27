@@ -1,4 +1,4 @@
-# Etude d'architecture
+# Etude d'architecture - Topinambours Takenoko
 ## Etude des ressources
 Nous envisageons d'utiliser la structure JSON pour les réponses du serveur.
 De son côté, l'utilisateur aura accès à des requêtes avec les verbes correspondant :
