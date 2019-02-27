@@ -211,6 +211,25 @@ Permet d'avoir accès à ses objectifs spécifiques (pandObjDeck / patternObjDec
 	    "{sous-objectif}" : [],
 	}
 	
+#### Possibilité de poser une parcelle
+> PUT /users/@me/plots/{plot id}/{coord}
+
+Permet de poser l'une de ses parcelles à un endroit défini
+
+#### Possibilité de poser une irrigation
+> PUT /users/@me/irrigation/{coord}
+
+Permet de poser une irrigation à un endroit défini
+
+#### Possibilité de déplacer le panda
+> PUT /users/@me/panda/{coord}
+
+Permet de déplacer le panda à un endroit défini
+
+#### Possibilité de déplacer le jardinier
+> PUT /users/@me/panda/{coord}
+
+Permet de déplacer le jardinier à un endroit défini
 ## Explication d'un scénario de jeu
 
 en cours ...
