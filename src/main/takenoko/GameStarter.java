@@ -63,7 +63,6 @@ public class GameStarter {
         System.out.println("====================\n\nSmart vs Smart vs Random");
 
         report();
-        System.exit(1);
     }
 
 
