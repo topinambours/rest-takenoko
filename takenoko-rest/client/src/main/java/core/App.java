@@ -1,7 +1,7 @@
 package core;
 
 import org.springframework.web.client.RestTemplate;
-
+import cucumber.api.java.en.When;
 
 public class App {
 
