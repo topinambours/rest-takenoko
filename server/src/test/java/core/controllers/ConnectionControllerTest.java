@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static junit.framework.TestCase.assertEquals;
 
 @Ignore
-public class StatusTest extends CucumberStepDefinitions {
+public class ConnectionControllerTest extends CucumberStepDefinitions {
 
     @Autowired
-    Status controller;
+    ConnectionController controller;
 
     @When("^ping is performed$")
     public void ping_is_performed(){
