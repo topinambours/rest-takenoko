@@ -1,4 +1,4 @@
-package takenoko.Container;
+package communication.Container;
 
 import takenoko.Tuile;
 

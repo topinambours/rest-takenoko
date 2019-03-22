@@ -1,19 +1,16 @@
 package pioche;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import takenoko.Container.TuileContainer;
+import communication.Container.TuileContainer;
 import takenoko.Couleur;
 import takenoko.Tuile;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * Pioche de parcelles
  */
-@Configuration
 public class PiocheTuile extends Pioche<Tuile> {
 
     /**
