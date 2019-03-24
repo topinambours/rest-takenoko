@@ -1,52 +1,42 @@
 package core;
 
 import communication.Container.ResponseContainer;
-import communication.HTTPClient;
-import org.springframework.context.annotation.Bean;
 import communication.Container.TuileContainer;
-import org.springframework.context.annotation.Configuration;
+import communication.HTTPClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
 
 import java.util.Arrays;
 
 
-public class Joueur {
+public class Joueur extends HTTPClient {
 
-    private final int id;
+    private final Logger logger = LoggerFactory.getLogger(Joueur.class);
 
-    private final HTTPClient httpClient;
-
-    private Joueur(){
-        this.id = -1;
-        this.httpClient = new HTTPClient(id);
+    private Joueur() {
+        super(-1);
     }
 
-    public Joueur(int id){
-        this.id = id;
-        this.httpClient = new HTTPClient(id);
+    public Joueur(int id) {
+        super(id);
+        ResponseContainer resp = pingServer();
+        if (resp.response) {
+            logger.info("Pong received from server");
+            ResponseContainer register_resp = req_register();
+            logger.info(register_resp.toString());
+        }
     }
 
-    public Joueur(int id, HTTPClient httpClient){
-        this.id = id;
-        this.httpClient = httpClient;
-    }
-
-    public void enter_matchmaking(){
-        ResponseContainer response = httpClient.enter_matchmaking();
-        System.out.println(response.toString());
-    }
-
-    public void piocher(){
-        TuileContainer result = httpClient.piocher_tuiles();
+    public void piocher() {
+        TuileContainer result = piocher_tuiles();
 
         System.out.println("Le joueur a pioché :" + Arrays.deepToString(result.getContent().toArray()));
     }
 
-    public int getId() {
-        return id;
-    }
 
     @Bean(name = "joueur_1")
-    public Joueur joueur_1(){
+    public Joueur joueur_1() {
         return new Joueur(1);
     }
 }

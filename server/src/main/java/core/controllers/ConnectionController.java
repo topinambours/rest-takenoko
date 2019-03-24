@@ -2,7 +2,10 @@ package core.controllers;
 
 import communication.Container.ResponseContainer;
 import communication.HTTPClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,37 +15,44 @@ import java.util.Hashtable;
 @RestController
 public class ConnectionController {
 
-    private Hashtable<Integer, HTTPClient> connectedUsers;
+    Logger logger = LoggerFactory.getLogger(ConnectionController.class);
+
+    public Hashtable<Integer, HTTPClient> getRegisteredUsers() {
+        return registeredUsers;
+    }
+
+    private Hashtable<Integer, HTTPClient> registeredUsers;
 
     @Autowired
     public ConnectionController() {
-        this.connectedUsers = new Hashtable<>();
+        this.registeredUsers = new Hashtable<>();
     }
 
-    @RequestMapping("/status")
-    public String status_req() {
-        return getStatus();
+    @RequestMapping("/ping/{id}/{user_url}")
+    public ResponseContainer ping_received(
+            @PathVariable int id,
+            @PathVariable String user_url)
+    {
+        logger.info(String.format("Ping received from %d@%s", id, user_url));
+        return new ResponseContainer(true, "pong");
     }
 
-    static String getStatus() {
-        return "Server is up";
-    }
+    @RequestMapping("/register/{id}/{user_url}")
+    public ResponseContainer registration_req(
+            @PathVariable int id,
+            @PathVariable String user_url){
+        logger.info(String.format("Registration request from %d@%s", id, user_url));
 
-    @RequestMapping("/action/enter_matchmaking/{id}/{user_url}")
-    public ResponseContainer req_matchmaking(@PathVariable int id, @PathVariable String user_url){
-        System.out.println(String.format("Player id=%d with adress : %s want to play",id, user_url));
-        if (connectedUsers.containsKey(id)){
-            if (connectedUsers.get(id).getInMatchmaking()){
-                return new ResponseContainer(false, "User with id=%d already in matchmaking");
-            }
-            else {
-                connectedUsers.get(id).setInMatchmaking(true);
-                return new ResponseContainer(true, "Registration complete, searching for games");
-            }
-        }else{
-            connectedUsers.put(id, new HTTPClient(id, true));
-            return new ResponseContainer(true, "Registration complete, searching for games");
+        if (registeredUsers.containsKey(id)){
+            logger.warn(String.format("User with id %d already registered", id));
+            return new ResponseContainer(false, "Already registered");
         }
+        else{
+            registeredUsers.put(id, new HTTPClient(id, user_url));
+            logger.info(String.format("User with id %d registered with address %s", id,user_url));
+            return new ResponseContainer(true, "Registration complete");
+        }
+
     }
 
 }

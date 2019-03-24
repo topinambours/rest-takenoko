@@ -9,12 +9,12 @@ public class Tuile {
 
     private final Couleur couleur;
 
-    public Tuile(){
+    public Tuile() {
         this.id = -1;
         this.couleur = Couleur.BLEU;
     }
 
-    public Tuile(int id, Couleur couleur){
+    public Tuile(int id, Couleur couleur) {
         this.id = id;
         this.couleur = couleur;
     }

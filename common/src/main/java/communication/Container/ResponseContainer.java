@@ -1,5 +1,7 @@
 package communication.Container;
 
+import java.util.Objects;
+
 /**
  * Un objet de type ResponseContainer contient un boolean et un message.
  */
@@ -7,12 +9,12 @@ public class ResponseContainer {
     public Boolean response;
     public String message;
 
-    public ResponseContainer(){
+    public ResponseContainer() {
         this.response = null;
         this.message = null;
     }
 
-    public ResponseContainer(boolean b, String msg){
+    public ResponseContainer(boolean b, String msg) {
         this.response = b;
         this.message = msg;
     }
@@ -36,5 +38,19 @@ public class ResponseContainer {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ResponseContainer that = (ResponseContainer) o;
+        return response.equals(that.response) &&
+                Objects.equals(message, that.message);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(response, message);
     }
 }

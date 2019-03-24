@@ -15,11 +15,11 @@ public class TuileContainer {
      */
     private List<Tuile> content;
 
-    public TuileContainer(){
+    public TuileContainer() {
         this.content = new ArrayList<>();
     }
 
-    public TuileContainer(List<Tuile> tuiles){
+    public TuileContainer(List<Tuile> tuiles) {
         this.content = new ArrayList<>(tuiles);
     }
 

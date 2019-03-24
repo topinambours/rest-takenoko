@@ -11,7 +11,7 @@ public class PlateauController {
 
     private final Plateau plateau;
 
-    public PlateauController(@Qualifier("plateau_vide") Plateau plateau){
+    public PlateauController(@Qualifier("plateau_vide") Plateau plateau) {
         this.plateau = plateau;
     }
 

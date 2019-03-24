@@ -3,7 +3,7 @@ sudo: false
 
 env:
   global:
-  - CODECOV_TOKEN=:uuid-repo-token
+    - CODECOV_TOKEN=:uuid-repo-token
 
 jdk:
   - openjdk10
