@@ -64,6 +64,10 @@ public class HTTPClient {
         return request(String.format("action/piocher", server_url), TuileContainer.class);
     }
 
+    public boolean rendre_tuiles(int tuileId, int tuileId_2){
+        return request(String.format("action/rendre-tuiles/%s/%s",tuileId, tuileId_2), Boolean.class);
+    }
+
     public ResponseContainer req_register(){
         return request(String.format("register/%d/%s", id, user_adress), ResponseContainer.class);
     }

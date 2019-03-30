@@ -2,8 +2,10 @@ package pioche;
 
 import communication.Container.TuileContainer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import takenoko.Couleur;
-import takenoko.Tuile;
+import takenoko.tuile.Tuile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +45,7 @@ public class PiocheTuile extends Pioche<Tuile> {
         return new TuileContainer(List.copyOf(getDeque()));
     }
 
-    @Bean(name = "pioche_depart")
+    @Bean(name = "piocheDepart")
     public PiocheTuile pioche_depart() {
         ArrayList<Tuile> tuiles = new ArrayList<>();
         for (int i = 1; i <= 27; i++) {
@@ -53,4 +55,5 @@ public class PiocheTuile extends Pioche<Tuile> {
         }
         return new PiocheTuile(tuiles);
     }
+
 }

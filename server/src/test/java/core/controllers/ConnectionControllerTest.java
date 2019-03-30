@@ -64,15 +64,14 @@ public class ConnectionControllerTest extends CucumberStepDefinitions {
     @Ignore
     @When("ping received from user {int} with address {string}")
     public void ping_is_performed(int id, String url) {
-        ConnectionController controller = new ConnectionController();
-        controller.ping_received(id, url);
+        t.ping_received(id, url);
     }
 
     @Ignore
     @Then("the client with id {int} and address {string} receive pong")
     public void client_receive_pong(int id, String url) {
-        ConnectionController controller = new ConnectionController();
-        assertEquals(new ResponseContainer(true, "pong"), controller.ping_received(id, url));
+        //ConnectionController controller = new ConnectionController();
+        assertEquals(new ResponseContainer(true, "pong"), t.ping_received(id, url));
     }
 
     @Ignore

@@ -2,21 +2,18 @@ package takenoko;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.ArrayList;
+import takenoko.tuile.CoordAxial;
+import takenoko.tuile.Tuile;
+import java.util.HashMap;
 
 @Configuration
 public class Plateau {
 
-    private ArrayList<Tuile> tuiles;
+    private HashMap<CoordAxial, Tuile> tuiles;
 
     public Plateau() {
-        this.tuiles = new ArrayList<>();
-        this.tuiles.add(new Tuile(0, Couleur.BLEU));
-    }
-
-    public Tuile getFirst() {
-        return tuiles.get(0);
+        this.tuiles = new HashMap<>();
+        this.tuiles.put(new CoordAxial(0,0), new Tuile(-1, Couleur.BLEU));
     }
 
     @Bean(name = "plateau_vide")

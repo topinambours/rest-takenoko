@@ -12,7 +12,6 @@ import java.util.*;
 @JsonIgnoreProperties(ignoreUnknown = false)
 public abstract class Pioche<T> {
 
-
     private Deque<T> deque;
 
     /**
@@ -118,5 +117,6 @@ public abstract class Pioche<T> {
     public void setDeque(Deque<T> deque) {
         this.deque = deque;
     }
+
 
 }

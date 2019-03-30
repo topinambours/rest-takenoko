@@ -3,8 +3,9 @@ package core.controllers;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import takenoko.Couleur;
 import takenoko.Plateau;
-import takenoko.Tuile;
+import takenoko.tuile.Tuile;
 
 @RestController
 public class PlateauController {
@@ -17,6 +18,6 @@ public class PlateauController {
 
     @RequestMapping("/plateau/first")
     public Tuile status_req() {
-        return plateau.getFirst();
+        return new Tuile(-1,Couleur.BLEU);
     }
 }

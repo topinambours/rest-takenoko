@@ -1,6 +1,7 @@
 Feature: Related to connections with the server
   
   Scenario: client performing ping to server
+    Given using fresh connection controller
     When ping received from user 10 with address "localhost:8081"
     Then the client with id 10 and address "localhost:8081" receive pong
     

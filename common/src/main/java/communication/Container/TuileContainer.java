@@ -1,6 +1,6 @@
 package communication.Container;
 
-import takenoko.Tuile;
+import takenoko.tuile.Tuile;
 
 import java.util.ArrayList;
 import java.util.List;
