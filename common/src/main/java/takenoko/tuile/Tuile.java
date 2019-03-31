@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import takenoko.Couleur;
 
 import java.util.Objects;
-import java.util.UUID;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Tuile {

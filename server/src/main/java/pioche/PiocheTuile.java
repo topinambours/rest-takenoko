@@ -2,8 +2,7 @@ package pioche;
 
 import communication.Container.TuileContainer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Primary;
 import takenoko.Couleur;
 import takenoko.tuile.Tuile;
 
@@ -45,6 +44,7 @@ public class PiocheTuile extends Pioche<Tuile> {
         return new TuileContainer(List.copyOf(getDeque()));
     }
 
+    @Primary
     @Bean(name = "piocheDepart")
     public PiocheTuile pioche_depart() {
         ArrayList<Tuile> tuiles = new ArrayList<>();

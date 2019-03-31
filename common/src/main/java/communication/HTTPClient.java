@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
+import takenoko.tuile.CoordAxial;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -66,6 +67,10 @@ public class HTTPClient {
 
     public boolean rendre_tuiles(int tuileId, int tuileId_2){
         return request(String.format("action/rendre-tuiles/%s/%s",tuileId, tuileId_2), Boolean.class);
+    }
+
+    public ResponseContainer poser_tuile(int tuileId, CoordAxial pos){
+        return request(String.format("action/poser_tuile/%s/%s/%s",tuileId, pos.getQ(), pos.getR()), ResponseContainer.class);
     }
 
     public ResponseContainer req_register(){

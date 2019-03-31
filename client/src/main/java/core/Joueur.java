@@ -6,6 +6,7 @@ import communication.HTTPClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
+import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
 
 import java.util.Arrays;
@@ -30,6 +31,8 @@ public class Joueur extends HTTPClient {
             logger.info(register_resp.toString());
         }
         piocher();
+
+        poser_tuile(current_tuile.getUnique_id(), new CoordAxial(0,1));
     }
 
     public void piocher() {

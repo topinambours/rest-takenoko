@@ -4,7 +4,9 @@ import communication.Container.TuileContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +27,7 @@ public class DeckController {
     /**
      * Représente l'ensemble des tuiles disponibles durant la partie.
      */
-    private HashMap<Integer, Tuile> available_tuiles;
+    public HashMap<Integer, Tuile> available_tuiles;
 
     public DeckController(@Qualifier("piocheDepart") PiocheTuile pTuile) {
         this.available_tuiles = new HashMap<>();
@@ -65,6 +67,4 @@ public class DeckController {
     public PiocheTuile getpTuile() {
         return pTuile;
     }
-
-
 }
