@@ -10,6 +10,7 @@ jdk:
 script:
   - mvn test
   - docker build -t hamlab/topi-takenoko .
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push hamlab/topi-takenoko:latest
 
 after_success:
