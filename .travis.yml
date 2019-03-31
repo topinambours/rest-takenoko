@@ -9,6 +9,8 @@ jdk:
   - openjdk10
 script:
   - mvn test
+  - docker build -t hamlab/topi-takenoko .
+  - docker push hamlab/topi-takenoko:latest
 
 after_success:
   - bash <(curl -s https://codecov.io/bash) -t 9cd957f7-8fa1-40cc-9e96-70f4114b5969
