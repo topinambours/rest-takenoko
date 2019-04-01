@@ -1,14 +1,31 @@
+<h1 align="center">
+  <br>
+  <a href="https://github.com/uca-m1informatique-softeng/topinambours-takenoko"><img src="http://takenoko.hamlab.fr/img/logo.png" alt="Takenoko" width="50px"></a>
+  <br>
+Takenoko
+  <br>
+</h1>
 
-# Projet [takenoko](http://jeuxstrategie1.free.fr/jeu_takenoko/regle.pdf "takenoko")
+<h4 align="center">Un  <a href="http://jeuxstrategie1.free.fr/jeu_takenoko/regle.pdf" target="_blank">Takenoko</a> en Java avec une API rest</h4>
 
-![Build Status](https://travis-ci.com/uca-m1informatique-softeng/topinambours-takenoko.svg?token=ddDp96SuTBDWqbwuapYh&branch=master) ![](http://sonarqube.hamlab.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=alert_status) ![](http://sonarqube.hamlab.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=reliability_rating) ![](http://sonarqube.hamlab.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=code_smells) ![](http://sonarqube.hamlab.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=coverage)  ![](http://sonarqube.hamlab.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=sqale_rating)
+<p align="center">
+<img src="https://travis-ci.com/uca-m1informatique-softeng/topinambours-takenoko.svg?token=ddDp96SuTBDWqbwuapYh&branch=master">
+<a href="https://cloud.docker.com/u/topinambours/repository/docker/topinambours/takenoko" target="_blank"><img src="https://img.shields.io/docker/automated/topinambours/takenoko.svg"></a>
+<a href="https://cloud.docker.com/u/topinambours/repository/docker/topinambours/takenoko" target="_blank"><img src="https://img.shields.io/docker/pulls/topinambours/takenoko.svg"></a>
+  
+</p>
 
-> ##### SonarQube : [sonarqube.hamlab.fr](http://sonarqube.hamlab.fr/sessions/new)
-> Login : admin\
-> Pass : admin2906
+<p align="center">
+  <a href="#presentation">Presentation</a> •
+  <a href="#lancer-une-partie">Lancer une partie</a> •
+  <a href="#plan-de-route">Plan de route</a> •
+   <a href="#la-boite">La boite</a> •
+  <a href="#notes-de-conception">Conception</a> 
+</p>
 
 
-## Master 1 Informatique - Université Nice Sophia Antipolis
+
+## Presentation
 
 > L'équipe 
 > - [Jeremy Bonsaudo](https://github.com/JeremyBonsaudo)
@@ -38,7 +55,7 @@ Version textuel n'étant pas destinée à être jouée par des êtres humains ma
  - [x] **Version 8** : Les joueurs peuvent piocher ~~et placer~~ des aménagements. Le dé météo affecte le déroulement du tour, les joueurs doivent effectuer deux actions par tours.~~ Les aménagements sont désormais intégrés dans le moteur du jeu. Une partie se termine dès lors qu'un joueur à complété un certain nombre d'objectifs selon les règles takenoko. Ajout du dé météo, les joueurs lancent le dé au début de leur tour SANS que cela n'affecte le déroulement du tour. Les joueurs disposent maintenant de stratégies pour les aménagements (décision au moment de la pioche selon le type).
  - [x] **Version 9** : Limiter le nombre d'action des joueurs, améliorer les robots pour que leurs coups complètent en priorité leurs objectifs.
  - [ ] **Version 10** : La météo influe sur les décisions des robots.
-## Y'a quoi dans la boite ?
+## La boite
 
 |Nombre| Nom | Image 
 |--|--|--|
