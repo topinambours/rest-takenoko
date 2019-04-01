@@ -2,6 +2,7 @@ package core.controllers;
 
 import communication.Container.ResponseContainer;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +12,7 @@ import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
 
 @RestController
+@Import(Plateau.class)
 public class PlateauController {
 
     private final Plateau plateau;

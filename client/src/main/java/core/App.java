@@ -1,23 +1,25 @@
 package core;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 @SpringBootApplication
-@Import(Joueur.class)
 public class App {
 
-    @Qualifier("joueur_1")
-    private Joueur joueur;
-
     public static void main(String args[]) {
+        System.out.println(Arrays.deepToString(args));
+
+        String APP_PORT = "8081";
+        if (args.length > 0){
+            APP_PORT = args[0];
+        }
+
         SpringApplication app = new SpringApplication(App.class);
         app.setDefaultProperties(Collections
-                .singletonMap("server.port", "8081"));
+                .singletonMap("server.port", APP_PORT));
         app.run(args);
     }
 
