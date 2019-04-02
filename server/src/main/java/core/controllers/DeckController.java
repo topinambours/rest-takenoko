@@ -1,15 +1,12 @@
 package core.controllers;
 
-import communication.Container.TuileContainer;
+import communication.container.ResponseContainer;
+import communication.container.TuileContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Scope;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pioche.EmptyDeckException;
 import pioche.PiocheTuile;
 import takenoko.tuile.Tuile;
@@ -40,6 +37,15 @@ public class DeckController {
     @RequestMapping("/action/piocher")
     public TuileContainer req_pioche() throws EmptyDeckException {
         return new PiocheTuile(pTuile.draw(3)).toContainer();
+    }
+
+    @PostMapping("/action/rendre_tuiles/")
+    public ResponseContainer rendre_tuiles(@RequestBody TuileContainer tuiles){
+        for (Tuile t : tuiles.getContent()){
+            pTuile.insertBottom(t);
+            log.info(t.toString() + " INSERTED TO BOTTOM OF DECK");
+        }
+        return new ResponseContainer(true, "return effective");
     }
 
     @RequestMapping("/action/rendre-tuiles/{uid_1}/{uid_2}")

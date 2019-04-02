@@ -1,25 +1,47 @@
 package core;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Import;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @SpringBootApplication
+@Import(Joueur.class)
 public class App {
+
+    @Qualifier("joueur_1")
+    Joueur joueur;
 
     public static void main(String args[]) {
         System.out.println(Arrays.deepToString(args));
 
         String APP_PORT = "8081";
+        String DIST_ADD = "http://localhost:8080";
         if (args.length > 0){
             APP_PORT = args[0];
+
+            if (args.length > 1){
+                DIST_ADD= args[1];
+            }
         }
 
+
         SpringApplication app = new SpringApplication(App.class);
-        app.setDefaultProperties(Collections
-                .singletonMap("server.port", APP_PORT));
+
+        Map<String, Object> properties = new HashMap<>();
+
+        properties.put("server.port", APP_PORT);
+        properties.put("client.port", APP_PORT);
+
+        properties.put("distant.server.address", DIST_ADD);
+
+        app.setDefaultProperties(properties);
         app.run(args);
     }
 

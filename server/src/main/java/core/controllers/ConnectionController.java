@@ -1,6 +1,6 @@
 package core.controllers;
 
-import communication.Container.ResponseContainer;
+import communication.container.ResponseContainer;
 import communication.HTTPClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

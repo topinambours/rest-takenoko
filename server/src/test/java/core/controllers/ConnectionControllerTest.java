@@ -1,6 +1,6 @@
 package core.controllers;
 
-import communication.Container.ResponseContainer;
+import communication.container.ResponseContainer;
 import communication.HTTPClient;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;

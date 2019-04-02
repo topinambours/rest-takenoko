@@ -1,6 +1,6 @@
 package pioche;
 
-import communication.Container.TuileContainer;
+import communication.container.TuileContainer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import takenoko.Couleur;

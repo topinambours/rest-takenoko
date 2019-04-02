@@ -1,6 +1,6 @@
 package core.controllers;
 
-import communication.Container.ResponseContainer;
+import communication.container.ResponseContainer;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.PathVariable;

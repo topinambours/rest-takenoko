@@ -1,8 +1,6 @@
 package core.controllers;
 
-import communication.Container.ResponseContainer;
-import communication.Container.TuileContainer;
-import communication.HTTPClient;
+import communication.container.TuileContainer;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -12,7 +10,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import pioche.EmptyDeckException;
 import pioche.PiocheTuile;

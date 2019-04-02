@@ -12,7 +12,7 @@ public class App {
     public static void main(String[] args) {
         System.out.println(Arrays.deepToString(args));
 
-        String APP_PORT = "8081";
+        String APP_PORT = "8080";
         if (args.length > 0){
             APP_PORT = args[0];
         }

@@ -1,34 +1,58 @@
 package communication;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import communication.Container.ResponseContainer;
-import communication.Container.TuileContainer;
+import communication.container.ResponseContainer;
+import communication.container.TuileContainer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import takenoko.tuile.CoordAxial;
+import takenoko.tuile.Tuile;
+
+import javax.validation.constraints.NotNull;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HTTPClient {
 
-    //TODO demander comment obtenir l'url de l'appli
-    private String user_adress = "localhost:8081";
-    private final String server_url = "http://localhost:8080";
+    private String user_adress;
+    private String server_url;
+
     private int id;
+
+    Logger log = LoggerFactory.getLogger(HTTPClient.class);
 
     public HTTPClient() {
         this.id = 0;
     }
 
     public HTTPClient(int id) {
+
         this.id = id;
     }
 
     public HTTPClient(int id, String user_adress) {
         this.id = id;
         this.user_adress = user_adress;
+    }
+
+    public HTTPClient(int id, String user_adress, String server_url) {
+        this.id = id;
+        this.user_adress = user_adress;
+        this.server_url = server_url;
     }
 
     public int getId() {
@@ -53,7 +77,24 @@ public class HTTPClient {
         return null;
     }
 
+    public <Req,Res> Res post_request(String uri,Req postObject, Class<Res> responseType){
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpEntity<Req> request = new HttpEntity<>(postObject, new HttpHeaders());
+        URI uri_req = null;
+        try {
+            uri_req = new URI(String.format("%s/%s", server_url, uri));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return restTemplate.postForObject(uri_req, request, responseType);
+
+    }
+
+
+
     public ResponseContainer pingServer() {
+        log.info(user_adress + " performing ping to " + server_url);
         return request(String.format("ping/%d/%s", id, user_adress), ResponseContainer.class);
     }
 
@@ -67,6 +108,13 @@ public class HTTPClient {
 
     public boolean rendre_tuiles(int tuileId, int tuileId_2){
         return request(String.format("action/rendre-tuiles/%s/%s",tuileId, tuileId_2), Boolean.class);
+    }
+
+    public ResponseContainer rendre_tuiles_2(Tuile tuile, Tuile tuile_2){
+        List<Tuile> out = new ArrayList<>();
+        out.add(tuile);
+        out.add(tuile_2);
+        return post_request("action/rendre_tuiles/", new TuileContainer(out), ResponseContainer.class);
     }
 
     public ResponseContainer poser_tuile(int tuileId, CoordAxial pos){
