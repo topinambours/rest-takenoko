@@ -16,21 +16,24 @@ import java.util.Map;
 public class App {
 
     @Qualifier("joueur_1")
-    Joueur joueur;
+    static Joueur joueur;
 
     public static void main(String args[]) {
         System.out.println(Arrays.deepToString(args));
 
         String APP_PORT = "8081";
         String DIST_ADD = "http://localhost:8080";
+        String USER_ID = "1";
         if (args.length > 0){
             APP_PORT = args[0];
 
             if (args.length > 1){
                 DIST_ADD= args[1];
             }
+            if (args.length > 2){
+                USER_ID = args[2];
+            }
         }
-
 
         SpringApplication app = new SpringApplication(App.class);
 
@@ -38,7 +41,7 @@ public class App {
 
         properties.put("server.port", APP_PORT);
         properties.put("client.port", APP_PORT);
-
+        properties.put("client.id", USER_ID);
         properties.put("distant.server.address", DIST_ADD);
 
         app.setDefaultProperties(properties);

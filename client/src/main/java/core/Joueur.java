@@ -74,6 +74,7 @@ public class Joueur extends HTTPClient {
     public Joueur joueur_1() {
         String user_port = env.getProperty("client.port");
         String server_adress = env.getProperty("distant.server.address");
-        return new Joueur(1, "localhost:" + user_port, server_adress);
+        int player_id = Integer.parseInt(env.getProperty("client.id"));
+        return new Joueur(player_id, "localhost:" + user_port, server_adress);
     }
 }
