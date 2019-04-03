@@ -4,6 +4,7 @@ import communication.container.TuileContainer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import takenoko.Couleur;
+import takenoko.tuile.Amenagement;
 import takenoko.tuile.Tuile;
 
 import java.util.ArrayList;
@@ -47,12 +48,41 @@ public class PiocheTuile extends Pioche<Tuile> {
     @Primary
     @Bean(name = "piocheDepart")
     public PiocheTuile pioche_depart() {
+        int i = 1;
         ArrayList<Tuile> tuiles = new ArrayList<>();
-        for (int i = 1; i <= 27; i++) {
-            if (i <= 11) tuiles.add(new Tuile(i, Couleur.VERT));
-            if (i > 11 && i <= 18) tuiles.add(new Tuile(i, Couleur.ROSE));
-            if (i > 18) tuiles.add(new Tuile(i, Couleur.JAUNE));
-        }
+
+        tuiles.add(new Tuile(i++, Couleur.VERT));
+        tuiles.add(new Tuile(i++, Couleur.VERT));
+        tuiles.add(new Tuile(i++, Couleur.VERT));
+        tuiles.add(new Tuile(i++, Couleur.VERT));
+        tuiles.add(new Tuile(i++, Couleur.VERT));
+        tuiles.add(new Tuile(i++, Couleur.VERT));
+        tuiles.add(new Tuile(i++, Couleur.VERT, Amenagement.BASSIN));
+        tuiles.add(new Tuile(i++, Couleur.VERT, Amenagement.BASSIN));
+        tuiles.add(new Tuile(i++, Couleur.VERT, Amenagement.ENCLOS));
+        tuiles.add(new Tuile(i++, Couleur.VERT, Amenagement.ENCLOS));
+        tuiles.add(new Tuile(i++, Couleur.VERT, Amenagement.ENGRAIS));
+
+
+
+        tuiles.add(new Tuile(i++, Couleur.ROSE));
+        tuiles.add(new Tuile(i++, Couleur.ROSE));
+        tuiles.add(new Tuile(i++, Couleur.ROSE));
+        tuiles.add(new Tuile(i++, Couleur.ROSE));
+        tuiles.add(new Tuile(i++, Couleur.ROSE, Amenagement.BASSIN));
+        tuiles.add(new Tuile(i++, Couleur.ROSE, Amenagement.ENCLOS));
+        tuiles.add(new Tuile(i++, Couleur.ROSE, Amenagement.ENGRAIS));
+
+        tuiles.add(new Tuile(i++, Couleur.JAUNE));
+        tuiles.add(new Tuile(i++, Couleur.JAUNE));
+        tuiles.add(new Tuile(i++, Couleur.JAUNE));
+        tuiles.add(new Tuile(i++, Couleur.JAUNE));
+        tuiles.add(new Tuile(i++, Couleur.JAUNE));
+        tuiles.add(new Tuile(i++, Couleur.JAUNE));
+        tuiles.add(new Tuile(i++, Couleur.JAUNE, Amenagement.BASSIN));
+        tuiles.add(new Tuile(i++, Couleur.JAUNE, Amenagement.ENCLOS));
+        tuiles.add(new Tuile(i, Couleur.JAUNE, Amenagement.ENGRAIS));
+
         return new PiocheTuile(tuiles);
     }
 

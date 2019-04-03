@@ -18,7 +18,6 @@ import org.springframework.web.client.RestTemplate;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
 
-import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;

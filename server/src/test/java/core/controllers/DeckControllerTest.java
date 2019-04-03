@@ -19,16 +19,15 @@ import takenoko.tuile.Tuile;
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class DeckControllerTest extends CucumberStepDefinitions {
+public class DeckControllerTest {
 
     private DeckController d;
-    private TuileContainer t;
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -85,31 +84,6 @@ public class DeckControllerTest extends CucumberStepDefinitions {
 
     }
 
-
-    /**
-     * Cucumber step def
-     */
-
-    @Ignore
-    @When("Un joueur pioche 3 tuiles")
-    public void pioche_is_requested() throws EmptyDeckException {
-        t = d.req_pioche();
-    }
-
-    @Ignore
-    @When("le joueur rend les deux tuiles de sa pioche")
-    public void joueur_rend_surplus(){
-        d.req_rendre_tuiles(t.getContent().get(1).getUnique_id(), t.getContent().get(2).getUnique_id());
-    }
-
-    @Ignore
-    @Then("La taille de la pioche est de {int}")
-    public void size_of_pioche(int size) {
-        assertEquals(size, d.getpTuile().size());
-    }
-
-    @Ignore
-    @Given("using fresh deck controller")
     public DeckController generate_fresh_deck_controller(){
         ArrayList<Tuile> tuiles = new ArrayList<>();
         for (int i = 1; i <= 27; i++) {
