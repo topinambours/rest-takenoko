@@ -2,6 +2,7 @@ package core.controllers;
 
 import communication.container.ResponseContainer;
 import communication.HTTPClient;
+import core.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,20 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Hashtable;
 
 @RestController
-public class ConnectionController {
+public class ConnectionController extends Server {
 
     Logger logger = LoggerFactory.getLogger(ConnectionController.class);
-
-    public Hashtable<Integer, HTTPClient> getRegisteredUsers() {
-        return registeredUsers;
-    }
-
-    private Hashtable<Integer, HTTPClient> registeredUsers;
-
-    @Autowired
-    public ConnectionController() {
-        this.registeredUsers = new Hashtable<>();
-    }
 
     @RequestMapping("/ping/{id}/{user_url}")
     public ResponseContainer ping_received(
