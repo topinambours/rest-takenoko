@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
+
 import java.util.HashMap;
 import java.util.Map;
 

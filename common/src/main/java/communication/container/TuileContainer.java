@@ -2,7 +2,6 @@ package communication.container;
 
 import takenoko.tuile.Tuile;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

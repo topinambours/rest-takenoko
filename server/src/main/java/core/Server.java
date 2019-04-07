@@ -16,6 +16,10 @@ public class Server {
 
     protected Hashtable<Integer, HTTPClient> registeredUsers;
 
+    public MultiQueue getQueues() {
+        return queues;
+    }
+
     protected MultiQueue queues;
 
     public Server(){

@@ -1,10 +1,6 @@
 package communication.container;
 
 import takenoko.Couleur;
-import takenoko.tuile.Tuile;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Un bambouContainer est une classe permettant de transporter les 3 types de bambous (par couleur)

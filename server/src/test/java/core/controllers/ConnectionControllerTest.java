@@ -1,7 +1,7 @@
 package core.controllers;
 
-import communication.container.ResponseContainer;
 import communication.HTTPClient;
+import communication.container.ResponseContainer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

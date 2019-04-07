@@ -5,12 +5,8 @@ import communication.container.ResponseContainer;
 import communication.container.TuileContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.client.ResourceAccessException;
@@ -122,6 +118,10 @@ public class HTTPClient {
 
     public ResponseContainer req_register(){
         return request(String.format("register/%d/%s", id, user_adress), ResponseContainer.class);
+    }
+
+    public ResponseContainer req_matchmaking(int gameSize){
+        return request(String.format("matchmaking/%d/%d", id, gameSize), ResponseContainer.class);
     }
 
 

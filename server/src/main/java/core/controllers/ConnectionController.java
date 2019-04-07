@@ -1,16 +1,13 @@
 package core.controllers;
 
-import communication.container.ResponseContainer;
 import communication.HTTPClient;
+import communication.container.ResponseContainer;
 import core.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Hashtable;
 
 @RestController
 public class ConnectionController extends Server {
@@ -42,6 +39,33 @@ public class ConnectionController extends Server {
             return new ResponseContainer(true, "Registration complete");
         }
 
+    }
+
+    @RequestMapping("/matchmaking/{id}/{gameSize}")
+    public ResponseContainer matchmaking_req(
+            @PathVariable int id,
+            @PathVariable int gameSize
+    ){
+        logger.info(String.format("Player %d request matchmaking of size %d", id, gameSize));
+        if (registeredUsers.containsKey(id)){
+            if (gameSize >= 2 & gameSize <= 4){
+                queues.addClient(gameSize, registeredUsers.get(id));
+
+                // @TODO demander une game à une entité compétente.
+                if (queues.enoughPlayerForGame(gameSize)){
+                    return new ResponseContainer(true, String.format("Enterring new game with %d other players.", gameSize - 1));
+                }
+                else{
+                    return new ResponseContainer(true, "Performing matchmaking");
+                }
+            }else{
+                return new ResponseContainer(false, "Invalid game size");
+            }
+
+            // Le joueur n'est pas enregistré, son adresse est donc inconnu, impossible de démarrer une partie.
+        }else{
+            return new ResponseContainer(false, "You must be logged before enter matchmaking");
+        }
     }
 
 
