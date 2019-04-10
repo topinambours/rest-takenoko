@@ -3,6 +3,7 @@ package communication;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import communication.container.ResponseContainer;
 import communication.container.TuileContainer;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -19,8 +20,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Data
 public class HTTPClient {
 
     private String user_adress;

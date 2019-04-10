@@ -2,17 +2,33 @@ package core.controllers;
 
 import communication.HTTPClient;
 import communication.container.ResponseContainer;
-import core.Server;
+import core.MultiQueue;
+import core.game.GameManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-public class ConnectionController extends Server {
+import java.util.Hashtable;
 
-    Logger logger = LoggerFactory.getLogger(ConnectionController.class);
+@RestController
+public class ConnectionController {
+
+    private Logger logger = LoggerFactory.getLogger(ConnectionController.class);
+
+    private Hashtable<Integer, HTTPClient> registeredUsers;
+    private GameManager gameManager;
+    private MultiQueue queues;
+
+
+    @Autowired
+    public ConnectionController(){
+        this.registeredUsers = new Hashtable<>();
+        this.queues = new MultiQueue();
+        this.gameManager = new GameManager();
+    }
 
     @RequestMapping("/ping/{id}/{user_url}")
     public ResponseContainer ping_received(
@@ -53,6 +69,7 @@ public class ConnectionController extends Server {
 
                 // @TODO demander une game à une entité compétente.
                 if (queues.enoughPlayerForGame(gameSize)){
+                    gameManager.requestNewGame(queues.removeFromQueue(gameSize, gameSize));
                     return new ResponseContainer(true, String.format("Enterring new game with %d other players.", gameSize - 1));
                 }
                 else{
@@ -66,6 +83,14 @@ public class ConnectionController extends Server {
         }else{
             return new ResponseContainer(false, "You must be logged before enter matchmaking");
         }
+    }
+
+    public MultiQueue getQueues() {
+        return queues;
+    }
+
+    public Hashtable<Integer, HTTPClient> getRegisteredUsers() {
+        return registeredUsers;
     }
 
 

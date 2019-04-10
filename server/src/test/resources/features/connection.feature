@@ -72,7 +72,7 @@ Feature: Related to connections with the server
     When Client with id 25 request for matchmaking for games of size 2
     Then Client received true with the message "Enterring new game with 1 other players."
     # At this stage both player will receive id of the game they have to play
-    Then The number of waiting client in queue for game of size 2 is 2
+    Then The number of waiting client in queue for game of size 2 is 0
 
   Scenario: Multiples clients on multiple game size
     Given Using fresh connection controller
@@ -98,9 +98,11 @@ Feature: Related to connections with the server
     And Client with id 8 request for matchmaking for games of size 4
     When Client with id 9 and address "localhost:8087" request for registration
     And Client with id 9 request for matchmaking for games of size 4
-    
-    Then The number of waiting client in queue for game of size 2 is 3
-    And The number of waiting client in queue for game of size 3 is 4
+
+    # One game have been setup for 2 players
+    Then The number of waiting client in queue for game of size 2 is 1
+    # And one game have been setup for 3 players
+    And The number of waiting client in queue for game of size 3 is 1
     And The number of waiting client in queue for game of size 4 is 2
     
     
