@@ -1,4 +1,4 @@
-package pioche;
+package core.takenoko.pioche;
 
 public class EmptyDeckException extends Exception {
 

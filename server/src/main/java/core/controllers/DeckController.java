@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.*;
-import pioche.EmptyDeckException;
-import pioche.PiocheTuile;
+import core.takenoko.pioche.EmptyDeckException;
+import core.takenoko.pioche.PiocheTuile;
 import takenoko.tuile.Tuile;
 
 import java.util.HashMap;
@@ -59,10 +59,10 @@ public class DeckController {
             Tuile t2 = available_tuiles.get(uid_2);
 
             pTuile.insertBottom(t1);
-            log.info(t1.toString() + " replacée dans la pioche.");
+            log.info(t1.toString() + " replacée dans la core.takenoko.pioche.");
 
             pTuile.insertBottom(t2);
-            log.info(t2.toString() + " replacée dans la pioche.");
+            log.info(t2.toString() + " replacée dans la core.takenoko.pioche.");
 
             return true;
         }

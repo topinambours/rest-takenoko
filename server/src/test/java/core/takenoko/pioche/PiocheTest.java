@@ -1,4 +1,4 @@
-package pioche;
+package core.takenoko.pioche;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -61,7 +61,7 @@ public class PiocheTest {
     }
 
     /**
-     * On peut garantir un maximum de 35% d'élément à la même position pour une pioche de 27 elements.
+     * On peut garantir un maximum de 35% d'élément à la même position pour une core.takenoko.pioche de 27 elements.
      * @throws EmptyDeckException
      */
     @Test

@@ -2,6 +2,8 @@ package takenoko;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import takenoko.tuile.Amenagement;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
 
@@ -45,4 +47,11 @@ public class Plateau {
         return new Plateau();
     }
 
+    @Bean(name = "plateauTakenoko")
+    @Scope("singleton")
+    public Plateau plateau_depart() {
+        Plateau out = new Plateau();
+        out.poserTuile(new CoordAxial(0,0), new Tuile(0, Couleur.BLEU, Amenagement.NONE));
+        return out;
+    }
 }

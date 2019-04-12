@@ -1,8 +1,11 @@
-package pioche;
+package core.takenoko.pioche;
 
 import communication.container.TuileContainer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import takenoko.Couleur;
 import takenoko.tuile.Amenagement;
 import takenoko.tuile.Tuile;
@@ -13,6 +16,7 @@ import java.util.List;
 /**
  * Pioche de parcelles
  */
+@Component
 public class PiocheTuile extends Pioche<Tuile> {
 
     /**
@@ -27,6 +31,7 @@ public class PiocheTuile extends Pioche<Tuile> {
     /**
      * Création d'une Container vide
      */
+    @Autowired
     public PiocheTuile() {
         super();
     }
@@ -47,6 +52,7 @@ public class PiocheTuile extends Pioche<Tuile> {
 
     @Primary
     @Bean(name = "piocheDepart")
+    @Scope("prototype")
     public PiocheTuile pioche_depart() {
         int i = 1;
         ArrayList<Tuile> tuiles = new ArrayList<>();

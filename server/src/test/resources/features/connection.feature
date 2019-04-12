@@ -1,4 +1,4 @@
-Feature: Related to connections with the server
+#Feature: Related to connections with the server
   
   Scenario: client performing ping to server
     Given Using fresh connection controller

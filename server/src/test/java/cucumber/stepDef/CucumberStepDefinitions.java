@@ -6,8 +6,8 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Ignore;
-import pioche.EmptyDeckException;
-import pioche.PiocheTuile;
+import core.takenoko.pioche.EmptyDeckException;
+import core.takenoko.pioche.PiocheTuile;
 import takenoko.Couleur;
 import takenoko.tuile.Tuile;
 
