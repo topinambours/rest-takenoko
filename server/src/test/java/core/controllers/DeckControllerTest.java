@@ -24,7 +24,7 @@ import static org.junit.Assert.assertFalse;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Ignore
 public class DeckControllerTest {
-
+    /*
     private DeckController d;
 
     @Autowired
@@ -92,5 +92,5 @@ public class DeckControllerTest {
         d = new DeckController(new PiocheTuile(tuiles));
         return d;
     }
-
+    */
 }

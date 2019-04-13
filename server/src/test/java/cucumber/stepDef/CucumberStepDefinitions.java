@@ -19,13 +19,9 @@ import static junit.framework.TestCase.assertEquals;
 @Ignore
 public class CucumberStepDefinitions {
 
-
+    /*
     private DeckController d;
     private TuileContainer t2;
-
-    /**
-     * Cucumber step def
-     */
 
     @When("Un joueur pioche 3 tuiles")
     public void pioche_is_requested() throws EmptyDeckException {
@@ -53,4 +49,5 @@ public class CucumberStepDefinitions {
         d = new DeckController(new PiocheTuile(tuiles));
         return d;
     }
+    */
 }

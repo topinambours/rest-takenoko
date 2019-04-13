@@ -25,7 +25,7 @@ public class ConnectionControllerTest {
 
     @Test
     public void pingTest() {
-        testClient = new HTTPClient(0);
+        testClient = new HTTPClient(0, "foo", "foo");
         String req = String.format("/ping/%s/%s", testClient.getId(), testClient.getUser_adress());
         ResponseContainer resp = this.restTemplate.getForObject(req, ResponseContainer.class);
         assertEquals(resp, new ResponseContainer(true, "pong"));
@@ -33,7 +33,7 @@ public class ConnectionControllerTest {
 
     @Test
     public void registrationTest(){
-        testClient = new HTTPClient(1);
+        testClient = new HTTPClient(1, "foo", "foo");
         String req = String.format("/register/%s/%s", testClient.getId(), testClient.getUser_adress());
         ResponseContainer resp = this.restTemplate.getForObject(req, ResponseContainer.class);
         assertEquals(new ResponseContainer(true, "Registration complete"), resp);
@@ -42,7 +42,7 @@ public class ConnectionControllerTest {
     @Test
     public void multipleRegistrationTest(){
 
-        testClient = new HTTPClient(2);
+        testClient = new HTTPClient(2, "foo", "foo");
         String req = String.format("/register/%s/%s", testClient.getId(), testClient.getUser_adress());
         ResponseContainer resp = this.restTemplate.getForObject(req, ResponseContainer.class);
         assertEquals(new ResponseContainer(true, "Registration complete"), resp);

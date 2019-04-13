@@ -1,6 +1,8 @@
 package core.controllers;
 
 import communication.container.ResponseContainer;
+import core.GameEngine;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,12 +19,13 @@ public class PlateauController {
 
     private final Plateau plateau;
 
-    private DeckController dc;
+    @Autowired
+    GameEngine game;
 
     public PlateauController(@Qualifier("plateau_vide") Plateau plateau,DeckController dc) {
-        this.dc = dc;
         this.plateau = plateau;
     }
+    /*
 
     @RequestMapping("/plateau/first")
     public Tuile status_req() {
@@ -35,4 +38,5 @@ public class PlateauController {
         System.out.println(plateau.toString());
         return new ResponseContainer(true, "blabla");
     }
+    */
 }

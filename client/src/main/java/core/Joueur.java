@@ -7,12 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 import takenoko.tuile.Tuile;
 
-import java.util.Arrays;
-
-
+@Component
 public class Joueur extends HTTPClient {
 
     @Autowired
@@ -22,41 +22,22 @@ public class Joueur extends HTTPClient {
 
     private Tuile current_tuile;
 
-    private Joueur() {
-        super(-1);
-    }
+    public boolean myTurn;
 
-    public Joueur(int id) {
-        super(id);
+    @Autowired
+    public Joueur(){
+        super(0,"","");
     }
 
     public Joueur(int id, String user_port, String distant_server_url) {
         super(id, user_port, distant_server_url);
-        ResponseContainer resp = pingServer();
-        if (resp.response) {
-            logger.info("Pong received from server");
-            ResponseContainer register_resp = req_register();
-            logger.info(register_resp.toString());
-        }
-
-        // Request for matchmaking at creation @TODO ajouter un paramètre à l'application {GameSize}
-        logger.info(req_matchmaking(2).toString());
+        registerGame();
     }
 
-    public void piocher() {
-        // Ensemble de trois tuiles
-        TuileContainer result = piocher_tuiles();
-
-        //TODO, garder la meilleure des trois en accord avec la stratégie du joueur.
-        current_tuile = result.getContent().get(0);
-
-        rendre_tuiles(
-                result.getContent().get(1).getUnique_id(),
-                result.getContent().get(2).getUnique_id()
-        );
-
-        System.out.println("Le joueur a pioché :" + Arrays.deepToString(result.getContent().toArray()));
-        System.out.println("Le joueur garde la tuile : " + current_tuile);
+    public ResponseContainer turn(){
+        TuileContainer tuiles = piocher_tuiles();
+        logger.info(String.format("Le joueur a pioché %d tuiles : %s", tuiles.getContent().size(), tuiles.getContent()));
+        return notifyEndTurn();
     }
 
     /**
@@ -64,6 +45,7 @@ public class Joueur extends HTTPClient {
      * @return
      */
 
+    @Primary
     @Bean(name = "joueur_1")
     public Joueur joueur_1() {
         String user_port = env.getProperty("client.port");

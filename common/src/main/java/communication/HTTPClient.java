@@ -6,10 +6,14 @@ import communication.container.TuileContainer;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import takenoko.tuile.CoordAxial;
@@ -21,28 +25,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Component
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class HTTPClient {
 
     private String user_adress;
+
     private String server_url;
 
     private int id;
 
-    Logger log = LoggerFactory.getLogger(HTTPClient.class);
-
-    public HTTPClient() {
-        this.id = 0;
-    }
-
-    public HTTPClient(int id) {
-
-        this.id = id;
-    }
-
-    public HTTPClient(int id, String user_adress) {
-        this.id = id;
-        this.user_adress = user_adress;
-    }
+    //Logger log = LoggerFactory.getLogger(HTTPClient.class);
 
     public HTTPClient(int id, String user_adress, String server_url) {
         this.id = id;
@@ -62,13 +55,23 @@ public class HTTPClient {
         return server_url;
     }
 
+    public <T> T self_request(String uri, Class<T> responseType) {
+        try {
+            return new RestTemplate().getForObject(String.format("%s/%s", "http://" + user_adress, uri), responseType);
+        } catch (ResourceAccessException error) {
+            System.out.println(error.getMessage());
+        }
+        //System.exit(1);
+        return null;
+    }
+
     public <T> T request(String uri, Class<T> responseType) {
         try {
             return new RestTemplate().getForObject(String.format("%s/%s", server_url, uri), responseType);
         } catch (ResourceAccessException error) {
             System.out.println("Server disconnected");
         }
-        System.exit(1);
+        //System.exit(1);
         return null;
     }
 
@@ -86,53 +89,32 @@ public class HTTPClient {
 
     }
 
-
-
-    public ResponseContainer pingServer() {
-        log.info(user_adress + " performing ping to " + server_url);
-        return request(String.format("ping/%d/%s", id, user_adress), ResponseContainer.class);
+    public ResponseContainer registerGame(){
+        return post_request("register/", this, ResponseContainer.class);
     }
 
-    public ResponseContainer enter_matchmaking() {
-        return request(String.format("action/enter_matchmaking/%d/%s", server_url, id, user_adress), ResponseContainer.class);
+    public ResponseContainer isItMyTurn(){
+        return post_request("current_player_turn", this, ResponseContainer.class);
     }
 
     public TuileContainer piocher_tuiles() {
-        return request(String.format("action/piocher", server_url), TuileContainer.class);
+        return request("action/piocher", TuileContainer.class);
     }
 
-    public boolean rendre_tuiles(int tuileId, int tuileId_2){
-        return request(String.format("action/rendre-tuiles/%s/%s",tuileId, tuileId_2), Boolean.class);
+    public ResponseContainer notifyEndTurn(){
+        return request("/end_turn", ResponseContainer.class);
     }
 
-    public ResponseContainer rendre_tuiles_2(Tuile tuile, Tuile tuile_2){
-        List<Tuile> out = new ArrayList<>();
-        out.add(tuile);
-        out.add(tuile_2);
-        return post_request("action/rendre_tuiles/", new TuileContainer(out), ResponseContainer.class);
+    public ResponseContainer isGameEnded(){
+        return request("/gameEnded", ResponseContainer.class);
     }
 
-    public ResponseContainer poser_tuile(int tuileId, CoordAxial pos){
-        return request(String.format("action/poser_tuile/%s/%s/%s",tuileId, pos.getQ(), pos.getR()), ResponseContainer.class);
+    public ResponseContainer isGameStarted(){
+        return request("/gameStarted", ResponseContainer.class);
     }
-
-    public ResponseContainer req_register(){
-        return request(String.format("register/%d/%s", id, user_adress), ResponseContainer.class);
-    }
-
-    public ResponseContainer req_matchmaking(int gameSize){
-        return request(String.format("matchmaking/%d/%d", id, gameSize), ResponseContainer.class);
-    }
-
 
     @Override
     public String toString() {
         return String.format("HTTPClient : id=%d uri=%s onServer=%s", id, user_adress, server_url);
-    }
-
-    @Bean(name = "client_test")
-    @Scope("singleton")
-    public HTTPClient httpClient_for_test() {
-        return new HTTPClient(1);
     }
 }
