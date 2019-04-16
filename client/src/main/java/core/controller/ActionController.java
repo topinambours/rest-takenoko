@@ -20,8 +20,9 @@ public class ActionController {
             System.exit(0);
         }
 
-        System.out.println(String.format("GET NOTIFIED TURN OF PLAYER %d", current_id));
+
         if (current_id == joueur.getId()){
+            System.out.println("GET NOTIFIED IT IS MY TURN");
             joueur.myTurn = true;
         }
         return new ResponseContainer(true, String.format("turn complete for player %d", joueur.getId()));

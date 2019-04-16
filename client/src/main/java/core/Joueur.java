@@ -1,6 +1,7 @@
 package core;
 
 import communication.HTTPClient;
+import communication.container.PoseTuileContainer;
 import communication.container.ResponseContainer;
 import communication.container.TuileContainer;
 import core.strategie.RandomStrategie;
@@ -8,17 +9,30 @@ import core.strategie.Strategie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
 
-@Component
-public class Joueur extends HTTPClient {
+import java.util.Arrays;
+import java.util.List;
 
-    @Autowired
-    private Environment env;
+@Component
+@Import(HTTPClient.class)
+public class Joueur {
+
+    public HTTPClient getHttpClient() {
+        return httpClient;
+    }
+
+    public void setHttpClient(HTTPClient httpClient) {
+        this.httpClient = httpClient;
+    }
+
+    private HTTPClient httpClient;
 
     private final Logger logger = LoggerFactory.getLogger(Joueur.class);
 
@@ -26,42 +40,47 @@ public class Joueur extends HTTPClient {
 
     private Strategie strategie;
 
-    public boolean myTurn;
+    public boolean myTurn = false;
 
-    public Joueur(){
-        super(0,"","");
+    public Joueur(@Qualifier("http_client") HTTPClient httpClient){
+        this.httpClient = httpClient;
         this.strategie = new RandomStrategie();
+        System.out.println(httpClient);
     }
 
-    public Joueur(int id, String user_port, String distant_server_url,Strategie strategie) {
-        super(id, user_port, distant_server_url);
-        registerGame();
-        this.strategie = strategie;
-    }
-
-    public Joueur(int id, String user_port, String distant_server_url) {
-        super(id, user_port, distant_server_url);
-        registerGame();
+    public int getId(){
+        return httpClient.getId();
     }
 
     public ResponseContainer turn(){
-        TuileContainer tuiles = piocher_tuiles();
+        TuileContainer tuiles = httpClient.piocher_tuiles();
         logger.info(String.format("Le joueur a pioché %d tuiles : %s", tuiles.getContent().size(), tuiles.getContent()));
-        return notifyEndTurn();
-    }
 
-    /**
-     *
-     * @return
-     */
+        Tuile selectedForPos = strategie.selectTuile(tuiles.getContent());
+        tuiles.getContent().remove(selectedForPos);
+        System.out.println(tuiles);
+        System.out.println(selectedForPos);
+        // On renvoi les tuiles dans la pioche
+        httpClient.rendreTuiles(tuiles);
+
+        List<CoordAxial> legalMoves = httpClient.requestLegalMovesTuiles().getContent();
+
+        logger.info(String.format("LE JOUEUR PEUT JOUER SUR CES COORDS : %s", Arrays.deepToString(legalMoves.toArray())));
+
+        CoordAxial pos = strategie.selectEmplacement(legalMoves);
+
+        logger.info(String.format("LE JOUEUR POSE SA TUILE %s en %s", selectedForPos.toString(), pos.toString()));
+
+        ResponseContainer resp = httpClient.poserTuile(new PoseTuileContainer(pos, selectedForPos));
+
+        logger.info(resp.toString());
+
+        return httpClient.notifyEndTurn();
+    }
 
     @Primary
     @Bean(name = "joueur_1")
     public Joueur joueur_1() {
-        String user_port = env.getProperty("client.port");
-        String server_adress = env.getProperty("distant.server.address");
-        int player_id = Integer.parseInt(env.getProperty("client.id"));
-        this.strategie = new RandomStrategie();
-        return new Joueur(player_id, "localhost:" + user_port, server_adress);
+        return new Joueur(httpClient);
     }
 }

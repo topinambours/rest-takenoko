@@ -1,19 +1,19 @@
 package communication;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import communication.container.CoordContainer;
+import communication.container.PoseTuileContainer;
 import communication.container.ResponseContainer;
 import communication.container.TuileContainer;
-import lombok.Data;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.AsyncRestTemplate;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import takenoko.tuile.CoordAxial;
@@ -21,13 +21,13 @@ import takenoko.tuile.Tuile;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
 
-@Data
 @Component
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class HTTPClient {
+
+    @Autowired
+    private Environment env;
 
     private String user_adress;
 
@@ -36,11 +36,17 @@ public class HTTPClient {
     private int id;
 
     //Logger log = LoggerFactory.getLogger(HTTPClient.class);
+    public HTTPClient(){
+        this.id = -1;
+        this.user_adress = "";
+        this.server_url = "";
+    }
 
     public HTTPClient(int id, String user_adress, String server_url) {
         this.id = id;
         this.user_adress = user_adress;
         this.server_url = server_url;
+        registerGame();
     }
 
     public int getId() {
@@ -60,8 +66,8 @@ public class HTTPClient {
             return new RestTemplate().getForObject(String.format("%s/%s", "http://" + user_adress, uri), responseType);
         } catch (ResourceAccessException error) {
             System.out.println(error.getMessage());
+            System.exit(1);
         }
-        //System.exit(1);
         return null;
     }
 
@@ -70,8 +76,8 @@ public class HTTPClient {
             return new RestTemplate().getForObject(String.format("%s/%s", server_url, uri), responseType);
         } catch (ResourceAccessException error) {
             System.out.println("Server disconnected");
+            System.exit(1);
         }
-        //System.exit(1);
         return null;
     }
 
@@ -101,6 +107,18 @@ public class HTTPClient {
         return request("action/piocher", TuileContainer.class);
     }
 
+    public ResponseContainer rendreTuiles(TuileContainer tuiles){
+        return post_request("/action/rendre_tuiles/", tuiles, ResponseContainer.class);
+    }
+
+    public ResponseContainer poserTuile(PoseTuileContainer poseTuileContainer){
+        return post_request("/action/poser-tuile/", poseTuileContainer, ResponseContainer.class);
+    }
+
+    public CoordContainer requestLegalMovesTuiles(){
+        return request("/plateau/legal/", CoordContainer.class);
+    }
+
     public ResponseContainer notifyEndTurn(){
         return request("/end_turn", ResponseContainer.class);
     }
@@ -113,8 +131,30 @@ public class HTTPClient {
         return request("/gameStarted", ResponseContainer.class);
     }
 
+    public void setUser_adress(String user_adress) {
+        this.user_adress = user_adress;
+    }
+
+    public void setServer_url(String server_url) {
+        this.server_url = server_url;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+
     @Override
     public String toString() {
         return String.format("HTTPClient : id=%d uri=%s onServer=%s", id, user_adress, server_url);
+    }
+
+    @Primary
+    @Bean(name = "http_client")
+    public HTTPClient httpClient(){
+        String user_port = env.getProperty("client.port");
+        String server_adress = env.getProperty("distant.server.address");
+        int player_id = Integer.parseInt(env.getProperty("client.id"));
+        return new HTTPClient(player_id, "localhost:" + user_port, server_adress);
     }
 }

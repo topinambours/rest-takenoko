@@ -11,6 +11,11 @@ public class CoordAxial {
     private int q;
     private int r;
 
+    public CoordAxial(){
+        this.q = 0;
+        this.r = 0;
+    }
+
     public CoordAxial(int q, int r) {
         this.q = q;
         this.r = r;
