@@ -11,6 +11,9 @@ public class PoseTuileContainer {
 
     private Tuile tuile;
 
+    public PoseTuileContainer() {
+    }
+
     public PoseTuileContainer(CoordAxial pos, Tuile tuile){
         this.pos = pos;
         this.tuile = tuile;
