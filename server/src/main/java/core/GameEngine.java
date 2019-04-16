@@ -66,7 +66,7 @@ public class GameEngine {
     }
 
     public boolean gameEnded(){
-        return piocheTuile.isEmpty();
+        return plateau.getTuiles().size() == 28;
     }
 
     @Primary

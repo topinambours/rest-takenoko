@@ -1,6 +1,7 @@
 package communication;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.jcabi.aspects.RetryOnFailure;
 import communication.container.CoordContainer;
 import communication.container.PoseTuileContainer;
 import communication.container.ResponseContainer;
@@ -61,26 +62,17 @@ public class HTTPClient {
         return server_url;
     }
 
+    @RetryOnFailure(attempts = 5, delay = 200, verbose = true)
     public <T> T self_request(String uri, Class<T> responseType) {
-        try {
-            return new RestTemplate().getForObject(String.format("%s/%s", "http://" + user_adress, uri), responseType);
-        } catch (ResourceAccessException error) {
-            System.out.println(error.getMessage());
-            System.exit(1);
-        }
-        return null;
+        return new RestTemplate().getForObject(String.format("%s/%s", "http://" + user_adress, uri), responseType);
     }
 
+    @RetryOnFailure(attempts = 5, delay = 200, verbose = true)
     public <T> T request(String uri, Class<T> responseType) {
-        try {
-            return new RestTemplate().getForObject(String.format("%s/%s", server_url, uri), responseType);
-        } catch (ResourceAccessException error) {
-            System.out.println("Server disconnected");
-            System.exit(1);
-        }
-        return null;
+        return new RestTemplate().getForObject(String.format("%s/%s", server_url, uri), responseType);
     }
 
+    @RetryOnFailure(attempts = 5, delay = 200, verbose = true)
     public <Req,Res> Res post_request(String uri,Req postObject, Class<Res> responseType){
         RestTemplate restTemplate = new RestTemplate();
 

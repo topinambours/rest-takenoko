@@ -15,6 +15,10 @@ import java.util.stream.Collectors;
 @Configuration
 public class Plateau {
 
+    public HashMap<CoordAxial, Tuile> getTuiles() {
+        return tuiles;
+    }
+
     private HashMap<CoordAxial, Tuile> tuiles;
 
     public Plateau() {
