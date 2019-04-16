@@ -17,9 +17,7 @@ public class ActionController {
     public ResponseContainer current_player(@PathVariable int current_id) {
         if (current_id == -1){
             System.out.println("NO MORE PLOTS GAME ENDED");
-            System.exit(0);
         }
-
 
         if (current_id == joueur.getId()){
             System.out.println("GET NOTIFIED IT IS MY TURN");

@@ -12,6 +12,9 @@ public class RandomStrategie implements Strategie {
 
     @Override
     public Tuile selectTuile(List<Tuile> tuiles) {
+        if (tuiles.size() == 1){
+            return tuiles.get(0);
+        }
         Random rand = new Random();
         int size = tuiles.size();
         System.out.println("=>size " + size);

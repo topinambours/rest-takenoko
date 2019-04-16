@@ -66,6 +66,8 @@ public class GameEngine {
     }
 
     public boolean gameEnded(){
+        System.out.println(plateau.getTuiles().size());
+        System.out.println(plateau.toString());
         return plateau.getTuiles().size() == 28;
     }
 

@@ -21,14 +21,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class PlateauController {
     private final Logger log = LoggerFactory.getLogger(PlateauController.class);
 
-    private final Plateau plateau;
-
     @Autowired
     GameEngine game;
 
-    public PlateauController(@Qualifier("plateau_vide") Plateau plateau) {
-        this.plateau = plateau;
-    }
     /*
 
     @RequestMapping("/plateau/first")
@@ -74,7 +69,7 @@ public class PlateauController {
      */
     @GetMapping("/plateau/")
     public Plateau getPlateau(){
-        return plateau;
+        return game.getPlateau();
     }
 
 
@@ -104,7 +99,7 @@ public class PlateauController {
      */
     @GetMapping("/plateau/legal/")
     public CoordContainer getLegalPosition(){
-        return new CoordContainer(plateau.legalPositions());
+        return new CoordContainer(game.getPlateau().legalPositions());
     }
 
     /**
@@ -134,7 +129,7 @@ public class PlateauController {
     public ResponseContainer poser_tuile(
             @RequestBody PoseTuileContainer poseTuileContainer){
 
-        plateau.poserTuile(poseTuileContainer.getPos(), poseTuileContainer.getTuile());
+        game.getPlateau().poserTuile(poseTuileContainer.getPos(), poseTuileContainer.getTuile());
 
         log.info(String.format("%s posée en %s",
                 poseTuileContainer.getTuile().toString(),
@@ -169,6 +164,6 @@ public class PlateauController {
     @ResponseBody
     public boolean checkIfPositionIsLegal
             (@PathVariable int q, @PathVariable int r) {
-        return plateau.isPositionLegal(new CoordAxial(q,r));
+        return game.getPlateau().isPositionLegal(new CoordAxial(q,r));
     }
 }

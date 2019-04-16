@@ -45,7 +45,6 @@ public class Joueur {
     public Joueur(@Qualifier("http_client") HTTPClient httpClient){
         this.httpClient = httpClient;
         this.strategie = new RandomStrategie();
-        System.out.println(httpClient);
     }
 
     public int getId(){
@@ -58,10 +57,13 @@ public class Joueur {
 
         Tuile selectedForPos = strategie.selectTuile(tuiles.getContent());
         tuiles.getContent().remove(selectedForPos);
-        System.out.println(tuiles);
-        System.out.println(selectedForPos);
         // On renvoi les tuiles dans la pioche
-        httpClient.rendreTuiles(tuiles);
+
+        logger.info("LE JOUEUR RENVOI LES TUILES : " + tuiles.getContent().toString());
+
+        if (tuiles.getContent().size() > 0) {
+            httpClient.rendreTuiles(tuiles);
+        }
 
         List<CoordAxial> legalMoves = httpClient.requestLegalMovesTuiles().getContent();
 

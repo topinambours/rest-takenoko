@@ -42,8 +42,11 @@ public class DeckController {
      */
     @RequestMapping("/action/piocher")
     public TuileContainer req_pioche() throws EmptyDeckException {
-        System.out.println(game.getPiocheTuile().toContainer());
-        return new PiocheTuile(game.getPiocheTuile().draw(3)).toContainer();
+        System.out.println("PIOCHE " + game.getPiocheTuile().toString());
+
+        TuileContainer out = new TuileContainer(game.getPiocheTuile().draw(3));
+        System.out.println("ENVOIE DE " + out);
+        return out;
     }
 
     /**

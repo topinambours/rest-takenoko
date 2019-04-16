@@ -51,12 +51,18 @@ public class ConnectionController {
      */
     @GetMapping("/end_turn")
     public ResponseContainer end_turn(){
-        game.setCurrentPlayerIndex((game.getCurrentPlayerIndex() + 1) % game.getGameSize());
-        System.out.println(game.getCurrentPlayerIndex());
-        HTTPClient currentPlayer = game.getClients().get(game.getCurrentPlayerIndex());
-        System.out.println("CURRENT PLAYER" + currentPlayer.toString());
 
+        if (game.gameEnded()){
+            game.setCurrentPlayerIndex(-1);
+        }else{
+            game.setCurrentPlayerIndex((game.getCurrentPlayerIndex() + 1) % game.getGameSize());
+        }
         return new ResponseContainer(true, String.format("Player %d have to play", game.getClients().get(game.getCurrentPlayerIndex()).getId()));
+    }
+    @GetMapping("/gameEnded")
+    public ResponseContainer gameEnded(){
+
+        return new ResponseContainer(game.gameEnded(), "");
     }
 
 
@@ -143,7 +149,6 @@ public class ConnectionController {
     @PostMapping("/register/")
     public ResponseContainer register(@RequestBody HTTPClient client){
         game.getClients().add(client);
-        System.out.println(game.getClients());
         if (game.getClients().size() == game.getGameSize()){
             //game.start();
             return new ResponseContainer(true, "Game started");
