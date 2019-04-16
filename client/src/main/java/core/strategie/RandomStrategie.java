@@ -13,13 +13,28 @@ public class RandomStrategie implements Strategie {
     @Override
     public Tuile selectTuile(List<Tuile> tuiles) {
         Random rand = new Random();
-        return tuiles.get(rand.nextInt(tuiles.size()));
+        int size = tuiles.size();
+        System.out.println("=>size " + size);
+        if(size >= 0){
+            return tuiles.get(rand.nextInt(size - 1));
+        }else{
+            return null;
+        }
+
+
+
     }
 
     @Override
     public CoordAxial selectEmplacement(List<CoordAxial> coordAxials) {
         Random rand = new Random();
-        return coordAxials.get(rand.nextInt(coordAxials.size()));
+        int size = coordAxials.size();
+        if(size >= 0){
+            return coordAxials.get(rand.nextInt());
+        }else{
+            return null;
+        }
+
     }
 
 }
