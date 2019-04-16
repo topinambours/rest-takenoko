@@ -1,17 +1,12 @@
 package core.controllers;
 
-import communication.container.ResponseContainer;
 import core.GameEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Import;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import takenoko.Couleur;
 import takenoko.Plateau;
-import takenoko.tuile.CoordAxial;
-import takenoko.tuile.Tuile;
 
 @RestController
 @Import(Plateau.class)
@@ -39,4 +34,9 @@ public class PlateauController {
         return new ResponseContainer(true, "blabla");
     }
     */
+
+    @GetMapping("/plateau/")
+    public Plateau getPlateau(){
+        return plateau;
+    }
 }

@@ -1,5 +1,6 @@
 package takenoko;
 
+import lombok.Data;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -10,6 +11,7 @@ import takenoko.tuile.Tuile;
 import java.util.HashMap;
 import java.util.Map;
 
+@Data
 @Configuration
 public class Plateau {
 
