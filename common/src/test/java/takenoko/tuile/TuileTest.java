@@ -4,6 +4,8 @@ import communication.container.BambouContainer;
 import org.junit.Test;
 import takenoko.Couleur;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 import static takenoko.Couleur.VERT;
 
@@ -179,5 +181,20 @@ public class TuileTest {
         assertEquals(new BambouContainer(VERT, 0), t.enleverBambou());
         assertEquals(0, t.getNbBambous());
 
+    }
+
+    @Test
+    public void testNeighborCoords() {
+        CoordAxial myCoo = new CoordAxial(0, 0);
+        List<CoordAxial> toTest = myCoo.getNeighborCoords();
+
+        assertEquals(toTest.get(0), new CoordAxial(1, -1));
+        assertEquals(toTest.get(1), new CoordAxial(1, 0));
+        assertEquals(toTest.get(2), new CoordAxial(0, -1));
+        assertEquals(toTest.get(3), new CoordAxial(0, 1));
+        assertEquals(toTest.get(4), new CoordAxial(-1, 0));
+        assertEquals(toTest.get(5), new CoordAxial(-1, 1));
+
+        assertEquals(toTest.size(),6);
     }
 }

@@ -1,12 +1,15 @@
 package core.controllers;
 
+import communication.container.CoordContainer;
 import core.GameEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Import;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import takenoko.Plateau;
+import takenoko.tuile.CoordAxial;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
 @Import(Plateau.class)
@@ -38,5 +41,18 @@ public class PlateauController {
     @GetMapping("/plateau/")
     public Plateau getPlateau(){
         return plateau;
+    }
+
+    @GetMapping("/plateau/legal/")
+    public CoordContainer getLegalPosition(){
+        System.out.println(plateau.legalPositions().toString());
+        return new CoordContainer(plateau.legalPositions());
+    }
+
+    @RequestMapping(value = "/plateau/legal/{q}/{r}", method = GET)
+    @ResponseBody
+    public boolean getFoosBySimplePathWithPathVariables
+            (@PathVariable int q, @PathVariable int r) {
+        return plateau.isPositionLegal(new CoordAxial(q,r));
     }
 }

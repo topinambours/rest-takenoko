@@ -3,6 +3,7 @@ package takenoko.tuile;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class CoordAxial {
 
     private int q;
