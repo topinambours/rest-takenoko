@@ -3,6 +3,8 @@ package core;
 import communication.HTTPClient;
 import communication.container.ResponseContainer;
 import communication.container.TuileContainer;
+import core.strategie.RandomStrategie;
+import core.strategie.Strategie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +24,19 @@ public class Joueur extends HTTPClient {
 
     private Tuile current_tuile;
 
+    private Strategie strategie;
+
     public boolean myTurn;
 
-    @Autowired
     public Joueur(){
         super(0,"","");
+        this.strategie = new RandomStrategie();
+    }
+
+    public Joueur(int id, String user_port, String distant_server_url,Strategie strategie) {
+        super(id, user_port, distant_server_url);
+        registerGame();
+        this.strategie = strategie;
     }
 
     public Joueur(int id, String user_port, String distant_server_url) {
@@ -51,6 +61,7 @@ public class Joueur extends HTTPClient {
         String user_port = env.getProperty("client.port");
         String server_adress = env.getProperty("distant.server.address");
         int player_id = Integer.parseInt(env.getProperty("client.id"));
+        this.strategie = new RandomStrategie();
         return new Joueur(player_id, "localhost:" + user_port, server_adress);
     }
 }
