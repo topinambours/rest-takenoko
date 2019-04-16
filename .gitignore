@@ -582,3 +582,6 @@ TSWLatexianTemp*
 # standalone packages
 *.sta
 takenoko-rest/\.idea/
+
+node_modules/
+Package-lock.json

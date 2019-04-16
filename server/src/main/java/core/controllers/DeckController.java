@@ -24,12 +24,51 @@ public class DeckController {
     @Autowired
     private GameEngine game;
 
+    /**
+     * Permet d'avoir la pioche
+     * @return TuileContainer
+     * @throws EmptyDeckException
+     *
+     * @api {get} /action/piocher Piocher
+     * @apiDescription Get new plots for the deck
+     * @apiName Piocher
+     * @apiGroup Server/DeckController
+     *
+     * @apiSuccess PiocheTuile A deck response
+     *
+     * @apiError EmptyDeckException
+     *
+     *
+     */
     @RequestMapping("/action/piocher")
     public TuileContainer req_pioche() throws EmptyDeckException {
         System.out.println(game.getPiocheTuile().toContainer());
         return new PiocheTuile(game.getPiocheTuile().draw(3)).toContainer();
     }
 
+    /**
+     * Permet de rendre une tuile non utilisé
+     * @param tuiles TuileContainer
+     * @return ResponseContainer
+     *
+     * @api {post} /action/rendre_tuiles/ RendreTuiles
+     * @apiDescription Get back non-used plots
+     * @apiName RendreTuiles
+     * @apiGroup Server/DeckController
+     *
+     * @apiSuccess {Boolean} response The API success response.
+     * @apiSuccess {String} message The API message response, here the deck status.
+     *
+     * @apiParam TuileContainer : plots to return
+     *
+     * @apiSuccessExample Success-Response:
+     *       HTTP/1.1 200 OK
+     *       {
+     *         "response": "true",
+     *         "message": "return effective"
+     *       }
+     *
+     */
     @PostMapping("/action/rendre_tuiles/")
     public ResponseContainer rendre_tuiles(@RequestBody TuileContainer tuiles){
         for (Tuile t : tuiles.getContent()){

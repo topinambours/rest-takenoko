@@ -26,6 +26,29 @@ public class ConnectionController {
         this.game = game;
     }
 
+    /**
+     * Permet d'avoir la fin du tour de jeu
+     * @return ResponseContainer
+     *
+     *
+     * @api {get} /end_turn EndTurn
+     * @apiDescription End the turn end get the player id that have to play
+     * @apiName EndTurn
+     * @apiGroup Server/ConnectionController
+     *
+     * @apiSuccess {Boolean} response The API success response.
+     * @apiSuccess {String} message The API message response, here the player that have to play.
+     *
+     * @apiSuccessExample Success-Response:
+     *       HTTP/1.1 200 OK
+     *       {
+     *         "response": "true",
+     *         "message": "Player :id have to play"
+     *       }
+     *
+     *
+     *
+     */
     @GetMapping("/end_turn")
     public ResponseContainer end_turn(){
         game.setCurrentPlayerIndex((game.getCurrentPlayerIndex() + 1) % game.getGameSize());
@@ -37,17 +60,86 @@ public class ConnectionController {
     }
 
 
+    /**
+     * Permet de poser des tuiles
+     * @param tuiles TuileCountainer
+     * @return ResponseContainer
+     *
+     * @api {post} /post_turn/ PostTurn
+     * @apiDescription allows to put a plot on the board
+     * @apiName PostTurn
+     * @apiGroup Server/ConnectionController
+     *
+     * @apiSuccess {Boolean} response The API success response.
+     * @apiSuccess {String} message The API message response, here the plot.
+     *
+     * @apiParam TuileContainer : tuiles List of plots
+     *
+     * @apiSuccessExample Success-Response:
+     *       HTTP/1.1 200 OK
+     *       {
+     *         "response": "true",
+     *         "message": "Tuile(unique_id=-1, couleur=Bleu(Lac), amenagement=NONE, haveWater=true, nbBambous=0)y"
+     *       }
+     *
+     */
     @PostMapping("/post_turn/")
     public ResponseContainer post_turn(@RequestBody TuileContainer tuiles){
         return new ResponseContainer(true, tuiles.toString());
     }
 
+    /**
+     * Permet de savoir a quel joueur c'est le tour
+     * @param client HTTPClient
+     * @return ResponseContainer
+     *
+     * @api {post} /current_player_turn CurrentPlayerTurn
+     * @apiDescription Post the httpClient references to get the current player turn
+     * @apiName CurrentPlayerTurn
+     * @apiGroup Server/ConnectionController
+     *
+     * @apiSuccess {Boolean} response The API success response.
+     * @apiSuccess {String} message The API message response, here the player that play.
+     *
+     * @apiParam HTTPClient : client Client references
+     *
+     * @apiSuccessExample Success-Response:
+     *       HTTP/1.1 200 OK
+     *       {
+     *         "response": "true",
+     *         "message": "Turn of player :id"
+     *       }
+     *
+     */
     @PostMapping("/current_player_turn")
     public ResponseContainer current_player_turn(@RequestBody HTTPClient client){
         HTTPClient currentPlayer = game.getClients().get(game.getCurrentPlayerIndex());
         return new ResponseContainer(client.getId() == currentPlayer.getId(), String.format("Turn of player %d", currentPlayer.getId()));
     }
 
+    /**
+     * Permet d'enregistrer un joueur
+     * @param client HTTPClient
+     * @return ResponseContainer
+     *
+     * @api {post} /register/ Register
+     * @apiDescription Post the httpClient references to register to the game
+     * @apiName Register
+     * @apiGroup Server/ConnectionController
+     *
+     * @apiSuccess {Boolean} response The API success response.
+     * @apiSuccess {String} message The API message response, here the registration status.
+     *
+     * @apiParam HTTPClient : client Client references
+     *
+     * @apiSuccessExample Success-Response:
+     *       HTTP/1.1 200 OK
+     *       {
+     *         "response": "true",
+     *         "message": "You joined the game"
+     *       }
+     *
+     */
     @PostMapping("/register/")
     public ResponseContainer register(@RequestBody HTTPClient client){
         game.getClients().add(client);

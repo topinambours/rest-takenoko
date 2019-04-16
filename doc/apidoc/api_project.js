@@ -1,0 +1,1 @@
+define({  "name": "Topinambours-Takenoko",  "version": "0.1.0",  "description": "a REST API for the takenoko game",  "title": "Topinambours - REST API Takenoko",  "sampleUrl": false,  "defaultVersion": "0.0.0",  "apidoc": "0.3.0",  "generator": {    "name": "apidoc",    "time": "2019-04-16T20:42:01.598Z",    "url": "http://apidocjs.com",    "version": "0.17.7"  }});
