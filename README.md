@@ -1,14 +1,31 @@
+<h1 align="center">
+  <br>
+  <a href="https://github.com/uca-m1informatique-softeng/topinambours-takenoko"><img src="http://takenoko.hamlab.fr/img/logo.png" alt="Takenoko" width="50px"></a>
+  <br>
+Takenoko
+  <br>
+</h1>
 
-# Projet [takenoko](http://jeuxstrategie1.free.fr/jeu_takenoko/regle.pdf "takenoko")
+<h4 align="center">Un  <a href="http://jeuxstrategie1.free.fr/jeu_takenoko/regle.pdf" target="_blank">Takenoko</a> en Java avec une API rest</h4>
 
-![Build Status](https://travis-ci.com/uca-m1informatique-softeng/topinambours-takenoko.svg?token=ddDp96SuTBDWqbwuapYh&branch=master) ![](http://sonarqube.hamlab.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=alert_status) ![](http://sonarqube.hamlab.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=reliability_rating) ![](http://sonarqube.hamlab.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=code_smells) ![](http://sonarqube.hamlab.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=coverage)  ![](http://sonarqube.hamlab.fr/api/project_badges/measure?project=BambooMaster%3ATakenoko&metric=sqale_rating)
+<p align="center">
+<img src="https://travis-ci.com/uca-m1informatique-softeng/topinambours-takenoko.svg?token=ddDp96SuTBDWqbwuapYh&branch=master">
+<a href="https://cloud.docker.com/u/topinambours/repository/docker/topinambours/takenoko" target="_blank"><img src="https://img.shields.io/docker/automated/topinambours/takenoko.svg"></a>
+<a href="https://cloud.docker.com/u/topinambours/repository/docker/topinambours/takenoko" target="_blank"><img src="https://img.shields.io/docker/pulls/topinambours/takenoko.svg"></a>
+  
+</p>
 
-> ##### SonarQube : [sonarqube.hamlab.fr](http://sonarqube.hamlab.fr/sessions/new)
-> Login : admin\
-> Pass : admin2906
+<p align="center">
+  <a href="#presentation">Presentation</a> •
+  <a href="#lancer-une-partie">Lancer une partie</a> •
+  <a href="#plan-de-route">Plan de route</a> •
+   <a href="#la-boite">La boite</a> •
+  <a href="#notes-de-conception">Conception</a> 
+</p>
 
 
-## Master 1 Informatique - Université Nice Sophia Antipolis
+
+## Presentation
 
 > L'équipe 
 > - [Jeremy Bonsaudo](https://github.com/JeremyBonsaudo)
@@ -26,7 +43,7 @@ Version textuel n'étant pas destinée à être jouée par des êtres humains ma
 
 ## Plan de route
 
- - [x] **Version 1 :** un robot pioche et place les parcelles aléatoirement sur le plateau jusqu’à épuisement de la pioche.
+ - [x] **Version 1 :** un robot core.takenoko.pioche et place les parcelles aléatoirement sur le plateau jusqu’à épuisement de la core.takenoko.pioche.
  - [x] **Version 2 :** Le placement des tuiles est encadré par les règles takenoko (adjacences). Ajout d'une stratégie aux robots leurs permettant de placer une parcelle en maximisant son nombre de parcelle adjacente. Un robot marque autant de point que d'adjacence dont dispose sa parcelle.
  
  - [x] **Version 3** : Ajout de composants liés à l’irrigation des parcelles, les bambous ne poussent que si la parcelle est irrigué. A chaque tour, les parcelles se dotent d'un bambous supplémentaire. Un robot ne marque des points qu'en plaçant une parcelle adjacent à une parcelle disposant de bambous, récolte les bambous et marque 1 point par bambou récolté.
@@ -35,10 +52,10 @@ Version textuel n'étant pas destinée à être jouée par des êtres humains ma
  - [x] **Version 5** : Les joueurs recoivent des cartes objectifs panda, les joueurs gagnent des points pour chaque carte objectif complétée. Les joueurs adaptent leurs stratégies pour compléter leurs objectifs.
  - [x] **Version 6** : Les joueurs recoivent des cartes objectifs parcelle, un joueur gagne des points en complétant ses cartes. Un joueur va donc adapter ses placements de parcelles pour achever ses objectifs.
  - [x] **Version 7** : Les joueurs ont maintenant la posibilité de jouer avec le jardinier, les cartes jardinier, et le Panda. ~~De plus, le joueur respecte la règle des 2 actions maximum par tours.~~
- - [x] **Version 8** : Les joueurs peuvent piocher ~~et placer~~ des aménagements. Le dé météo affecte le déroulement du tour, les joueurs doivent effectuer deux actions par tours.~~ Les aménagements sont désormais intégrés dans le moteur du jeu. Une partie se termine dès lors qu'un joueur à complété un certain nombre d'objectifs selon les règles takenoko. Ajout du dé météo, les joueurs lancent le dé au début de leur tour SANS que cela n'affecte le déroulement du tour. Les joueurs disposent maintenant de stratégies pour les aménagements (décision au moment de la pioche selon le type).
+ - [x] **Version 8** : Les joueurs peuvent piocher ~~et placer~~ des aménagements. Le dé météo affecte le déroulement du tour, les joueurs doivent effectuer deux actions par tours.~~ Les aménagements sont désormais intégrés dans le moteur du jeu. Une partie se termine dès lors qu'un joueur à complété un certain nombre d'objectifs selon les règles takenoko. Ajout du dé météo, les joueurs lancent le dé au début de leur tour SANS que cela n'affecte le déroulement du tour. Les joueurs disposent maintenant de stratégies pour les aménagements (décision au moment de la core.takenoko.pioche selon le type).
  - [x] **Version 9** : Limiter le nombre d'action des joueurs, améliorer les robots pour que leurs coups complètent en priorité leurs objectifs.
  - [ ] **Version 10** : La météo influe sur les décisions des robots.
-## Y'a quoi dans la boite ?
+## La boite
 
 |Nombre| Nom | Image 
 |--|--|--|

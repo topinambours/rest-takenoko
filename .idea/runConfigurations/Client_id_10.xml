@@ -1,0 +1,18 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Client id=10" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="client" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="core.game.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <option name="SPRING_BOOT_MAIN_CLASS" value="core.App" />
+    <option name="HIDE_BANNER" value="true" />
+    <option name="PROGRAM_PARAMETERS" value="8081 http://localhost:8080 10" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

@@ -139,7 +139,9 @@ local.properties
 
 # on peut enlever tout le dossier .idea : il sera alors à refaire par chaque developpeur
 /.idea/
-!.idea/runConfigurations/*
+
+.idea/*
+!/.idea/runConfigurations/*
 # ou on peut enlever cibler plus finement, mais on laisse alors des traces d'intellij dans le git
 #.idea/workspace.xml
 #.idea/libraries
@@ -579,3 +581,7 @@ TSWLatexianTemp*
 
 # standalone packages
 *.sta
+takenoko-rest/\.idea/
+
+node_modules/
+Package-lock.json
