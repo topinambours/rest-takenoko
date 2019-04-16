@@ -44,7 +44,7 @@ public class Plateau {
      */
     public List<Tuile> getNeighbors(CoordAxial coo) {
         ArrayList<Tuile> res = new ArrayList<>();
-        for (CoordAxial nbc : coo.getNeighborCoords()) {
+        for (CoordAxial nbc : coo.computeNeighborCoords()) {
             Tuile myPlot = getTuileAtCoord(nbc);
             if (myPlot != null) {
                 res.add(myPlot);
@@ -67,12 +67,12 @@ public class Plateau {
             return false;
         }
         // Si la position est adjacente à celle de départ
-        if (new CoordAxial(0,0).getNeighborCoords().contains(coo)){
+        if (new CoordAxial(0,0).computeNeighborCoords().contains(coo)){
             return true;
         }
 
         int nbAdj = 0;
-        for (CoordAxial coord : coo.getNeighborCoords()){
+        for (CoordAxial coord : coo.computeNeighborCoords()){
             if (this.getTuileAtCoord(coord) != null){
                 nbAdj += 1;
             }
@@ -89,7 +89,7 @@ public class Plateau {
         HashSet<CoordAxial> out = new HashSet<>();
 
         for (CoordAxial coo : tuiles.keySet()){
-            out.addAll(coo.getNeighborCoords().stream().filter(this::isPositionLegal).collect(Collectors.toList()));
+            out.addAll(coo.computeNeighborCoords().stream().filter(this::isPositionLegal).collect(Collectors.toList()));
         }
 
         return new ArrayList<>(out);

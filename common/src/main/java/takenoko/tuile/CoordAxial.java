@@ -1,9 +1,11 @@
 package takenoko.tuile;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Data
 public class CoordAxial {
 
     private int q;
@@ -47,7 +49,7 @@ public class CoordAxial {
      * rend les 6 coordonnées des hexagones voisins
      * @return Liste de CoordAxial correspondant aux 6 emplacements voisins
      */
-    public List<CoordAxial> getNeighborCoords() {
+    public List<CoordAxial> computeNeighborCoords() {
         ArrayList<CoordAxial> res = new ArrayList<>();
         res.add(new CoordAxial(q + 1, r - 1));
         res.add(new CoordAxial(q + 1, r));

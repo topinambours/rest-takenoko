@@ -186,7 +186,7 @@ public class TuileTest {
     @Test
     public void testNeighborCoords() {
         CoordAxial myCoo = new CoordAxial(0, 0);
-        List<CoordAxial> toTest = myCoo.getNeighborCoords();
+        List<CoordAxial> toTest = myCoo.computeNeighborCoords();
 
         assertEquals(toTest.get(0), new CoordAxial(1, -1));
         assertEquals(toTest.get(1), new CoordAxial(1, 0));
