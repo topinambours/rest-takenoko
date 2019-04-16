@@ -12,31 +12,20 @@ public class RandomStrategie implements Strategie {
 
     @Override
     public Tuile selectTuile(List<Tuile> tuiles) {
-        if (tuiles.size() == 1){
-            return tuiles.get(0);
+        if(tuiles.size() == 1){
+            return  tuiles.get(0);
         }
         Random rand = new Random();
-        int size = tuiles.size();
-        System.out.println("=>size " + size);
-        if(size >= 0){
-            return tuiles.get(rand.nextInt(size - 1));
-        }else{
-            return null;
-        }
-
-
-
+        return tuiles.get(rand.nextInt(tuiles.size() - 1));
     }
 
     @Override
     public CoordAxial selectEmplacement(List<CoordAxial> coordAxials) {
-        Random rand = new Random();
-        int size = coordAxials.size();
-        if(size >= 0){
-            return coordAxials.get(rand.nextInt());
-        }else{
-            return null;
+        if(coordAxials.size() == 1){
+            return  coordAxials.get(0);
         }
+        Random rand = new Random();
+        return coordAxials.get(rand.nextInt(coordAxials.size() - 1));
 
     }
 
