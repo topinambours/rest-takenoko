@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface Strategie {
     Tuile selectTuile(List<Tuile> tuiles);
+    CoordAxial selectEmplacement(List<CoordAxial> coordAxials);
 }

@@ -16,4 +16,10 @@ public class RandomStrategie implements Strategie {
         return tuiles.get(rand.nextInt(tuiles.size()));
     }
 
+    @Override
+    public CoordAxial selectEmplacement(List<CoordAxial> coordAxials) {
+        Random rand = new Random();
+        return coordAxials.get(rand.nextInt(coordAxials.size()));
+    }
+
 }
