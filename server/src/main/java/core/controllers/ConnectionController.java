@@ -59,6 +59,30 @@ public class ConnectionController {
         }
         return new ResponseContainer(true, String.format("Player %d have to play", game.getClients().get(game.getCurrentPlayerIndex()).getId()));
     }
+
+    /**
+     * Permet de check si une partie est terminée
+     * @return ResponseContainer
+     *
+     *
+     * @api {get} /gameEnded gameEnded
+     * @apiDescription Get the status to know if the game is ended
+     * @apiName gameEnded
+     * @apiGroup Server/ConnectionController
+     *
+     * @apiSuccess {Boolean} response The API success response.
+     * @apiSuccess {String} message The API message response.
+     *
+     * @apiSuccessExample Success-Response:
+     *       HTTP/1.1 200 OK
+     *       {
+     *         "response": "true",
+     *         "message": ""
+     *       }
+     *
+     *
+     *
+     */
     @GetMapping("/gameEnded")
     public ResponseContainer gameEnded(){
 
