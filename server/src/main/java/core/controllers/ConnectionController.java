@@ -51,12 +51,7 @@ public class ConnectionController {
      */
     @GetMapping("/end_turn")
     public ResponseContainer end_turn(){
-
-        if (game.gameEnded()){
-            game.setCurrentPlayerIndex(-1);
-        }else{
-            game.setCurrentPlayerIndex((game.getCurrentPlayerIndex() + 1) % game.getGameSize());
-        }
+        game.setCurrentPlayerIndex((game.getCurrentPlayerIndex() + 1) % game.getGameSize());
         return new ResponseContainer(true, String.format("Player %d have to play", game.getClients().get(game.getCurrentPlayerIndex()).getId()));
     }
 
