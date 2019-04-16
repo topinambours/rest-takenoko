@@ -51,7 +51,7 @@ public class PlateauController {
 
     @RequestMapping(value = "/plateau/legal/{q}/{r}", method = GET)
     @ResponseBody
-    public boolean getFoosBySimplePathWithPathVariables
+    public boolean checkIfPositionIsLegal
             (@PathVariable int q, @PathVariable int r) {
         return plateau.isPositionLegal(new CoordAxial(q,r));
     }
