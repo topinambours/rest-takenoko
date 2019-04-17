@@ -31,7 +31,6 @@ import java.util.List;
 
 @Component
 @Import(Plateau.class)
-@Data
 public class GameEngine {
 
     @Autowired

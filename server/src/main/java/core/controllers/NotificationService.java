@@ -8,6 +8,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+
 
 @Service
 @EnableScheduling
@@ -16,8 +18,8 @@ public class NotificationService {
     @Autowired
     GameEngine game;
 
-    @Async
-    @Scheduled(fixedDelay = 500)
+
+    @Scheduled(fixedDelay = 1000)
     public void doNotify() {
         if (game.gameEnded()){
             System.out.println("NO MORE PLOTS GAME ENDED");

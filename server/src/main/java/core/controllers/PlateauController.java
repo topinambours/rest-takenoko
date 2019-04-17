@@ -24,21 +24,6 @@ public class PlateauController {
     @Autowired
     GameEngine game;
 
-    /*
-
-    @RequestMapping("/plateau/first")
-    public Tuile status_req() {
-        return new Tuile(-1,Couleur.BLEU);
-    }
-
-    @RequestMapping("/action/poser_tuile/{tuile_id}/{q}/{r}")
-    public ResponseContainer poser_tuile(@PathVariable int tuile_id, @PathVariable int q, @PathVariable int r){
-        plateau.poserTuile(new CoordAxial(q,r), dc.available_tuiles.get(tuile_id));
-        System.out.println(plateau.toString());
-        return new ResponseContainer(true, "blabla");
-    }
-    */
-
     /**
      * Permet d'avoir le plateau actuel
      * @return Plateau

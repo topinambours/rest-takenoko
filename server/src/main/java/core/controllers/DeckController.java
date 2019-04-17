@@ -16,7 +16,6 @@ import takenoko.tuile.Tuile;
 import java.util.HashMap;
 
 @RestController
-@Import(PiocheTuile.class)
 public class DeckController {
 
     private static final Logger log = LoggerFactory.getLogger(DeckController.class);
