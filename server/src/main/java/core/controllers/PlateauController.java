@@ -67,6 +67,8 @@ public class PlateauController {
      * @apiName getLegalPosition
      * @apiGroup Server/PlateauController
      *
+     * @apiDeprecated soon moved to /plateau/tuile/legal/
+     *
      * @apiSuccess CoordContainer : list of CoordAxial
      *
      *
@@ -82,7 +84,7 @@ public class PlateauController {
      *          ]}
      *
      */
-    @GetMapping("/plateau/legal/")
+    @GetMapping("/plateau/legal/") //Todo : move to /plateau/tuile/legal/
     public CoordContainer getLegalPosition(){
         return new CoordContainer(game.getPlateau().legalPositions());
     }
@@ -135,6 +137,8 @@ public class PlateauController {
      * @apiName checkIfPositionIsLegal
      * @apiGroup Server/PlateauController
      *
+     * @apiDeprecated soon moved to /plateau/tuile/legal/{q}/{r}
+     *
      * @apiSuccess {Boolean} response true|false depending of the situation.
      *
      * @apiParam {Number} q q variable of the CoordAxial of the plot.
@@ -145,7 +149,7 @@ public class PlateauController {
      *       true
      *
      */
-    @RequestMapping(value = "/plateau/legal/{q}/{r}", method = GET)
+    @RequestMapping(value = "/plateau/legal/{q}/{r}", method = GET) //Todo : move to /plateau/tuile/legal/{q}/{r}
     @ResponseBody
     public boolean checkIfPositionIsLegal
             (@PathVariable int q, @PathVariable int r) {
