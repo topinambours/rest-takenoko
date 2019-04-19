@@ -108,6 +108,23 @@ public class Plateau {
     // -----------
 
     /**
+     * ajoute une section d'irrigation au plateau
+     * Modifie la propriété "irriguée" aux parcelles adjacentes à l'irrigation
+     * @param coo
+     */
+    public void addIrrigation(CoordIrrig coo) {
+        irrigations.add(coo);
+        for (Tuile t : getPlotsFromIrig(coo)){
+            if (!t.getHaveWater()){
+                t.setHaveWater(true);
+                // Lors de la première irigation, la parcelle reçoit un bambou
+                t.pousserBambou();
+            }
+
+        }
+    }
+
+    /**
      * rend la liste des endroits où on peut placer des irrigations
      * @return List<CoordIrrig>
      */
@@ -167,6 +184,9 @@ public class Plateau {
     }
 
 
+    public HashSet<CoordIrrig> irrigationsList() {
+        return irrigations;
+    }
 
     @Override
     public String toString() {
@@ -193,7 +213,11 @@ public class Plateau {
     @Scope("singleton")
     public Plateau plateau_depart() {
         Plateau out = new Plateau();
-        out.poserTuile(new CoordAxial(0,0), new Tuile(0, Couleur.BLEU, Amenagement.NONE));
+        CoordAxial startingCoord = new CoordAxial(0,0);
+        out.poserTuile(startingCoord, new Tuile(0, Couleur.BLEU, Amenagement.NONE));
+        List<CoordIrrig> borderCoords = new CoordAxial(0,0).computeBorderCoords();
+        out.irrigations.addAll(borderCoords);
+
         return out;
     }
 }
