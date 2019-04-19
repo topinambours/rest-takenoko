@@ -32,6 +32,8 @@ public class Plateau {
     public void poserTuile(CoordAxial pos, Tuile t){
         if (!tuiles.containsKey(pos)){
             tuiles.put(pos, t);
+            t.setHaveWater(checkPlotWater(pos));
+
         }
     }
 
@@ -122,6 +124,25 @@ public class Plateau {
             }
 
         }
+    }
+
+    /**
+     * Permet de définir si une parcelle est irriguée
+     * Une parcelle est automatique irrigué si elle est adjacente à la parcelle de départ
+     * @param coordAxial CoordAxial les coordonnées de la parcelle
+     * @return boolean true|false
+     */
+    public boolean checkPlotWater(CoordAxial coordAxial){
+        if (coordAxial.computeNeighborCoords().contains(new CoordAxial(0,0))){
+            return true;
+        }
+
+        for (CoordIrrig c : coordAxial.computeBorderCoords()){
+            if (this.irrigationsList().contains(c)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
