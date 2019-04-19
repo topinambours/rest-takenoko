@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import takenoko.irrigation.CoordIrrig;
 import takenoko.tuile.Amenagement;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
@@ -20,9 +21,11 @@ public class Plateau {
     }
 
     private HashMap<CoordAxial, Tuile> tuiles;
+    private HashSet<CoordIrrig> irrigations;
 
     public Plateau() {
         this.tuiles = new HashMap<>();
+        this.irrigations = new HashSet<>();
         this.tuiles.put(new CoordAxial(0,0), new Tuile(-1, Couleur.BLEU));
     }
 
@@ -100,6 +103,68 @@ public class Plateau {
 
     }
 
+    // -----------
+    // IRRIGATION
+    // -----------
+
+    /**
+     * rend la liste des endroits où on peut placer des irrigations
+     * @return List<CoordIrrig>
+     */
+    public List<CoordIrrig> legalIrrigPositions() {
+        return irrigPositionsToTest().stream().filter(this::isIrrigPositionLegal).collect(Collectors.toList());
+    }
+
+    /**
+     * fonction utilitaire pour legalIrrigPositions
+     * @return
+     */
+    private List<CoordIrrig> irrigPositionsToTest() {
+        HashSet<CoordIrrig> mySet = new HashSet<CoordIrrig>();
+        for (CoordIrrig irrig : irrigations) {
+            mySet.addAll(irrig.continues());
+        }
+        return new ArrayList<>(mySet);
+    }
+
+    /**
+     * renvoie si on peut placer
+     * @param coo
+     * @return
+     */
+    public boolean isIrrigPositionLegal(CoordIrrig coo) {
+        // Déjà placé
+        if (irrigations.contains(coo)){
+            return false;
+        }
+
+        // Si la position est la continuité d'un autre canal d'irrigation la pos est valide
+        for (CoordIrrig nbc : coo.continues()) {
+            if (irrigations.contains(nbc) && getPlotsFromIrig(coo).size() == 2) {
+                // Un canaux ne peut être placé qu'entre deux parcelles
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Renvoie la liste des tuiles adjacentes à une coordonnée d'irrigation
+     * Les tuiles renvoyées sont posées sur le plateau
+     * @param coordIrrig coordonnée d'irrigation
+     * @return tuiles présentent sur le plateau étant adjacente à coordIrrig passée en paramètre
+     */
+    public List<Tuile> getPlotsFromIrig(CoordIrrig coordIrrig){
+        List<Tuile> out = new ArrayList<>();
+        List<CoordAxial> coordAxials = coordIrrig.borders();
+
+        for (CoordAxial c : coordAxials){
+            if (tuiles.containsKey(c)){
+                out.add(tuiles.get(c));
+            }
+        }
+        return out;
+    }
 
 
 

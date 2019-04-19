@@ -230,4 +230,24 @@ public class PlateauController {
         return new CoordIrrigContainer(new CoordIrrig(new CoordAxial(q,r),orient).continues());
     }
 
+    /**
+     * Permet d'avoir la liste des positions d'irrigation acceptés
+     * @return CoordIrrigContainer
+     *
+     * @api {get} /plateau/irrigation/legal/ computeLegalIrrigPositions
+     * @apiDescription Compute the legal posotions to push irrigations
+     * @apiName computeLegalIrrigPositions
+     * @apiGroup Server/PlateauController
+     *
+     *
+     * @apiSuccessExample Success-Response:
+     *       {"content":[]}
+     *
+     *
+     */
+    @GetMapping("/plateau/irrigation/legal/")
+    public CoordIrrigContainer computeLegalIrrigPositions(){
+        return new CoordIrrigContainer(game.getPlateau().legalIrrigPositions());
+    }
+
 }
