@@ -156,7 +156,37 @@ public class PlateauController {
             (@PathVariable int q, @PathVariable int r) {
         return game.getPlateau().isPositionLegal(new CoordAxial(q,r));
     }
-    
+
+
+    /**
+     * Permet de savoir si une tuile a de l'eau
+     * @param q int
+     * @param r int
+     * @return boolean
+     *
+     *
+     * @api {get} /plateau/tuile/water/:q/:r checkTuileWater
+     * @apiDescription check if a plot have water on it
+     * @apiName checkTuileWater
+     * @apiGroup Server/PlateauController
+     *
+     *
+     * @apiSuccess {Boolean} response true|false depending of the situation.
+     *
+     * @apiParam {Number} q q variable of the CoordAxial of the plot.
+     * @apiParam {Number} r r variable of the CoordAxial of the plot.
+     *
+     * @apiSuccessExample Success-Response:
+     *       HTTP/1.1 200 OK
+     *       true
+     *
+     */
+    @RequestMapping(value = "/plateau/tuile/water/{q}/{r}", method = GET)
+    @ResponseBody
+    public boolean checkTuileWater
+            (@PathVariable int q, @PathVariable int r) {
+        return game.getPlateau().getTuileAtCoord(new CoordAxial(q,r)).getHaveWater();
+    }
 
 
     /**

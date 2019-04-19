@@ -113,9 +113,10 @@ public class Plateau {
      * ajoute une section d'irrigation au plateau
      * Modifie la propriété "irriguée" aux parcelles adjacentes à l'irrigation
      * @param coo
+     * @return boolean true|false
      */
-    public void addIrrigation(CoordIrrig coo) {
-        irrigations.add(coo);
+    public boolean addIrrigation(CoordIrrig coo) {
+        boolean res = irrigations.add(coo);
         for (Tuile t : getPlotsFromIrig(coo)){
             if (!t.getHaveWater()){
                 t.setHaveWater(true);
@@ -124,6 +125,7 @@ public class Plateau {
             }
 
         }
+        return res;
     }
 
     /**
