@@ -1,6 +1,8 @@
 package takenoko.tuile;
 
 import lombok.Data;
+import takenoko.irrigation.CoordIrrig;
+import takenoko.irrigation.Orient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +66,22 @@ public class CoordAxial {
         res.add(new CoordAxial(q - 1, r + 1));
         return res;
     }
+
+    /**
+     * rend les coordonnées des 6 arêtes du pourtour de l'hexagone
+     * @return Liste de CoordIrrig correspondant aux 6 arêtes de l'hexagone
+     */
+    public List<CoordIrrig> computeBorderCoords() {
+        ArrayList<CoordIrrig> res = new ArrayList<CoordIrrig>();
+        res.add(new CoordIrrig(q + 1, r - 1, Orient.S));
+        res.add(new CoordIrrig(q + 1, r, Orient.W));
+        res.add(new CoordIrrig(q, r, Orient.N));
+        res.add(new CoordIrrig(q, r + 1, Orient.N));
+        res.add(new CoordIrrig(q, r, Orient.W));
+        res.add(new CoordIrrig(q, r, Orient.S));
+        return res;
+    }
+
 
     /**
      * Permet de savoir si une coordonnée est dans la même line que
