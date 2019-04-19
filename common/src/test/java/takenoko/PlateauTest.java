@@ -4,6 +4,8 @@ import org.junit.Test;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
 
+import static org.junit.Assert.*;
+
 public class PlateauTest {
 
     @Test
@@ -16,7 +18,8 @@ public class PlateauTest {
         Plateau p = new Plateau();
         p = p.plateau_depart();
 
-        System.out.println(p.irrigationsList().size());
+        assertEquals(p.irrigationsList().size(),6);
     }
-   
+
+
 }
