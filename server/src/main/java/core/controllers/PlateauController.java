@@ -62,7 +62,7 @@ public class PlateauController {
      * Permet d'avoir la liste des positions légales
      * @return CoordContainer
      *
-     * @api {get} /plateau/legal/ getLegalPosition
+     * @api {get} /plateau/tuile/legal/ getLegalPosition
      * @apiDescription Get the list of legals position to put plots
      * @apiName getLegalPosition
      * @apiGroup Server/PlateauController
@@ -84,7 +84,7 @@ public class PlateauController {
      *          ]}
      *
      */
-    @GetMapping("/plateau/legal/") //Todo : move to /plateau/tuile/legal/
+    @GetMapping("/plateau/tuile/legal/")
     public CoordContainer getLegalPosition(){
         return new CoordContainer(game.getPlateau().legalPositions());
     }
@@ -132,7 +132,7 @@ public class PlateauController {
      * @return boolean
      *
      *
-     * @api {get} /plateau/legal/:q/:r checkIfPositionIsLegal
+     * @api {get} /plateau/tuile/legal/:q/:r checkIfPositionIsLegal
      * @apiDescription check if a position is legal to put plot
      * @apiName checkIfPositionIsLegal
      * @apiGroup Server/PlateauController
@@ -149,7 +149,7 @@ public class PlateauController {
      *       true
      *
      */
-    @RequestMapping(value = "/plateau/legal/{q}/{r}", method = GET) //Todo : move to /plateau/tuile/legal/{q}/{r}
+    @RequestMapping(value = "/plateau/tuile/legal/{q}/{r}", method = GET)
     @ResponseBody
     public boolean checkIfPositionIsLegal
             (@PathVariable int q, @PathVariable int r) {

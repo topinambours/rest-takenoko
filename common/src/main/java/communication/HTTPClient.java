@@ -103,7 +103,7 @@ public class HTTPClient {
     }
 
     public CoordContainer requestLegalMovesTuiles(){
-        return request("/plateau/legal/", CoordContainer.class);
+        return request("/plateau/tuile/legal/", CoordContainer.class);
     }
 
     public ResponseContainer notifyEndTurn(){
