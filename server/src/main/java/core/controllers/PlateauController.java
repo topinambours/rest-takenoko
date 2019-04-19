@@ -70,7 +70,6 @@ public class PlateauController {
      * @apiName getLegalPosition
      * @apiGroup Server/PlateauController
      *
-     * @apiDeprecated soon moved to /plateau/tuile/legal/
      *
      * @apiSuccess CoordContainer : list of CoordAxial
      *
@@ -140,7 +139,6 @@ public class PlateauController {
      * @apiName checkIfPositionIsLegal
      * @apiGroup Server/PlateauController
      *
-     * @apiDeprecated soon moved to /plateau/tuile/legal/{q}/{r}
      *
      * @apiSuccess {Boolean} response true|false depending of the situation.
      *
