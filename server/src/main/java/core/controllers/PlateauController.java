@@ -1,6 +1,7 @@
 package core.controllers;
 
 import communication.container.CoordContainer;
+import communication.container.CoordIrrigContainer;
 import communication.container.PoseTuileContainer;
 import communication.container.ResponseContainer;
 import core.GameEngine;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.*;
 import takenoko.Plateau;
+import takenoko.irrigation.CoordIrrig;
+import takenoko.irrigation.Orient;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
 
@@ -155,4 +158,78 @@ public class PlateauController {
             (@PathVariable int q, @PathVariable int r) {
         return game.getPlateau().isPositionLegal(new CoordAxial(q,r));
     }
+
+
+    /**
+     * Permet d'avoir la liste des bordes d'une tuile
+     * @param q int
+     * @param r int
+     * @param orient Orient
+     * @return CoordContainer
+     *
+     *
+     * @api {get} /plateau/irrigation/border/{q}/{r}/{o}/ computeBorders
+     * @apiDescription compute Borders of a plot for irrigation
+     * @apiName computeBorders
+     * @apiGroup Server/PlateauController
+     *
+     *
+     *
+     * @apiParam {Number} q q variable of the CoordAxial of the plot.
+     * @apiParam {Number} r r variable of the CoordAxial of the plot.
+     * @apiParam {String} o A orient Enum {"S","N","W"}
+     *
+     * @apiSuccessExample Success-Response:
+     *       {"content":[
+     *       {"q":-1,"r":0},
+     *       {"q":0,"r":0}
+     *       ]}
+     *
+     * @apiError Bad Request : The orient need to be into {"S","N","W"}
+     *
+     */
+    @RequestMapping(value = "/plateau/irrigation/border/{q}/{r}/{o}/", method = GET)
+    @ResponseBody
+    public CoordContainer computeBorders
+            (@PathVariable int q, @PathVariable int r, @PathVariable(value = "o") Orient orient) {
+        return new CoordContainer(new CoordIrrig(new CoordAxial(q,r),orient).borders());
+    }
+
+
+    /**
+     * Permet d'avoir la continuité d'une irrigation
+     * @param q int
+     * @param r int
+     * @param orient Orient
+     * @return CoordIrrigContainer
+     *
+     * @api {get} /plateau/irrigation/border/{q}/{r}/{o}/ computeContinues
+     * @apiDescription Compute continuity of a irrigation
+     * @apiName computeContinues
+     * @apiGroup Server/PlateauController
+     *
+     *
+     *
+     * @apiParam {Number} q q variable of the CoordAxial of the plot.
+     * @apiParam {Number} r r variable of the CoordAxial of the plot.
+     * @apiParam {String} o A orient Enum {"S","N","W"}
+     *
+     * @apiSuccessExample Success-Response:
+     *       {"content":[
+     *       {"coordAxial":{"q":0,"r":0},"o":"W"},
+     *       {"coordAxial":{"q":0,"r":-1},"o":"S"},
+     *       {"coordAxial":{"q":1,"r":-1},"o":"W"},
+     *       {"coordAxial":{"q":1,"r":-1},"o":"S"}
+     *       ]}
+     *
+     * @apiError Bad Request : The orient need to be into {"S","N","W"}
+     *
+     */
+    @RequestMapping(value = "/plateau/irrigation/continues/{q}/{r}/{o}/", method = GET)
+    @ResponseBody
+    public CoordIrrigContainer computeContinues
+            (@PathVariable int q, @PathVariable int r, @PathVariable(value = "o") Orient orient) {
+        return new CoordIrrigContainer(new CoordIrrig(new CoordAxial(q,r),orient).continues());
+    }
+
 }
