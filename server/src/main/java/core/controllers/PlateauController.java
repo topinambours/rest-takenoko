@@ -188,6 +188,36 @@ public class PlateauController {
         return game.getPlateau().getTuileAtCoord(new CoordAxial(q,r)).getHaveWater();
     }
 
+    /**
+     * Permet d'avoir la hauteur d'un bambou
+     * @param q int
+     * @param r int
+     * @return int
+     *
+     *
+     * @api {get} /plateau/tuile/bambou/:q/:r checkBambouHeight
+     * @apiDescription check the height of the bamboo of the plot
+     * @apiName checkBambouHeight
+     * @apiGroup Server/PlateauController
+     *
+     *
+     * @apiSuccess {Integer} height of the bamboo.
+     *
+     * @apiParam {Number} q q variable of the CoordAxial of the plot.
+     * @apiParam {Number} r r variable of the CoordAxial of the plot.
+     *
+     * @apiSuccessExample Success-Response:
+     *       HTTP/1.1 200 OK
+     *       1
+     *
+     */
+    @RequestMapping(value = "/plateau/tuile/bambou/{q}/{r}", method = GET)
+    @ResponseBody
+    public int checkBambouHeight
+            (@PathVariable int q, @PathVariable int r) {
+        return game.getPlateau().getTuileAtCoord(new CoordAxial(q,r)).getNbBambous();
+    }
+
 
     /**
      * Permet d'avoir la liste des bordes d'une tuile
