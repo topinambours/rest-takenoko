@@ -156,6 +156,7 @@ public class PlateauController {
             (@PathVariable int q, @PathVariable int r) {
         return game.getPlateau().isPositionLegal(new CoordAxial(q,r));
     }
+    
 
 
     /**
@@ -249,5 +250,75 @@ public class PlateauController {
     public CoordIrrigContainer computeLegalIrrigPositions(){
         return new CoordIrrigContainer(game.getPlateau().legalIrrigPositions());
     }
+
+
+    /**
+     * Permet d'avoir la liste des irrigations
+     * @return CoordIrrigContainer
+     *
+     * @api {get} /plateau/irrigation/ listOfIrrigation
+     * @apiDescription Get the list of irrigations on the board
+     * @apiName listOfIrrigation
+     * @apiGroup Server/PlateauController
+     *
+     *
+     * @apiSuccessExample Success-Response:
+     *       {"content":[
+     *       {"coordAxial":{"q":0,"r":1},"o":"N"},
+     *       {"coordAxial":{"q":0,"r":0},"o":"W"},
+     *       {"coordAxial":{"q":0,"r":0},"o":"S"},
+     *       {"coordAxial":{"q":1,"r":0},"o":"W"},
+     *       {"coordAxial":{"q":1,"r":-1},"o":"S"},
+     *       {"coordAxial":{"q":0,"r":0},"o":"N"}
+     *       ]}
+     *
+     */
+    @GetMapping("/plateau/irrigation/")
+    public CoordIrrigContainer listOfIrrigation(){
+        return new CoordIrrigContainer(game.getPlateau().irrigationsList());
+    }
+
+    /**
+     * Permet de poser une irrigation
+     * @param coordIrrig CoordIrrig
+     * @return boolean true|false
+     *
+     *
+     * @api {post} /action/poser-irrigation/ PoserIrrigation
+     * @apiDescription Post a irrigation to be put on the board
+     * @apiName PoserIrrigation
+     * @apiGroup Server/PlateauController
+     *
+     * @apiSuccess {Boolean} response The API success response.
+     * @apiSuccess {String} message The API message response, here the registration status.
+     *
+     * @apiParam CoordIrrig : a irrigation coord
+     *
+     * @apiSuccessExample Success-Response:
+     *       HTTP/1.1 200 OK
+     *       {
+     *         "response": "true",
+     *         "message": "Pose d'irrigation effectué en {"coordAxial":{"q":0,"r":0},"o":"W"}"
+     *       }
+     *
+     * @apiErrorExample Error-Response:
+     *       {
+     *         "response": "false",
+     *         "message": "Erreur lors de la pose de l'irrigation en {"coordAxial":{"q":0,"r":0},"o":"W"}"
+     *       }
+     *
+     */
+    @PostMapping("/action/poser-irrigation/")
+    public ResponseContainer poserIrrigation(@RequestBody CoordIrrig coordIrrig){
+        boolean res = game.getPlateau().addIrrigation(coordIrrig);
+        if (res){
+            return new ResponseContainer(res,"Pose d'irrigation effectué en " + coordIrrig.toString());
+        }else{
+            return new ResponseContainer(res, "Erreur lors de la pose de l'irrigation en "+coordIrrig.toString());
+        }
+
+    }
+
+
 
 }
