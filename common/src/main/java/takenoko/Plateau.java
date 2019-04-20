@@ -326,6 +326,21 @@ public class Plateau {
 
     }
 
+    /**
+     * Permet d'avoir le couple CoordAxial,Tuile via un id
+     * @param id int
+     * @return Map.Entry<CoordAxial,Tuile>
+     */
+    public Map.Entry<CoordAxial,Tuile> getTuileFormId(int id) throws TuileNotFoundException {
+        List<Map.Entry<CoordAxial,Tuile>> entries = tuiles.entrySet().stream().filter(t -> t.getValue().getUnique_id() == id).collect(Collectors.toList());
+        if (entries.size() == 0){
+            throw new TuileNotFoundException();
+        }else{
+            return entries.get(0);
+        }
+
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

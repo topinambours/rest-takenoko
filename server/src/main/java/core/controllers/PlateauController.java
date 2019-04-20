@@ -192,6 +192,37 @@ public class PlateauController {
         return new TuileContainer(game.getPlateau().getTuileFromId(id));
     }
 
+    /**
+     * Permet d'avoir la coordonnée d'une tuile via son id
+     * @param id int
+     * @return CoordContainer
+     * @throws TuileNotFoundException
+     *
+     *
+     * @api {get} /platea/tuile/:id/coord getTuileCoordFromID
+     * @apiVersion 0.3.0
+     * @apiDescription get the tuile coord from his ID
+     * @apiName getTuileCoordFromID
+     * @apiGroup Server/PlateauController
+     *
+     *
+     * @apiParam {Number} id Unique ID.
+     *
+     * @apiError TuileNotFoundException
+     *
+     * @apiSuccessExample Success-Response:
+     *       HTTP/1.1 200 OK
+     *       {"content":[
+     *       {"q":0,"r":0}
+     *       ]}
+     *
+     */
+    @RequestMapping(value = "/platea/tuile/{id}/coord")
+    @ResponseBody
+    public CoordContainer getTuileCoordFromID(@PathVariable int id) throws TuileNotFoundException {
+        return new CoordContainer(game.getPlateau().getTuileFormId(id).getKey());
+    }
+
 
     /**
      * Permet de savoir si une tuile a de l'eau
