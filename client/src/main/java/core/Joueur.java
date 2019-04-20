@@ -1,6 +1,7 @@
 package core;
 
 import communication.HTTPClient;
+import communication.container.ColorContainer;
 import communication.container.PoseTuileContainer;
 import communication.container.ResponseContainer;
 import communication.container.TuileContainer;
@@ -18,6 +19,7 @@ import takenoko.irrigation.CoordIrrig;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -98,6 +100,9 @@ public class Joueur {
         if(!legalPanda.isEmpty()){
             CoordAxial posePanda = strategie.selectPandaEmplacement(legalPanda);
             logger.info(String.format("LE JOUEUR DEPLACER LE PENDA EN %s",posePanda.toString()));
+
+            ResponseContainer responsePandaMove = httpClient.deplacerPanda(posePanda);
+            logger.info(responsePandaMove.toString());
         }
 
 

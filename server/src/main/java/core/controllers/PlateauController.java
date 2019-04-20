@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.*;
+import takenoko.Couleur;
 import takenoko.Plateau;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.irrigation.Orient;
@@ -520,8 +521,11 @@ public class PlateauController {
      *
      */
     @PostMapping("/action/bouger-panda/")
-    public ColorContainer bougerPanda(@RequestBody CoordAxial coordAxial){
-        return new ColorContainer(game.getPlateau().movePanda(coordAxial));
+    public ResponseContainer bougerPanda(@RequestBody CoordAxial coordAxial){
+        //Todo : récupérer les bambous
+        Couleur couleur = game.getPlateau().movePanda(coordAxial);
+        //return new ColorContainer(couleur);
+        return new ResponseContainer(true,String.format("LE PANDA C'EST DEPLACE EN %s ET A MANGE UN BAMBOU DE COULEUR %s",coordAxial.toString(),couleur.toString()));
     }
 
 

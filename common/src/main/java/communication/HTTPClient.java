@@ -10,6 +10,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import takenoko.irrigation.CoordIrrig;
+import takenoko.tuile.CoordAxial;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -124,6 +125,10 @@ public class HTTPClient {
 
     public CoordContainer requestLegalPandaPositions(){
         return request("/plateau/panda/legal/",CoordContainer.class);
+    }
+
+    public ResponseContainer deplacerPanda(CoordAxial coordAxial){
+        return post_request("/action/bouger-panda/",coordAxial,ResponseContainer.class);
     }
 
     public void setUser_adress(String user_adress) {
