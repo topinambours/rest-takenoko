@@ -1,8 +1,5 @@
 package core.takenoko.pioche;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.stereotype.Component;
-
 import java.util.*;
 
 /**
@@ -10,8 +7,7 @@ import java.util.*;
  *
  * @param <T> Classe des objets composants la Container
  */
-@JsonIgnoreProperties(ignoreUnknown = false)
-@Component
+
 public abstract class Pioche<T> {
 
     private Deque<T> deque;

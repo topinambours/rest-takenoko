@@ -1,5 +1,6 @@
 package core.strategie;
 
+import takenoko.irrigation.CoordIrrig;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
 
@@ -29,4 +30,12 @@ public class RandomStrategie implements Strategie {
 
     }
 
+    @Override
+    public CoordIrrig selectIrrigationEmplacement(List<CoordIrrig> coordIrrigs) {
+        if(coordIrrigs.size() == 1){
+            return  coordIrrigs.get(0);
+        }
+        Random rand = new Random();
+        return coordIrrigs.get(rand.nextInt(coordIrrigs.size() - 1));
+    }
 }

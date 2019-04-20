@@ -16,7 +16,6 @@ import takenoko.tuile.Tuile;
 import java.util.HashMap;
 
 @RestController
-@Import(PiocheTuile.class)
 public class DeckController {
 
     private static final Logger log = LoggerFactory.getLogger(DeckController.class);
@@ -30,6 +29,7 @@ public class DeckController {
      * @throws EmptyDeckException
      *
      * @api {get} /action/piocher Piocher
+     * @apiVersion 0.2.0
      * @apiDescription Get new plots for the deck
      * @apiName Piocher
      * @apiGroup Server/DeckController
@@ -41,11 +41,13 @@ public class DeckController {
      *
      */
     @RequestMapping("/action/piocher")
-    public TuileContainer req_pioche() throws EmptyDeckException {
-        System.out.println("PIOCHE " + game.getPiocheTuile().toString());
-
+    public TuileContainer req_pioche(
+            @RequestParam(value = "playerId",
+                    required = false,
+                    defaultValue = "-1") int playerId)
+            throws EmptyDeckException {
         TuileContainer out = new TuileContainer(game.getPiocheTuile().draw(3));
-        System.out.println("ENVOIE DE " + out);
+        log.info(String.format("Le joueur %d a pioché %s", playerId, out));
         return out;
     }
 
@@ -55,6 +57,7 @@ public class DeckController {
      * @return ResponseContainer
      *
      * @api {post} /action/rendre_tuiles/ RendreTuiles
+     * @apiVersion 0.2.0
      * @apiDescription Get back non-used plots
      * @apiName RendreTuiles
      * @apiGroup Server/DeckController
@@ -73,10 +76,16 @@ public class DeckController {
      *
      */
     @PostMapping("/action/rendre_tuiles/")
-    public ResponseContainer rendre_tuiles(@RequestBody TuileContainer tuiles){
+    public ResponseContainer rendre_tuiles(
+            @RequestParam(value = "playerId",
+            required = false,
+            defaultValue = "-1") int playerId,
+
+            @RequestBody TuileContainer tuiles){
+        log.info(String.format("Le joueur %d a rendu : %s", playerId, tuiles));
         for (Tuile t : tuiles.getContent()){
             game.getPiocheTuile().insertBottom(t);
-            log.info(t.toString() + " INSERTED TO BOTTOM OF DECK");
+            log.info(t.toString() + " remise dans la pioche");
         }
         return new ResponseContainer(true, "return effective");
     }

@@ -1,4 +1,4 @@
-Feature: Scénarios relatifs aux requêtes de pioche
+#Feature: Scénarios relatifs aux requêtes de pioche
 
   Scenario: Une nouvelle pioche est crée
     Given using fresh deck controller

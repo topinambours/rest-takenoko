@@ -2,28 +2,26 @@ package core.controllers;
 
 import communication.HTTPClient;
 import communication.container.ResponseContainer;
-import communication.container.TuileContainer;
 import core.GameEngine;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@EnableScheduling
 public class ConnectionController {
 
-    @Autowired
-    NotificationService service;
+    final NotificationService service;
+
+    private static final Logger log = LoggerFactory.getLogger(ConnectionController.class);
 
     private final GameEngine game;
 
-    public ConnectionController(@Qualifier("GameEngine") GameEngine game) {
+    public ConnectionController(@Qualifier("GameEngine") GameEngine game, NotificationService service) {
         this.game = game;
+        this.service = service;
     }
 
     /**
@@ -32,6 +30,7 @@ public class ConnectionController {
      *
      *
      * @api {get} /end_turn EndTurn
+     * @apiVersion 0.2.0
      * @apiDescription End the turn end get the player id that have to play
      * @apiName EndTurn
      * @apiGroup Server/ConnectionController
@@ -50,8 +49,16 @@ public class ConnectionController {
      *
      */
     @GetMapping("/end_turn")
-    public ResponseContainer end_turn(){
+    public ResponseContainer end_turn(@RequestParam(value = "playerId",
+            required = false,
+            defaultValue = "-1") int playerId){
+        log.info(String.format("Le joueur %d a terminé son tour.", playerId));
+
         game.setCurrentPlayerIndex((game.getCurrentPlayerIndex() + 1) % game.getGameSize());
+        if (!game.gameEnded()) {
+            log.info(String.format("C'est au tour du joueur %d", game.getClients().get(game.getCurrentPlayerIndex()).getId()));
+        }
+
         return new ResponseContainer(true, String.format("Player %d have to play", game.getClients().get(game.getCurrentPlayerIndex()).getId()));
     }
 
@@ -61,6 +68,7 @@ public class ConnectionController {
      *
      *
      * @api {get} /gameEnded gameEnded
+     * @apiVersion 0.2.0
      * @apiDescription Get the status to know if the game is ended
      * @apiName gameEnded
      * @apiGroup Server/ConnectionController
@@ -80,66 +88,7 @@ public class ConnectionController {
      */
     @GetMapping("/gameEnded")
     public ResponseContainer gameEnded(){
-
         return new ResponseContainer(game.gameEnded(), "");
-    }
-
-
-    /**
-     * Permet de poser des tuiles
-     * @param tuiles TuileCountainer
-     * @return ResponseContainer
-     *
-     * @api {post} /post_turn/ PostTurn
-     * @apiDescription allows to put a plot on the board
-     * @apiName PostTurn
-     * @apiGroup Server/ConnectionController
-     *
-     * @apiSuccess {Boolean} response The API success response.
-     * @apiSuccess {String} message The API message response, here the plot.
-     *
-     * @apiParam TuileContainer : tuiles List of plots
-     *
-     * @apiSuccessExample Success-Response:
-     *       HTTP/1.1 200 OK
-     *       {
-     *         "response": "true",
-     *         "message": "Tuile(unique_id=-1, couleur=Bleu(Lac), amenagement=NONE, haveWater=true, nbBambous=0)y"
-     *       }
-     *
-     */
-    @PostMapping("/post_turn/")
-    public ResponseContainer post_turn(@RequestBody TuileContainer tuiles){
-        return new ResponseContainer(true, tuiles.toString());
-    }
-
-    /**
-     * Permet de savoir a quel joueur c'est le tour
-     * @param client HTTPClient
-     * @return ResponseContainer
-     *
-     * @api {post} /current_player_turn CurrentPlayerTurn
-     * @apiDescription Post the httpClient references to get the current player turn
-     * @apiName CurrentPlayerTurn
-     * @apiGroup Server/ConnectionController
-     *
-     * @apiSuccess {Boolean} response The API success response.
-     * @apiSuccess {String} message The API message response, here the player that play.
-     *
-     * @apiParam HTTPClient : client Client references
-     *
-     * @apiSuccessExample Success-Response:
-     *       HTTP/1.1 200 OK
-     *       {
-     *         "response": "true",
-     *         "message": "Turn of player :id"
-     *       }
-     *
-     */
-    @PostMapping("/current_player_turn")
-    public ResponseContainer current_player_turn(@RequestBody HTTPClient client){
-        HTTPClient currentPlayer = game.getClients().get(game.getCurrentPlayerIndex());
-        return new ResponseContainer(client.getId() == currentPlayer.getId(), String.format("Turn of player %d", currentPlayer.getId()));
     }
 
     /**
@@ -148,6 +97,7 @@ public class ConnectionController {
      * @return ResponseContainer
      *
      * @api {post} /register/ Register
+     * @apiVersion 0.2.0
      * @apiDescription Post the httpClient references to register to the game
      * @apiName Register
      * @apiGroup Server/ConnectionController
@@ -167,11 +117,19 @@ public class ConnectionController {
      */
     @PostMapping("/register/")
     public ResponseContainer register(@RequestBody HTTPClient client){
-        game.getClients().add(client);
-        if (game.getClients().size() == game.getGameSize()){
-            //game.start();
-            return new ResponseContainer(true, "Game started");
+        if (!game.isGameStarted()) {
+            game.getClients().add(client);
+            if (game.getClients().size() == game.getGameSize()) {
+                game.setGameStarted(true);
+            }
+            log.info(String.format("Le joueur %d@%s c'est enregistré.", client.getId(), client.getUser_adress()));
+            return new ResponseContainer(true, "You joined the game");
         }
-        return new ResponseContainer(true, "You joined the game");
+        else{
+            log.info(String.format("Le joueur %d@%s tente de s'enregistrer", client.getId(), client.getUser_adress()));
+            return new ResponseContainer(false, "Game has started");
+        }
     }
+
+
 }
