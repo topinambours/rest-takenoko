@@ -38,4 +38,13 @@ public class RandomStrategie implements Strategie {
         Random rand = new Random();
         return coordIrrigs.get(rand.nextInt(coordIrrigs.size() - 1));
     }
+
+    @Override
+    public CoordAxial selectPandaEmplacement(List<CoordAxial> coordAxials) {
+        if(coordAxials.size() == 1){
+            return  coordAxials.get(0);
+        }
+        Random rand = new Random();
+        return coordAxials.get(rand.nextInt(coordAxials.size() - 1));
+    }
 }

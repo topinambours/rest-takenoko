@@ -95,6 +95,11 @@ public class Joueur {
 
         logger.info(String.format("LE JOUEUR PEUT DEPLACER LE PANDA SUR CES COORDS : %s",legalPanda.toString()));
 
+        if(!legalPanda.isEmpty()){
+            CoordAxial posePanda = strategie.selectPandaEmplacement(legalPanda);
+            logger.info(String.format("LE JOUEUR DEPLACER LE PENDA EN %s",posePanda.toString()));
+        }
+
 
         return httpClient.notifyEndTurn();
     }
