@@ -75,12 +75,22 @@ public class Joueur {
         logger.info(String.format("LE JOUEUR POSE SA TUILE %s en %s", selectedForPos.toString(), pos.toString()));
 
         ResponseContainer resp = httpClient.poserTuile(new PoseTuileContainer(pos, selectedForPos));
+        logger.info(resp.toString());
 
         List<CoordIrrig> legalIrrig = httpClient.requestLegalIrrigPositions().getContent();
 
         logger.info(String.format("LE JOUEUR PEUT PLACER CES IRRIGATIONS : %s",Arrays.deepToString(legalIrrig.toArray())));
 
-        logger.info(resp.toString());
+        if (!legalIrrig.isEmpty()){
+            CoordIrrig poseIrrig = strategie.selectIrrigationEmplacement(legalIrrig);
+
+            logger.info(String.format("LE JOUEUR POSE UNE IRRIGATION EN %s AVEC ORIENTATION %s",poseIrrig.getCoordAxial().toString(),poseIrrig.getO().toString()));
+
+            ResponseContainer responsePoseIrrig = httpClient.poserIrrigation(poseIrrig);
+            logger.info(responsePoseIrrig.toString());
+
+        }
+
 
         return httpClient.notifyEndTurn();
     }

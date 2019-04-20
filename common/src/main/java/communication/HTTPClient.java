@@ -11,6 +11,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import takenoko.irrigation.CoordIrrig;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -117,6 +118,10 @@ public class HTTPClient {
 
     public CoordIrrigContainer requestLegalIrrigPositions(){
         return request("/plateau/irrigation/legal/",CoordIrrigContainer.class);
+    }
+
+    public ResponseContainer poserIrrigation(CoordIrrig coordIrrig){
+        return post_request("/action/poser-irrigation/",coordIrrig,ResponseContainer.class);
     }
 
     public void setUser_adress(String user_adress) {
