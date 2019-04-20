@@ -59,7 +59,6 @@ public class PlateauController {
         return game.getPlateau();
     }
 
-
     /**
      * Permet d'avoir la liste des positions légales
      * @return CoordContainer

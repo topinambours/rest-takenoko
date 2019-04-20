@@ -27,7 +27,6 @@ Feature: Check registration of users for the game
     Then The number of registered users is 3
     Then the game has not started
 
-
     # TRIGGERING GAME START
   Scenario: Checking for game of size 2, game start when there is 2 players
     Given a fresh gameEngine of size 2
