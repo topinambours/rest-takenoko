@@ -1,6 +1,6 @@
 {
   "name": "Topinambours-Takenoko",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "a REST API for the takenoko game",
   "title": "Topinambours - REST API Takenoko",
   "template":{
