@@ -1,9 +1,6 @@
 package core.controllers;
 
-import communication.container.CoordContainer;
-import communication.container.CoordIrrigContainer;
-import communication.container.PoseTuileContainer;
-import communication.container.ResponseContainer;
+import communication.container.*;
 import core.GameEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -417,6 +414,28 @@ public class PlateauController {
     @GetMapping("/plateau/panda/")
     public CoordContainer pandaPosition(){
         return new CoordContainer(game.getPlateau().posPanda());
+    }
+
+
+    /**
+     * Permet de bouger le panda à une position donnée
+     * @param coordAxial CoordAxial
+     * @return ColorContainer la couleur du bambou récupéré
+     *
+     *
+     * @api {post} /action/bouger-panda/ BougerPanda
+     * @apiVersion 0.3.0
+     * @apiDescription Post a coordaxial to move the panda on the board
+     * @apiName BougerPanda
+     * @apiGroup Server/PlateauController
+     *
+     *
+     * @apiParam CoordAxial : a board coord
+     *
+     */
+    @PostMapping("/action/bouger-panda/")
+    public ColorContainer bougerPanda(@RequestBody CoordAxial coordAxial){
+        return new ColorContainer(game.getPlateau().movePanda(coordAxial));
     }
 
 
