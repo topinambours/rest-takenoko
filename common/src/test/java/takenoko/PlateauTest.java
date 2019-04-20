@@ -70,8 +70,6 @@ public class PlateauTest {
         Plateau p = new Plateau();
         p = p.plateau_depart();
 
-        System.out.println(p.getTuiles().toString());
-
         assertEquals(p.getTuileFromId(-1),p.getTuileAtCoord(new CoordAxial(0,0)));
 
         Tuile tuile = new Tuile(1,Couleur.JAUNE);

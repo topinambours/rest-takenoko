@@ -46,9 +46,15 @@ public class DeckController {
                     required = false,
                     defaultValue = "-1") int playerId)
             throws EmptyDeckException {
-        TuileContainer out = new TuileContainer(game.getPiocheTuile().draw(3));
-        log.info(String.format("Le joueur %d a pioché %s", playerId, out));
-        return out;
+
+        if (playerId == game.getCurrentPlayer().getId() && game.isGameStarted()) {
+            TuileContainer out = new TuileContainer(game.getPiocheTuile().draw(3));
+            log.info(String.format("Le joueur %d a pioché %s", playerId, out));
+            return out;
+        }else{
+            log.info(String.format("Le joueur %d veut piocher alors que ce n'est pas son tour", playerId));
+            return new TuileContainer();
+        }
     }
 
     /**
