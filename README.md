@@ -49,7 +49,8 @@ API First conception : https://github.com/uca-m1informatique-softeng/topinambour
 ## Plan de route
 
  - [x] **Version 0.1 :** Redémarrage du projet from scratch avec un takenoko minimaliste pour son adaptation à l'API REST.
- - [ ] **Version 0.2 :** Ajout de l'irrigation dans le takenoko.
+ - [ ] **Version 0.2 :** Ajout de l'irrigation dans le takenoko. Ce qui comprend l'ajout d'un nouveau système de coordonnées ainsi qu'une maj de l'API-Rest. De plus, une modification des tuiles s'impose ainsi qu'une stratégie de base.
+ - [ ] **Version 0.3 :** Ajout du panda dans le takenoko.Ce qui comprend l'ajout d'un nouveau objectif principale avec son lot de cartes objectifs pandas. De plus, les bambous vont être revus ainsi qu'une stratégie de base ajoutée. Pour finir, toutes ces modifications seront accessibles via l'API-Rest. 
  
 ## La boite
 
