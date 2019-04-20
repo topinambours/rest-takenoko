@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import takenoko.irrigation.CoordIrrig;
+import takenoko.objectives.patterns.CoordCube;
 import takenoko.tuile.Amenagement;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
@@ -28,6 +29,7 @@ public class Plateau {
         this.tuiles = new HashMap<>();
         this.irrigations = new HashSet<>();
         this.tuiles.put(new CoordAxial(0,0), new Tuile(-1, Couleur.BLEU));
+        this.posPanda = new CoordAxial(0,0);
     }
 
     public void poserTuile(CoordAxial pos, Tuile t){
@@ -104,6 +106,15 @@ public class Plateau {
 
         return new ArrayList<>(out);
 
+    }
+
+    /**
+     * getter de parcelle, prend les coordonnées mises ensemble
+     * @param coord coordonnées axiales de la parcelle
+     * @return la parcelle placée en (coord)
+     */
+    public Tuile getTuile(CoordAxial coord) {
+        return tuiles.get(coord);
     }
 
     // -----------
@@ -207,6 +218,84 @@ public class Plateau {
         return out;
     }
 
+
+    // -------
+    // PANDA
+    // -------
+
+
+    /**
+     * Modifie la position du panda uniquement si pour la nouvelle position, il existe une parcelle sur le plateau
+     * @param coord nouvelle coordonnée de la figurine panda
+     * @return la couleur du bambou récupéré après le passage du panda
+     */
+    public Couleur movePanda(CoordAxial coord){
+        if (tuiles.containsKey(coord) && coord.isInLine(posPanda) && hasStraightPath(coord, posPanda)){
+            posPanda = coord;
+            Tuile current = tuiles.get(coord);
+            if (current.getNbBambous() > 0 && !(current.getAmenagement().equals(Amenagement.ENCLOS))) { //Ne mange pas en cas d'enclos
+                tuiles.get(coord).enleverBambou();
+
+                return tuiles.get(coord).getCouleur();
+            }else{
+
+                return Couleur.BLEU;
+            }
+        }
+        // Couleur de la tuile de départ, ne rapporte pas de section au joueur.
+        return Couleur.BLEU;
+    }
+
+    // ------
+    // UTILS
+    // ------
+
+    /**
+     * Vérifie si deux parcelles sont alignées et ont un chemin droit ininterrompu entre elles
+     * @param coo1 la coordonnée de la première parcelle
+     * @param coo2 la coordonnée de la seconde parcelle
+     * @return vrai s'il y a un chemin, faux sinon
+     */
+    public boolean hasStraightPath(CoordAxial coo1, CoordAxial coo2) {
+        CoordCube diffCub = new CoordCube(coo2.getQ() - coo1.getQ(), coo2.getR() - coo1.getR());
+        if (diffCub.getQ() == 0) {
+            if (diffCub.getR() >= 0) {
+                for (int i = 0; i < diffCub.getR(); i++) {
+                    if (getTuile(new CoordAxial(coo1.getQ(), coo1.getR() + i)) == null) return false;
+                }
+                return true;
+            } else {
+                for (int i = 0; i < diffCub.getS(); i++) {
+                    if (getTuile(new CoordAxial(coo1.getQ(), coo1.getR() - i)) == null) return false;
+                }
+                return true;
+            }
+        } else if (diffCub.getR() == 0) {
+            if (diffCub.getQ() >= 0) {
+                for (int i = 0; i < diffCub.getQ(); i++) {
+                    if (getTuile(new CoordAxial(coo1.getQ() + i, coo1.getR())) == null) return false;
+                }
+                return true;
+            } else {
+                for (int i = 0; i < diffCub.getS(); i++) {
+                    if (getTuile(new CoordAxial(coo1.getQ() - i, coo1.getR())) == null) return false;
+                }
+                return true;
+            }
+        } else if (diffCub.getS() == 0) {
+            if (diffCub.getQ() >= 0) {
+                for (int i = 0; i < diffCub.getQ(); i++) {
+                    if (getTuile(new CoordAxial(coo1.getQ() + i, coo1.getR() - i)) == null) return false;
+                }
+                return true;
+            } else {
+                for (int i = 0; i < diffCub.getR(); i++) {
+                    if (getTuile(new CoordAxial(coo1.getQ() - i, coo1.getR() + i)) == null) return false;
+                }
+                return true;
+            }
+        } else return false;
+    }
 
     public HashSet<CoordIrrig> irrigationsList() {
         return irrigations;
