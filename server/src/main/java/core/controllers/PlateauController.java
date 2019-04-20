@@ -480,6 +480,28 @@ public class PlateauController {
         return new CoordContainer(game.getPlateau().posPanda());
     }
 
+    /**
+     * Permet d'avoir la liste des positions legal pour le panda
+     * @return CoordContainer
+     *
+     * @api {get} /plateau/panda/legal/ legalPandaPosition
+     * @apiVersion 0.3.0
+     * @apiDescription Get the legal position to push the panda on the board
+     * @apiName legalPandaPosition
+     * @apiGroup Server/PlateauController
+     *
+     *
+     * @apiSuccessExample Success-Response:
+     *       {"content":[
+     *       {"q":0,"r":0}
+     *       ]}
+     *
+     */
+    @GetMapping("/plateau/panda/legal/")
+    public CoordContainer legalPandaPosition(){
+        return new CoordContainer(game.getPlateau().computePandaLegalPositions());
+    }
+
 
     /**
      * Permet de bouger le panda à une position donnée

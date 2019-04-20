@@ -248,6 +248,12 @@ public class Plateau {
         return Couleur.BLEU;
     }
 
+    public List<CoordAxial> computePandaLegalPositions(){
+        List<CoordAxial> legalPos = getLineCoord(posPanda);
+        legalPos.remove(posPanda);
+        return legalPos;
+    }
+
 
 
     // ------
@@ -339,6 +345,19 @@ public class Plateau {
             return entries.get(0);
         }
 
+    }
+
+    public List<Map.Entry<CoordAxial,Tuile>> getLine(CoordAxial coord){
+        List<Map.Entry<CoordAxial,Tuile>> entries = tuiles.entrySet().stream().filter(p -> hasStraightPath(coord, p.getKey())).collect(Collectors.toList());
+        return entries;
+    }
+
+    public List<Tuile> getLinePlots(CoordAxial coordAxial){
+        return getLine(coordAxial).stream().map(Map.Entry::getValue).collect(Collectors.toList());
+    }
+
+    public List<CoordAxial> getLineCoord(CoordAxial coordAxial){
+        return getLine(coordAxial).stream().map(Map.Entry::getKey).collect(Collectors.toList());
     }
 
     @Override
