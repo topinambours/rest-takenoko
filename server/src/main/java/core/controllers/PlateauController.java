@@ -396,6 +396,29 @@ public class PlateauController {
 
     }
 
+    /**
+     * Permet d'avoir la position actuelle du panda
+     * @return CoordContainer
+     *
+     *
+     * @api {get} /plateau/panda/ pandaPosition
+     * @apiVersion 0.3.0
+     * @apiDescription Get the actual position of the panda on the board
+     * @apiName pandaPosition
+     * @apiGroup Server/PlateauController
+     *
+     *
+     * @apiSuccessExample Success-Response:
+     *       {"content":[
+     *       {"q":0,"r":0}
+     *       ]}
+     *
+     */
+    @GetMapping("/plateau/panda/")
+    public CoordContainer pandaPosition(){
+        return new CoordContainer(game.getPlateau().posPanda());
+    }
+
 
 
 }
