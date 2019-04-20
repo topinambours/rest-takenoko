@@ -122,6 +122,10 @@ public class HTTPClient {
         return post_request("/action/poser-irrigation/",coordIrrig,ResponseContainer.class);
     }
 
+    public CoordContainer requestLegalPandaPositions(){
+        return request("/plateau/panda/legal/",CoordContainer.class);
+    }
+
     public void setUser_adress(String user_adress) {
         this.user_adress = user_adress;
     }

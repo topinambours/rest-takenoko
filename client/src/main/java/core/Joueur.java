@@ -91,6 +91,10 @@ public class Joueur {
 
         }
 
+        List<CoordAxial> legalPanda = httpClient.requestLegalPandaPositions().getContent();
+
+        logger.info(String.format("LE JOUEUR PEUT DEPLACER LE PANDA SUR CES COORDS : %s",legalPanda.toString()));
+
 
         return httpClient.notifyEndTurn();
     }
