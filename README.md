@@ -17,12 +17,13 @@ Takenoko
 
 <p align="center">
   <a href="#presentation">Presentation</a> •
+  <a href="#api">API</a> •
   <a href="#lancer-une-partie">Lancer une partie</a> •
   <a href="#plan-de-route">Plan de route</a> •
    <a href="#la-boite">La boite</a> •
   <a href="#notes-de-conception">Conception</a> 
-</p><br>
-API Documentation : https://docs.topinambours.xyz/rest-takenoko/
+</p>
+
 
 ## Presentation
 
@@ -34,6 +35,11 @@ API Documentation : https://docs.topinambours.xyz/rest-takenoko/
 
 Le projet consiste à réaliser en Java une version numérique du jeu takenoko créé par [Antoine Bauza](http://www.antoinebauza.fr/?tag=takenoko).
 Version textuel n'étant pas destinée à être jouée par des êtres humains mais par des robots jouants de façon autonome.
+
+## API
+**API Documentation :** https://docs.topinambours.xyz/rest-takenoko/
+
+API First conception : https://github.com/uca-m1informatique-softeng/topinambours-takenoko/blob/master/doc/etude.md
 
 ## Lancer une partie
 
