@@ -21,9 +21,8 @@ Takenoko
   <a href="#plan-de-route">Plan de route</a> •
    <a href="#la-boite">La boite</a> •
   <a href="#notes-de-conception">Conception</a> 
-</p>
-
-
+</p><br>
+API Documentation : https://docs.topinambours.xyz/rest-takenoko/
 
 ## Presentation
 
