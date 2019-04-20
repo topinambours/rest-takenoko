@@ -11,6 +11,8 @@ import takenoko.Plateau;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.irrigation.Orient;
 import takenoko.tuile.CoordAxial;
+import takenoko.tuile.Tuile;
+import takenoko.tuile.TuileNotFoundException;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -157,6 +159,37 @@ public class PlateauController {
     public boolean checkIfPositionIsLegal
             (@PathVariable int q, @PathVariable int r) {
         return game.getPlateau().isPositionLegal(new CoordAxial(q,r));
+    }
+
+    /**
+     * Permet d'avoir
+     * @param id int
+     * @return TuileContainer
+     * @throws TuileNotFoundException
+     *
+     *
+     * @api {get} /platea/tuile/:id getTuileFromID
+     * @apiVersion 0.3.0
+     * @apiDescription get the tuile from his ID
+     * @apiName getTuileFromID
+     * @apiGroup Server/PlateauController
+     *
+     *
+     * @apiParam {Number} id Unique ID.
+     *
+     * @apiError TuileNotFoundException
+     *
+     * @apiSuccessExample Success-Response:
+     *       HTTP/1.1 200 OK
+     *       {"content":[
+     *       {"unique_id":-1,"couleur":"BLEU","amenagement":"NONE","haveWater":true,"nbBambous":0}
+     *       ]}
+     *
+     */
+    @RequestMapping(value = "/platea/tuile/{id}")
+    @ResponseBody
+    public TuileContainer getTuileFromID(@PathVariable int id) throws TuileNotFoundException {
+        return new TuileContainer(game.getPlateau().getTuileFromId(id));
     }
 
 

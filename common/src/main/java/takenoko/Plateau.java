@@ -9,8 +9,10 @@ import takenoko.objectives.patterns.CoordCube;
 import takenoko.tuile.Amenagement;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
+import takenoko.tuile.TuileNotFoundException;
 
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Data
@@ -246,6 +248,8 @@ public class Plateau {
         return Couleur.BLEU;
     }
 
+
+
     // ------
     // UTILS
     // ------
@@ -297,12 +301,29 @@ public class Plateau {
         } else return false;
     }
 
+
+
     public HashSet<CoordIrrig> irrigationsList() {
         return irrigations;
     }
 
     public CoordAxial posPanda() {
         return posPanda;
+    }
+
+    /**
+     * Permet d'avoir un id unique vers une tuile
+     * @param id int
+     * @return Tuile
+     */
+    public Tuile getTuileFromId(int id) throws TuileNotFoundException {
+        List<Tuile> tuile = tuiles.values().stream().filter(t -> t.getUnique_id() == id).collect(Collectors.toList());
+        if (tuile.size() == 0){
+            throw new TuileNotFoundException();
+        }else{
+            return tuile.get(0);
+        }
+
     }
 
     @Override
