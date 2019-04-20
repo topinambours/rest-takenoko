@@ -8,14 +8,12 @@ import core.GameEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.*;
 import takenoko.Plateau;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.irrigation.Orient;
 import takenoko.tuile.CoordAxial;
-import takenoko.tuile.Tuile;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -118,12 +116,15 @@ public class PlateauController {
      *
      */
     @PostMapping("/action/poser-tuile/")
-    public ResponseContainer poser_tuile(
+    public ResponseContainer poser_tuile(@RequestParam(value = "playerId",
+            required = false,
+            defaultValue = "-1") int playerId,
             @RequestBody PoseTuileContainer poseTuileContainer){
 
         game.getPlateau().poserTuile(poseTuileContainer.getPos(), poseTuileContainer.getTuile());
 
-        log.info(String.format("%s posée en %s",
+        log.info(String.format("Le joueur %d pose %s en %s",
+                playerId,
                 poseTuileContainer.getTuile().toString(),
                 poseTuileContainer.getPos().toString()));
 
@@ -380,9 +381,14 @@ public class PlateauController {
      *
      */
     @PostMapping("/action/poser-irrigation/")
-    public ResponseContainer poserIrrigation(@RequestBody CoordIrrig coordIrrig){
+    public ResponseContainer poserIrrigation(
+            @RequestBody CoordIrrig coordIrrig,
+            @RequestParam(value = "playerId",
+            required = false,
+            defaultValue = "-1") int playerId){
         boolean res = game.getPlateau().addIrrigation(coordIrrig);
         if (res){
+            log.info(String.format("Le joueur %d pose une irrigation en %s", playerId, coordIrrig));
             return new ResponseContainer(res,"Pose d'irrigation effectué en " + coordIrrig.toString());
         }else{
             return new ResponseContainer(res, "Erreur lors de la pose de l'irrigation en "+coordIrrig.toString());

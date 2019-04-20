@@ -1,14 +1,12 @@
 package communication;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.jcabi.aspects.RetryOnFailure;
 import communication.container.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import takenoko.irrigation.CoordIrrig;
@@ -55,24 +53,22 @@ public class HTTPClient {
         return server_url;
     }
 
-    @RetryOnFailure(attempts = 5, delay = 200, verbose = true)
     public <T> T self_request(String uri, Class<T> responseType) {
         return new RestTemplate().getForObject(String.format("%s/%s", "http://" + user_adress, uri), responseType);
     }
 
-    @RetryOnFailure(attempts = 5, delay = 200, verbose = true)
     public <T> T request(String uri, Class<T> responseType) {
-        return new RestTemplate().getForObject(String.format("%s/%s", server_url, uri), responseType);
+
+        return new RestTemplate().getForObject(String.format("%s/%s?playerId=%d", server_url, uri, id), responseType);
     }
 
-    @RetryOnFailure(attempts = 5, delay = 200, verbose = true)
     public <Req,Res> Res post_request(String uri,Req postObject, Class<Res> responseType){
         RestTemplate restTemplate = new RestTemplate();
 
         HttpEntity<Req> request = new HttpEntity<>(postObject, new HttpHeaders());
         URI uri_req = null;
         try {
-            uri_req = new URI(String.format("%s/%s", server_url, uri));
+            uri_req = new URI(String.format("%s/%s?playerId=%d", server_url, uri, id));
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -82,10 +78,6 @@ public class HTTPClient {
 
     public ResponseContainer registerGame(){
         return post_request("register/", this, ResponseContainer.class);
-    }
-
-    public ResponseContainer isItMyTurn(){
-        return post_request("current_player_turn", this, ResponseContainer.class);
     }
 
     public TuileContainer piocher_tuiles() {

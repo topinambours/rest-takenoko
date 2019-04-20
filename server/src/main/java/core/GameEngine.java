@@ -5,6 +5,8 @@ import communication.container.ResponseContainer;
 import communication.container.TuileContainer;
 import core.takenoko.pioche.EmptyDeckException;
 import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -35,6 +37,7 @@ public class GameEngine {
 
     @Autowired
     private Environment env;
+    private static final Logger log = LoggerFactory.getLogger(GameEngine.class);
 
     private Plateau plateau;
     private PiocheTuile piocheTuile;
@@ -50,8 +53,6 @@ public class GameEngine {
 
     public GameEngine(int gameSize){
         this.gameSize = gameSize;
-        System.out.println(String.format("NEW GAME CREATED OF SIZE %d", gameSize));
-        System.out.println(piocheTuile.toContainer());
     }
 
     public GameEngine(int gameSize, PiocheTuile piocheTuile, Plateau plateau){
@@ -59,9 +60,7 @@ public class GameEngine {
         this.piocheTuile = piocheTuile;
         this.plateau = plateau;
         this.clients = new ArrayList<>();
-        System.out.println(String.format("NEW GAME CREATED OF SIZE %d", gameSize));
-        System.out.println(plateau.toString());
-        System.out.println(piocheTuile.toContainer());
+        log.info(String.format("Nouvelle partie pour %d joueurs instanciée.", gameSize));
     }
 
     public boolean gameEnded(){
