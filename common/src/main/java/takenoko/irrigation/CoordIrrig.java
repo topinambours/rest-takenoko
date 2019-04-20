@@ -20,7 +20,10 @@ public class CoordIrrig {
     /**
      * Une coordonné d'irrigation dispose d'une orientation parmis {@link Orient}
      */
-    private final Orient o;
+    private Orient o;
+
+    public CoordIrrig() {
+    }
 
     public CoordIrrig(CoordAxial coordAxial, Orient o) {
         this.coordAxial = coordAxial;

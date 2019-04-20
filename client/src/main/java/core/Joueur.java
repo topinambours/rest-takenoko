@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
+import takenoko.irrigation.CoordIrrig;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
 
@@ -74,6 +75,10 @@ public class Joueur {
         logger.info(String.format("LE JOUEUR POSE SA TUILE %s en %s", selectedForPos.toString(), pos.toString()));
 
         ResponseContainer resp = httpClient.poserTuile(new PoseTuileContainer(pos, selectedForPos));
+
+        List<CoordIrrig> legalIrrig = httpClient.requestLegalIrrigPositions().getContent();
+
+        logger.info(String.format("LE JOUEUR PEUT PLACER CES IRRIGATIONS : %s",Arrays.deepToString(legalIrrig.toArray())));
 
         logger.info(resp.toString());
 

@@ -2,10 +2,7 @@ package communication;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.jcabi.aspects.RetryOnFailure;
-import communication.container.CoordContainer;
-import communication.container.PoseTuileContainer;
-import communication.container.ResponseContainer;
-import communication.container.TuileContainer;
+import communication.container.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
@@ -116,6 +113,10 @@ public class HTTPClient {
 
     public ResponseContainer isGameStarted(){
         return request("/gameStarted", ResponseContainer.class);
+    }
+
+    public CoordIrrigContainer requestLegalIrrigPositions(){
+        return request("/plateau/irrigation/legal/",CoordIrrigContainer.class);
     }
 
     public void setUser_adress(String user_adress) {
