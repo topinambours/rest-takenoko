@@ -22,6 +22,7 @@ public class Plateau {
 
     private HashMap<CoordAxial, Tuile> tuiles;
     private HashSet<CoordIrrig> irrigations;
+    private CoordAxial posPanda;
 
     public Plateau() {
         this.tuiles = new HashMap<>();
@@ -211,6 +212,10 @@ public class Plateau {
         return irrigations;
     }
 
+    public CoordAxial posPanda() {
+        return posPanda;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -240,6 +245,8 @@ public class Plateau {
         out.poserTuile(startingCoord, new Tuile(0, Couleur.BLEU, Amenagement.NONE));
         List<CoordIrrig> borderCoords = new CoordAxial(0,0).computeBorderCoords();
         out.irrigations.addAll(borderCoords);
+
+        out.posPanda = startingCoord;
 
         return out;
     }
