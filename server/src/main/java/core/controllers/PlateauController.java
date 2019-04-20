@@ -522,7 +522,7 @@ public class PlateauController {
      */
     @PostMapping("/action/bouger-panda/")
     public ResponseContainer bougerPanda(@RequestBody CoordAxial coordAxial){
-        //Todo : récupérer les bambous
+        //Todo : récupérer les bambous #61
         Couleur couleur = game.getPlateau().movePanda(coordAxial);
         //return new ColorContainer(couleur);
         return new ResponseContainer(true,String.format("LE PANDA C'EST DEPLACE EN %s ET A MANGE UN BAMBOU DE COULEUR %s",coordAxial.toString(),couleur.toString()));
