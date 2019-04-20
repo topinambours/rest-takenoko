@@ -29,6 +29,7 @@ public class DeckController {
      * @throws EmptyDeckException
      *
      * @api {get} /action/piocher Piocher
+     * @apiVersion 0.2.0
      * @apiDescription Get new plots for the deck
      * @apiName Piocher
      * @apiGroup Server/DeckController
@@ -54,6 +55,7 @@ public class DeckController {
      * @return ResponseContainer
      *
      * @api {post} /action/rendre_tuiles/ RendreTuiles
+     * @apiVersion 0.2.0
      * @apiDescription Get back non-used plots
      * @apiName RendreTuiles
      * @apiGroup Server/DeckController
