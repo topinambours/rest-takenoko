@@ -35,10 +35,16 @@ public class HTTPClient {
     }
 
     public HTTPClient(int id, String user_adress, String server_url) {
+        this(id, user_adress, server_url, true);
+    }
+
+    public HTTPClient(int id, String user_adress, String server_url, Boolean autoRegistration) {
         this.id = id;
         this.user_adress = user_adress;
         this.server_url = server_url;
-        registerGame();
+        if (autoRegistration) {
+            registerGame();
+        }
     }
 
     public int getId() {

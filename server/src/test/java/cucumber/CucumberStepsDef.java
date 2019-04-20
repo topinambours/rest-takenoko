@@ -1,4 +1,4 @@
-package cucumber.stepDef;
+package cucumber;
 
 import communication.container.TuileContainer;
 import core.controllers.DeckController;
@@ -17,7 +17,7 @@ import static junit.framework.TestCase.assertEquals;
 
 
 @Ignore
-public class CucumberStepDefinitions {
+public class CucumberStepsDef {
 
     /*
     private DeckController d;

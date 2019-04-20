@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class ConnectionController {
 
-    @Autowired
-    NotificationService service;
+    final NotificationService service;
 
     private static final Logger log = LoggerFactory.getLogger(ConnectionController.class);
 
     private final GameEngine game;
 
-    public ConnectionController(@Qualifier("GameEngine") GameEngine game) {
+    public ConnectionController(@Qualifier("GameEngine") GameEngine game, NotificationService service) {
         this.game = game;
+        this.service = service;
     }
 
     /**
@@ -117,8 +117,19 @@ public class ConnectionController {
      */
     @PostMapping("/register/")
     public ResponseContainer register(@RequestBody HTTPClient client){
-        game.getClients().add(client);
-        log.info(String.format("Le joueur %d@%s c'est enregistré.", client.getId(), client.getUser_adress()));
-        return new ResponseContainer(true, "You joined the game");
+        if (!game.isGameStarted()) {
+            game.getClients().add(client);
+            if (game.getClients().size() == game.getGameSize()) {
+                game.setGameStarted(true);
+            }
+            log.info(String.format("Le joueur %d@%s c'est enregistré.", client.getId(), client.getUser_adress()));
+            return new ResponseContainer(true, "You joined the game");
+        }
+        else{
+            log.info(String.format("Le joueur %d@%s tente de s'enregistrer", client.getId(), client.getUser_adress()));
+            return new ResponseContainer(false, "Game has started");
+        }
     }
+
+
 }

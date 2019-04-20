@@ -41,11 +41,15 @@ public class GameEngine {
 
     private Plateau plateau;
     private PiocheTuile piocheTuile;
-    private final int gameSize;
+
+    private int gameSize;
 
     private List<HTTPClient> clients;
 
     private int currentPlayerIndex;
+
+    private boolean gameStarted;
+
 
     public GameEngine(){
         this.gameSize = 4;
@@ -55,11 +59,20 @@ public class GameEngine {
         this.gameSize = gameSize;
     }
 
-    public GameEngine(int gameSize, PiocheTuile piocheTuile, Plateau plateau){
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
+
+    public void setGameStarted(boolean gameStarted) {
+        this.gameStarted = gameStarted;
+    }
+
+    public GameEngine(int gameSize, @Qualifier("piocheDepart") PiocheTuile piocheTuile, @Qualifier("plateauTakenoko")  Plateau plateau){
         this.gameSize = gameSize;
         this.piocheTuile = piocheTuile;
         this.plateau = plateau;
         this.clients = new ArrayList<>();
+        this.gameStarted = false;
         log.info(String.format("Nouvelle partie pour %d joueurs instanciée.", gameSize));
     }
 
@@ -73,7 +86,16 @@ public class GameEngine {
     public GameEngine gameEngine(
             @Qualifier("piocheDepart") PiocheTuile piocheTuile,
             @Qualifier("plateauTakenoko") Plateau plateau) {
-        return new GameEngine(env.getProperty("game.size", Integer.class), piocheTuile, plateau);
+
+        int gameSize;
+        try {
+            gameSize = env.getProperty("game.size", Integer.class);
+        }catch (NullPointerException e){
+            gameSize = 2;
+        }
+
+
+        return new GameEngine(gameSize, piocheTuile, plateau);
     }
 
 
@@ -103,6 +125,9 @@ public class GameEngine {
 
     public int getGameSize() {
         return gameSize;
+    }
+    public void setGameSize(int gameSize) {
+        this.gameSize = gameSize;
     }
 
     public List<HTTPClient> getClients() {

@@ -28,7 +28,7 @@ public class NotificationService {
             log.info("FIN DE PARTIE");
             System.exit(0);
         }
-        if (game.getClients().size() == game.getGameSize()) {
+        if (game.isGameStarted()) {
             int id_notify = game.gameEnded() ? -1 : game.getClients().get(game.getCurrentPlayerIndex()).getId();
             game.getClients().forEach(client ->
                     client.self_request(String.format("/notify/%d", id_notify), ResponseContainer.class));
