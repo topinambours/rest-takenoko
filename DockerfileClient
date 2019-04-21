@@ -1,0 +1,15 @@
+# Stage 1 (to create a "build" image)
+FROM anonymoussquad/maven3.5-jdk10-node AS builder
+RUN java -version
+
+COPY . /usr/src/takenoko-server/
+WORKDIR /usr/src/takenoko-server/
+RUN mvn package -DskipTests
+
+# Stage 2 (to create a downsized "container executable")
+FROM anonymoussquad/maven3.5-jdk10-node
+WORKDIR /root/
+COPY --from=builder /usr/src/takenoko-server/client/target/client-1.0-SNAPSHOT.jar .
+
+EXPOSE 8123
+ENTRYPOINT ["java", "-jar", "client-1.0-SNAPSHOT.jar" ]

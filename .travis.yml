@@ -27,9 +27,14 @@ jobs:
     - script: mvn -pl server -Dtest=CucumberRunnerTest test
       name : "Server"
 
-    - stage : deploy
-      name: "Deploy to DockerHub"
+    - stage : "Deploy to DockerHub"
+      name: "Server"
       script :
-        - docker build -t topinambours/takenoko .
+        - docker build -t topinambours/takenoko:latest-server . -f DockerfileServer
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker push topinambours/takenoko:latest
+        - docker push topinambours/takenoko:latest-server
+    - script:
+        - docker build -t topinambours/takenoko:latest-client . -f DockerfileClient
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push topinambours/takenoko:latest-client
+      name: "Client"
