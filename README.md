@@ -18,6 +18,7 @@ Takenoko
 <p align="center">
   <a href="#presentation">Presentation</a> •
   <a href="#api">API</a> •
+  <a href="#application">App</a> •
   <a href="#lancer-une-partie">Lancer une partie</a> •
   <a href="#plan-de-route">Plan de route</a> •
    <a href="#la-boite">La boite</a> •
@@ -40,6 +41,13 @@ Version textuel n'étant pas destinée à être jouée par des êtres humains ma
 **API Documentation :** https://docs.topinambours.xyz/rest-takenoko/
 
 API First conception : https://github.com/uca-m1informatique-softeng/topinambours-takenoko/blob/master/doc/etude.md
+
+## Application
+<p align="center">
+<img src="https://topinambours.xyz/assets/img/projects/takenoko-rest-api/app-diag.png">
+</p>
+L'application se compose d'une partie client et d'une partie serveur dans des images Docker. La partie client se connectant à un serveur via son id. Le serveur lui host une seule partie, mais pourquoi faire comme ça ? <br>
+L'objectif final est la création d'une structure type kubernetes. C'est-à-dire comme vue dans le diagramme ci-dessus, la création d'un système de matchmaking qui dynamiquement est en fonction des besoins, pull des images Docker pour créer des serveurs de jeu. C'est pourquoi, nos serveurs sont des serveurs hébergent uniquement une game avec un système d'authentification par id.
 
 ## Lancer une partie
 
