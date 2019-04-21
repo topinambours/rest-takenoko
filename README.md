@@ -51,8 +51,26 @@ L'objectif final est la création d'une structure type kubernetes. C'est-à-dire
 
 ## Lancer une partie
 
-    docker pull topinambours/takenoko
-    docker run topinambours/takenoko [args:server/client]
+    Server : 
+    docker pull topinambours/takenoko:latest-server
+    docker run --network host topinambours/takenoko:latest-server [PORTSERVER] [NBCLIENT]
+    
+    Client : 
+    docker pull topinambours/takenoko:latest-server
+    docker run --network host topinambours/takenoko:latest-client [IDCLIENT] http://[IP]:[PORTSERVER]/ [PORTCLIENT] 
+
+
+Exemple :
+
+    Server : 
+    docker pull topinambours/takenoko:latest-server
+    docker run --network host topinambours/takenoko:latest-server 8080 2
+    
+    Client : 
+    docker pull topinambours/takenoko:latest-server
+    docker run --network host topinambours/takenoko:latest-client 1 http://localhost:8080/ 8081
+    
+    
 
 ## Plan de route
 
