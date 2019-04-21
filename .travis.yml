@@ -6,10 +6,24 @@ jdk:
 
 jobs:
   include:
-    - stage: test
-      script:
-        - mvn test
+    - stage: "Unit Tests"
+      name : "Common"
+      script: mvn -pl common -Dtest=\!CucumberRunnerTest test
+    - script: mvn -pl client -Dtest=\!CucumberRunnerTest test
+      name : "Client"
+    - script: mvn -pl server -Dtest=\!CucumberRunnerTest test
+      name : "Server"
+
+    - stage: "Integration Tests"
+      name : "Common"
+      script: mvn -pl common -Dtest=CucumberRunnerTest test
+    - script: mvn -pl client -Dtest=CucumberRunnerTest test
+      name : "Client"
+    - script: mvn -pl server -Dtest=CucumberRunnerTest test
+      name : "Server"
+
     - stage : deploy
+      name: "Deploy to DockerHub"
       script :
         - docker build -t topinambours/takenoko .
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
