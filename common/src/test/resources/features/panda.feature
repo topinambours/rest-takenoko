@@ -20,9 +20,18 @@ Feature: Comportement du panda
     Given Une tuile de couleur VERT en 1,0 avec bambou de taille 1
     When Je déplace le panda en 1,0
     Then Je ramasse des bambous de couleur VERT
+    Then La tuile en 1,0 contient un bambou de taille 0
 
   Scenario: Le panda ne peut ramasser quand il n'y a pas de bombou sur la tuile d'arrivé
     Given Un plateau de depart
     Given Une tuile de couleur VERT en 1,0 avec bambou de taille 0
     When Je déplace le panda en 1,0
     Then Le panda ne ramasse pas de bambou
+
+  Scenario: Le panda ne mange pas sur une tuile avec aménagement enclos
+    Given Un plateau de depart
+    Given Une tuile de couleur VERT en 1,0 avec bambou de taille 1
+    Given La tuile en 1,0 contient l'aménagment ENCLOS
+    When Je déplace le panda en 1,0
+    Then Le panda ne ramasse pas de bambou
+    Then La tuile en 1,0 contient un bambou de taille 1

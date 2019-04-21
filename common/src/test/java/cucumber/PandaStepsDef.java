@@ -6,6 +6,7 @@ import cucumber.api.java.en.When;
 import org.junit.Ignore;
 import takenoko.Couleur;
 import takenoko.Plateau;
+import takenoko.tuile.Amenagement;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
 
@@ -78,6 +79,18 @@ public class PandaStepsDef {
     @Then("Le panda ne ramasse pas de bambou")
     public void panda_dont_eat(){
         assertEquals(plateau.movePanda(coordAxial),Couleur.BLEU);
+    }
+
+    @Ignore
+    @Then("La tuile en {int},{int} contient un bambou de taille {int}")
+    public void plot_bambou_number(int q,int r,int bambous){
+        assertEquals(plateau.getTuileAtCoord(new CoordAxial(q,r)).getNbBambous(),bambous);
+    }
+
+    @Ignore
+    @When("La tuile en {int},{int} contient l'aménagment {amenagement}")
+    public void plot_amenagement(int q,int r,Amenagement amenagement){
+        plateau.getTuileAtCoord(new CoordAxial(q,r)).setAmenagement(amenagement);
     }
 
 }
