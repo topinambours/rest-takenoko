@@ -30,9 +30,7 @@ public class HTTPClient {
 
     //Logger log = LoggerFactory.getLogger(HTTPClient.class);
     public HTTPClient(){
-        this.id = -1;
-        this.user_adress = "";
-        this.server_url = "";
+        this(-1, "foo", "foo", false);
     }
 
     public HTTPClient(int id, String user_adress, String server_url) {
@@ -155,6 +153,9 @@ public class HTTPClient {
         String user_port = env.getProperty("client.port");
         String server_adress = env.getProperty("distant.server.address");
         int player_id = Integer.parseInt(env.getProperty("client.id"));
-        return new HTTPClient(player_id, "localhost:" + user_port, server_adress);
+
+        boolean auto_registration = !"false".equals(env.getProperty("auto_registration"));
+
+        return new HTTPClient(player_id, "localhost:" + user_port, server_adress,auto_registration);
     }
 }

@@ -21,10 +21,15 @@ public class ActionController {
     public ResponseContainer current_player(@PathVariable int current_id) {
 
         if (current_id == joueur.getId()){
+            if (joueur.myTurn){
+                return new ResponseContainer(false, String.format("Player %d already know that he have to play", current_id));
+            }
+
             log.info("Notification de jouer reçu");
             joueur.myTurn = true;
+            return new ResponseContainer(true, String.format("Player %d aware that he have to play.", joueur.getId()));
         }
-        return new ResponseContainer(true, String.format("turn complete for player %d", joueur.getId()));
+        return new ResponseContainer(true, String.format("Player %d know that it is the turn of player %d", joueur.getId(), current_id));
     }
 
 }
