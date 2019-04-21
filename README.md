@@ -68,7 +68,8 @@ Exemple :
     
     Client : 
     docker pull topinambours/takenoko:latest-server
-    docker run --network host topinambours/takenoko:latest-client 1 http://localhost:8080/ 8081
+    docker run --network host topinambours/takenoko:latest-client 1 http://localhost:8080/ 8081 //client 1
+    docker run --network host topinambours/takenoko:latest-client 2 http://localhost:8080/ 8082 //client 2
     
     
 
