@@ -19,7 +19,7 @@ Takenoko
 <p align="center">
   <a href="#presentation">Presentation</a> •
   <a href="#api">API</a> •
-  <a href="#application">App</a> •
+  <a href="#architecture-globale-du-projet">Architecture</a> •
   <a href="#lancer-une-partie">Lancer une partie</a> •
   <a href="#plan-de-route">Plan de route</a> •
    <a href="#la-boite">La boite</a> •
