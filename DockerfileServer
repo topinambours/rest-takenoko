@@ -2,14 +2,14 @@
 FROM anonymoussquad/maven3.5-jdk10-node AS builder
 RUN java -version
 
-COPY . /usr/src/myapp/
-WORKDIR /usr/src/myapp/
-RUN mvn package
+COPY . /usr/src/takenoko-server/
+WORKDIR /usr/src/takenoko-server/
+RUN mvn package -DskipTests
 
 # Stage 2 (to create a downsized "container executable", ~87MB)
 FROM anonymoussquad/maven3.5-jdk10-node
 WORKDIR /root/
-COPY --from=builder /usr/src/myapp/ .
+COPY --from=builder /usr/src/takenoko-server/server/target/server-1.0-SNAPSHOT.jar .
 
 EXPOSE 8123
-ENTRYPOINT ["sh", "./selector.sh"]
+ENTRYPOINT ["java", "-jar", "server-1.0-SNAPSHOT.jar" ]

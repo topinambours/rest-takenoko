@@ -13,7 +13,7 @@ import java.util.Locale;
 import static java.util.Locale.ENGLISH;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "src/test/resources")
+@CucumberOptions(features = "src/test/resources/features")
 public class CucumberRunnerTest implements TypeRegistryConfigurer {
 
     @Override

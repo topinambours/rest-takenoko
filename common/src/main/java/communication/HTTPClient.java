@@ -10,6 +10,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import takenoko.irrigation.CoordIrrig;
+import takenoko.tuile.CoordAxial;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -29,9 +30,7 @@ public class HTTPClient {
 
     //Logger log = LoggerFactory.getLogger(HTTPClient.class);
     public HTTPClient(){
-        this.id = -1;
-        this.user_adress = "";
-        this.server_url = "";
+        this(-1, "foo", "foo", false);
     }
 
     public HTTPClient(int id, String user_adress, String server_url) {
@@ -122,6 +121,14 @@ public class HTTPClient {
         return post_request("/action/poser-irrigation/",coordIrrig,ResponseContainer.class);
     }
 
+    public CoordContainer requestLegalPandaPositions(){
+        return request("/plateau/panda/legal/",CoordContainer.class);
+    }
+
+    public ResponseContainer deplacerPanda(CoordAxial coordAxial){
+        return post_request("/action/bouger-panda/",coordAxial,ResponseContainer.class);
+    }
+
     public void setUser_adress(String user_adress) {
         this.user_adress = user_adress;
     }
@@ -146,6 +153,9 @@ public class HTTPClient {
         String user_port = env.getProperty("client.port");
         String server_adress = env.getProperty("distant.server.address");
         int player_id = Integer.parseInt(env.getProperty("client.id"));
-        return new HTTPClient(player_id, "localhost:" + user_port, server_adress);
+
+        boolean auto_registration = !"false".equals(env.getProperty("auto_registration"));
+
+        return new HTTPClient(player_id, "localhost:" + user_port, server_adress,auto_registration);
     }
 }

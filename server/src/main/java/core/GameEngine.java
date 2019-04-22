@@ -21,6 +21,7 @@ import takenoko.Plateau;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * GameEngine est la classe générale d'une instance d'une partie takenoko
@@ -49,7 +50,6 @@ public class GameEngine {
     private int currentPlayerIndex;
 
     private boolean gameStarted;
-
 
     public GameEngine(){
         this.gameSize = 4;
@@ -98,6 +98,14 @@ public class GameEngine {
         return new GameEngine(gameSize, piocheTuile, plateau);
     }
 
+
+    public List<Integer> getClientsId(){
+        return clients.stream().map(HTTPClient::getId).collect(Collectors.toList());
+    }
+
+    public HTTPClient getCurrentPlayer(){
+        return getClients().get(currentPlayerIndex);
+    }
 
     public Environment getEnv() {
         return env;

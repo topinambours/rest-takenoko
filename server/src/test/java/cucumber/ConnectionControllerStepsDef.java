@@ -27,6 +27,11 @@ public class ConnectionControllerStepsDef extends SpringIntegrationTest {
         cc.register(new HTTPClient(id, usr_url, "http://localhost:8080", false));
     }
 
+    @When("Player {int} notify that he finished his turn")
+    public void notify_ent_turn(int playerId){
+        cc.end_turn(playerId);
+    }
+
     @Then("the game has started")
     public void theGameHasStarted(){
         assertTrue(game.isGameStarted());
@@ -35,4 +40,5 @@ public class ConnectionControllerStepsDef extends SpringIntegrationTest {
     public void theGameHasNotStarted(){
         assertFalse(game.isGameStarted());
     }
+
 }

@@ -85,6 +85,7 @@ public class Tuile {
         return new BambouContainer(couleur, nb_to_remove);
     }
 
+
     /**
      * Irrigue sans verification la tuile
      */

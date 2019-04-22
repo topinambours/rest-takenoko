@@ -1,19 +1,19 @@
 package core.controllers;
 
-import communication.container.CoordContainer;
-import communication.container.CoordIrrigContainer;
-import communication.container.PoseTuileContainer;
-import communication.container.ResponseContainer;
+import communication.container.*;
 import core.GameEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.*;
+import takenoko.Couleur;
 import takenoko.Plateau;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.irrigation.Orient;
 import takenoko.tuile.CoordAxial;
+import takenoko.tuile.Tuile;
+import takenoko.tuile.TuileNotFoundException;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -31,7 +31,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/ getPlateau
-     * @apiVersion 0.2.0
+     * @apiVersion 0.3.0
      * @apiDescription Get the deck status with all the plots positions
      * @apiName getPlateau
      * @apiGroup Server/PlateauController
@@ -59,13 +59,12 @@ public class PlateauController {
         return game.getPlateau();
     }
 
-
     /**
      * Permet d'avoir la liste des positions légales
      * @return CoordContainer
      *
      * @api {get} /plateau/tuile/legal/ getLegalPosition
-     * @apiVersion 0.2.0
+     * @apiVersion 0.3.0
      * @apiDescription Get the list of legals position to put plots
      * @apiName getLegalPosition
      * @apiGroup Server/PlateauController
@@ -97,7 +96,7 @@ public class PlateauController {
      * @return ResponseContainer
      *
      * @api {post} /action/poser-tuile/ PoserTuile
-     * @apiVersion 0.2.0
+     * @apiVersion 0.3.0
      * @apiDescription Post a plot to be put on the board
      * @apiName PoserTuile
      * @apiGroup Server/PlateauController
@@ -139,7 +138,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/tuile/legal/:q/:r checkIfPositionIsLegal
-     * @apiVersion 0.2.0
+     * @apiVersion 0.3.0
      * @apiDescription check if a position is legal to put plot
      * @apiName checkIfPositionIsLegal
      * @apiGroup Server/PlateauController
@@ -162,6 +161,68 @@ public class PlateauController {
         return game.getPlateau().isPositionLegal(new CoordAxial(q,r));
     }
 
+    /**
+     * Permet d'avoir
+     * @param id int
+     * @return TuileContainer
+     * @throws TuileNotFoundException
+     *
+     *
+     * @api {get} /platea/tuile/:id getTuileFromID
+     * @apiVersion 0.3.0
+     * @apiDescription get the tuile from his ID
+     * @apiName getTuileFromID
+     * @apiGroup Server/PlateauController
+     *
+     *
+     * @apiParam {Number} id Unique ID.
+     *
+     * @apiError TuileNotFoundException
+     *
+     * @apiSuccessExample Success-Response:
+     *       HTTP/1.1 200 OK
+     *       {"content":[
+     *       {"unique_id":-1,"couleur":"BLEU","amenagement":"NONE","haveWater":true,"nbBambous":0}
+     *       ]}
+     *
+     */
+    @RequestMapping(value = "/platea/tuile/{id}")
+    @ResponseBody
+    public TuileContainer getTuileFromID(@PathVariable int id) throws TuileNotFoundException {
+        return new TuileContainer(game.getPlateau().getTuileFromId(id));
+    }
+
+    /**
+     * Permet d'avoir la coordonnée d'une tuile via son id
+     * @param id int
+     * @return CoordContainer
+     * @throws TuileNotFoundException
+     *
+     *
+     * @api {get} /platea/tuile/:id/coord getTuileCoordFromID
+     * @apiVersion 0.3.0
+     * @apiDescription get the tuile coord from his ID
+     * @apiName getTuileCoordFromID
+     * @apiGroup Server/PlateauController
+     *
+     *
+     * @apiParam {Number} id Unique ID.
+     *
+     * @apiError TuileNotFoundException
+     *
+     * @apiSuccessExample Success-Response:
+     *       HTTP/1.1 200 OK
+     *       {"content":[
+     *       {"q":0,"r":0}
+     *       ]}
+     *
+     */
+    @RequestMapping(value = "/platea/tuile/{id}/coord")
+    @ResponseBody
+    public CoordContainer getTuileCoordFromID(@PathVariable int id) throws TuileNotFoundException {
+        return new CoordContainer(game.getPlateau().getTuileFormId(id).getKey());
+    }
+
 
     /**
      * Permet de savoir si une tuile a de l'eau
@@ -171,7 +232,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/tuile/water/:q/:r checkTuileWater
-     * @apiVersion 0.2.0
+     * @apiVersion 0.3.0
      * @apiDescription check if a plot have water on it
      * @apiName checkTuileWater
      * @apiGroup Server/PlateauController
@@ -202,7 +263,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/tuile/bambou/:q/:r checkBambouHeight
-     * @apiVersion 0.2.0
+     * @apiVersion 0.3.0
      * @apiDescription check the height of the bamboo of the plot
      * @apiName checkBambouHeight
      * @apiGroup Server/PlateauController
@@ -235,7 +296,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/irrigation/border/{q}/{r}/{o}/ computeBorders
-     * @apiVersion 0.2.0
+     * @apiVersion 0.3.0
      * @apiDescription compute Borders of a plot for irrigation
      * @apiName computeBorders
      * @apiGroup Server/PlateauController
@@ -271,7 +332,7 @@ public class PlateauController {
      * @return CoordIrrigContainer
      *
      * @api {get} /plateau/irrigation/border/{q}/{r}/{o}/ computeContinues
-     * @apiVersion 0.2.0
+     * @apiVersion 0.3.0
      * @apiDescription Compute continuity of a irrigation
      * @apiName computeContinues
      * @apiGroup Server/PlateauController
@@ -305,7 +366,7 @@ public class PlateauController {
      * @return CoordIrrigContainer
      *
      * @api {get} /plateau/irrigation/legal/ computeLegalIrrigPositions
-     * @apiVersion 0.2.0
+     * @apiVersion 0.3.0
      * @apiDescription Compute the legal posotions to push irrigations
      * @apiName computeLegalIrrigPositions
      * @apiGroup Server/PlateauController
@@ -327,7 +388,7 @@ public class PlateauController {
      * @return CoordIrrigContainer
      *
      * @api {get} /plateau/irrigation/ listOfIrrigation
-     * @apiVersion 0.2.0
+     * @apiVersion 0.3.0
      * @apiDescription Get the list of irrigations on the board
      * @apiName listOfIrrigation
      * @apiGroup Server/PlateauController
@@ -356,7 +417,7 @@ public class PlateauController {
      *
      *
      * @api {post} /action/poser-irrigation/ PoserIrrigation
-     * @apiVersion 0.2.0
+     * @apiVersion 0.3.0
      * @apiDescription Post a irrigation to be put on the board
      * @apiName PoserIrrigation
      * @apiGroup Server/PlateauController
@@ -394,6 +455,76 @@ public class PlateauController {
             return new ResponseContainer(res, "Erreur lors de la pose de l'irrigation en "+coordIrrig.toString());
         }
 
+    }
+
+    /**
+     * Permet d'avoir la position actuelle du panda
+     * @return CoordContainer
+     *
+     *
+     * @api {get} /plateau/panda/ pandaPosition
+     * @apiVersion 0.3.0
+     * @apiDescription Get the actual position of the panda on the board
+     * @apiName pandaPosition
+     * @apiGroup Server/PlateauController
+     *
+     *
+     * @apiSuccessExample Success-Response:
+     *       {"content":[
+     *       {"q":0,"r":0}
+     *       ]}
+     *
+     */
+    @GetMapping("/plateau/panda/")
+    public CoordContainer pandaPosition(){
+        return new CoordContainer(game.getPlateau().posPanda());
+    }
+
+    /**
+     * Permet d'avoir la liste des positions legal pour le panda
+     * @return CoordContainer
+     *
+     * @api {get} /plateau/panda/legal/ legalPandaPosition
+     * @apiVersion 0.3.0
+     * @apiDescription Get the legal position to push the panda on the board
+     * @apiName legalPandaPosition
+     * @apiGroup Server/PlateauController
+     *
+     *
+     * @apiSuccessExample Success-Response:
+     *       {"content":[
+     *       {"q":0,"r":0}
+     *       ]}
+     *
+     */
+    @GetMapping("/plateau/panda/legal/")
+    public CoordContainer legalPandaPosition(){
+        return new CoordContainer(game.getPlateau().computePandaLegalPositions());
+    }
+
+
+    /**
+     * Permet de bouger le panda à une position donnée
+     * @param coordAxial CoordAxial
+     * @return ColorContainer la couleur du bambou récupéré
+     *
+     *
+     * @api {post} /action/bouger-panda/ BougerPanda
+     * @apiVersion 0.3.0
+     * @apiDescription Post a coordaxial to move the panda on the board
+     * @apiName BougerPanda
+     * @apiGroup Server/PlateauController
+     *
+     *
+     * @apiParam CoordAxial : a board coord
+     *
+     */
+    @PostMapping("/action/bouger-panda/")
+    public ResponseContainer bougerPanda(@RequestBody CoordAxial coordAxial){
+        //Todo : récupérer les bambous #61
+        Couleur couleur = game.getPlateau().movePanda(coordAxial);
+        //return new ColorContainer(couleur);
+        return new ResponseContainer(true,String.format("LE PANDA C'EST DEPLACE EN %s ET A MANGE UN BAMBOU DE COULEUR %s",coordAxial.toString(),couleur.toString()));
     }
 
 
