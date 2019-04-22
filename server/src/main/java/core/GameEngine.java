@@ -153,4 +153,12 @@ public class GameEngine {
     public void setCurrentPlayerIndex(int currentPlayerIndex) {
         this.currentPlayerIndex = currentPlayerIndex;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder out = new StringBuilder("GameEngine\n");
+        out.append("\t gameSize : ").append(gameSize).append("\n");
+        out.append("\tClients : ").append(clients.toString());
+        return out.toString();
+    }
 }

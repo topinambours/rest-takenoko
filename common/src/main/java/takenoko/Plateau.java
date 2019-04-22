@@ -38,7 +38,9 @@ public class Plateau {
         if (!tuiles.containsKey(pos)){
             tuiles.put(pos, t);
             t.setHaveWater(checkPlotWater(pos));
-
+            if (t.getHaveWater()){
+                t.pousserBambou();
+            }
         }
     }
 
