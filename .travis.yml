@@ -42,7 +42,7 @@ jobs:
         - sudo docker build -t topinambours/takenoko:latest-testSuite . -f DockerfileTestSuite
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker push topinambours/takenoko:latest-testSuite
-        name: "Test suite"
+      name: "Test suite"
 
     - stage: "Deploy Tests"
       name: "5 sequential games run"
