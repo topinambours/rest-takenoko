@@ -38,3 +38,15 @@ jobs:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker push topinambours/takenoko:latest-client
       name: "Client"
+    - script:
+        - sudo docker build -t topinambours/takenoko:latest-testSuite . -f DockerfileTestSuite
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push topinambours/takenoko:latest-testSuite
+        name: "Test suite"
+
+    - stage: "Deploy Tests"
+      name: "5 sequential games run"
+        script:
+          - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+          - docker pull topinambours/takenoko:latest-testSuite
+          - docker run -ti --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode sequential -g2 3 -g3 1 -g4 1
