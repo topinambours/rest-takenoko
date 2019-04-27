@@ -50,3 +50,9 @@ jobs:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker pull topinambours/takenoko:latest-testSuite
         - docker run -ti --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode sequential -g2 3 -g3 1 -g4 1
+    - script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker pull topinambours/takenoko:latest-testSuite
+        - docker run -ti --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode parallel -g2 3 -g3 1 -g4 1
+      name: "5 parallel games run (13 clients)"
+
