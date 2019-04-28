@@ -48,7 +48,7 @@ public class NotificationService {
         }
         // Trigger the first notification of turn
         if (game.isGameStarted() && firstPlayerTurn) {
-            Thread.sleep(1000);
+            Thread.sleep(2500);
             firstPlayerTurn = false;
             int id_notify = game.getClients().get(game.getCurrentPlayerIndex()).getId();
             log.info(String.format("C'est au tour du joueur %d", id_notify));
