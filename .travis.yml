@@ -53,8 +53,8 @@ jobs:
     - script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker pull topinambours/takenoko:latest-testSuite
-        - docker run -ti --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode sequential -g2 40 -g3 30 -g4 30
-      name: "100 sequential games run"
+        - docker run -ti --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode sequential -g2 20 -g3 15 -g4 15
+      name: "50 sequential games run"
     - script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker pull topinambours/takenoko:latest-testSuite
@@ -63,8 +63,8 @@ jobs:
     - script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker pull topinambours/takenoko:latest-testSuite
-        - docker run -ti --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode parallel -g2 10 -g3 10 -g4 10
-      name: "30 parallel games run (90 clients)"
+        - docker run -ti --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode parallel -g2 4 -g3 3 -g4 3
+      name: "10 parallel games run (90 clients)"
 
 
 

@@ -63,12 +63,10 @@ public class HTTPClient {
     }
 
     public <T> T request(String uri, Class<T> responseType) {
-
         return new RestTemplate().getForObject(String.format("%s/%s?playerId=%d", server_url, uri, id), responseType);
     }
 
     public <Req,Res> Res post_request(String uri,Req postObject, Class<Res> responseType){
-        RestTemplate restTemplate = new RestTemplate();
 
         HttpEntity<Req> request = new HttpEntity<>(postObject, new HttpHeaders());
         URI uri_req = null;
@@ -77,7 +75,7 @@ public class HTTPClient {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        return restTemplate.postForObject(uri_req, request, responseType);
+        return new RestTemplate().postForObject(uri_req, request, responseType);
 
     }
 
