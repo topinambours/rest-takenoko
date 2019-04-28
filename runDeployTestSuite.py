@@ -48,7 +48,7 @@ def check_connection(port):
 	(out, err) = p.communicate()
 	out = out.decode()
 	err = err.decode()
-	if 'open' in err :
+	if ('open' in err) or ('succeeded!' in err) :
 		return True
 	else :
 		return False

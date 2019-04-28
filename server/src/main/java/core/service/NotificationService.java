@@ -20,18 +20,23 @@ public class NotificationService {
     @Autowired
     GameEngine game;
 
-    private boolean cNotifiedEndOfGame = false;
     private boolean firstPlayerTurn = true;
     private static final Logger log = LoggerFactory.getLogger(NotificationService.class);
 
+    /**
+     * Check if game is ended every 1000ms
+     * & Trigger the first turn call
+     */
     @Scheduled(fixedDelay = 1000)
-    public void doNotify() {
-
+    public void doNotify() throws InterruptedException {
         if (game.gameEnded()){
-            log.info("FIN DE PARTIE");
+            log.info("GAME ENDED DISCONNECTING CLIENTS");
+
             List<HTTPClient> connectedClients = game.getClients();
+
             for (HTTPClient c : game.getClients()){
                 ResponseContainer e = c.self_request(String.format("/closeApplication/%s", "GAME ENDED"), ResponseContainer.class);
+                // response true if player receive the notification
                 if (e.response){
                     connectedClients.remove(c);
                 }
@@ -41,9 +46,12 @@ public class NotificationService {
                 System.exit(0);
             }
         }
+        // Trigger the first notification of turn
         if (game.isGameStarted() && firstPlayerTurn) {
+            Thread.sleep(1000);
             firstPlayerTurn = false;
-            int id_notify = game.gameEnded() ? -1 : game.getClients().get(game.getCurrentPlayerIndex()).getId();
+            int id_notify = game.getClients().get(game.getCurrentPlayerIndex()).getId();
+            log.info(String.format("C'est au tour du joueur %d", id_notify));
             game.getClients().forEach(client ->
                     client.self_request(String.format("/notify/%d", id_notify), ResponseContainer.class));
         }
