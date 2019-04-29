@@ -1,20 +1,31 @@
 package takenoko.versionning;
 
 /**
- * Anumeration des différentes actions possibles
- * <ul>
- *     <li>PUTPLOT : Ajout de plot sur le plateau</li>
- *     <li>ADDIRRIG : Ajout d'irrigation</li>
- *     <li>MOOVEPENDA : Deplacement du panda a une position donnée</li>
- *     <li>BAMBOOGROW : faire pousser un bambou</li>
- *     <li>EATBAMBOO : la panda mange un bambou</li>
- * </ul>
+ * Une evolution est une action effectué sur la plateau
+ * @param <T>
  */
-public enum Action {
-    PUTPLOT,
-    ADDIRRIG,
-    MOOVEPANDA,
-    MOOVEGARDENER,
-    BAMBOOGROW,
-    EATBAMBOO;
+public class Action<T> {
+    private ActionType action;
+    private T argument;
+
+    public Action(ActionType action, T argument) {
+        this.action = action;
+        this.argument = argument;
+    }
+
+    public ActionType getAction() {
+        return action;
+    }
+
+    public T getArgument() {
+        return argument;
+    }
+
+    @Override
+    public String toString() {
+        return "Evolution{" +
+                "action=" + action +
+                ", argument=" + argument +
+                '}';
+    }
 }

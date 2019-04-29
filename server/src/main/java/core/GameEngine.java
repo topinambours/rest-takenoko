@@ -1,10 +1,6 @@
 package core;
 
 import communication.HTTPClient;
-import communication.container.ResponseContainer;
-import communication.container.TuileContainer;
-import core.takenoko.pioche.EmptyDeckException;
-import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +10,13 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import core.takenoko.pioche.PiocheTuile;
 import takenoko.Plateau;
+import takenoko.versionning.Action;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,6 +47,8 @@ public class GameEngine {
     private int currentPlayerIndex;
 
     private boolean gameStarted;
+
+    private List<Action> versionning; //TODO : add the actions into the action list
 
     public GameEngine(){
         this.gameSize = 4;
