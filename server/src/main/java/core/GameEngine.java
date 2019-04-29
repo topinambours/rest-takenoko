@@ -153,6 +153,10 @@ public class GameEngine {
         this.currentPlayerIndex = currentPlayerIndex;
     }
 
+    public List<Action> getVersionning() {
+        return versionning;
+    }
+
     @Override
     public String toString() {
         StringBuilder out = new StringBuilder("GameEngine\n");
