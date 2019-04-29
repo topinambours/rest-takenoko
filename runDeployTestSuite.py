@@ -42,7 +42,7 @@ def generate_ports(games, startPort):
 	return out
 
 def check_connection(port):
-	app = ['nc', '-vz', '127.0.0.1' ,str(port)]
+	app = ['nc', '-vz', 'localhost' ,str(port)]
 	p = Popen(app, stdout=PIPE, stderr=PIPE)
 	p.wait()
 	(out, err) = p.communicate()
@@ -55,12 +55,12 @@ def check_connection(port):
 
 def start_server(gameId, port, gameSize):
 	print('STARTING NEW GAME ID=',gameId, 'SIZE:',gameSize,'ON PORT:',port)
-	app = ['docker', 'run', '--network', 'host', 'topinambours/takenoko:latest-server',str(port), str(gameSize)]
+	app = ['docker', 'run','--network', 'host', 'topinambours/takenoko:latest-server',str(port), str(gameSize)]
 	return Popen(app, stdout=DEVNULL, stderr=DEVNULL)
 
 def start_client(port, serverPort, clientId):
 	print('STARTING NEW CLIENT ID=',clientId, 'PORT:',port,'ON SERVER:','http://localhost:{}'.format(serverPort))
-	app = ['docker', 'run', '--network', 'host', 'topinambours/takenoko:latest-client',str(port), 'http://127.0.0.1:{}'.format(serverPort), str(clientId)]
+	app = ['docker', 'run','--network', 'host', 'topinambours/takenoko:latest-client',str(port), 'http://localhost:{}'.format(serverPort), str(clientId)]
 	return Popen(app, stdout=DEVNULL, stderr=DEVNULL)
 
 def start_sequential(gameToRun, ports):
@@ -81,10 +81,9 @@ def start_sequential(gameToRun, ports):
 		for c_port in ports[e[0]][1]:
 			processes.append(start_client(c_port, ports[e[0]][0], clientId))
 			clientId += 1
-		clients_status = [check_connection(p) for p in ports[e[0]][1]]
-		while False in clients_status :
-			time.sleep(1)
-			clients_status = [check_connection(p) for p in ports[e[0]][1]]
+			while not check_connection(c_port):
+				time.sleep(1)
+
 		print("\033[92mGAME ID={} STARTED, ALL {} CLIENTS CONNECTED\033[0m".format(e[0], len(ports[e[0]][1])))
 
 		for p in processes :

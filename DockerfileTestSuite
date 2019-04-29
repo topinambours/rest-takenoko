@@ -5,5 +5,5 @@ RUN python3 --version
 COPY ./runDeployTestSuite.py .
 WORKDIR .
 
-EXPOSE 9999:9999
+EXPOSE 8123
 ENTRYPOINT ["python3", "./runDeployTestSuite.py"]
