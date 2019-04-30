@@ -66,6 +66,36 @@ jobs:
         - docker push topinambours/takenoko:latest-testSuite
       name: "Test suite"
 
+    - stage: "Release Deploy to DockerHub"
+      language: generic
+      install: false
+      name: "Server"
+      if: tag IS present
+      script:
+        - docker build -t topinambours/takenoko:"$TRAVIS_TAG"-server . -f ./dp/DockerfileServer
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push topinambours/takenoko:"$TRAVIS_TAG"-server
+    - # Same stage
+      language: generic
+      install: false
+      name: "Client"
+      if: tag IS present
+      script:
+        - docker build -t topinambours/takenoko:"$TRAVIS_TAG"-client . -f ./dp/DockerfileClient
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push topinambours/takenoko:"$TRAVIS_TAG"-client
+
+    - # Same stage
+      language: generic
+      install: false
+      name: "Test suite"
+      if: tag IS present
+      script:
+        - sudo docker build -t topinambours/takenoko:"$TRAVIS_TAG"-testSuite ./dp -f ./dp/DockerfileTestSuite
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push topinambours/takenoko:"$TRAVIS_TAG"-testSuite
+
+
     - stage: "Deploy Tests (2 vcores)"
       language: generic
       install: false
