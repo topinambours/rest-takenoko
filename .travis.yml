@@ -1,70 +1,79 @@
-language: java
-sudo: false
-
 cache:
   directories:
     - $HOME/.m2
 
-jdk:
-  - oraclejdk11
-
-jobs:
-
+matrix:
   include:
-    - stage: "Unit Tests"
-      name : "Common"
-      script: mvn -pl common -Dtest=\!CucumberRunnerTest test
-    - script: mvn -pl client -Dtest=\!CucumberRunnerTest test
-      name : "Client"
-    - script: mvn -pl server -Dtest=\!CucumberRunnerTest test
-      name : "Server"
+    - language: java
+      jdk: oraclejdk11
+      include :
+        - stage : "Unit Tests"
 
-    - stage: "Integration Tests"
-      name : "Common"
-      script: mvn -pl common -Dtest=CucumberRunnerTest test
-    - script: mvn -pl client -Dtest=CucumberRunnerTest test
-      name : "Client"
-    - script: mvn -pl server -Dtest=CucumberRunnerTest test
-      name : "Server"
+          name: "Common"
+          script: mvn -pl common -Dtest=\!CucumberRunnerTest test
 
-    - stage : "Deploy to DockerHub"
-      name: "Server"
-      script :
-        - docker build -t topinambours/takenoko:latest-server . -f DockerfileServer
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker push topinambours/takenoko:latest-server
-    - script:
-        - docker build -t topinambours/takenoko:latest-client . -f DockerfileClient
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker push topinambours/takenoko:latest-client
-      name: "Client"
-    - script:
-        - sudo docker build -t topinambours/takenoko:latest-testSuite . -f DockerfileTestSuite
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker push topinambours/takenoko:latest-testSuite
-      name: "Test suite"
+        - script: mvn -pl client -Dtest=\!CucumberRunnerTest test
+          name: "Client"
 
-    - stage: "Deploy Tests (2 vcores)"
-      name: "5 sequential games run"
-      script:
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker pull topinambours/takenoko:latest-testSuite
-        - docker run -it --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode sequential -g2 3 -g3 1 -g4 1
-    - script:
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker pull topinambours/takenoko:latest-testSuite
-        - docker run -it --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode sequential -g2 20 -g3 15 -g4 15
-      name: "50 sequential games run"
-    - script:
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker pull topinambours/takenoko:latest-testSuite
-        - docker run -it --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode parallel -g2 1 -g3 1 -g4 1
-      name: "3 parallel games run (9 clients)"
-    - script:
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker pull topinambours/takenoko:latest-testSuite
-        - docker run -it --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode parallel -g2 2 -g3 2 -g4 2
-      name: "10 parallel games run (18 clients)"
+        - script: mvn -pl server -Dtest=\!CucumberRunnerTest test
+          name: "Server"
+
+        - stage: "Integration Tests"
+
+          name: "Common"
+          script: mvn -pl common -Dtest=CucumberRunnerTest test
+
+        - script: mvn -pl client -Dtest=CucumberRunnerTest test
+          name: "Client"
+
+        - script: mvn -pl server -Dtest=CucumberRunnerTest test
+          name: "Server"
+
+
+    - language: generic
+      include:
+        - stage: "Deploy to DockerHub"
+          name: "Server"
+          script:
+            - echo "$TRAVIS_BRANCH"
+            - docker build -t topinambours/takenoko:latest-server . -f ./dp/DockerfileServer
+            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+            - docker push topinambours/takenoko:latest-server
+        - script:
+          - docker build -t topinambours/takenoko:latest-client . -f ./dp/DockerfileClient
+          - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+          - docker push topinambours/takenoko:latest-client
+          name: "Client"
+        - script:
+            - sudo docker build -t topinambours/takenoko:latest-testSuite dp -f ./dp/DockerfileTestSuite
+            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+            - docker push topinambours/takenoko:latest-testSuite
+          name: "Test suite"
+
+        - stage: "Deploy Tests (2 vcores)"
+          name: "5 sequential games run"
+          script:
+            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+            - docker pull topinambours/takenoko:latest-testSuite
+            - docker run -it --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode sequential -g2 3 -g3 1 -g4 1
+        - script:
+            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+            - docker pull topinambours/takenoko:latest-testSuite
+            - docker run -it --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode sequential -g2 20 -g3 15 -g4 15
+          name: "50 sequential games run"
+        - script:
+            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+            - docker pull topinambours/takenoko:latest-testSuite
+            - docker run -it --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode parallel -g2 1 -g3 1 -g4 1
+          name: "3 parallel games run (9 clients)"
+        - script:
+            - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+            - docker pull topinambours/takenoko:latest-testSuite
+            - docker run -it --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode parallel -g2 2 -g3 2 -g4 2
+          name: "10 parallel games run (18 clients)"
+
+
+
 
 
 
