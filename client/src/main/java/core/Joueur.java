@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
+import takenoko.Plateau;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
@@ -43,11 +44,14 @@ public class Joueur {
 
     private Strategie strategie;
 
+    private Plateau plateau;
+
     public boolean myTurn = false;
 
     public Joueur(@Qualifier("http_client") HTTPClient httpClient){
         this.httpClient = httpClient;
         this.strategie = new RandomStrategie();
+        this.plateau = new Plateau().plateau_depart();
     }
 
     public int getId(){
@@ -60,6 +64,10 @@ public class Joueur {
 
     public Strategie getStrategie() {
         return strategie;
+    }
+
+    public Plateau getPlateau() {
+        return plateau;
     }
 
     @Primary
