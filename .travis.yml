@@ -3,10 +3,10 @@ sudo: false
 
 jdk:
   - oraclejdk11
-  
+
 cache:
   directories:
-  - $HOME/.m2
+    - $HOME/.m2
 
 jobs:
 
@@ -70,6 +70,7 @@ jobs:
       language: generic
       install: false
       name: "5 sequential games run"
+      if: branch = master
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker pull topinambours/takenoko:latest-testSuite
@@ -77,30 +78,29 @@ jobs:
     - # Same stage
       language: generic
       install: false
+      name: "50 sequential games run"
+      if: branch = master
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker pull topinambours/takenoko:latest-testSuite
         - docker run -it --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode sequential -g2 20 -g3 15 -g4 15
-      name: "50 sequential games run"
+
     - # Same stage
       language: generic
       install: false
+      name: "3 parallel games run (9 clients)"
+      if: branch = master
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker pull topinambours/takenoko:latest-testSuite
         - docker run -it --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode parallel -g2 1 -g3 1 -g4 1
-      name: "3 parallel games run (9 clients)"
+
     - # Same stage
       language: generic
       install: false
+      name: "10 parallel games run (18 clients)"
+      if: branch = master
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker pull topinambours/takenoko:latest-testSuite
         - docker run -it --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode parallel -g2 2 -g3 2 -g4 2
-      name: "10 parallel games run (18 clients)"
-
-
-
-
-
-
