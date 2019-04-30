@@ -36,14 +36,6 @@ public class VersionControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-
-
-    @Test
-    public void test(){
-        gameEngine.addVersion(new Action(ActionType.ADDIRRIG,"tamere"));
-        System.out.println(restTemplate.getForObject("/version", ActionContainer.class).toString());
-    }
-
     @Test
     public void badIdError(){
         int size = gameEngine.getVersionning().size();
@@ -89,9 +81,44 @@ public class VersionControllerTest {
         assertEquals(resp2.getStatusCode(), HttpStatus.OK);
 
         ResponseEntity<ActionContainer> resp3 = restTemplate.getForEntity("/version/from/0/to/1",ActionContainer.class);
-        System.out.println(resp3.getBody());
         assertEquals(resp3.getBody(),actionContainer);
         assertEquals(resp3.getStatusCode(), HttpStatus.OK);
+    }
+
+    @Test
+    public void multipleTest(){
+        gameEngine.addVersion(new Action(ActionType.PUTPLOT,"test"));
+        gameEngine.addVersion(new Action(ActionType.PUTPLOT,"test2"));
+        gameEngine.addVersion(new Action(ActionType.PUTPLOT,"test3"));
+
+        int size = gameEngine.getVersionning().size();
+        ActionContainer actionContainer = new ActionContainer(gameEngine.getVersionning());
+
+
+        ResponseEntity<ActionContainer> resp = restTemplate.getForEntity("/version/from/0",ActionContainer.class);
+        assertEquals(resp.getBody(),actionContainer);
+        assertEquals(resp.getStatusCode(), HttpStatus.OK);
+
+
+        ResponseEntity<ActionContainer> resp2 = restTemplate.getForEntity("/version/from/0/to/"+size,ActionContainer.class);
+        assertEquals(resp2.getBody(),actionContainer);
+        assertEquals(resp2.getStatusCode(), HttpStatus.OK);
+
+        ActionContainer subActionContainer1 = new ActionContainer(gameEngine.getVersionning().subList(0,size-1));
+        ResponseEntity<ActionContainer> resp3 = restTemplate.getForEntity("/version/from/0/to/"+(size-1),ActionContainer.class);
+        assertEquals(resp3.getBody(),subActionContainer1);
+        assertEquals(resp3.getStatusCode(), HttpStatus.OK);
+
+        ActionContainer subActionContainer2 = new ActionContainer(gameEngine.getVersionning().subList(1,size));
+        ResponseEntity<ActionContainer> resp4 = restTemplate.getForEntity("/version/from/1",ActionContainer.class);
+        assertEquals(resp4.getBody(),subActionContainer2);
+        assertEquals(resp4.getStatusCode(), HttpStatus.OK);
+
+        ActionContainer subActionContainer3 = new ActionContainer(gameEngine.getVersionning().get(1));
+        ResponseEntity<ActionContainer> resp5 = restTemplate.getForEntity("/version/from/1/to/2",ActionContainer.class);
+        assertEquals(resp5.getBody(),subActionContainer3);
+        assertEquals(resp5.getStatusCode(), HttpStatus.OK);
+
 
 
 
