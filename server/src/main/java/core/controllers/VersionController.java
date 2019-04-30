@@ -86,7 +86,7 @@ public class VersionController {
         if (size <= from || from < 0){
             throw new VersionNotFoundException();
         }
-        return new ActionContainer(gameEngine.getVersionning().subList(0,size));
+        return new ActionContainer(gameEngine.getVersionning().subList(from,size));
     }
 
     /**
