@@ -135,6 +135,22 @@ public class HTTPClient {
         this.server_url = server_url;
     }
 
+    public ActionContainer pullAllVersion(){
+        return request("/version",ActionContainer.class);
+    }
+
+    public ActionContainer pullVersionId(int id){
+        return request("/version/"+id+"/",ActionContainer.class);
+    }
+
+    public ActionContainer pullVersionFrom(int from){
+        return request("/version/from/"+from,ActionContainer.class);
+    }
+
+    public ActionContainer pullVersionFromTo(int from,int to){
+        return request("/version/from/"+from+"/to/"+to,ActionContainer.class);
+    }
+
     public void setId(int id) {
         this.id = id;
     }
