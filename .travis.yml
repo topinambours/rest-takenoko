@@ -12,7 +12,7 @@ jobs:
 
   include:
     - stage: "Build modules & pre-cache"
-      script: false
+      script: skip
 
     - stage: "Unit Tests"
 
