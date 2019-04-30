@@ -4,9 +4,9 @@ import takenoko.versionning.Action;
 
 import java.util.List;
 
-
-public class ActionContainer extends Container{
+public class ActionContainer extends Container<Action> {
     public ActionContainer() {
+        super();
     }
 
     public ActionContainer(Action single) {
@@ -16,4 +16,6 @@ public class ActionContainer extends Container{
     public ActionContainer(List<Action> multipleElement) {
         super(multipleElement);
     }
+
+
 }

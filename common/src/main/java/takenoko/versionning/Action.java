@@ -1,9 +1,14 @@
 package takenoko.versionning;
 
+import lombok.Data;
+
+import java.util.Objects;
+
 /**
  * Une evolution est une action effectué sur la plateau
  * @param <T>
  */
+
 public class Action<T> {
     private ActionType action;
     private T argument;
@@ -23,9 +28,23 @@ public class Action<T> {
 
     @Override
     public String toString() {
-        return "Evolution{" +
+        return "{" +
                 "action=" + action +
                 ", argument=" + argument +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Action<?> action1 = (Action<?>) o;
+        return action == action1.action &&
+                Objects.equals(argument, action1.argument);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(action, argument);
     }
 }

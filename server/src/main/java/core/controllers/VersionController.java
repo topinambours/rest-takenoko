@@ -54,9 +54,9 @@ public class VersionController {
      * @apiSuccess ActionContainer : list of actions
      *
      */
-    @GetMapping("/version/{v}/")
+    @GetMapping("/version/{version}/")
     public ActionContainer getVersionID(@PathVariable int version) throws VersionNotFoundException {
-        if(gameEngine.getVersionning().size() <= version){
+        if(gameEngine.getVersionning().size() <= version || version < 0){
             throw new VersionNotFoundException();
         }
         return new ActionContainer(gameEngine.getVersionning().get(version));
@@ -69,24 +69,24 @@ public class VersionController {
      * @throws VersionNotFoundException
      *
      *
-     * @api {get} /version/from/:f getVersionFrom
+     * @api {get} /version/from/:from getVersionFrom
      * @apiVersion 0.4.0
      * @apiDescription Get all the versions from a version
      * @apiName getVersionFrom
      * @apiGroup Server/VersionController
      *
-     * @apiParam {number} Version ID From
+     * @apiParam {number} from Version ID From
      *
      * @apiSuccess ActionContainer : list of actions
      *
      */
-    @GetMapping("/version/from/{f}")
+    @GetMapping("/version/from/{from}")
     public ActionContainer getVersionFrom(@PathVariable int from) throws VersionNotFoundException {
         int size = gameEngine.getVersionning().size();
         if (size <= from || from < 0){
             throw new VersionNotFoundException();
         }
-        return new ActionContainer(gameEngine.getVersionning().subList(from,size-1));
+        return new ActionContainer(gameEngine.getVersionning().subList(0,size));
     }
 
     /**
@@ -97,22 +97,22 @@ public class VersionController {
      * @throws VersionNotFoundException
      *
      *
-     * @api {get} /version/from/:f/to/:t getVersionFromTo
+     * @api {get} /version/from/:from/to/:to getVersionFromTo
      * @apiVersion 0.4.0
      * @apiDescription Get all the versions from a version to a version
      * @apiName getVersionFromTo
      * @apiGroup Server/VersionController
      *
-     * @apiParam {number} Version ID From
-     * @apiParam {number} Version ID To
+     * @apiParam {number} from Version ID From
+     * @apiParam {number} to Version ID To
      *
      * @apiSuccess ActionContainer : list of actions
      *
      */
-    @GetMapping("/version/from/{f}/to/{t}")
+    @GetMapping("/version/from/{from}/to/{to}")
     public ActionContainer getVersionFromTo(@PathVariable int from,@PathVariable int to) throws VersionNotFoundException {
         int size = gameEngine.getVersionning().size();
-        if(size <= from || size <= to || from < 0){
+        if(size <= from || size < to || from < 0 || from > to){
             throw new VersionNotFoundException();
         }
         return new ActionContainer(gameEngine.getVersionning().subList(from,to));

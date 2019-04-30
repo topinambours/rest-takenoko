@@ -72,6 +72,7 @@ public class GameEngine {
         this.plateau = plateau;
         this.clients = new ArrayList<>();
         this.gameStarted = false;
+        this.versionning = new ArrayList<>();
         log.info(String.format("Nouvelle partie pour %d joueurs instanciée.", gameSize));
     }
 
@@ -155,6 +156,10 @@ public class GameEngine {
 
     public List<Action> getVersionning() {
         return versionning;
+    }
+
+    public boolean addVersion(Action action){
+        return versionning.add(action);
     }
 
     @Override
