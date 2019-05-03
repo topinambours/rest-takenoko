@@ -43,9 +43,9 @@ public class Action<T> {
         switch (action.getAction()){
             case PUTPLOT:
                 if(action.getArgument().size() == 2){
-                    if (action.getArgument().get(1).getClass().equals(CoordAxial.class) && action.getArgument().get(0).getClass().equals(Tuile.class)){
-                        CoordAxial coordAxial = (CoordAxial) action.getArgument().get(0);
-                        Tuile tuile = (Tuile) action.getArgument().get(1);
+                    if (action.getArgument().get(0).getClass().equals(CoordAxial.class) && action.getArgument().get(1).getClass().equals(Tuile.class)){
+                        CoordAxial coordAxial = CoordAxial.class.cast(action.getArgument().get(0));
+                        Tuile tuile = Tuile.class.cast(action.getArgument().get(1));
 
                         plateau.poserTuile(coordAxial,tuile);
                         return true;
@@ -54,7 +54,7 @@ public class Action<T> {
             case ADDIRRIG:
                 if (action.getArgument().size() == 1){
                     if(action.getArgument().get(0).getClass().equals(CoordIrrig.class)){
-                        CoordIrrig coordIrrig = (CoordIrrig) action.getArgument().get(0);
+                        CoordIrrig coordIrrig = CoordIrrig.class.cast(action.getArgument().get(0));
 
                         return plateau.addIrrigation(coordIrrig);
                     }else return false;
@@ -62,7 +62,7 @@ public class Action<T> {
             case MOOVEPANDA:
                 if (action.getArgument().size() == 1){
                     if(action.getArgument().get(0).getClass().equals(CoordAxial.class)){
-                        CoordAxial coordAxial = (CoordAxial) action.getArgument().get(0);
+                        CoordAxial coordAxial = CoordAxial.class.cast(action.getArgument().get(0));
 
                         plateau.movePanda(coordAxial);
                         return true;
