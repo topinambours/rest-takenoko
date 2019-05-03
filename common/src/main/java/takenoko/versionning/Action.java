@@ -15,10 +15,13 @@ import java.util.Objects;
  * Une evolution est une action effectué sur la plateau
  * @param <T>
  */
-
+@Data
 public class Action<T> {
     private ActionType action;
     private List<T> argument;
+
+    public Action() {
+    }
 
     public Action(ActionType action, T... arguments) {
         this.action = action;
