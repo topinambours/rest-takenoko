@@ -1,7 +1,14 @@
 package takenoko.versionning;
 
 import lombok.Data;
+import takenoko.Plateau;
+import takenoko.irrigation.CoordIrrig;
+import takenoko.tuile.CoordAxial;
+import takenoko.tuile.Tuile;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -11,20 +18,61 @@ import java.util.Objects;
 
 public class Action<T> {
     private ActionType action;
-    private T argument;
+    private List<T> argument;
 
-    public Action(ActionType action, T argument) {
+    public Action(ActionType action, T... arguments) {
         this.action = action;
-        this.argument = argument;
+        this.argument = new ArrayList<T>(Arrays.asList(arguments));
     }
 
     public ActionType getAction() {
         return action;
     }
 
-    public T getArgument() {
+    public List<T> getArgument() {
         return argument;
     }
+
+    /**
+     * Static function to apply a action into a board
+     * @param action Action
+     * @param plateau Plateau
+     * @return boolean
+     */
+    static public boolean applyAction(Action action, Plateau plateau){
+        switch (action.getAction()){
+            case PUTPLOT:
+                if(action.getArgument().size() == 2){
+                    if (action.getArgument().get(1).getClass().equals(CoordAxial.class) && action.getArgument().get(0).getClass().equals(Tuile.class)){
+                        CoordAxial coordAxial = (CoordAxial) action.getArgument().get(0);
+                        Tuile tuile = (Tuile) action.getArgument().get(1);
+
+                        plateau.poserTuile(coordAxial,tuile);
+                        return true;
+                    }else return false;
+                }else return false;
+            case ADDIRRIG:
+                if (action.getArgument().size() == 1){
+                    if(action.getArgument().get(0).getClass().equals(CoordIrrig.class)){
+                        CoordIrrig coordIrrig = (CoordIrrig) action.getArgument().get(0);
+
+                        return plateau.addIrrigation(coordIrrig);
+                    }else return false;
+                }else return false;
+            case MOOVEPANDA:
+                if (action.getArgument().size() == 1){
+                    if(action.getArgument().get(0).getClass().equals(CoordAxial.class)){
+                        CoordAxial coordAxial = (CoordAxial) action.getArgument().get(0);
+
+                        plateau.movePanda(coordAxial);
+                        return true;
+                    }else return false;
+                }else return false;
+
+            default: return false;
+        }
+    }
+
 
     @Override
     public String toString() {
