@@ -396,4 +396,19 @@ public class Plateau {
 
         return out;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Plateau plateau = (Plateau) o;
+        return Objects.equals(tuiles, plateau.tuiles) &&
+                Objects.equals(irrigations, plateau.irrigations) &&
+                Objects.equals(posPanda, plateau.posPanda);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tuiles, irrigations, posPanda);
+    }
 }

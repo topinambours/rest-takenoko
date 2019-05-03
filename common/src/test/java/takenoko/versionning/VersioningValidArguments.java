@@ -1,6 +1,5 @@
 package takenoko.versionning;
 
-import cucumber.api.java.en_old.Ac;
 import org.junit.Before;
 import org.junit.Test;
 import takenoko.Plateau;

@@ -1,12 +1,9 @@
 package core.controllers;
 
 import communication.container.ActionContainer;
-import communication.container.Container;
 import core.GameEngine;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -14,13 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
-import takenoko.tuile.CoordAxial;
 import takenoko.versionning.Action;
 import takenoko.versionning.ActionType;
-import takenoko.versionning.VersionNotFoundException;
-
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 
 import static org.junit.Assert.*;
 
