@@ -151,6 +151,10 @@ public class HTTPClient {
         return request("/version/from/"+from+"/to/"+to,ActionContainer.class);
     }
 
+    public Integer pullLatestVersionId(){
+        return request("/version/latest/id",Integer.class);
+    }
+
     public void setId(int id) {
         this.id = id;
     }
