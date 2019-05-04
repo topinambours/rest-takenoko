@@ -81,7 +81,7 @@ public class VersionControllerTest {
     public void multipleTest(){
         gameEngine.addVersion(new Action(ActionType.PUTPLOT,"test"));
         gameEngine.addVersion(new Action(ActionType.PUTPLOT,"test2"));
-        gameEngine.addVersion(new Action(ActionType.PUTPLOT,"test3"));
+        gameEngine.addVersion(new Action(gameEngine.getVersionning().size(),ActionType.PUTPLOT,"test3"));
 
         int size = gameEngine.getVersionning().size();
         ActionContainer actionContainer = new ActionContainer(gameEngine.getVersionning());
@@ -111,9 +111,15 @@ public class VersionControllerTest {
         assertEquals(resp5.getBody(),subActionContainer3);
         assertEquals(resp5.getStatusCode(), HttpStatus.OK);
 
+        ActionContainer subActionContainer4 = new ActionContainer(gameEngine.getVersionning().get(2));
+        ResponseEntity<ActionContainer> resp6 = restTemplate.getForEntity("/version/latest/",ActionContainer.class);
+        assertEquals(resp6.getBody(),subActionContainer4);
+        assertEquals(resp6.getStatusCode(), HttpStatus.OK);
 
-
-
+        Integer versionID = gameEngine.getVersionning().get(2).getId();
+        ResponseEntity<Integer> resp7 = restTemplate.getForEntity("/version/latest/id",Integer.class);
+        assertEquals(resp7.getBody(),versionID);
+        assertEquals(resp7.getStatusCode(), HttpStatus.OK);
     }
 
 

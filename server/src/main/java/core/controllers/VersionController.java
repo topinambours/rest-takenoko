@@ -118,5 +118,42 @@ public class VersionController {
         return new ActionContainer(gameEngine.getVersionning().subList(from,to));
     }
 
+    /**
+     * Get the latest version
+     * @return ActionContainer
+     *
+     *
+     * @api {get} /version/latest/ getLatestAction
+     * @apiVersion 0.4.0
+     * @apiDescription Get the latest version
+     * @apiName getLatestAction
+     * @apiGroup Server/VersionController
+     *
+     * @apiSuccess ActionContainer : actions container with the latest version
+     *
+     */
+    @GetMapping("/version/latest/")
+    public ActionContainer getLatestAction(){
+        return new ActionContainer(gameEngine.getVersionning().get(gameEngine.getVersionning().size()-1));
+    }
+
+    /**
+     * Get the latest version ID
+     * @return int
+     *
+     * @api {get} /version/latest/id getLatestActionId
+     * @apiVersion 0.4.0
+     * @apiDescription Get the latest version ID
+     * @apiName getLatestActionId
+     * @apiGroup Server/VersionController
+     *
+     * @apiSuccess Integer : Latest version ID
+     *
+     */
+    @GetMapping("/version/latest/id")
+    public Integer getLatestActionId(){
+        return gameEngine.getVersionning().size()-1;
+    }
+
 
 }
