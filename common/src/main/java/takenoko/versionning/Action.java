@@ -14,16 +14,25 @@ import java.util.*;
  */
 @Data
 public class Action<T> {
+    private int id;
     private ActionType action;
     private List<T> argument;
 
     public Action() {
     }
 
-    public Action(ActionType action, T... arguments) {
+    public Action(int id, ActionType action,  T... arguments) {
+        this.id = id;
         this.action = action;
         this.argument = new ArrayList<T>(Arrays.asList(arguments));
     }
+
+    public Action(ActionType action, T... arguments) {
+        this.id = -1;
+        this.action = action;
+        this.argument = new ArrayList<T>(Arrays.asList(arguments));
+    }
+
 
     public ActionType getAction() {
         return action;
@@ -31,6 +40,10 @@ public class Action<T> {
 
     public List<T> getArgument() {
         return argument;
+    }
+
+    public int getId() {
+        return id;
     }
 
     /**
@@ -88,11 +101,11 @@ public class Action<T> {
         return true;
     }
 
-
     @Override
     public String toString() {
         return "{" +
-                "action=" + action +
+                "id=" + id +
+                ", action=" + action +
                 ", argument=" + argument +
                 '}';
     }

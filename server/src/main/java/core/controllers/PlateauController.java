@@ -123,7 +123,7 @@ public class PlateauController {
             @RequestBody PoseTuileContainer poseTuileContainer){
 
         game.getPlateau().poserTuile(poseTuileContainer.getPos(), poseTuileContainer.getTuile());
-        Action action = new Action(ActionType.PUTPLOT,poseTuileContainer.getPos(), poseTuileContainer.getTuile());
+        Action action = new Action(game.getVersionning().size(),ActionType.PUTPLOT,poseTuileContainer.getPos(), poseTuileContainer.getTuile());
         game.addVersion(action);
         log.info("Nouvelle version : "+ action.toString());
 
@@ -456,7 +456,7 @@ public class PlateauController {
         if (res){
             log.info(String.format("Le joueur %d pose une irrigation en %s", playerId, coordIrrig));
 
-            Action action = new Action(ActionType.ADDIRRIG,coordIrrig);
+            Action action = new Action(game.getVersionning().size(),ActionType.ADDIRRIG,coordIrrig);
             game.addVersion(action);
             log.info("Nouvelle version : "+ action.toString());
             return new ResponseContainer(res,"Pose d'irrigation effectué en " + coordIrrig.toString());
@@ -533,7 +533,7 @@ public class PlateauController {
         //Todo : récupérer les bambous #61
         Couleur couleur = game.getPlateau().movePanda(coordAxial);
         //return new ColorContainer(couleur);
-        Action action = new Action(ActionType.MOOVEPANDA,coordAxial);
+        Action action = new Action(game.getVersionning().size(),ActionType.MOOVEPANDA,coordAxial);
         game.addVersion(action);
         log.info("Nouvelle version : "+ action.toString());
         return new ResponseContainer(true,String.format("LE PANDA C'EST DEPLACE EN %s ET A MANGE UN BAMBOU DE COULEUR %s",coordAxial.toString(),couleur.toString()));
