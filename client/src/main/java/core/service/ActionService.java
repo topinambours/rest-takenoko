@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
+import takenoko.versionning.Action;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,6 +36,25 @@ public class ActionService {
     @Async("asyncExecutor")
     public void turn(){
         HTTPClient httpClient = joueur.getHttpClient();
+
+        Integer latestPlayerVersion = joueur.getLatestVersionId();
+        Integer latestServerVersion = httpClient.pullLatestVersionId();
+
+        if(! latestPlayerVersion.equals(latestServerVersion)){
+            log.info(String.format("Le joueur ayant la plateau à la version %d pull la version %d",latestPlayerVersion,latestServerVersion));
+
+            List<Action> actions = httpClient.pullVersionFrom(latestPlayerVersion).getContent();
+            boolean goodApply = Action.applyAllAction(actions,joueur.getPlateau());
+            if (!goodApply){
+                log.warn("Erreur lors de la mise en pratique de la version sur le plateau du joueur, pull de l'intégralité du plateau ...");
+                joueur.setPlateau(httpClient.getPlateau());
+            }
+            joueur.setLatestVersionId(latestServerVersion);
+            log.info(String.format("Nouvelle version du plateau joueur : %d",joueur.getLatestVersionId()));
+        }
+
+
+
         TuileContainer tuiles = httpClient.piocher_tuiles();
         log.info(String.format("Le joueur a pioché %d tuiles : %s", tuiles.getContent().size(), tuiles.getContent()));
 

@@ -56,7 +56,7 @@ public class PlateauController {
      *        }
      *
      */
-    @GetMapping("/plateau/")
+    @RequestMapping(value = "/plateau/", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
     public Plateau getPlateau(){
         return game.getPlateau();
     }

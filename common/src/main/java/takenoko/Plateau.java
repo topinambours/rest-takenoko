@@ -1,5 +1,6 @@
 package takenoko;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,11 +18,8 @@ import java.util.stream.Collectors;
 
 @Data
 @Configuration
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Plateau {
-
-    public HashMap<CoordAxial, Tuile> getTuiles() {
-        return tuiles;
-    }
 
     private HashMap<CoordAxial, Tuile> tuiles;
     private HashSet<CoordIrrig> irrigations;
@@ -319,6 +317,10 @@ public class Plateau {
         return posPanda;
     }
 
+    public HashMap<CoordAxial, Tuile> getTuiles() {
+        return tuiles;
+    }
+
     /**
      * Permet d'avoir un id unique vers une tuile
      * @param id int
@@ -411,4 +413,6 @@ public class Plateau {
     public int hashCode() {
         return Objects.hash(tuiles, irrigations, posPanda);
     }
+
+
 }

@@ -46,6 +46,8 @@ public class Joueur {
 
     private Plateau plateau;
 
+    private int latestVersionId = 0;
+
     public boolean myTurn = false;
 
     public Joueur(@Qualifier("http_client") HTTPClient httpClient){
@@ -58,6 +60,10 @@ public class Joueur {
         return httpClient.getId();
     }
 
+    public int getLatestVersionId() {
+        return latestVersionId;
+    }
+
     public Tuile getCurrent_tuile() {
         return current_tuile;
     }
@@ -68,6 +74,14 @@ public class Joueur {
 
     public Plateau getPlateau() {
         return plateau;
+    }
+
+    public void setPlateau(Plateau plateau) {
+        this.plateau = plateau;
+    }
+
+    public void setLatestVersionId(int latestVersionId) {
+        this.latestVersionId = latestVersionId;
     }
 
     @Primary

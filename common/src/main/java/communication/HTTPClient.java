@@ -9,6 +9,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import takenoko.Plateau;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.tuile.CoordAxial;
 
@@ -153,6 +154,10 @@ public class HTTPClient {
 
     public Integer pullLatestVersionId(){
         return request("/version/latest/id",Integer.class);
+    }
+
+    public Plateau getPlateau(){
+        return request("/plateau/",Plateau.class);
     }
 
     public void setId(int id) {

@@ -3,9 +3,7 @@ package core.controllers;
 import communication.container.ActionContainer;
 import core.GameEngine;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import takenoko.versionning.Action;
 import takenoko.versionning.VersionNotFoundException;
 
