@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import takenoko.versionning.Action;
 import takenoko.versionning.VersionNotFoundException;
 
+
 import java.util.List;
 
 @RestController
@@ -83,6 +84,8 @@ public class VersionController {
                                             required = false,
                                             defaultValue = "-1") int playerId,
                                           @PathVariable int from) throws VersionNotFoundException {
+
+
         int size = gameEngine.getVersionning().size();
         if (size <= from || from < 0){
             throw new VersionNotFoundException();

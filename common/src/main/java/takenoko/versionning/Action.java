@@ -6,6 +6,8 @@ import takenoko.irrigation.CoordIrrig;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.*;
 
 /**
@@ -17,6 +19,8 @@ public class Action<T> {
     private int id;
     private ActionType action;
     private List<T> argument;
+
+    private static ObjectMapper mapper = new ObjectMapper();
 
     public Action() {
     }
@@ -56,27 +60,24 @@ public class Action<T> {
         switch (action.getAction()){
             case PUTPLOT:
                 if(action.getArgument().size() == 2){
-                    if (action.getArgument().get(0).getClass().equals(CoordAxial.class) && action.getArgument().get(1).getClass().equals(Tuile.class)){
-                        CoordAxial coordAxial = CoordAxial.class.cast(action.getArgument().get(0));
-                        Tuile tuile = Tuile.class.cast(action.getArgument().get(1));
-
+                    CoordAxial coordAxial = mapper.convertValue(action.getArgument().get(0), CoordAxial.class);
+                    Tuile tuile = mapper.convertValue(action.getArgument().get(1),Tuile.class);
+                    if ((coordAxial != null) && (tuile != null)){
                         plateau.poserTuile(coordAxial,tuile);
                         return true;
                     }else return false;
                 }else return false;
             case ADDIRRIG:
                 if (action.getArgument().size() == 1){
-                    if(action.getArgument().get(0).getClass().equals(CoordIrrig.class)){
-                        CoordIrrig coordIrrig = CoordIrrig.class.cast(action.getArgument().get(0));
-
+                    CoordIrrig coordIrrig = mapper.convertValue(action.getArgument().get(0),CoordIrrig.class);
+                    if(coordIrrig != null){
                         return plateau.addIrrigation(coordIrrig);
                     }else return false;
                 }else return false;
             case MOOVEPANDA:
                 if (action.getArgument().size() == 1){
-                    if(action.getArgument().get(0).getClass().equals(CoordAxial.class)){
-                        CoordAxial coordAxial = CoordAxial.class.cast(action.getArgument().get(0));
-
+                    CoordAxial coordAxial = mapper.convertValue(action.getArgument().get(0),CoordAxial.class);
+                    if(coordAxial != null){
                         plateau.movePanda(coordAxial);
                         return true;
                     }else return false;
@@ -93,6 +94,7 @@ public class Action<T> {
      * @return boolean
      */
     static public boolean applyAllAction(List<Action> actions,Plateau plateau){
+        if (actions.size() == 0) return true;
         Iterator<Action> iterator = actions.iterator();
         while (iterator.hasNext()){
             boolean current = applyAction(iterator.next(),plateau);

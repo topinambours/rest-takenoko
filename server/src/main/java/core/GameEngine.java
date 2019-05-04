@@ -159,7 +159,10 @@ public class GameEngine {
     }
 
     public boolean addVersion(Action action){
-        return versionning.add(action);
+        boolean res = versionning.add(action);
+        log.debug("Version "+ getVersionning().size());
+        log.debug(getPlateau().toString());
+        return res;
     }
 
     @Override

@@ -56,7 +56,12 @@ public class ActionService {
 
                 joueur.setLatestVersionId(latestServerVersion);
                 log.info(String.format("Nouvelle version du plateau joueur : %d", joueur.getLatestVersionId()));
+            }else{
+                joueur.setLatestVersionId(latestServerVersion);
+                log.info(String.format("Mise en pratique effectuée, nouvelle version du plateau joueur : %d", joueur.getLatestVersionId()));
             }
+            log.debug("Version "+joueur.getLatestVersionId());
+            log.debug(joueur.getPlateau().toString());
         }
 
 
