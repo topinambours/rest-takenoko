@@ -6,10 +6,7 @@ import takenoko.irrigation.CoordIrrig;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Une evolution est une action effectué sur la plateau
@@ -74,6 +71,21 @@ public class Action<T> {
 
             default: return false;
         }
+    }
+
+    /**
+     * Function to apply all actions
+     * @param actions List<Action>
+     * @param plateau Plateau
+     * @return boolean
+     */
+    static public boolean applyAllAction(List<Action> actions,Plateau plateau){
+        Iterator<Action> iterator = actions.iterator();
+        while (iterator.hasNext()){
+            boolean current = applyAction(iterator.next(),plateau);
+            if (!current) return false;
+        }
+        return true;
     }
 
 
