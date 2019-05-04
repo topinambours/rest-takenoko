@@ -150,7 +150,10 @@ public class VersionController {
      */
     @GetMapping("/version/latest/id")
     public Integer getLatestActionId(){
-        return gameEngine.getVersionning().size()-1;
+        if (gameEngine.getVersionning().size() == 0){
+            return 0;
+        }
+        return gameEngine.getVersionning().size();
     }
 
 
