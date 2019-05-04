@@ -47,7 +47,7 @@ public class ActionService {
             boolean goodApply = Action.applyAllAction(actions,joueur.getPlateau());
             if (!goodApply){
                 log.warn("Erreur lors de la mise en pratique de la version sur le plateau du joueur, pull de l'intégralité du plateau ...");
-                joueur.setPlateau(httpClient.getPlateau());
+                joueur.setPlateau(httpClient.pullPlateau());
             }
             joueur.setLatestVersionId(latestServerVersion);
             log.info(String.format("Nouvelle version du plateau joueur : %d",joueur.getLatestVersionId()));

@@ -5,6 +5,7 @@ import lombok.Data;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.objectives.patterns.CoordCube;
 import takenoko.tuile.Amenagement;
@@ -17,7 +18,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Data
-@Configuration
+@Component
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Plateau {
 
@@ -398,21 +399,5 @@ public class Plateau {
 
         return out;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Plateau plateau = (Plateau) o;
-        return Objects.equals(tuiles, plateau.tuiles) &&
-                Objects.equals(irrigations, plateau.irrigations) &&
-                Objects.equals(posPanda, plateau.posPanda);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(tuiles, irrigations, posPanda);
-    }
-
 
 }

@@ -32,10 +32,10 @@ public class PlateauController {
      * @return Plateau
      *
      *
-     * @api {get} /plateau/ getPlateau
+     * @api {get} /plateau/ pullPlateau
      * @apiVersion 0.4.0
      * @apiDescription Get the deck status with all the plots positions
-     * @apiName getPlateau
+     * @apiName pullPlateau
      * @apiGroup Server/PlateauController
      *
      * @apiSuccess Plateau : list of plots

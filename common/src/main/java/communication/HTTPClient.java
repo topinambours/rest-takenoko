@@ -156,7 +156,7 @@ public class HTTPClient {
         return request("/version/latest/id",Integer.class);
     }
 
-    public Plateau getPlateau(){
+    public Plateau pullPlateau(){
         return request("/plateau/",Plateau.class);
     }
 
