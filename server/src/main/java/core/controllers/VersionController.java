@@ -79,7 +79,10 @@ public class VersionController {
      *
      */
     @GetMapping("/version/from/{from}")
-    public ActionContainer getVersionFrom(@PathVariable int from) throws VersionNotFoundException {
+    public ActionContainer getVersionFrom(@RequestParam(value = "playerId",
+                                            required = false,
+                                            defaultValue = "-1") int playerId,
+                                          @PathVariable int from) throws VersionNotFoundException {
         int size = gameEngine.getVersionning().size();
         if (size <= from || from < 0){
             throw new VersionNotFoundException();
@@ -153,7 +156,7 @@ public class VersionController {
         if (gameEngine.getVersionning().size() == 0){
             return 0;
         }
-        return gameEngine.getVersionning().size();
+        return gameEngine.getVersionning().size() - 1;
     }
 
 

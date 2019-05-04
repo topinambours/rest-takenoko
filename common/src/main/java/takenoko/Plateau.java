@@ -1,11 +1,14 @@
 package takenoko;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.google.gson.Gson;
+import lombok.Builder;
 import lombok.Data;
+import lombok.Singular;
+import lombok.ToString;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.objectives.patterns.CoordCube;
 import takenoko.tuile.Amenagement;
@@ -14,16 +17,13 @@ import takenoko.tuile.Tuile;
 import takenoko.tuile.TuileNotFoundException;
 
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-@Data
-@Component
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Plateau {
 
-    private HashMap<CoordAxial, Tuile> tuiles;
-    private HashSet<CoordIrrig> irrigations;
+    private Map<CoordAxial, Tuile> tuiles;
+    private Set<CoordIrrig> irrigations;
+
     private CoordAxial posPanda;
 
     public Plateau() {
@@ -31,6 +31,12 @@ public class Plateau {
         this.irrigations = new HashSet<>();
         this.tuiles.put(new CoordAxial(0,0), new Tuile(-1, Couleur.BLEU));
         this.posPanda = new CoordAxial(0,0);
+    }
+
+    public Plateau(Map<CoordAxial, Tuile> tuile, Set<CoordIrrig> irrigations, CoordAxial posPanda){
+        this.tuiles = tuile;
+        this.irrigations = irrigations;
+        this.posPanda = posPanda;
     }
 
     public void poserTuile(CoordAxial pos, Tuile t){
@@ -310,7 +316,7 @@ public class Plateau {
 
 
 
-    public HashSet<CoordIrrig> irrigationsList() {
+    public Set<CoordIrrig> irrigationsList() {
         return irrigations;
     }
 
@@ -318,7 +324,7 @@ public class Plateau {
         return posPanda;
     }
 
-    public HashMap<CoordAxial, Tuile> getTuiles() {
+    public Map<CoordAxial, Tuile> getTuiles() {
         return tuiles;
     }
 
@@ -398,6 +404,17 @@ public class Plateau {
         out.posPanda = startingCoord;
 
         return out;
+    }
+
+    public static Plateau fromJson(String json){
+        Gson gson = new Gson();
+        Plateau p = gson.fromJson(json, Plateau.class);
+        return p;
+    }
+
+    public String toJson(){
+        Gson gson = new Gson();
+        return "{ \"Plateau\" : "+gson.toJson(this)+"}" ;
     }
 
 }

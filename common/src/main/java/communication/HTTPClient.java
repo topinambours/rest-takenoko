@@ -157,7 +157,8 @@ public class HTTPClient {
     }
 
     public Plateau pullPlateau(){
-        return request("/plateau/",Plateau.class);
+        String req = request("/plateau/",String.class);
+        return Plateau.fromJson(req);
     }
 
     public void setId(int id) {

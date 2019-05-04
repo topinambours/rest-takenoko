@@ -17,6 +17,8 @@ import takenoko.tuile.TuileNotFoundException;
 import takenoko.versionning.Action;
 import takenoko.versionning.ActionType;
 
+import java.util.List;
+
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
@@ -56,9 +58,10 @@ public class PlateauController {
      *        }
      *
      */
-    @RequestMapping(value = "/plateau/", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
-    public Plateau getPlateau(){
-        return game.getPlateau();
+
+    @RequestMapping(value = "/plateau/", produces = {"application/JSON"})
+    public String getPlateau(){
+        return game.getPlateau().toJson();
     }
 
     /**
@@ -412,7 +415,7 @@ public class PlateauController {
      */
     @GetMapping("/plateau/irrigation/")
     public CoordIrrigContainer listOfIrrigation(){
-        return new CoordIrrigContainer(game.getPlateau().irrigationsList());
+        return new CoordIrrigContainer(List.copyOf(game.getPlateau().irrigationsList()));
     }
 
     /**
