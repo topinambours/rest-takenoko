@@ -8,6 +8,9 @@ cache:
   directories:
     - $HOME/.m2
 
+notifications:
+  email: false
+
 jobs:
 
   include:
