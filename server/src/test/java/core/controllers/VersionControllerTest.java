@@ -81,7 +81,7 @@ public class VersionControllerTest {
     public void multipleTest(){
         gameEngine.addVersion(new Action(ActionType.PUTPLOT,"test"));
         gameEngine.addVersion(new Action(ActionType.PUTPLOT,"test2"));
-        gameEngine.addVersion(new Action(gameEngine.getVersionning().size(),ActionType.PUTPLOT,"test3"));
+        gameEngine.addVersion(new Action(gameEngine.getVersionning().size()+1,ActionType.PUTPLOT,"test3"));
 
         int size = gameEngine.getVersionning().size();
         ActionContainer actionContainer = new ActionContainer(gameEngine.getVersionning());

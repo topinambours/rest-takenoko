@@ -373,18 +373,11 @@ public class Plateau {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Plateau : taille = ");
-        sb.append(tuiles.size());
-        sb.append("\n");
-        for (Map.Entry<CoordAxial, Tuile> t : tuiles.entrySet()){
-            sb.append(t.getKey().toString());
-            sb.append(" ");
-            sb.append(t.getValue().toString());
-            sb.append("\n");
-        }
-
-        return sb.toString();
+        return "Plateau{" +
+                "tuiles=" + tuiles +
+                ", irrigations=" + irrigations +
+                ", posPanda=" + posPanda +
+                '}';
     }
 
     @Bean(name = "plateau_vide")
@@ -417,4 +410,18 @@ public class Plateau {
         return "{ \"Plateau\" : "+gson.toJson(this)+"}" ;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Plateau plateau = (Plateau) o;
+        return Objects.equals(tuiles, plateau.tuiles) &&
+                Objects.equals(irrigations, plateau.irrigations) &&
+                Objects.equals(posPanda, plateau.posPanda);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tuiles, irrigations, posPanda);
+    }
 }
