@@ -1,12 +1,6 @@
 package takenoko;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.gson.Gson;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Singular;
-import lombok.ToString;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import takenoko.irrigation.CoordIrrig;

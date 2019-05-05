@@ -123,10 +123,11 @@ public class PlateauController {
     public ResponseContainer poser_tuile(@RequestParam(value = "playerId",
             required = false,
             defaultValue = "-1") int playerId,
-            @RequestBody PoseTuileContainer poseTuileContainer){
+            @RequestBody PoseTuileContainer poseTuileContainer) throws CloneNotSupportedException {
+        Tuile clone = poseTuileContainer.getTuile().clone();
 
         game.getPlateau().poserTuile(poseTuileContainer.getPos(), poseTuileContainer.getTuile());
-        Action action = new Action(game.getVersionning().size()+1,ActionType.PUTPLOT,poseTuileContainer.getPos(), poseTuileContainer.getTuile());
+        Action action = new Action(game.getVersionning().size()+1,ActionType.PUTPLOT,poseTuileContainer.getPos(), clone);
         game.addVersion(action);
         log.info("Nouvelle version : "+ action.toString());
 

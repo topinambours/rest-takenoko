@@ -55,6 +55,13 @@ public class Tuile {
         this.nbBambous = 0;
     }
 
+    public Tuile clone(){
+        Tuile out = new Tuile(this.unique_id, this.couleur, this.amenagement);
+        out.setHaveWater(this.haveWater);
+        out.setNbBambous(this.nbBambous);
+        return out;
+    }
+
     /**
      * Permet de savoir si la pousse de bambou est possible sur la tuile
      * @return vrai si la tuile dispose de moins de 4 bambous et si elle est irriguée
