@@ -4,6 +4,7 @@ import communication.container.ActionContainer;
 import core.GameEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import takenoko.Plateau;
 import takenoko.versionning.Action;
 import takenoko.versionning.VersionNotFoundException;
 
@@ -160,6 +161,38 @@ public class VersionController {
             return 0;
         }
         return gameEngine.getVersionning().size() - 1;
+    }
+
+
+    /**
+     * Get the board at a specific version
+     * @param id int
+     * @return String json
+     * @throws VersionNotFoundException
+     *
+     *
+     * @api {get} /version/:id/plateau boardAtVersion
+     * @apiVersion 0.4.0
+     * @apiDescription Get the board at a specific version
+     * @apiName boardAtVersion
+     * @apiGroup Server/VersionController
+     *
+     * @apiParam {number} Version ID
+     *
+     * @apiSuccess String : Board json
+     *
+     */
+    @RequestMapping(value = "/version/{id}/plateau", produces = {"application/JSON"})
+    public String boardAtVersion(@PathVariable int id) throws VersionNotFoundException {
+        Plateau plateau = new Plateau().plateau_depart();
+
+        int size = gameEngine.getVersionning().size();
+        if(size < id){
+            throw new VersionNotFoundException();
+        }
+
+        Action.applyAllAction(gameEngine.getVersionning().subList(0,id),plateau);
+        return plateau.toJson();
     }
 
 
