@@ -62,7 +62,7 @@ public class PlateauTest {
 
         assertEquals(Couleur.BLEU, p.movePanda(new CoordAxial(0,0)));
 
-        assertEquals(Couleur.BLEU, p.movePanda(new CoordAxial(1,-1)));
+        assertEquals(Couleur.VERT, p.movePanda(new CoordAxial(1,-1)));
     }
 
     @Test

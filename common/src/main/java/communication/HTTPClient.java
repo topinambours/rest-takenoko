@@ -9,6 +9,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import takenoko.Plateau;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.tuile.CoordAxial;
 
@@ -63,12 +64,10 @@ public class HTTPClient {
     }
 
     public <T> T request(String uri, Class<T> responseType) {
-
         return new RestTemplate().getForObject(String.format("%s/%s?playerId=%d", server_url, uri, id), responseType);
     }
 
     public <Req,Res> Res post_request(String uri,Req postObject, Class<Res> responseType){
-        RestTemplate restTemplate = new RestTemplate();
 
         HttpEntity<Req> request = new HttpEntity<>(postObject, new HttpHeaders());
         URI uri_req = null;
@@ -77,7 +76,7 @@ public class HTTPClient {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        return restTemplate.postForObject(uri_req, request, responseType);
+        return new RestTemplate().postForObject(uri_req, request, responseType);
 
     }
 
@@ -135,6 +134,31 @@ public class HTTPClient {
 
     public void setServer_url(String server_url) {
         this.server_url = server_url;
+    }
+
+    public ActionContainer pullAllVersion(){
+        return request("/version",ActionContainer.class);
+    }
+
+    public ActionContainer pullVersionId(int id){
+        return request("/version/"+id+"/",ActionContainer.class);
+    }
+
+    public ActionContainer pullVersionFrom(int from){
+        return request("/version/from/"+from,ActionContainer.class);
+    }
+
+    public ActionContainer pullVersionFromTo(int from,int to){
+        return request("/version/from/"+from+"/to/"+to,ActionContainer.class);
+    }
+
+    public Integer pullLatestVersionId(){
+        return request("/version/latest/id",Integer.class);
+    }
+
+    public Plateau pullPlateau(){
+        String req = request("/plateau/",String.class);
+        return Plateau.fromJson(req);
     }
 
     public void setId(int id) {

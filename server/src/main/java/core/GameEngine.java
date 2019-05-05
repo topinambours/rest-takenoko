@@ -1,10 +1,6 @@
 package core;
 
 import communication.HTTPClient;
-import communication.container.ResponseContainer;
-import communication.container.TuileContainer;
-import core.takenoko.pioche.EmptyDeckException;
-import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +10,13 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import core.takenoko.pioche.PiocheTuile;
 import takenoko.Plateau;
+import takenoko.versionning.Action;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,6 +48,8 @@ public class GameEngine {
 
     private boolean gameStarted;
 
+    private List<Action> versionning; //TODO : add the actions into the action list
+
     public GameEngine(){
         this.gameSize = 4;
     }
@@ -73,6 +72,7 @@ public class GameEngine {
         this.plateau = plateau;
         this.clients = new ArrayList<>();
         this.gameStarted = false;
+        this.versionning = new ArrayList<>();
         log.info(String.format("Nouvelle partie pour %d joueurs instanciée.", gameSize));
     }
 
@@ -152,5 +152,24 @@ public class GameEngine {
 
     public void setCurrentPlayerIndex(int currentPlayerIndex) {
         this.currentPlayerIndex = currentPlayerIndex;
+    }
+
+    public List<Action> getVersionning() {
+        return versionning;
+    }
+
+    public boolean addVersion(Action action){
+        boolean res = versionning.add(action);
+        log.debug("Version "+ getVersionning().size());
+        log.debug(getPlateau().toString());
+        return res;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder out = new StringBuilder("GameEngine\n");
+        out.append("\t gameSize : ").append(gameSize).append("\n");
+        out.append("\tClients : ").append(clients.toString());
+        return out.toString();
     }
 }

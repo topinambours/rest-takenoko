@@ -3,15 +3,27 @@ package core.controllers;
 import communication.HTTPClient;
 import communication.container.ResponseContainer;
 import core.GameEngine;
+import core.service.ConnectionService;
+import core.service.NotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 @RestController
 public class ConnectionController {
 
     private final NotificationService service;
+
+    @Autowired
+    ConnectionService connectionService;
 
     private static final Logger log = LoggerFactory.getLogger(ConnectionController.class);
 
@@ -28,7 +40,7 @@ public class ConnectionController {
      *
      *
      * @api {get} /end_turn EndTurn
-     * @apiVersion 0.3.0
+     * @apiVersion 0.4.0
      * @apiDescription End the turn end get the player id that have to play
      * @apiName EndTurn
      * @apiGroup Server/ConnectionController
@@ -49,24 +61,10 @@ public class ConnectionController {
     @GetMapping("/end_turn")
     public ResponseContainer end_turn(@RequestParam(value = "playerId",
             required = false,
-            defaultValue = "-1") int playerId){
+            defaultValue = "-1") int playerId) throws ExecutionException, InterruptedException, TimeoutException {
 
-        HTTPClient currentPlayer = game.getClients().get(game.getCurrentPlayerIndex());
-
-        if (playerId == currentPlayer.getId()){
-            log.info(String.format("Le joueur %d a terminé son tour.", playerId));
-
-            game.setCurrentPlayerIndex((game.getCurrentPlayerIndex() + 1) % game.getGameSize());
-            if (!game.gameEnded() && game.getClientsId().contains(playerId)) {
-                log.info(String.format("C'est au tour du joueur %d", game.getClients().get(game.getCurrentPlayerIndex()).getId()));
-            }
-            return new ResponseContainer(true, String.format("Player %d have to play", game.getClients().get(game.getCurrentPlayerIndex()).getId()));
-        }
-        else{
-            log.info(String.format("Le joueur %d notifie la fin de son tour alors que ce n'est pas son tour. Aucune modification apportée à l'état de la partie.", playerId));
-            return new ResponseContainer(false, String.format("Player %d have to play, it is not your turn.", game.getClients().get(game.getCurrentPlayerIndex()).getId()));
-        }
-
+        CompletableFuture<ResponseContainer> res = connectionService.enTurnNotified(playerId);
+        return res.get(1, TimeUnit.SECONDS);
 
     }
 
@@ -76,7 +74,7 @@ public class ConnectionController {
      *
      *
      * @api {get} /gameEnded gameEnded
-     * @apiVersion 0.3.0
+     * @apiVersion 0.4.0
      * @apiDescription Get the status to know if the game is ended
      * @apiName gameEnded
      * @apiGroup Server/ConnectionController
@@ -105,7 +103,7 @@ public class ConnectionController {
      * @return ResponseContainer
      *
      * @api {post} /register/ Register
-     * @apiVersion 0.3.0
+     * @apiVersion 0.4.0
      * @apiDescription Post the httpClient references to register to the game
      * @apiName Register
      * @apiGroup Server/ConnectionController
@@ -124,25 +122,9 @@ public class ConnectionController {
      *
      */
     @PostMapping("/register/")
-    public ResponseContainer register(@RequestBody HTTPClient client){
-        if (!game.isGameStarted()) {
-
-            if (!game.getClientsId().contains(client.getId())) {
-                game.getClients().add(client);
-                if (game.getClients().size() == game.getGameSize()) {
-                    game.setGameStarted(true);
-                }
-                log.info(String.format("Le joueur %d@%s c'est enregistré.", client.getId(), client.getUser_adress()));
-                return new ResponseContainer(true, "You joined the game");
-            }
-            else{
-                return new ResponseContainer(false, "Already registered");
-            }
-        }
-        else{
-            log.info(String.format("Le joueur %d@%s tente de s'enregistrer", client.getId(), client.getUser_adress()));
-            return new ResponseContainer(false, "Game has started");
-        }
+    public ResponseContainer register(@RequestBody HTTPClient client) throws ExecutionException, InterruptedException {
+        CompletableFuture<ResponseContainer> res = connectionService.registerNewClient(client);
+        return res.get();
     }
 
 

@@ -1,13 +1,13 @@
-# Stage 1 (to create a "build" image)
-FROM anonymoussquad/maven3.5-jdk10-node AS builder
-RUN java -version
+# Stage 1 Build image that run maven
+FROM maven:3-jdk-11-slim as builder
+RUN java -version && mvn -version
 
 COPY . /usr/src/takenoko-server/
 WORKDIR /usr/src/takenoko-server/
 RUN mvn package -DskipTests
 
-# Stage 2 (to create a downsized "container executable")
-FROM anonymoussquad/maven3.5-jdk10-node
+# Stage 2 Container image without maven
+FROM openjdk:11-slim
 WORKDIR /root/
 COPY --from=builder /usr/src/takenoko-server/client/target/client-1.0-SNAPSHOT.jar .
 

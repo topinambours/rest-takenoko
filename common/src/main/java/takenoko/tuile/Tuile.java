@@ -55,6 +55,13 @@ public class Tuile {
         this.nbBambous = 0;
     }
 
+    public Tuile clone(){
+        Tuile out = new Tuile(this.unique_id, this.couleur, this.amenagement);
+        out.setHaveWater(this.haveWater);
+        out.setNbBambous(this.nbBambous);
+        return out;
+    }
+
     /**
      * Permet de savoir si la pousse de bambou est possible sur la tuile
      * @return vrai si la tuile dispose de moins de 4 bambous et si elle est irriguée
@@ -124,6 +131,26 @@ public class Tuile {
 
     public void setNbBambous(int nbBambous) {
         this.nbBambous = nbBambous;
+    }
+
+
+    public String generateDrawCode(CoordAxial pos){
+
+        String color = "black";
+        switch (couleur){
+            case ROSE: color = "pink"; break;
+            case JAUNE: color = "yellow"; break;
+            case VERT: color = "green"; break;
+            case BLEU: color = "blue"; break;
+        }
+
+        double x = (500 - 43.5) + 87.25 * pos.getQ() + pos.getR() * 43.5;
+        double y = (500 - 50) + 75 * pos.getR();
+
+        return "draw.polygon('43.5,0 87,25 87,75 43.5,100 0,75 0,25 43.5,0').fill('" + color + "').move("+x+", "+y+").stroke({ width: 1, color: 'black' });" +
+                "\ndraw.plain('"+pos.toString()+"').move("+(x + 25)+", "+(y+ 10)+");" +
+                "\ndraw.plain('Bambou :"+nbBambous+"').move("+(x )+", "+(y+ 43.5)+");" +
+                "\ndraw.plain('Irrig :"+ haveWater +"').move("+(x +10 )+", "+(y+ 65)+");";
     }
 
 

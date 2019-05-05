@@ -19,21 +19,4 @@ public class TurnHandler {
     public TurnHandler(Joueur joueur) {
         this.joueur = joueur;
     }
-
-    @Async
-    @Scheduled(fixedDelay = 300)
-    public void checkEndGame(){
-        if (joueur.getHttpClient().isGameEnded().response){
-            System.exit(0);
-        }
-    }
-
-    @Async
-    @Scheduled(fixedDelay = 750)
-    public void doNotify() {
-        if (joueur.myTurn){
-            joueur.myTurn = false;
-            joueur.turn();
-        }
-    }
 }

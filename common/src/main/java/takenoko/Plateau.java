@@ -1,8 +1,7 @@
 package takenoko;
 
-import lombok.Data;
+import com.google.gson.Gson;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.objectives.patterns.CoordCube;
@@ -12,19 +11,13 @@ import takenoko.tuile.Tuile;
 import takenoko.tuile.TuileNotFoundException;
 
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-@Data
-@Configuration
 public class Plateau {
 
-    public HashMap<CoordAxial, Tuile> getTuiles() {
-        return tuiles;
-    }
+    private Map<CoordAxial, Tuile> tuiles;
+    private Set<CoordIrrig> irrigations;
 
-    private HashMap<CoordAxial, Tuile> tuiles;
-    private HashSet<CoordIrrig> irrigations;
     private CoordAxial posPanda;
 
     public Plateau() {
@@ -34,11 +27,19 @@ public class Plateau {
         this.posPanda = new CoordAxial(0,0);
     }
 
+    public Plateau(Map<CoordAxial, Tuile> tuile, Set<CoordIrrig> irrigations, CoordAxial posPanda){
+        this.tuiles = tuile;
+        this.irrigations = irrigations;
+        this.posPanda = posPanda;
+    }
+
     public void poserTuile(CoordAxial pos, Tuile t){
         if (!tuiles.containsKey(pos)){
             tuiles.put(pos, t);
             t.setHaveWater(checkPlotWater(pos));
-
+            if (t.getHaveWater()){
+                t.pousserBambou();
+            }
         }
     }
 
@@ -309,12 +310,16 @@ public class Plateau {
 
 
 
-    public HashSet<CoordIrrig> irrigationsList() {
+    public Set<CoordIrrig> irrigationsList() {
         return irrigations;
     }
 
     public CoordAxial posPanda() {
         return posPanda;
+    }
+
+    public Map<CoordAxial, Tuile> getTuiles() {
+        return tuiles;
     }
 
     /**
@@ -362,18 +367,11 @@ public class Plateau {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Plateau : taille = ");
-        sb.append(tuiles.size());
-        sb.append("\n");
-        for (Map.Entry<CoordAxial, Tuile> t : tuiles.entrySet()){
-            sb.append(t.getKey().toString());
-            sb.append(" ");
-            sb.append(t.getValue().toString());
-            sb.append("\n");
-        }
-
-        return sb.toString();
+        return "Plateau{" +
+                "tuiles=" + tuiles +
+                ", irrigations=" + irrigations +
+                ", posPanda=" + posPanda +
+                '}';
     }
 
     @Bean(name = "plateau_vide")
@@ -393,5 +391,31 @@ public class Plateau {
         out.posPanda = startingCoord;
 
         return out;
+    }
+
+    public static Plateau fromJson(String json){
+        Gson gson = new Gson();
+        Plateau p = gson.fromJson(json, Plateau.class);
+        return p;
+    }
+
+    public String toJson(){
+        Gson gson = new Gson();
+        return "{ \"Plateau\" : "+gson.toJson(this)+"}" ;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Plateau plateau = (Plateau) o;
+        return Objects.equals(tuiles, plateau.tuiles) &&
+                Objects.equals(irrigations, plateau.irrigations) &&
+                Objects.equals(posPanda, plateau.posPanda);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tuiles, irrigations, posPanda);
     }
 }
