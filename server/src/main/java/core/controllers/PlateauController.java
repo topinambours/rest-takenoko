@@ -119,25 +119,32 @@ public class PlateauController {
      *         "message": "Tuile posée"
      *       }
      *
+     * @apiError IllegalArgumentException La position de la tuile n'est pas une position légale
+     *
      */
     @PostMapping("/action/poser-tuile/")
     public ResponseContainer poser_tuile(@RequestParam(value = "playerId",
             required = false,
             defaultValue = "-1") int playerId,
-            @RequestBody PoseTuileContainer poseTuileContainer) throws CloneNotSupportedException {
-        Tuile clone = poseTuileContainer.getTuile().clone();
+            @RequestBody PoseTuileContainer poseTuileContainer) throws CloneNotSupportedException, IllegalArgumentException {
 
-        game.getPlateau().poserTuile(poseTuileContainer.getPos(), poseTuileContainer.getTuile());
-        Action action = new Action(game.getVersionning().size()+1,ActionType.PUTPLOT,poseTuileContainer.getPos(), clone);
-        game.addVersion(action);
-        log.info("Nouvelle version : "+ action.toString());
+        if(! game.getPlateau().legalPositions().contains(poseTuileContainer.getPos())){
+            throw new IllegalArgumentException("La position de la tuile n'est pas une position légale");
+        }else{
+            Tuile clone = poseTuileContainer.getTuile().clone();
 
-        log.info(String.format("Le joueur %d pose %s en %s",
-                playerId,
-                poseTuileContainer.getTuile().toString(),
-                poseTuileContainer.getPos().toString()));
+            game.getPlateau().poserTuile(poseTuileContainer.getPos(), poseTuileContainer.getTuile());
+            Action action = new Action(game.getVersionning().size()+1,ActionType.PUTPLOT,poseTuileContainer.getPos(), clone);
+            game.addVersion(action);
+            log.info("Nouvelle version : "+ action.toString());
 
-        return new ResponseContainer(true, "Tuile posée");
+            log.info(String.format("Le joueur %d pose %s en %s",
+                    playerId,
+                    poseTuileContainer.getTuile().toString(),
+                    poseTuileContainer.getPos().toString()));
+
+            return new ResponseContainer(true, "Tuile posée");
+        }
     }
 
     /**
