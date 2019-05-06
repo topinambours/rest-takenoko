@@ -456,7 +456,14 @@ public class PlateauController {
             @RequestParam(value = "playerId",
             required = false,
             defaultValue = "-1") int playerId){
-        boolean res = game.getPlateau().addIrrigation(coordIrrig);
+
+        boolean res;
+        if (game.getPlateau().legalIrrigPositions().contains(coordIrrig)){
+            res = game.getPlateau().addIrrigation(coordIrrig);
+        }else{
+            log.warn("IllegalArgumentException : L'irrigation passée en paramètres n'est pas une irrigation légale");
+            throw new IllegalArgumentException("L'irrigation passée en paramètres n'est pas une irrigation légale");
+        }
         if (res){
             log.info(String.format("Le joueur %d pose une irrigation en %s", playerId, coordIrrig));
 
