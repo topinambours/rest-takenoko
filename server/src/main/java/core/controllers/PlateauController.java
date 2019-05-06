@@ -2,6 +2,7 @@ package core.controllers;
 
 import communication.container.*;
 import core.GameEngine;
+import core.controllers.exception.IllegalArgumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -449,13 +450,15 @@ public class PlateauController {
      *         "message": "Erreur lors de la pose de l'irrigation en {"coordAxial":{"q":0,"r":0},"o":"W"}"
      *       }
      *
+     * @apiError IllegalArgumentException L'irrigation passée en paramètres n'est pas une irrigation légale
+     *
      */
     @PostMapping("/action/poser-irrigation/")
     public ResponseContainer poserIrrigation(
             @RequestBody CoordIrrig coordIrrig,
             @RequestParam(value = "playerId",
             required = false,
-            defaultValue = "-1") int playerId){
+            defaultValue = "-1") int playerId) throws IllegalArgumentException {
 
         boolean res;
         if (game.getPlateau().legalIrrigPositions().contains(coordIrrig)){
@@ -538,17 +541,24 @@ public class PlateauController {
      *
      * @apiParam CoordAxial : a board coord
      *
+     * @apiError IllegalArgumentException La position du panda n'est pas une position légale
+     *
      */
     @PostMapping("/action/bouger-panda/")
-    public ResponseContainer bougerPanda(@RequestBody CoordAxial coordAxial){
+    public ResponseContainer bougerPanda(@RequestBody CoordAxial coordAxial) throws IllegalArgumentException {
         //Todo : récupérer les bambous #61
-        Couleur couleur = game.getPlateau().movePanda(coordAxial);
-        //return new ColorContainer(couleur);
-        Action action = new Action(game.getVersionning().size()+1,ActionType.MOOVEPANDA,coordAxial);
-        game.addVersion(action);
-        log.info("Nouvelle version : "+ action.toString());
-        return new ResponseContainer(true,String.format("LE PANDA C'EST DEPLACE EN %s ET A MANGE UN BAMBOU DE COULEUR %s",coordAxial.toString(),couleur.toString()));
+        if (! game.getPlateau().computePandaLegalPositions().contains(coordAxial)){
+            throw new IllegalArgumentException("La position du panda n'est pas une position légale");
+        }else{
+            Couleur couleur = game.getPlateau().movePanda(coordAxial);
+            //return new ColorContainer(couleur);
+            Action action = new Action(game.getVersionning().size()+1,ActionType.MOOVEPANDA,coordAxial);
+            game.addVersion(action);
+            log.info("Nouvelle version : "+ action.toString());
+            return new ResponseContainer(true,String.format("LE PANDA C'EST DEPLACE EN %s ET A MANGE UN BAMBOU DE COULEUR %s",coordAxial.toString(),couleur.toString()));
+        }
     }
+
 
 
 
