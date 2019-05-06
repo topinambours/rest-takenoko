@@ -129,6 +129,7 @@ public class PlateauController {
             @RequestBody PoseTuileContainer poseTuileContainer) throws CloneNotSupportedException, IllegalArgumentException {
 
         if(! game.getPlateau().legalPositions().contains(poseTuileContainer.getPos())){
+            log.warn("IllegalArgumentException : La position de la tuile n'est pas une position légale");
             throw new IllegalArgumentException("La position de la tuile n'est pas une position légale");
         }else{
             Tuile clone = poseTuileContainer.getTuile().clone();
@@ -555,6 +556,7 @@ public class PlateauController {
     public ResponseContainer bougerPanda(@RequestBody CoordAxial coordAxial) throws IllegalArgumentException {
         //Todo : récupérer les bambous #61
         if (! game.getPlateau().computePandaLegalPositions().contains(coordAxial)){
+            log.warn("IllegalArgumentException : La position du panda n'est pas une position légale");
             throw new IllegalArgumentException("La position du panda n'est pas une position légale");
         }else{
             Couleur couleur = game.getPlateau().movePanda(coordAxial);
