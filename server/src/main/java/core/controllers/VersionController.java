@@ -8,9 +8,6 @@ import takenoko.Plateau;
 import takenoko.versionning.Action;
 import takenoko.versionning.VersionNotFoundException;
 
-
-import java.util.List;
-
 @RestController
 public class VersionController {
 
@@ -179,8 +176,8 @@ public class VersionController {
      * @apiSuccess String : Board json
      *
      */
-    @RequestMapping(value = "/version/{id}/plateau", produces = {"application/JSON"})
-    public String boardAtVersion(@PathVariable int id) throws VersionNotFoundException {
+    @RequestMapping(value = "/version/{id}/plateau")
+    public Plateau boardAtVersion(@PathVariable int id) throws VersionNotFoundException {
         Plateau plateau = new Plateau().plateau_depart();
 
         int size = gameEngine.getVersionning().size();
@@ -189,7 +186,7 @@ public class VersionController {
         }
 
         Action.applyAllAction(gameEngine.getVersionning().subList(0,id),plateau);
-        return plateau.toJson();
+        return plateau;
     }
 
 

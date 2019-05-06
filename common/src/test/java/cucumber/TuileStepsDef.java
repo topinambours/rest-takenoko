@@ -9,9 +9,7 @@ import takenoko.Couleur;
 import takenoko.tuile.Amenagement;
 import takenoko.tuile.Tuile;
 
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.*;
 
 public class TuileStepsDef {
 

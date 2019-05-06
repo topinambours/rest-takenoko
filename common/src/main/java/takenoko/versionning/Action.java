@@ -1,23 +1,25 @@
 package takenoko.versionning;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import takenoko.Plateau;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 /**
- * Une evolution est une action effectué sur la plateau
+ * Une evolution est une actionType effectué sur la plateau
  * @param <T>
  */
 @Data
 public class Action<T> {
     private int id;
-    private ActionType action;
+    private ActionType actionType;
     private List<T> argument;
 
     private static ObjectMapper mapper = new ObjectMapper();
@@ -25,21 +27,21 @@ public class Action<T> {
     public Action() {
     }
 
-    public Action(int id, ActionType action,  T... arguments) {
+    public Action(int id, ActionType actionType, T... arguments) {
         this.id = id;
-        this.action = action;
+        this.actionType = actionType;
         this.argument = new ArrayList<T>(Arrays.asList(arguments));
     }
 
-    public Action(ActionType action, T... arguments) {
+    public Action(ActionType actionType, T... arguments) {
         this.id = -1;
-        this.action = action;
+        this.actionType = actionType;
         this.argument = new ArrayList<T>(Arrays.asList(arguments));
     }
 
 
-    public ActionType getAction() {
-        return action;
+    public ActionType getActionType() {
+        return actionType;
     }
 
     public List<T> getArgument() {
@@ -50,18 +52,37 @@ public class Action<T> {
         return id;
     }
 
+
+
+    public boolean haveValidArguments(){
+        switch (actionType){
+            case PUTPLOT: return argument.size() == 2 && argument.get(0) instanceof CoordAxial && argument.get(1) instanceof Tuile;
+
+            case ADDIRRIG: return argument.size() == 1 && argument.get(0) instanceof CoordIrrig;
+
+            case MOOVEPANDA: return argument.size() == 1 && argument.get(0) instanceof CoordAxial;
+
+            default: return false;
+        }
+    }
+
     /**
-     * Static function to apply a action into a board
+     * Static function to apply a actionType into a board
      * @param action Action
      * @param plateau Plateau
      * @return boolean
      */
     static public boolean applyAction(Action action, Plateau plateau){
-        switch (action.getAction()){
+
+        if (!action.haveValidArguments()) {
+            return false;
+        }
+
+        switch (action.getActionType()){
             case PUTPLOT:
                 if(action.getArgument().size() == 2){
-                    CoordAxial coordAxial = mapper.convertValue(action.getArgument().get(0), CoordAxial.class);
-                    Tuile tuile = mapper.convertValue(action.getArgument().get(1),Tuile.class);
+                        CoordAxial coordAxial = mapper.convertValue(action.getArgument().get(0), CoordAxial.class);
+                        Tuile tuile = mapper.convertValue(action.getArgument().get(1), Tuile.class);
                     if ((coordAxial != null) && (tuile != null)){
                         plateau.poserTuile(coordAxial,tuile);
                         return true;
@@ -69,7 +90,8 @@ public class Action<T> {
                 }else return false;
             case ADDIRRIG:
                 if (action.getArgument().size() == 1){
-                    CoordIrrig coordIrrig = mapper.convertValue(action.getArgument().get(0),CoordIrrig.class);
+                    CoordIrrig coordIrrig;
+                        coordIrrig = (CoordIrrig) action.getArgument().get(0);
                     if(coordIrrig != null){
                         return plateau.addIrrigation(coordIrrig);
                     }else return false;
@@ -95,9 +117,8 @@ public class Action<T> {
      */
     static public boolean applyAllAction(List<Action> actions,Plateau plateau){
         if (actions.size() == 0) return true;
-        Iterator<Action> iterator = actions.iterator();
-        while (iterator.hasNext()){
-            boolean current = applyAction(iterator.next(),plateau);
+        for (Action action : actions){
+            boolean current = applyAction(action,plateau);
             if (!current) return false;
         }
         return true;
@@ -107,7 +128,7 @@ public class Action<T> {
     public String toString() {
         return "{" +
                 "id=" + id +
-                ", action=" + action +
+                ", actionType=" + actionType +
                 ", argument=" + argument +
                 '}';
     }
@@ -117,12 +138,12 @@ public class Action<T> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Action<?> action1 = (Action<?>) o;
-        return action == action1.action &&
+        return actionType == action1.actionType &&
                 Objects.equals(argument, action1.argument);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(action, argument);
+        return Objects.hash(actionType, argument);
     }
 }

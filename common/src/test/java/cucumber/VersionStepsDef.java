@@ -6,7 +6,6 @@ import cucumber.api.java.en.When;
 import org.junit.Ignore;
 import takenoko.Plateau;
 import takenoko.tuile.CoordAxial;
-import takenoko.tuile.Tuile;
 import takenoko.versionning.Action;
 import takenoko.versionning.ActionType;
 
@@ -14,9 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
 
 public class VersionStepsDef<T> {
     private Plateau plateauServer;

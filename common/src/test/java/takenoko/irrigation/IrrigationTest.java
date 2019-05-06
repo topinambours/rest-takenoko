@@ -3,7 +3,6 @@ package takenoko.irrigation;
 import org.junit.Test;
 import takenoko.tuile.CoordAxial;
 
-
 import java.util.List;
 
 import static org.junit.Assert.*;

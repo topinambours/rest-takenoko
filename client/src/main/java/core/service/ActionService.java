@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import takenoko.Plateau;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
@@ -18,7 +17,6 @@ import takenoko.versionning.Action;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.*;
 
 @Service
 public class ActionService {

@@ -10,9 +10,7 @@ import takenoko.tuile.Amenagement;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
 
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.*;
 
 
 public class PandaStepsDef {
@@ -35,7 +33,7 @@ public class PandaStepsDef {
     @Ignore
     @When("Je place une tuile en {int},{int}")
     public void putPlot(int q,int r){
-        plateau.poserTuile(new CoordAxial(q,r),new Tuile());
+        plateau.poserTuile(new CoordAxial(q,r),new Tuile(plateau.generateTuileMap().size(), Couleur.VERT));
     }
 
     @Ignore
@@ -72,7 +70,7 @@ public class PandaStepsDef {
     @Given("Une tuile de couleur {couleur} en {int},{int} avec bambou de taille {int}")
     public void given_plot(Couleur c,int q,int r,int b){
         plateau.poserTuile(new CoordAxial(q,r),new Tuile(-1,c));
-        plateau.getTuile(new CoordAxial(q,r)).setNbBambous(b);
+        plateau.getTuileAtCoord(new CoordAxial(q,r)).setNbBambous(b);
     }
 
     @Ignore

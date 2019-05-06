@@ -1,28 +1,17 @@
 package core;
 
 import communication.HTTPClient;
-import communication.container.ColorContainer;
-import communication.container.PoseTuileContainer;
-import communication.container.ResponseContainer;
-import communication.container.TuileContainer;
 import core.strategie.RandomStrategie;
 import core.strategie.Strategie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import takenoko.Plateau;
-import takenoko.irrigation.CoordIrrig;
-import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
-
-import java.awt.*;
-import java.util.Arrays;
-import java.util.List;
 
 @Component
 @Import(HTTPClient.class)

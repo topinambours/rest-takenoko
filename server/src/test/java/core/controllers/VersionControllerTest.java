@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import takenoko.versionning.Action;
 import takenoko.versionning.ActionType;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)

@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import takenoko.Plateau;
@@ -157,8 +158,7 @@ public class HTTPClient {
     }
 
     public Plateau pullPlateau(){
-        String req = request("/plateau/",String.class);
-        return Plateau.fromJson(req);
+        return request("/plateau/",Plateau.class);
     }
 
     public void setId(int id) {

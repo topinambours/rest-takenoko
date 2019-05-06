@@ -60,9 +60,9 @@ public class PlateauController {
      *
      */
 
-    @RequestMapping(value = "/plateau/", produces = {"application/JSON"})
-    public String getPlateau(){
-        return game.getPlateau().toJson();
+    @RequestMapping(value = "/plateau/")
+    public Plateau getPlateau(){
+        return game.getPlateau();
     }
 
     /**
