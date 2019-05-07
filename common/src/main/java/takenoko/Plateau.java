@@ -82,7 +82,7 @@ public class Plateau {
      */
     public boolean isPositionLegal(CoordAxial coo) {
         // Si une tuile est déjà présente, coo n'est pas un placement légal
-        if (getTuileAtCoord(coo) != null) {
+        if (coordAxialList.contains(coo)) {
             return false;
         }
         if (coo.equals(new CoordAxial(0,0))){
@@ -95,7 +95,7 @@ public class Plateau {
 
         int nbAdj = 0;
         for (CoordAxial coord : coo.computeNeighborCoords()){
-            if (this.getTuileAtCoord(coord) != null){
+            if (coordAxialList.contains(coord)){
                 nbAdj += 1;
             }
         }

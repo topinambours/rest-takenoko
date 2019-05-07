@@ -13,6 +13,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import takenoko.Couleur;
 import takenoko.Plateau;
+import takenoko.tuile.Amenagement;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
 import takenoko.versionning.Action;
@@ -69,20 +70,34 @@ public class VersionComparatorTest {
 
     @Test
     public void randomTest(){
-        int id = 0;
-        for (int i = 0; i < 1500;i++){
-            int al = i + (int)(Math.random() * ((8000- 2* i) + 1));
-            int al2 = i + (int)(Math.random() * ((8000- 2*i) + 1));
-            assertTrue(restTemplate.postForObject("/action/poser-tuile/", new PoseTuileContainer(new CoordAxial(al,al2),new Tuile(id, Couleur.BLEU)), ResponseContainer.class).getResponse());
-            Plateau p = restTemplate.getForObject("/plateau/", Plateau.class);
 
-            // put plot on randomly generated coordinate
-            assertTrue(p.generateTuileMap().containsKey(new CoordAxial(al, al2)));
+        assertEquals(true,restTemplate.postForObject("/action/poser-tuile/", new PoseTuileContainer(new CoordAxial(0, 1),new Tuile(-2, Couleur.VERT, Amenagement.NONE)), ResponseContainer.class).getResponse());
+        Plateau p = restTemplate.getForObject("/plateau/", Plateau.class);
+
+        assertTrue(p.generateTuileMap().containsKey(new CoordAxial(0, 1)));
+        // Let's check the id of the plot
+        assertEquals(-2, p.getTuileAtCoord(new CoordAxial(0, 1)).getUnique_id());
+
+        for (int i = 1; i <= 500;i++){
+            assertEquals(true,restTemplate.postForObject("/action/poser-tuile/", new PoseTuileContainer(new CoordAxial(i,0),new Tuile(i, Couleur.JAUNE, Amenagement.NONE)), ResponseContainer.class).getResponse());
+            p = restTemplate.getForObject("/plateau/", Plateau.class);
+
+            assertTrue(p.generateTuileMap().containsKey(new CoordAxial(i, 0)));
             // Let's check the id of the plot
-            assertEquals(id, p.getTuileAtCoord(new CoordAxial(al, al2)).getUnique_id());
+            assertEquals(i, p.getTuileAtCoord(new CoordAxial(i, 0)).getUnique_id());
 
-            id+=1;
-            assertEquals(id+1, p.generateTuileMap().size());
+
+
+
+            assertEquals(true,restTemplate.postForObject("/action/poser-tuile/", new PoseTuileContainer(new CoordAxial(i,1),new Tuile(3001 + i, Couleur.ROSE, Amenagement.NONE)), ResponseContainer.class).getResponse());
+            p = restTemplate.getForObject("/plateau/", Plateau.class);
+
+            assertTrue(p.generateTuileMap().containsKey(new CoordAxial(i, 1)));
+            // Let's check the id of the plot
+            assertEquals(3001 + i, p.getTuileAtCoord(new CoordAxial(i, 1)).getUnique_id());
+
+            assertEquals(i * 2 + 2, p.generateTuileMap().size());
+            assertEquals(gameEngine.getPlateau(), restTemplate.getForObject("/plateau/", Plateau.class));
         }
     }
 
