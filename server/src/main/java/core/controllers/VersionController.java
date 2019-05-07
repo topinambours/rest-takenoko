@@ -20,7 +20,7 @@ public class VersionController {
      *
      *
      * @api {get} /version getVersions
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Get all the versions list
      * @apiName getVersions
      * @apiGroup Server/VersionController
@@ -41,7 +41,7 @@ public class VersionController {
      *
      *
      * @api {get} /version/:v/ getVersionID
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Get the version with is ID
      * @apiName getVersionID
      * @apiGroup Server/VersionController
@@ -67,7 +67,7 @@ public class VersionController {
      *
      *
      * @api {get} /version/from/:from getVersionFrom
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Get all the versions from a version
      * @apiName getVersionFrom
      * @apiGroup Server/VersionController
@@ -100,7 +100,7 @@ public class VersionController {
      *
      *
      * @api {get} /version/from/:from/to/:to getVersionFromTo
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Get all the versions from a version to a version
      * @apiName getVersionFromTo
      * @apiGroup Server/VersionController
@@ -126,7 +126,7 @@ public class VersionController {
      *
      *
      * @api {get} /version/latest/ getLatestAction
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Get the latest version
      * @apiName getLatestAction
      * @apiGroup Server/VersionController
@@ -144,7 +144,7 @@ public class VersionController {
      * @return int
      *
      * @api {get} /version/latest/id getLatestActionId
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Get the latest version ID
      * @apiName getLatestActionId
      * @apiGroup Server/VersionController
@@ -166,7 +166,7 @@ public class VersionController {
      *
      *
      * @api {get} /version/:id/plateau boardAtVersion
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Get the board at a specific version
      * @apiName boardAtVersion
      * @apiGroup Server/VersionController

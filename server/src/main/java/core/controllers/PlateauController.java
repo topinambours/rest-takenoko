@@ -36,7 +36,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/ pullPlateau
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Get the deck status with all the plots positions
      * @apiName pullPlateau
      * @apiGroup Server/PlateauController
@@ -70,7 +70,7 @@ public class PlateauController {
      * @return CoordContainer
      *
      * @api {get} /plateau/tuile/legal/ getLegalPosition
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Get the list of legals position to put plots
      * @apiName getLegalPosition
      * @apiGroup Server/PlateauController
@@ -102,7 +102,7 @@ public class PlateauController {
      * @return ResponseContainer
      *
      * @api {post} /action/poser-tuile/ PoserTuile
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Post a plot to be put on the board
      * @apiName PoserTuile
      * @apiGroup Server/PlateauController
@@ -156,7 +156,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/tuile/legal/:q/:r checkIfPositionIsLegal
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription check if a position is legal to put plot
      * @apiName checkIfPositionIsLegal
      * @apiGroup Server/PlateauController
@@ -187,7 +187,7 @@ public class PlateauController {
      *
      *
      * @api {get} /platea/tuile/:id getTuileFromID
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription get the tuile from his ID
      * @apiName getTuileFromID
      * @apiGroup Server/PlateauController
@@ -218,7 +218,7 @@ public class PlateauController {
      *
      *
      * @api {get} /platea/tuile/:id/coord getTuileCoordFromID
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription get the tuile coord from his ID
      * @apiName getTuileCoordFromID
      * @apiGroup Server/PlateauController
@@ -250,7 +250,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/tuile/water/:q/:r checkTuileWater
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription check if a plot have water on it
      * @apiName checkTuileWater
      * @apiGroup Server/PlateauController
@@ -281,7 +281,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/tuile/bambou/:q/:r checkBambouHeight
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription check the height of the bamboo of the plot
      * @apiName checkBambouHeight
      * @apiGroup Server/PlateauController
@@ -314,7 +314,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/irrigation/border/{q}/{r}/{o}/ computeBorders
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription compute Borders of a plot for irrigation
      * @apiName computeBorders
      * @apiGroup Server/PlateauController
@@ -350,7 +350,7 @@ public class PlateauController {
      * @return CoordIrrigContainer
      *
      * @api {get} /plateau/irrigation/border/{q}/{r}/{o}/ computeContinues
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Compute continuity of a irrigation
      * @apiName computeContinues
      * @apiGroup Server/PlateauController
@@ -384,7 +384,7 @@ public class PlateauController {
      * @return CoordIrrigContainer
      *
      * @api {get} /plateau/irrigation/legal/ computeLegalIrrigPositions
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Compute the legal posotions to push irrigations
      * @apiName computeLegalIrrigPositions
      * @apiGroup Server/PlateauController
@@ -406,7 +406,7 @@ public class PlateauController {
      * @return CoordIrrigContainer
      *
      * @api {get} /plateau/irrigation/ listOfIrrigation
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Get the list of irrigations on the board
      * @apiName listOfIrrigation
      * @apiGroup Server/PlateauController
@@ -435,7 +435,7 @@ public class PlateauController {
      *
      *
      * @api {post} /action/poser-irrigation/ PoserIrrigation
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Post a irrigation to be put on the board
      * @apiName PoserIrrigation
      * @apiGroup Server/PlateauController
@@ -494,7 +494,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/panda/ pandaPosition
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Get the actual position of the panda on the board
      * @apiName pandaPosition
      * @apiGroup Server/PlateauController
@@ -516,7 +516,7 @@ public class PlateauController {
      * @return CoordContainer
      *
      * @api {get} /plateau/panda/legal/ legalPandaPosition
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Get the legal position to push the panda on the board
      * @apiName legalPandaPosition
      * @apiGroup Server/PlateauController
@@ -541,7 +541,7 @@ public class PlateauController {
      *
      *
      * @api {post} /action/bouger-panda/ BougerPanda
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Post a coordaxial to move the panda on the board
      * @apiName BougerPanda
      * @apiGroup Server/PlateauController
