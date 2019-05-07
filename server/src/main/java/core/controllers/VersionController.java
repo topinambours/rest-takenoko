@@ -8,9 +8,6 @@ import takenoko.Plateau;
 import takenoko.versionning.Action;
 import takenoko.versionning.VersionNotFoundException;
 
-
-import java.util.List;
-
 @RestController
 public class VersionController {
 
@@ -23,7 +20,7 @@ public class VersionController {
      *
      *
      * @api {get} /version getVersions
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription Get all the versions list
      * @apiName getVersions
      * @apiGroup Server/VersionController
@@ -44,7 +41,7 @@ public class VersionController {
      *
      *
      * @api {get} /version/:v/ getVersionID
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription Get the version with is ID
      * @apiName getVersionID
      * @apiGroup Server/VersionController
@@ -70,7 +67,7 @@ public class VersionController {
      *
      *
      * @api {get} /version/from/:from getVersionFrom
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription Get all the versions from a version
      * @apiName getVersionFrom
      * @apiGroup Server/VersionController
@@ -103,7 +100,7 @@ public class VersionController {
      *
      *
      * @api {get} /version/from/:from/to/:to getVersionFromTo
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription Get all the versions from a version to a version
      * @apiName getVersionFromTo
      * @apiGroup Server/VersionController
@@ -129,7 +126,7 @@ public class VersionController {
      *
      *
      * @api {get} /version/latest/ getLatestAction
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription Get the latest version
      * @apiName getLatestAction
      * @apiGroup Server/VersionController
@@ -147,7 +144,7 @@ public class VersionController {
      * @return int
      *
      * @api {get} /version/latest/id getLatestActionId
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription Get the latest version ID
      * @apiName getLatestActionId
      * @apiGroup Server/VersionController
@@ -169,7 +166,7 @@ public class VersionController {
      *
      *
      * @api {get} /version/:id/plateau boardAtVersion
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription Get the board at a specific version
      * @apiName boardAtVersion
      * @apiGroup Server/VersionController
@@ -179,8 +176,8 @@ public class VersionController {
      * @apiSuccess String : Board json
      *
      */
-    @RequestMapping(value = "/version/{id}/plateau", produces = {"application/JSON"})
-    public String boardAtVersion(@PathVariable int id) throws VersionNotFoundException {
+    @RequestMapping(value = "/version/{id}/plateau")
+    public Plateau boardAtVersion(@PathVariable int id) throws VersionNotFoundException {
         Plateau plateau = new Plateau().plateau_depart();
 
         int size = gameEngine.getVersionning().size();
@@ -189,7 +186,7 @@ public class VersionController {
         }
 
         Action.applyAllAction(gameEngine.getVersionning().subList(0,id),plateau);
-        return plateau.toJson();
+        return plateau;
     }
 
 

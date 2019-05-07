@@ -2,6 +2,7 @@ package core.controllers;
 
 import communication.container.*;
 import core.GameEngine;
+import core.controllers.exception.IllegalArgumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/ pullPlateau
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription Get the deck status with all the plots positions
      * @apiName pullPlateau
      * @apiGroup Server/PlateauController
@@ -59,9 +60,9 @@ public class PlateauController {
      *
      */
 
-    @RequestMapping(value = "/plateau/", produces = {"application/JSON"})
-    public String getPlateau(){
-        return game.getPlateau().toJson();
+    @RequestMapping(value = "/plateau/")
+    public Plateau getPlateau(){
+        return game.getPlateau();
     }
 
     /**
@@ -69,7 +70,7 @@ public class PlateauController {
      * @return CoordContainer
      *
      * @api {get} /plateau/tuile/legal/ getLegalPosition
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription Get the list of legals position to put plots
      * @apiName getLegalPosition
      * @apiGroup Server/PlateauController
@@ -101,7 +102,7 @@ public class PlateauController {
      * @return ResponseContainer
      *
      * @api {post} /action/poser-tuile/ PoserTuile
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription Post a plot to be put on the board
      * @apiName PoserTuile
      * @apiGroup Server/PlateauController
@@ -118,25 +119,33 @@ public class PlateauController {
      *         "message": "Tuile posée"
      *       }
      *
+     * @apiError IllegalArgumentException La position de la tuile n'est pas une position légale
+     *
      */
     @PostMapping("/action/poser-tuile/")
     public ResponseContainer poser_tuile(@RequestParam(value = "playerId",
             required = false,
             defaultValue = "-1") int playerId,
-            @RequestBody PoseTuileContainer poseTuileContainer) throws CloneNotSupportedException {
-        Tuile clone = poseTuileContainer.getTuile().clone();
+            @RequestBody PoseTuileContainer poseTuileContainer) throws CloneNotSupportedException, IllegalArgumentException {
 
-        game.getPlateau().poserTuile(poseTuileContainer.getPos(), poseTuileContainer.getTuile());
-        Action action = new Action(game.getVersionning().size()+1,ActionType.PUTPLOT,poseTuileContainer.getPos(), clone);
-        game.addVersion(action);
-        log.info("Nouvelle version : "+ action.toString());
+        if(! game.getPlateau().legalPositions().contains(poseTuileContainer.getPos())){
+            log.warn("IllegalArgumentException : La position de la tuile n'est pas une position légale");
+            throw new IllegalArgumentException("La position de la tuile n'est pas une position légale");
+        }else{
+            Tuile clone = poseTuileContainer.getTuile().clone();
 
-        log.info(String.format("Le joueur %d pose %s en %s",
-                playerId,
-                poseTuileContainer.getTuile().toString(),
-                poseTuileContainer.getPos().toString()));
+            game.getPlateau().poserTuile(poseTuileContainer.getPos(), poseTuileContainer.getTuile());
+            Action action = new Action(game.getVersionning().size()+1,ActionType.PUTPLOT,poseTuileContainer.getPos(), clone);
+            game.addVersion(action);
+            log.info("Nouvelle version : "+ action.toString());
 
-        return new ResponseContainer(true, "Tuile posée");
+            log.info(String.format("Le joueur %d pose %s en %s",
+                    playerId,
+                    poseTuileContainer.getTuile().toString(),
+                    poseTuileContainer.getPos().toString()));
+
+            return new ResponseContainer(true, "Tuile posée");
+        }
     }
 
     /**
@@ -147,7 +156,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/tuile/legal/:q/:r checkIfPositionIsLegal
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription check if a position is legal to put plot
      * @apiName checkIfPositionIsLegal
      * @apiGroup Server/PlateauController
@@ -178,7 +187,7 @@ public class PlateauController {
      *
      *
      * @api {get} /platea/tuile/:id getTuileFromID
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription get the tuile from his ID
      * @apiName getTuileFromID
      * @apiGroup Server/PlateauController
@@ -209,7 +218,7 @@ public class PlateauController {
      *
      *
      * @api {get} /platea/tuile/:id/coord getTuileCoordFromID
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription get the tuile coord from his ID
      * @apiName getTuileCoordFromID
      * @apiGroup Server/PlateauController
@@ -241,7 +250,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/tuile/water/:q/:r checkTuileWater
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription check if a plot have water on it
      * @apiName checkTuileWater
      * @apiGroup Server/PlateauController
@@ -272,7 +281,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/tuile/bambou/:q/:r checkBambouHeight
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription check the height of the bamboo of the plot
      * @apiName checkBambouHeight
      * @apiGroup Server/PlateauController
@@ -305,7 +314,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/irrigation/border/{q}/{r}/{o}/ computeBorders
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription compute Borders of a plot for irrigation
      * @apiName computeBorders
      * @apiGroup Server/PlateauController
@@ -341,7 +350,7 @@ public class PlateauController {
      * @return CoordIrrigContainer
      *
      * @api {get} /plateau/irrigation/border/{q}/{r}/{o}/ computeContinues
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription Compute continuity of a irrigation
      * @apiName computeContinues
      * @apiGroup Server/PlateauController
@@ -375,7 +384,7 @@ public class PlateauController {
      * @return CoordIrrigContainer
      *
      * @api {get} /plateau/irrigation/legal/ computeLegalIrrigPositions
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription Compute the legal posotions to push irrigations
      * @apiName computeLegalIrrigPositions
      * @apiGroup Server/PlateauController
@@ -397,7 +406,7 @@ public class PlateauController {
      * @return CoordIrrigContainer
      *
      * @api {get} /plateau/irrigation/ listOfIrrigation
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription Get the list of irrigations on the board
      * @apiName listOfIrrigation
      * @apiGroup Server/PlateauController
@@ -426,7 +435,7 @@ public class PlateauController {
      *
      *
      * @api {post} /action/poser-irrigation/ PoserIrrigation
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription Post a irrigation to be put on the board
      * @apiName PoserIrrigation
      * @apiGroup Server/PlateauController
@@ -449,14 +458,23 @@ public class PlateauController {
      *         "message": "Erreur lors de la pose de l'irrigation en {"coordAxial":{"q":0,"r":0},"o":"W"}"
      *       }
      *
+     * @apiError IllegalArgumentException L'irrigation passée en paramètres n'est pas une irrigation légale
+     *
      */
     @PostMapping("/action/poser-irrigation/")
     public ResponseContainer poserIrrigation(
             @RequestBody CoordIrrig coordIrrig,
             @RequestParam(value = "playerId",
             required = false,
-            defaultValue = "-1") int playerId){
-        boolean res = game.getPlateau().addIrrigation(coordIrrig);
+            defaultValue = "-1") int playerId) throws IllegalArgumentException {
+
+        boolean res;
+        if (game.getPlateau().legalIrrigPositions().contains(coordIrrig)){
+            res = game.getPlateau().addIrrigation(coordIrrig);
+        }else{
+            log.warn("IllegalArgumentException : L'irrigation passée en paramètres n'est pas une irrigation légale");
+            throw new IllegalArgumentException("L'irrigation passée en paramètres n'est pas une irrigation légale");
+        }
         if (res){
             log.info(String.format("Le joueur %d pose une irrigation en %s", playerId, coordIrrig));
 
@@ -476,7 +494,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/panda/ pandaPosition
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription Get the actual position of the panda on the board
      * @apiName pandaPosition
      * @apiGroup Server/PlateauController
@@ -498,7 +516,7 @@ public class PlateauController {
      * @return CoordContainer
      *
      * @api {get} /plateau/panda/legal/ legalPandaPosition
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription Get the legal position to push the panda on the board
      * @apiName legalPandaPosition
      * @apiGroup Server/PlateauController
@@ -523,7 +541,7 @@ public class PlateauController {
      *
      *
      * @api {post} /action/bouger-panda/ BougerPanda
-     * @apiVersion 0.4.0
+     * @apiVersion 0.5.0
      * @apiDescription Post a coordaxial to move the panda on the board
      * @apiName BougerPanda
      * @apiGroup Server/PlateauController
@@ -531,17 +549,25 @@ public class PlateauController {
      *
      * @apiParam CoordAxial : a board coord
      *
+     * @apiError IllegalArgumentException La position du panda n'est pas une position légale
+     *
      */
     @PostMapping("/action/bouger-panda/")
-    public ResponseContainer bougerPanda(@RequestBody CoordAxial coordAxial){
+    public ResponseContainer bougerPanda(@RequestBody CoordAxial coordAxial) throws IllegalArgumentException {
         //Todo : récupérer les bambous #61
-        Couleur couleur = game.getPlateau().movePanda(coordAxial);
-        //return new ColorContainer(couleur);
-        Action action = new Action(game.getVersionning().size()+1,ActionType.MOOVEPANDA,coordAxial);
-        game.addVersion(action);
-        log.info("Nouvelle version : "+ action.toString());
-        return new ResponseContainer(true,String.format("LE PANDA C'EST DEPLACE EN %s ET A MANGE UN BAMBOU DE COULEUR %s",coordAxial.toString(),couleur.toString()));
+        if (! game.getPlateau().computePandaLegalPositions().contains(coordAxial)){
+            log.warn("IllegalArgumentException : La position du panda n'est pas une position légale");
+            throw new IllegalArgumentException("La position du panda n'est pas une position légale");
+        }else{
+            Couleur couleur = game.getPlateau().movePanda(coordAxial);
+            //return new ColorContainer(couleur);
+            Action action = new Action(game.getVersionning().size()+1,ActionType.MOOVEPANDA,coordAxial);
+            game.addVersion(action);
+            log.info("Nouvelle version : "+ action.toString());
+            return new ResponseContainer(true,String.format("LE PANDA C'EST DEPLACE EN %s ET A MANGE UN BAMBOU DE COULEUR %s",coordAxial.toString(),couleur.toString()));
+        }
     }
+
 
 
 

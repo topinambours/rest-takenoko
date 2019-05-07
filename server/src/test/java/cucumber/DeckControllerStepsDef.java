@@ -3,16 +3,17 @@ package cucumber;
 import communication.container.TuileContainer;
 import core.GameEngine;
 import core.controllers.DeckController;
+import core.takenoko.pioche.EmptyDeckException;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Ignore;
-import core.takenoko.pioche.EmptyDeckException;
 import org.springframework.beans.factory.annotation.Autowired;
 import takenoko.tuile.Tuile;
 
 import java.util.List;
 
-import static junit.framework.TestCase.*;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertFalse;
 
 
 @Ignore

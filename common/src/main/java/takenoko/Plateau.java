@@ -1,6 +1,6 @@
 package takenoko;
 
-import com.google.gson.Gson;
+import lombok.Data;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import takenoko.irrigation.CoordIrrig;
@@ -13,34 +13,38 @@ import takenoko.tuile.TuileNotFoundException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
+@Data
 public class Plateau {
 
-    private Map<CoordAxial, Tuile> tuiles;
-    private Set<CoordIrrig> irrigations;
+    private List<CoordAxial> coordAxialList;
+    private List<Tuile> tuiles;
+
+    private List<CoordIrrig> irrigations;
 
     private CoordAxial posPanda;
 
     public Plateau() {
-        this.tuiles = new HashMap<>();
-        this.irrigations = new HashSet<>();
-        this.tuiles.put(new CoordAxial(0,0), new Tuile(-1, Couleur.BLEU));
+        this.tuiles = new ArrayList<>();
+        this.coordAxialList = new ArrayList<>();
+        this.irrigations = new ArrayList<>();
+        this.poserTuile(new CoordAxial(0,0), new Tuile(-1, Couleur.BLEU));
         this.posPanda = new CoordAxial(0,0);
     }
 
-    public Plateau(Map<CoordAxial, Tuile> tuile, Set<CoordIrrig> irrigations, CoordAxial posPanda){
-        this.tuiles = tuile;
-        this.irrigations = irrigations;
-        this.posPanda = posPanda;
-    }
-
     public void poserTuile(CoordAxial pos, Tuile t){
-        if (!tuiles.containsKey(pos)){
-            tuiles.put(pos, t);
+        if (!coordAxialList.contains(pos)){
+            tuiles.add(t);
+            coordAxialList.add(pos);
             t.setHaveWater(checkPlotWater(pos));
             if (t.getHaveWater()){
                 t.pousserBambou();
             }
         }
+    }
+
+    public List<CoordIrrig> getIrrigations() {
+        return irrigations;
     }
 
     /**
@@ -49,7 +53,10 @@ public class Plateau {
      * @return la parcelle placée en (coord)
      */
     public Tuile getTuileAtCoord(CoordAxial coord) {
-        return tuiles.get(coord);
+        if (coordAxialList.indexOf(coord) != -1) {
+            return tuiles.get(coordAxialList.indexOf(coord));
+        }
+        return null;
     }
 
     /**
@@ -75,7 +82,7 @@ public class Plateau {
      */
     public boolean isPositionLegal(CoordAxial coo) {
         // Si une tuile est déjà présente, coo n'est pas un placement légal
-        if (getTuileAtCoord(coo) != null) {
+        if (coordAxialList.contains(coo)) {
             return false;
         }
         if (coo.equals(new CoordAxial(0,0))){
@@ -88,7 +95,7 @@ public class Plateau {
 
         int nbAdj = 0;
         for (CoordAxial coord : coo.computeNeighborCoords()){
-            if (this.getTuileAtCoord(coord) != null){
+            if (coordAxialList.contains(coord)){
                 nbAdj += 1;
             }
         }
@@ -103,21 +110,12 @@ public class Plateau {
 
         HashSet<CoordAxial> out = new HashSet<>();
 
-        for (CoordAxial coo : tuiles.keySet()){
+        for (CoordAxial coo : coordAxialList){
             out.addAll(coo.computeNeighborCoords().stream().filter(this::isPositionLegal).collect(Collectors.toList()));
         }
 
         return new ArrayList<>(out);
 
-    }
-
-    /**
-     * getter de parcelle, prend les coordonnées mises ensemble
-     * @param coord coordonnées axiales de la parcelle
-     * @return la parcelle placée en (coord)
-     */
-    public Tuile getTuile(CoordAxial coord) {
-        return tuiles.get(coord);
     }
 
     // -----------
@@ -214,8 +212,8 @@ public class Plateau {
         List<CoordAxial> coordAxials = coordIrrig.borders();
 
         for (CoordAxial c : coordAxials){
-            if (tuiles.containsKey(c)){
-                out.add(tuiles.get(c));
+            if (coordAxialList.contains(c)){
+                out.add(getTuileAtCoord(c));
             }
         }
         return out;
@@ -233,13 +231,13 @@ public class Plateau {
      * @return la couleur du bambou récupéré après le passage du panda
      */
     public Couleur movePanda(CoordAxial coord){
-        if (tuiles.containsKey(coord) && coord.isInLine(posPanda) && hasStraightPath(coord, posPanda)){
+        if (coordAxialList.contains(coord) && coord.isInLine(posPanda) && hasStraightPath(coord, posPanda)){
             posPanda = coord;
-            Tuile current = tuiles.get(coord);
+            Tuile current = getTuileAtCoord(coord);
             if (current.getNbBambous() > 0 && !(current.getAmenagement().equals(Amenagement.ENCLOS))) { //Ne mange pas en cas d'enclos
-                tuiles.get(coord).enleverBambou();
+                current.enleverBambou();
 
-                return tuiles.get(coord).getCouleur();
+                return current.getCouleur();
             }else{
 
                 return Couleur.BLEU;
@@ -272,36 +270,36 @@ public class Plateau {
         if (diffCub.getQ() == 0) {
             if (diffCub.getR() >= 0) {
                 for (int i = 0; i < diffCub.getR(); i++) {
-                    if (getTuile(new CoordAxial(coo1.getQ(), coo1.getR() + i)) == null) return false;
+                    if (getTuileAtCoord(new CoordAxial(coo1.getQ(), coo1.getR() + i)) == null) return false;
                 }
                 return true;
             } else {
                 for (int i = 0; i < diffCub.getS(); i++) {
-                    if (getTuile(new CoordAxial(coo1.getQ(), coo1.getR() - i)) == null) return false;
+                    if (getTuileAtCoord(new CoordAxial(coo1.getQ(), coo1.getR() - i)) == null) return false;
                 }
                 return true;
             }
         } else if (diffCub.getR() == 0) {
             if (diffCub.getQ() >= 0) {
                 for (int i = 0; i < diffCub.getQ(); i++) {
-                    if (getTuile(new CoordAxial(coo1.getQ() + i, coo1.getR())) == null) return false;
+                    if (getTuileAtCoord(new CoordAxial(coo1.getQ() + i, coo1.getR())) == null) return false;
                 }
                 return true;
             } else {
                 for (int i = 0; i < diffCub.getS(); i++) {
-                    if (getTuile(new CoordAxial(coo1.getQ() - i, coo1.getR())) == null) return false;
+                    if (getTuileAtCoord(new CoordAxial(coo1.getQ() - i, coo1.getR())) == null) return false;
                 }
                 return true;
             }
         } else if (diffCub.getS() == 0) {
             if (diffCub.getQ() >= 0) {
                 for (int i = 0; i < diffCub.getQ(); i++) {
-                    if (getTuile(new CoordAxial(coo1.getQ() + i, coo1.getR() - i)) == null) return false;
+                    if (getTuileAtCoord(new CoordAxial(coo1.getQ() + i, coo1.getR() - i)) == null) return false;
                 }
                 return true;
             } else {
                 for (int i = 0; i < diffCub.getR(); i++) {
-                    if (getTuile(new CoordAxial(coo1.getQ() - i, coo1.getR() + i)) == null) return false;
+                    if (getTuileAtCoord(new CoordAxial(coo1.getQ() - i, coo1.getR() + i)) == null) return false;
                 }
                 return true;
             }
@@ -311,15 +309,20 @@ public class Plateau {
 
 
     public Set<CoordIrrig> irrigationsList() {
-        return irrigations;
+        return new HashSet<>(irrigations);
     }
 
     public CoordAxial posPanda() {
         return posPanda;
     }
 
-    public Map<CoordAxial, Tuile> getTuiles() {
-        return tuiles;
+
+    public Map<CoordAxial, Tuile> generateTuileMap() {
+        HashMap<CoordAxial, Tuile> out = new HashMap<>();
+        for (CoordAxial pos : coordAxialList){
+            out.put(pos, getTuileAtCoord(pos));
+        }
+        return out;
     }
 
     /**
@@ -328,13 +331,31 @@ public class Plateau {
      * @return Tuile
      */
     public Tuile getTuileFromId(int id) throws TuileNotFoundException {
-        List<Tuile> tuile = tuiles.values().stream().filter(t -> t.getUnique_id() == id).collect(Collectors.toList());
+        List<Tuile> tuile = tuiles.stream().filter(t -> t.getUnique_id() == id).collect(Collectors.toList());
         if (tuile.size() == 0){
             throw new TuileNotFoundException();
         }else{
             return tuile.get(0);
         }
+    }
 
+    /**
+     * Retrieve plot coordinate from plot object
+     * plot must be on the board to retrieve the coordinate (obvious)
+     * @param tuile
+     * @return {@link CoordAxial} position of the plot on the board
+     * @throws TuileNotFoundException
+     */
+    public CoordAxial getCoordFromTuile(Tuile tuile) {
+        if (tuiles.contains(tuile)) {
+            return coordAxialList.get(tuiles.indexOf(tuile));
+        }
+        try {
+            throw new TuileNotFoundException();
+        } catch (TuileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -343,32 +364,27 @@ public class Plateau {
      * @return Map.Entry<CoordAxial,Tuile>
      */
     public Map.Entry<CoordAxial,Tuile> getTuileFormId(int id) throws TuileNotFoundException {
-        List<Map.Entry<CoordAxial,Tuile>> entries = tuiles.entrySet().stream().filter(t -> t.getValue().getUnique_id() == id).collect(Collectors.toList());
-        if (entries.size() == 0){
-            throw new TuileNotFoundException();
-        }else{
-            return entries.get(0);
+        int index = 0;
+        for (index = 0; index < tuiles.size(); index++){
+            if (tuiles.get(index).getUnique_id() == id){
+                return Map.entry(coordAxialList.get(index), tuiles.get(index));
+            }
         }
-
+        throw new TuileNotFoundException();
     }
 
-    public List<Map.Entry<CoordAxial,Tuile>> getLine(CoordAxial coord){
-        List<Map.Entry<CoordAxial,Tuile>> entries = tuiles.entrySet().stream().filter(p -> hasStraightPath(coord, p.getKey())).collect(Collectors.toList());
-        return entries;
-    }
-
-    public List<Tuile> getLinePlots(CoordAxial coordAxial){
-        return getLine(coordAxial).stream().map(Map.Entry::getValue).collect(Collectors.toList());
+    public List<Tuile> getLine(CoordAxial coord){
+        return tuiles.stream().filter(p -> hasStraightPath(coord, getCoordFromTuile(p))).collect(Collectors.toList());
     }
 
     public List<CoordAxial> getLineCoord(CoordAxial coordAxial){
-        return getLine(coordAxial).stream().map(Map.Entry::getKey).collect(Collectors.toList());
+        return getLine(coordAxial).stream().map(this::getCoordFromTuile).collect(Collectors.toList());
     }
 
     @Override
     public String toString() {
         return "Plateau{" +
-                "tuiles=" + tuiles +
+                "tuiles=" + generateTuileMap() +
                 ", irrigations=" + irrigations +
                 ", posPanda=" + posPanda +
                 '}';
@@ -391,31 +407,5 @@ public class Plateau {
         out.posPanda = startingCoord;
 
         return out;
-    }
-
-    public static Plateau fromJson(String json){
-        Gson gson = new Gson();
-        Plateau p = gson.fromJson(json, Plateau.class);
-        return p;
-    }
-
-    public String toJson(){
-        Gson gson = new Gson();
-        return "{ \"Plateau\" : "+gson.toJson(this)+"}" ;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Plateau plateau = (Plateau) o;
-        return Objects.equals(tuiles, plateau.tuiles) &&
-                Objects.equals(irrigations, plateau.irrigations) &&
-                Objects.equals(posPanda, plateau.posPanda);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(tuiles, irrigations, posPanda);
     }
 }

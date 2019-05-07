@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import takenoko.versionning.Action;
 import takenoko.versionning.ActionType;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -33,30 +33,30 @@ public class VersionControllerTest {
         int size = gameEngine.getVersionning().size();
         ResponseEntity<ActionContainer> resp = restTemplate.getForEntity("/version/"+size+"/",ActionContainer.class);
         assertEquals(new ActionContainer(), resp.getBody());
-        assertEquals(resp.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        assertEquals(resp.getStatusCode(), HttpStatus.NOT_FOUND);
 
         ResponseEntity<ActionContainer> resp2 = restTemplate.getForEntity("/version/from/"+size+"/",ActionContainer.class);
         assertEquals(new ActionContainer(), resp2.getBody());
-        assertEquals(resp2.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        assertEquals(resp2.getStatusCode(), HttpStatus.NOT_FOUND);
 
         ResponseEntity<ActionContainer> resp3 = restTemplate.getForEntity("/version/from/"+size+"/to/"+size,ActionContainer.class);
         assertEquals(new ActionContainer(), resp3.getBody());
-        assertEquals(resp3.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        assertEquals(resp3.getStatusCode(), HttpStatus.NOT_FOUND);
     }
 
     @Test
     public void invalideID(){
         ResponseEntity<ActionContainer> resp = restTemplate.getForEntity("/version/-1/",ActionContainer.class);
         assertEquals(new ActionContainer(), resp.getBody());
-        assertEquals(resp.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        assertEquals(resp.getStatusCode(), HttpStatus.NOT_FOUND);
 
         ResponseEntity<ActionContainer> resp2 = restTemplate.getForEntity("/version/from/-1/",ActionContainer.class);
         assertEquals(new ActionContainer(), resp2.getBody());
-        assertEquals(resp2.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        assertEquals(resp2.getStatusCode(), HttpStatus.NOT_FOUND);
 
         ResponseEntity<ActionContainer> resp3 = restTemplate.getForEntity("/version/from/-1/to/-1",ActionContainer.class);
         assertEquals(new ActionContainer(), resp3.getBody());
-        assertEquals(resp3.getStatusCode(), HttpStatus.INTERNAL_SERVER_ERROR);
+        assertEquals(resp3.getStatusCode(), HttpStatus.NOT_FOUND);
     }
 
     @Test

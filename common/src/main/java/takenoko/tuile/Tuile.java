@@ -1,6 +1,5 @@
 package takenoko.tuile;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import communication.container.BambouContainer;
 import lombok.Data;
 import takenoko.Couleur;
@@ -9,7 +8,6 @@ import takenoko.Couleur;
  * Une tuile takenoko dispose d'une couleur, d'un aménagement ainsi qu'un nombre de bambou compris en 0 et 4
  * Une tuile peut être irrigée ou non (haveWater)
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 public class Tuile {
 

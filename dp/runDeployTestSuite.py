@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
-from subprocess import Popen, PIPE, DEVNULL
-import sys
 import argparse
+import sys
 import time
+from subprocess import Popen, PIPE, DEVNULL
+
 
 def docker_login(username, password):
 	pullCmd = ['docker', 'login', '-u', username, '-p', password]

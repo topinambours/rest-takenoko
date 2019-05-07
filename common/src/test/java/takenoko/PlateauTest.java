@@ -7,7 +7,10 @@ import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
 import takenoko.tuile.TuileNotFoundException;
 
-import static org.junit.Assert.*;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class PlateauTest {
 
@@ -54,7 +57,7 @@ public class PlateauTest {
         assertEquals(new CoordAxial(0,0), p.posPanda());
 
         p.poserTuile(new CoordAxial(1,-1),new Tuile(1, Couleur.VERT));
-        p.getTuile(new CoordAxial(1,-1)).pousserBambou(); //Todo : devra être remove quand poussage auto
+        p.getTuileAtCoord(new CoordAxial(1,-1)).pousserBambou(); //Todo : devra être remove quand poussage auto
 
         // Pas de bambou donc bleu
         assertEquals(Couleur.VERT, p.movePanda(new CoordAxial(1,-1)));
@@ -79,5 +82,22 @@ public class PlateauTest {
         assertEquals(p.getTuileFromId(1),tuile);
     }
 
+
+    @Test
+    public void poseTuileTest(){
+        Plateau p = new Plateau();
+        p = p.plateau_depart();
+
+
+        p.poserTuile(new CoordAxial(1,0), new Tuile(1, Couleur.BLEU));
+        p.poserTuile(new CoordAxial(-1,0), new Tuile(1,Couleur.VERT));
+
+        List<CoordAxial> legalMovesPanda = p.computePandaLegalPositions();
+
+        assertTrue(legalMovesPanda.contains(new CoordAxial(1,0)));
+        assertTrue(legalMovesPanda.contains(new CoordAxial(-1,0)));
+
+        p.poserTuile(new CoordAxial(2,0), new Tuile(1,Couleur.VERT));
+    }
 
 }
