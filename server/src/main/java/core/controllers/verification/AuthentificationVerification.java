@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public final class AuthentificationVerification {
     @Autowired
-    private GameEngine game;
+    private static GameEngine game;
 
     public static boolean verify(String requested,int playerID, String ip, Logger log) throws AuthentificationRequiredException {
         if (ip == null) return true; //Local testing dont have IP
@@ -24,10 +24,17 @@ public final class AuthentificationVerification {
             return true;
         }else{
             if(playerID == -1){
+                log.warn(String.format("No authentificated access at $s from $s => Access Denied",requested,ip));
                 throw new AuthentificationRequiredException();
             }else{
-                log.info(String.format("New request : $s from player $d ($s)",requested,playerID,ip));
-                return true;
+                if (game.getClientsId().contains(playerID)){
+                    log.info(String.format("New request : $s from player $d ($s)",requested,playerID,ip));
+                    return true;
+                }else{
+                    log.warn(String.format("Invalid authentification access at $s from $s => Access Denied",requested,ip));
+                    throw new AuthentificationRequiredException("Error : Invalid authentification");
+                }
+
             }
         }
 
