@@ -3,6 +3,7 @@ package core.controllers;
 import communication.container.ResponseContainer;
 import communication.container.TuileContainer;
 import core.GameEngine;
+import core.controllers.exception.AuthentificationRequiredException;
 import core.takenoko.pioche.EmptyDeckException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,7 @@ public class DeckController {
      * @apiSuccess PiocheTuile A deck response
      *
      * @apiError EmptyDeckException
+     * @apiError AuthentificationRequiredException
      *
      *
      */
@@ -40,8 +42,8 @@ public class DeckController {
             @RequestParam(value = "playerId",
                     required = false,
                     defaultValue = "-1") int playerId)
-            throws EmptyDeckException {
-
+            throws EmptyDeckException, AuthentificationRequiredException {
+        if(playerId == -1) throw new AuthentificationRequiredException();
         if (playerId == game.getCurrentPlayer().getId() && game.isGameStarted()) {
             TuileContainer out = new TuileContainer(game.getPiocheTuile().draw(3));
             log.info(String.format("Le joueur %d a pioché %s", playerId, out));
