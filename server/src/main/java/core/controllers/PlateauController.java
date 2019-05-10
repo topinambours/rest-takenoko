@@ -554,10 +554,12 @@ public class PlateauController {
      * @apiParam CoordAxial : a board coord
      *
      * @apiError IllegalArgumentException La position du panda n'est pas une position légale
+     * @apiError AuthentificationRequiredException
      *
      */
     @PostMapping("/action/bouger-panda/")
-    public ResponseContainer bougerPanda(@RequestBody CoordAxial coordAxial) throws IllegalArgumentException {
+    public ResponseContainer bougerPanda(@RequestParam(value = "playerId",required = false, defaultValue = "-1") int playerId, @RequestBody CoordAxial coordAxial) throws IllegalArgumentException, AuthentificationRequiredException {
+        if(playerId == -1) throw new AuthentificationRequiredException();
         //Todo : récupérer les bambous #61
         if (! game.getPlateau().computePandaLegalPositions().contains(coordAxial)){
             log.warn("IllegalArgumentException : La position du panda n'est pas une position légale");
