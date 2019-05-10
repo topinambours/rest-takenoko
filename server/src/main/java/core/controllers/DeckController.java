@@ -4,6 +4,7 @@ import communication.container.ResponseContainer;
 import communication.container.TuileContainer;
 import core.GameEngine;
 import core.controllers.exception.AuthentificationRequiredException;
+import core.controllers.verification.AuthentificationVerification;
 import core.takenoko.pioche.EmptyDeckException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,8 +49,7 @@ public class DeckController {
                     required = false,
                     defaultValue = "-1") int playerId)
             throws EmptyDeckException, AuthentificationRequiredException {
-        if(playerId == -1 && !request.getRemoteHost().equals("127.0.0.1")) throw new AuthentificationRequiredException();
-        log.info(String.format("New request : /action/piocher from player $d ($s)",playerId,request.getRemoteHost()));
+        AuthentificationVerification.verify("/action/piocher",playerId,request.getRemoteHost(),log);
         if (playerId == game.getCurrentPlayer().getId() && game.isGameStarted()) {
             TuileContainer out = new TuileContainer(game.getPiocheTuile().draw(3));
             log.info(String.format("Le joueur %d a pioché %s", playerId, out));
@@ -92,8 +92,7 @@ public class DeckController {
             defaultValue = "-1") int playerId,
 
             @RequestBody TuileContainer tuiles) throws AuthentificationRequiredException {
-        if(playerId == -1 && !request.getRemoteHost().equals("127.0.0.1")) throw new AuthentificationRequiredException();
-        log.info(String.format("New request : /action/rendre_tuiles/ from player $d ($s)",playerId,request.getRemoteHost()));
+        AuthentificationVerification.verify("/action/rendre_tuiles/",playerId,request.getRemoteHost(),log);
         log.info(String.format("Le joueur %d a rendu : %s", playerId, tuiles));
         for (Tuile t : tuiles.getContent()){
             game.getPiocheTuile().insertBottom(t);

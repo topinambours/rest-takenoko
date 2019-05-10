@@ -8,4 +8,8 @@ public class AuthentificationRequiredException extends Exception {
     public AuthentificationRequiredException() {
         super("Error : Authentification Required");
     }
+
+    public AuthentificationRequiredException(String message) {
+        super(message);
+    }
 }
