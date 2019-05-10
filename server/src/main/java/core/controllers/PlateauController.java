@@ -134,6 +134,7 @@ public class PlateauController {
             defaultValue = "-1") int playerId,
             @RequestBody PoseTuileContainer poseTuileContainer) throws CloneNotSupportedException, IllegalArgumentException, AuthentificationRequiredException {
         if(playerId == -1 && !request.getRemoteHost().equals("127.0.0.1")) throw new AuthentificationRequiredException();
+        log.info(String.format("New request : /action/poser-tuile/ from player $d ($s)",playerId,request.getRemoteHost()));
 
         if(! game.getPlateau().legalPositions().contains(poseTuileContainer.getPos())){
             log.warn("IllegalArgumentException : La position de la tuile n'est pas une position légale");
@@ -476,6 +477,7 @@ public class PlateauController {
             required = false,
             defaultValue = "-1") int playerId) throws IllegalArgumentException, AuthentificationRequiredException {
         if(playerId == -1 && !request.getRemoteHost().equals("127.0.0.1")) throw new AuthentificationRequiredException();
+        log.info(String.format("New request : /action/poser-irrigation/ from player $d ($s)",playerId,request.getRemoteHost()));
         boolean res;
         if (game.getPlateau().legalIrrigPositions().contains(coordIrrig)){
             res = game.getPlateau().addIrrigation(coordIrrig);
@@ -564,6 +566,7 @@ public class PlateauController {
     @PostMapping("/action/bouger-panda/")
     public ResponseContainer bougerPanda(@RequestParam(value = "playerId",required = false, defaultValue = "-1") int playerId, @RequestBody CoordAxial coordAxial) throws IllegalArgumentException, AuthentificationRequiredException {
         if(playerId == -1 && !request.getRemoteHost().equals("127.0.0.1")) throw new AuthentificationRequiredException();
+        log.info(String.format("New request : /action/bouger-panda from player $d ($s)",playerId,request.getRemoteHost()));
         //Todo : récupérer les bambous #61
         if (! game.getPlateau().computePandaLegalPositions().contains(coordAxial)){
             log.warn("IllegalArgumentException : La position du panda n'est pas une position légale");

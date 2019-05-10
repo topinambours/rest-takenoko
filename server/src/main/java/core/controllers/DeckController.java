@@ -49,6 +49,7 @@ public class DeckController {
                     defaultValue = "-1") int playerId)
             throws EmptyDeckException, AuthentificationRequiredException {
         if(playerId == -1 && !request.getRemoteHost().equals("127.0.0.1")) throw new AuthentificationRequiredException();
+        log.info(String.format("New request : /action/piocher from player $d ($s)",playerId,request.getRemoteHost()));
         if (playerId == game.getCurrentPlayer().getId() && game.isGameStarted()) {
             TuileContainer out = new TuileContainer(game.getPiocheTuile().draw(3));
             log.info(String.format("Le joueur %d a pioché %s", playerId, out));
@@ -92,6 +93,7 @@ public class DeckController {
 
             @RequestBody TuileContainer tuiles) throws AuthentificationRequiredException {
         if(playerId == -1 && !request.getRemoteHost().equals("127.0.0.1")) throw new AuthentificationRequiredException();
+        log.info(String.format("New request : /action/rendre_tuiles/ from player $d ($s)",playerId,request.getRemoteHost()));
         log.info(String.format("Le joueur %d a rendu : %s", playerId, tuiles));
         for (Tuile t : tuiles.getContent()){
             game.getPiocheTuile().insertBottom(t);
