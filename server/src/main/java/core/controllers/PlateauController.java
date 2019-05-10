@@ -2,6 +2,7 @@ package core.controllers;
 
 import communication.container.*;
 import core.GameEngine;
+import core.controllers.exception.AuthentificationRequiredException;
 import core.controllers.exception.IllegalArgumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -120,13 +121,15 @@ public class PlateauController {
      *       }
      *
      * @apiError IllegalArgumentException La position de la tuile n'est pas une position légale
+     * @apiError AuthentificationRequiredException
      *
      */
     @PostMapping("/action/poser-tuile/")
     public ResponseContainer poser_tuile(@RequestParam(value = "playerId",
             required = false,
             defaultValue = "-1") int playerId,
-            @RequestBody PoseTuileContainer poseTuileContainer) throws CloneNotSupportedException, IllegalArgumentException {
+            @RequestBody PoseTuileContainer poseTuileContainer) throws CloneNotSupportedException, IllegalArgumentException, AuthentificationRequiredException {
+        if(playerId == -1) throw new AuthentificationRequiredException();
 
         if(! game.getPlateau().legalPositions().contains(poseTuileContainer.getPos())){
             log.warn("IllegalArgumentException : La position de la tuile n'est pas une position légale");
