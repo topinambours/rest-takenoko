@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import takenoko.tuile.Tuile;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 public class DeckController {
 
@@ -18,6 +20,9 @@ public class DeckController {
 
     @Autowired
     private GameEngine game;
+
+    @Autowired
+    private HttpServletRequest request;
 
     /**
      * Permet d'avoir la pioche
@@ -43,7 +48,7 @@ public class DeckController {
                     required = false,
                     defaultValue = "-1") int playerId)
             throws EmptyDeckException, AuthentificationRequiredException {
-        if(playerId == -1) throw new AuthentificationRequiredException();
+        if(playerId == -1 && !request.getRemoteHost().equals("127.0.0.1")) throw new AuthentificationRequiredException();
         if (playerId == game.getCurrentPlayer().getId() && game.isGameStarted()) {
             TuileContainer out = new TuileContainer(game.getPiocheTuile().draw(3));
             log.info(String.format("Le joueur %d a pioché %s", playerId, out));
@@ -86,7 +91,7 @@ public class DeckController {
             defaultValue = "-1") int playerId,
 
             @RequestBody TuileContainer tuiles) throws AuthentificationRequiredException {
-        if(playerId == -1) throw new AuthentificationRequiredException();
+        if(playerId == -1 && !request.getRemoteHost().equals("127.0.0.1")) throw new AuthentificationRequiredException();
         log.info(String.format("Le joueur %d a rendu : %s", playerId, tuiles));
         for (Tuile t : tuiles.getContent()){
             game.getPiocheTuile().insertBottom(t);
