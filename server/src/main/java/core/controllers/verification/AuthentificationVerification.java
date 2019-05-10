@@ -4,6 +4,11 @@ import core.GameEngine;
 import core.controllers.exception.AuthentificationRequiredException;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Final class to verify authentification
@@ -13,6 +18,7 @@ public final class AuthentificationVerification {
     private GameEngine game;
 
     public static boolean verify(String requested,int playerID, String ip, Logger log) throws AuthentificationRequiredException {
+        if (ip == null) return true; //Local testing dont have IP
         if(ip.equals("127.0.0.1")){
             log.info(String.format("New request : $s from localhost",requested));
             return true;
@@ -29,6 +35,15 @@ public final class AuthentificationVerification {
 
     public static boolean verify(int playerID, String ip, Logger log) throws AuthentificationRequiredException {
         return verify("",playerID,ip,log);
+    }
+
+    public static String getRemoteAddress() {
+        RequestAttributes attribs = RequestContextHolder.getRequestAttributes();
+        if (RequestContextHolder.getRequestAttributes() != null) {
+            HttpServletRequest request = ((ServletRequestAttributes) attribs).getRequest();
+            return request.getRemoteAddr();
+        }
+        return null;
     }
 
     //

@@ -134,7 +134,8 @@ public class PlateauController {
             required = false,
             defaultValue = "-1") int playerId,
             @RequestBody PoseTuileContainer poseTuileContainer) throws CloneNotSupportedException, IllegalArgumentException, AuthentificationRequiredException {
-        AuthentificationVerification.verify("/action/poser-irrigation/",playerId,request.getRemoteHost(),log);
+        String ip = AuthentificationVerification.getRemoteAddress();
+        AuthentificationVerification.verify("/action/poser-irrigation/",playerId,ip,log);
 
         if(! game.getPlateau().legalPositions().contains(poseTuileContainer.getPos())){
             log.warn("IllegalArgumentException : La position de la tuile n'est pas une position légale");
@@ -476,7 +477,9 @@ public class PlateauController {
             @RequestParam(value = "playerId",
             required = false,
             defaultValue = "-1") int playerId) throws IllegalArgumentException, AuthentificationRequiredException {
-        AuthentificationVerification.verify("/action/poser-irrigation/",playerId,request.getRemoteHost(),log);
+        String ip = AuthentificationVerification.getRemoteAddress();
+        AuthentificationVerification.verify("/action/poser-irrigation/",playerId,ip,log);
+
         boolean res;
         if (game.getPlateau().legalIrrigPositions().contains(coordIrrig)){
             res = game.getPlateau().addIrrigation(coordIrrig);
@@ -564,7 +567,8 @@ public class PlateauController {
      */
     @PostMapping("/action/bouger-panda/")
     public ResponseContainer bougerPanda(@RequestParam(value = "playerId",required = false, defaultValue = "-1") int playerId, @RequestBody CoordAxial coordAxial) throws IllegalArgumentException, AuthentificationRequiredException {
-        AuthentificationVerification.verify("/action/bouger-panda/",playerId,request.getRemoteHost(),log);
+        String ip = AuthentificationVerification.getRemoteAddress();
+        AuthentificationVerification.verify("/action/bouger-panda/",playerId,ip,log);
         //Todo : récupérer les bambous #61
         if (! game.getPlateau().computePandaLegalPositions().contains(coordAxial)){
             log.warn("IllegalArgumentException : La position du panda n'est pas une position légale");

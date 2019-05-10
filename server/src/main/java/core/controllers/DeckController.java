@@ -10,6 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import takenoko.tuile.Tuile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,9 +24,6 @@ public class DeckController {
 
     @Autowired
     private GameEngine game;
-
-    @Autowired
-    private HttpServletRequest request;
 
     /**
      * Permet d'avoir la pioche
@@ -49,7 +49,9 @@ public class DeckController {
                     required = false,
                     defaultValue = "-1") int playerId)
             throws EmptyDeckException, AuthentificationRequiredException {
-        AuthentificationVerification.verify("/action/piocher",playerId,request.getRemoteHost(),log);
+        String ip = AuthentificationVerification.getRemoteAddress();
+        AuthentificationVerification.verify("/action/piocher",playerId,ip,log);
+
         if (playerId == game.getCurrentPlayer().getId() && game.isGameStarted()) {
             TuileContainer out = new TuileContainer(game.getPiocheTuile().draw(3));
             log.info(String.format("Le joueur %d a pioché %s", playerId, out));
@@ -92,7 +94,9 @@ public class DeckController {
             defaultValue = "-1") int playerId,
 
             @RequestBody TuileContainer tuiles) throws AuthentificationRequiredException {
-        AuthentificationVerification.verify("/action/rendre_tuiles/",playerId,request.getRemoteHost(),log);
+        String ip = AuthentificationVerification.getRemoteAddress();
+        AuthentificationVerification.verify("/action/rendre_tuiles/",playerId,ip,log);
+
         log.info(String.format("Le joueur %d a rendu : %s", playerId, tuiles));
         for (Tuile t : tuiles.getContent()){
             game.getPiocheTuile().insertBottom(t);
