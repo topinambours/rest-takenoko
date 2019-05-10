@@ -2,7 +2,9 @@ package core.controllers;
 
 import communication.container.*;
 import core.GameEngine;
+import core.controllers.exception.AuthentificationRequiredException;
 import core.controllers.exception.IllegalArgumentException;
+import core.controllers.verification.AuthentificationVerification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import takenoko.tuile.TuileNotFoundException;
 import takenoko.versionning.Action;
 import takenoko.versionning.ActionType;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -30,13 +33,16 @@ public class PlateauController {
     @Autowired
     GameEngine game;
 
+    @Autowired
+    private HttpServletRequest request;
+
     /**
      * Permet d'avoir le plateau actuel
      * @return Plateau
      *
      *
      * @api {get} /plateau/ pullPlateau
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Get the deck status with all the plots positions
      * @apiName pullPlateau
      * @apiGroup Server/PlateauController
@@ -70,7 +76,7 @@ public class PlateauController {
      * @return CoordContainer
      *
      * @api {get} /plateau/tuile/legal/ getLegalPosition
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Get the list of legals position to put plots
      * @apiName getLegalPosition
      * @apiGroup Server/PlateauController
@@ -102,7 +108,8 @@ public class PlateauController {
      * @return ResponseContainer
      *
      * @api {post} /action/poser-tuile/ PoserTuile
-     * @apiVersion 0.5.0
+     * @apiPermission Authentificated
+     * @apiVersion 0.6.0
      * @apiDescription Post a plot to be put on the board
      * @apiName PoserTuile
      * @apiGroup Server/PlateauController
@@ -120,13 +127,16 @@ public class PlateauController {
      *       }
      *
      * @apiError IllegalArgumentException La position de la tuile n'est pas une position légale
+     * @apiError AuthentificationRequiredException
      *
      */
     @PostMapping("/action/poser-tuile/")
     public ResponseContainer poser_tuile(@RequestParam(value = "playerId",
             required = false,
             defaultValue = "-1") int playerId,
-            @RequestBody PoseTuileContainer poseTuileContainer) throws CloneNotSupportedException, IllegalArgumentException {
+            @RequestBody PoseTuileContainer poseTuileContainer) throws CloneNotSupportedException, IllegalArgumentException, AuthentificationRequiredException {
+        String ip = AuthentificationVerification.getRemoteAddress();
+        AuthentificationVerification.verify("/action/poser-irrigation/",playerId,ip,log);
 
         if(! game.getPlateau().legalPositions().contains(poseTuileContainer.getPos())){
             log.warn("IllegalArgumentException : La position de la tuile n'est pas une position légale");
@@ -156,7 +166,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/tuile/legal/:q/:r checkIfPositionIsLegal
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription check if a position is legal to put plot
      * @apiName checkIfPositionIsLegal
      * @apiGroup Server/PlateauController
@@ -187,7 +197,7 @@ public class PlateauController {
      *
      *
      * @api {get} /platea/tuile/:id getTuileFromID
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription get the tuile from his ID
      * @apiName getTuileFromID
      * @apiGroup Server/PlateauController
@@ -218,7 +228,7 @@ public class PlateauController {
      *
      *
      * @api {get} /platea/tuile/:id/coord getTuileCoordFromID
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription get the tuile coord from his ID
      * @apiName getTuileCoordFromID
      * @apiGroup Server/PlateauController
@@ -250,7 +260,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/tuile/water/:q/:r checkTuileWater
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription check if a plot have water on it
      * @apiName checkTuileWater
      * @apiGroup Server/PlateauController
@@ -281,7 +291,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/tuile/bambou/:q/:r checkBambouHeight
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription check the height of the bamboo of the plot
      * @apiName checkBambouHeight
      * @apiGroup Server/PlateauController
@@ -314,7 +324,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/irrigation/border/{q}/{r}/{o}/ computeBorders
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription compute Borders of a plot for irrigation
      * @apiName computeBorders
      * @apiGroup Server/PlateauController
@@ -350,7 +360,7 @@ public class PlateauController {
      * @return CoordIrrigContainer
      *
      * @api {get} /plateau/irrigation/border/{q}/{r}/{o}/ computeContinues
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Compute continuity of a irrigation
      * @apiName computeContinues
      * @apiGroup Server/PlateauController
@@ -384,7 +394,7 @@ public class PlateauController {
      * @return CoordIrrigContainer
      *
      * @api {get} /plateau/irrigation/legal/ computeLegalIrrigPositions
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Compute the legal posotions to push irrigations
      * @apiName computeLegalIrrigPositions
      * @apiGroup Server/PlateauController
@@ -406,7 +416,7 @@ public class PlateauController {
      * @return CoordIrrigContainer
      *
      * @api {get} /plateau/irrigation/ listOfIrrigation
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Get the list of irrigations on the board
      * @apiName listOfIrrigation
      * @apiGroup Server/PlateauController
@@ -435,7 +445,8 @@ public class PlateauController {
      *
      *
      * @api {post} /action/poser-irrigation/ PoserIrrigation
-     * @apiVersion 0.5.0
+     * @apiPermission Authentificated
+     * @apiVersion 0.6.0
      * @apiDescription Post a irrigation to be put on the board
      * @apiName PoserIrrigation
      * @apiGroup Server/PlateauController
@@ -459,6 +470,7 @@ public class PlateauController {
      *       }
      *
      * @apiError IllegalArgumentException L'irrigation passée en paramètres n'est pas une irrigation légale
+     * @apiError AuthentificationRequiredException
      *
      */
     @PostMapping("/action/poser-irrigation/")
@@ -466,7 +478,9 @@ public class PlateauController {
             @RequestBody CoordIrrig coordIrrig,
             @RequestParam(value = "playerId",
             required = false,
-            defaultValue = "-1") int playerId) throws IllegalArgumentException {
+            defaultValue = "-1") int playerId) throws IllegalArgumentException, AuthentificationRequiredException {
+        String ip = AuthentificationVerification.getRemoteAddress();
+        AuthentificationVerification.verify("/action/poser-irrigation/",playerId,ip,log);
 
         boolean res;
         if (game.getPlateau().legalIrrigPositions().contains(coordIrrig)){
@@ -494,7 +508,7 @@ public class PlateauController {
      *
      *
      * @api {get} /plateau/panda/ pandaPosition
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Get the actual position of the panda on the board
      * @apiName pandaPosition
      * @apiGroup Server/PlateauController
@@ -516,7 +530,7 @@ public class PlateauController {
      * @return CoordContainer
      *
      * @api {get} /plateau/panda/legal/ legalPandaPosition
-     * @apiVersion 0.5.0
+     * @apiVersion 0.6.0
      * @apiDescription Get the legal position to push the panda on the board
      * @apiName legalPandaPosition
      * @apiGroup Server/PlateauController
@@ -541,7 +555,8 @@ public class PlateauController {
      *
      *
      * @api {post} /action/bouger-panda/ BougerPanda
-     * @apiVersion 0.5.0
+     * @apiPermission Authentificated
+     * @apiVersion 0.6.0
      * @apiDescription Post a coordaxial to move the panda on the board
      * @apiName BougerPanda
      * @apiGroup Server/PlateauController
@@ -550,10 +565,13 @@ public class PlateauController {
      * @apiParam CoordAxial : a board coord
      *
      * @apiError IllegalArgumentException La position du panda n'est pas une position légale
+     * @apiError AuthentificationRequiredException
      *
      */
     @PostMapping("/action/bouger-panda/")
-    public ResponseContainer bougerPanda(@RequestBody CoordAxial coordAxial) throws IllegalArgumentException {
+    public ResponseContainer bougerPanda(@RequestParam(value = "playerId",required = false, defaultValue = "-1") int playerId, @RequestBody CoordAxial coordAxial) throws IllegalArgumentException, AuthentificationRequiredException {
+        String ip = AuthentificationVerification.getRemoteAddress();
+        AuthentificationVerification.verify("/action/bouger-panda/",playerId,ip,log);
         //Todo : récupérer les bambous #61
         if (! game.getPlateau().computePandaLegalPositions().contains(coordAxial)){
             log.warn("IllegalArgumentException : La position du panda n'est pas une position légale");

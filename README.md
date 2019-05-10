@@ -104,6 +104,7 @@ Fournit un client avec pour id `15` accessible depuis son adresse via le port `8
  - [x] **Version 0.3 :** Ajout du panda dans le takenoko.Ce qui comprend l'ajout d'un nouveau objectif principale avec son lot de cartes objectifs pandas. De plus, les bambous vont être revus ainsi qu'une stratégie de base ajoutée. Pour finir, toutes ces modifications seront accessibles via l'API-Rest. 
  - [x] **Version 0.4 :** Les plateaux entre le joueur et le serveur sont maintenant synchronisés. C'est-à-dire que maintenant le joueur à la possibilité de pull les différences de plateau entre 2 moments données, par exemple, entre son précédent tour et celui qu'il est en train de préparer. L'utilité principale étant la possibilité au joueurs d'avoir accès à plus d'informations l'aidant à la conception de stratégie plus perfectionnées.
  - [x] **Version 0.5 :** Recast general pour correctif : correction du plateau permettant d'avoir correctement les datas via l'API; correction des codes d'erreur http; correction d'une faille sécurité permettant de poser des tuiles sur des emplacements illegaux.
+ - [x] **Version 0.6 :** Patch de sécurité au niveau de l'api visant notamment à protéger les parties contre des éléments extérieurs via le système d'authentification. Toute requête post n'étant pas ou mal authentifié est maintenant refusée. Pour finir, les accès sont maintenant logs
 
 ## La boite
 
