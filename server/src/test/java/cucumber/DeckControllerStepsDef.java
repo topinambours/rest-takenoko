@@ -3,6 +3,7 @@ package cucumber;
 import communication.container.TuileContainer;
 import core.GameEngine;
 import core.controllers.DeckController;
+import core.controllers.exception.AuthentificationRequiredException;
 import core.takenoko.pioche.EmptyDeckException;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -29,7 +30,7 @@ public class DeckControllerStepsDef {
     private Tuile selected;
 
     @When("Player {int} draw 3 plots")
-    public void pioche_is_requested(int playerId) throws EmptyDeckException {
+    public void pioche_is_requested(int playerId) throws EmptyDeckException, AuthentificationRequiredException {
         t2 = d.req_pioche(playerId);
     }
 
@@ -50,7 +51,7 @@ public class DeckControllerStepsDef {
     }
 
     @When("Player {int} send back extra plots")
-    public void joueur_rend_surplus(int playerId){
+    public void joueur_rend_surplus(int playerId) throws AuthentificationRequiredException {
         d.rendre_tuiles(playerId, t2);
     }
 
