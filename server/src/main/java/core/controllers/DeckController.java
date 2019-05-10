@@ -77,6 +77,7 @@ public class DeckController {
      *         "message": "return effective"
      *       }
      *
+     * @apiError AuthentificationRequiredException
      */
     @PostMapping("/action/rendre_tuiles/")
     public ResponseContainer rendre_tuiles(
@@ -84,7 +85,8 @@ public class DeckController {
             required = false,
             defaultValue = "-1") int playerId,
 
-            @RequestBody TuileContainer tuiles){
+            @RequestBody TuileContainer tuiles) throws AuthentificationRequiredException {
+        if(playerId == -1) throw new AuthentificationRequiredException();
         log.info(String.format("Le joueur %d a rendu : %s", playerId, tuiles));
         for (Tuile t : tuiles.getContent()){
             game.getPiocheTuile().insertBottom(t);
