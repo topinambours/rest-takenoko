@@ -39,7 +39,7 @@ public class ConnectionController {
      *
      *
      * @api {get} /end_turn EndTurn
-     * @apiVersion 0.6.0
+     * @apiVersion 0.7.0
      * @apiDescription End the turn end get the player id that have to play
      * @apiName EndTurn
      * @apiGroup Server/ConnectionController
@@ -73,7 +73,7 @@ public class ConnectionController {
      *
      *
      * @api {get} /gameEnded gameEnded
-     * @apiVersion 0.6.0
+     * @apiVersion 0.7.0
      * @apiDescription Get the status to know if the game is ended
      * @apiName gameEnded
      * @apiGroup Server/ConnectionController
@@ -102,7 +102,7 @@ public class ConnectionController {
      * @return ResponseContainer
      *
      * @api {post} /register/ Register
-     * @apiVersion 0.6.0
+     * @apiVersion 0.7.0
      * @apiDescription Post the httpClient references to register to the game
      * @apiName Register
      * @apiGroup Server/ConnectionController
