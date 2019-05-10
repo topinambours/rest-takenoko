@@ -462,6 +462,7 @@ public class PlateauController {
      *       }
      *
      * @apiError IllegalArgumentException L'irrigation passée en paramètres n'est pas une irrigation légale
+     * @apiError AuthentificationRequiredException
      *
      */
     @PostMapping("/action/poser-irrigation/")
@@ -469,8 +470,8 @@ public class PlateauController {
             @RequestBody CoordIrrig coordIrrig,
             @RequestParam(value = "playerId",
             required = false,
-            defaultValue = "-1") int playerId) throws IllegalArgumentException {
-
+            defaultValue = "-1") int playerId) throws IllegalArgumentException, AuthentificationRequiredException {
+        if(playerId == -1) throw new AuthentificationRequiredException();
         boolean res;
         if (game.getPlateau().legalIrrigPositions().contains(coordIrrig)){
             res = game.getPlateau().addIrrigation(coordIrrig);
