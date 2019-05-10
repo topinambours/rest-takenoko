@@ -108,6 +108,7 @@ public class PlateauController {
      * @return ResponseContainer
      *
      * @api {post} /action/poser-tuile/ PoserTuile
+     * @apiPermission Authentificated
      * @apiVersion 0.6.0
      * @apiDescription Post a plot to be put on the board
      * @apiName PoserTuile
@@ -444,6 +445,7 @@ public class PlateauController {
      *
      *
      * @api {post} /action/poser-irrigation/ PoserIrrigation
+     * @apiPermission Authentificated
      * @apiVersion 0.6.0
      * @apiDescription Post a irrigation to be put on the board
      * @apiName PoserIrrigation
@@ -553,6 +555,7 @@ public class PlateauController {
      *
      *
      * @api {post} /action/bouger-panda/ BougerPanda
+     * @apiPermission Authentificated
      * @apiVersion 0.6.0
      * @apiDescription Post a coordaxial to move the panda on the board
      * @apiName BougerPanda

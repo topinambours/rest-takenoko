@@ -2,6 +2,10 @@
 // General apiDoc documentation blocks and old history blocks.
 // ------------------------------------------------------------------------------------------
 
+/**
+ * @apiDefine Authentificated to authenticate, please add the following parameter at end of url : "?playerId=<code>id</code>"
+ */
+
 // ------------------------------------------------------------------------------------------
 // History.
 // ------------------------------------------------------------------------------------------
