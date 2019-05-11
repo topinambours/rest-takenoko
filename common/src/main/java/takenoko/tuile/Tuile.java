@@ -143,7 +143,7 @@ public class Tuile {
         }
 
         double x = (500 - 43.5) + 87.25 * pos.getQ() + pos.getR() * 43.5;
-        double y = (500 - 50) + 75 * pos.getR();
+        double y = (500 - 50) + 75.0 * pos.getR();
 
         return "draw.polygon('43.5,0 87,25 87,75 43.5,100 0,75 0,25 43.5,0').fill('" + color + "').move("+x+", "+y+").stroke({ width: 1, color: 'black' });" +
                 "\ndraw.plain('"+pos.toString()+"').move("+(x + 25)+", "+(y+ 10)+");" +

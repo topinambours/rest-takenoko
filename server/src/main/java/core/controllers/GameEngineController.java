@@ -19,30 +19,6 @@ public class GameEngineController {
     @Autowired
     GameEngine game;
 
-    @GetMapping("/showViewPage")
-    public String passParametersWithModel(Model model) {
-        Map<String, String> map = new HashMap<>();
-        map.put("spring", "mvc");
-        model.addAttribute("message", "Baeldung");
-        model.mergeAttributes(map);
-        return "viewPage";
-    }
-
-    @GetMapping("/printViewPage")
-    public String passParametersWithModelMap(ModelMap map) {
-        map.addAttribute("welcomeMessage", "welcome");
-        map.addAttribute("message", "Baeldung");
-        return "viewPage";
-    }
-
-    @GetMapping("/goToViewPage")
-    public ModelAndView passParametersWithModelAndView() {
-        ModelAndView modelAndView = new ModelAndView("viewPage");
-        modelAndView.addObject("message", "Baeldung");
-        return modelAndView;
-    }
-
-
     @GetMapping("/")
     public String index(Model model){
         model.addAttribute("game",game.toString());

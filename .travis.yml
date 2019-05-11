@@ -44,6 +44,10 @@ jobs:
       script: mvn -pl server -Dtest=CucumberRunnerTest test
       name : "Server"
 
+    - stage : "Generate and send Sonar report"
+      install: false
+      script : mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package  sonar:sonar   -Dsonar.projectKey=topinambours   -Dsonar.organization=mahe-thomas-github   -Dsonar.host.url=https://sonarcloud.io   -Dsonar.login=966ed49f255b853ea7144907091607719512b254
+
     - stage : "Deploy to DockerHub"
       language: generic
       install: false

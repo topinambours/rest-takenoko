@@ -3,14 +3,14 @@ package takenoko;
 import org.junit.Test;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.irrigation.Orient;
+import takenoko.tuile.Amenagement;
 import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
 import takenoko.tuile.TuileNotFoundException;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class PlateauTest {
 
@@ -98,6 +98,78 @@ public class PlateauTest {
         assertTrue(legalMovesPanda.contains(new CoordAxial(-1,0)));
 
         p.poserTuile(new CoordAxial(2,0), new Tuile(1,Couleur.VERT));
+    }
+
+
+    @Test
+    public void equalsHashTest(){
+        Plateau p1 = new Plateau().plateau_depart();
+        Plateau p2 = new Plateau().plateau_depart();
+
+        assertEquals(p1, p2);
+        assertEquals(p1.hashMD5(), p2.hashMD5());
+
+        p1.poserTuile(new CoordAxial(1,0), new Tuile(1, Couleur.VERT, Amenagement.NONE));
+
+        assertNotEquals(p1, p2);
+        assertNotEquals(p1.hashMD5(), p2.hashMD5());
+
+        p2.poserTuile(new CoordAxial(1,0), new Tuile(1, Couleur.VERT, Amenagement.NONE));
+
+        assertEquals(p1,p2);
+        assertEquals(p1.hashMD5(), p2.hashMD5());
+
+        // Let's move panda on p1
+
+        p1.movePanda(new CoordAxial(1,0));
+
+        assertNotEquals(p1,p2);
+        assertNotEquals(p1.hashMD5(), p2.hashMD5());
+
+        p2.movePanda(new CoordAxial(1,0));
+        assertEquals(p1,p2);
+        assertEquals(p1.hashMD5(), p2.hashMD5());
+
+        // Place new plot with differents id
+
+        p1.poserTuile(new CoordAxial(-1,0), new Tuile(2, Couleur.VERT, Amenagement.NONE));
+
+        assertNotEquals(p1, p2);
+        assertNotEquals(p1.hashMD5(), p2.hashMD5());
+
+        p2.poserTuile(new CoordAxial(-1,0), new Tuile(3, Couleur.VERT, Amenagement.NONE));
+
+        assertNotEquals(p1,p2);
+        assertNotEquals(p1.hashMD5(), p2.hashMD5());
+
+    }
+    @Test
+    public void hasStraightPath() {
+        Plateau p = new Plateau().plateau_depart();
+        Tuile inLine = new Tuile(1, Couleur.VERT, Amenagement.NONE);
+        Tuile inLineNotStraight = new Tuile(2, Couleur.VERT, Amenagement.NONE);
+        p.poserTuile(new CoordAxial(1,0), inLine);
+        p.poserTuile(new CoordAxial(3,0), inLineNotStraight);
+
+        assertTrue(p.hasStraightPath(new CoordAxial(0,0), p.getCoordFromTuile(inLine)));
+
+        assertFalse(p.hasStraightPath(new CoordAxial(0,0), p.getCoordFromTuile(inLineNotStraight)));
+
+    }
+
+    @Test
+    public void getLinePlots() {
+        Plateau p = new Plateau().plateau_depart();
+        Tuile inLine = new Tuile(1, Couleur.VERT);
+        Tuile inLine2 = new Tuile(2, Couleur.VERT);
+        Tuile notInLine = new Tuile(3, Couleur.VERT);
+        p.poserTuile(new CoordAxial(-1,1), inLine);
+        p.poserTuile(new CoordAxial(-2,2),inLine2);
+        p.poserTuile(new CoordAxial(-1,2),notInLine);
+
+        assertTrue(p.getLineCoord(new CoordAxial(0,0)).contains(p.getCoordFromTuile(inLine)));
+        assertTrue(p.getLineCoord(new CoordAxial(0,0)).contains(p.getCoordFromTuile(inLine2)));
+        assertFalse(p.getLineCoord(new CoordAxial(0,0)).contains(p.getCoordFromTuile(notInLine)));
     }
 
 }

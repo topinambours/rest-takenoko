@@ -3,6 +3,7 @@ package takenoko;
 import lombok.Data;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
+import org.springframework.util.DigestUtils;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.objectives.patterns.CoordCube;
 import takenoko.tuile.Amenagement;
@@ -10,6 +11,7 @@ import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
 import takenoko.tuile.TuileNotFoundException;
 
+import java.security.MessageDigest;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -407,5 +409,25 @@ public class Plateau {
         out.posPanda = startingCoord;
 
         return out;
+    }
+
+    public String hashMD5(){
+        return DigestUtils.md5DigestAsHex(this.toString().getBytes());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Plateau plateau = (Plateau) o;
+        return coordAxialList.equals(plateau.coordAxialList) &&
+                tuiles.equals(plateau.tuiles) &&
+                irrigations.equals(plateau.irrigations) &&
+                posPanda.equals(plateau.posPanda);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(coordAxialList, tuiles, irrigations, posPanda);
     }
 }
