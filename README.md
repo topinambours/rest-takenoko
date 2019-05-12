@@ -13,9 +13,9 @@ Takenoko
 <img src="https://travis-ci.com/uca-m1informatique-softeng/topinambours-takenoko.svg?token=ddDp96SuTBDWqbwuapYh&branch=master">
 <a href="https://cloud.docker.com/u/topinambours/repository/docker/topinambours/takenoko" target="_blank"><img src="https://img.shields.io/docker/automated/topinambours/takenoko.svg"></a>
 <a href="https://cloud.docker.com/u/topinambours/repository/docker/topinambours/takenoko" target="_blank"><img src="https://img.shields.io/docker/pulls/topinambours/takenoko.svg"></a>
+<a href="https://sonarcloud.io/dashboard?id=topinambours" target="_blank"><img src="https://sonarcloud.io/api/project_badges/measure?project=topinambours&metric=alert_status"></a>
+<a href="https://sonarcloud.io/dashboard?id=topinambours" target="_blank"><img src="https://sonarcloud.io/api/project_badges/measure?project=topinambours&metric=coverage"></a>
 </p>
-
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=topinambours&metric=alert_status)](https://sonarcloud.io/dashboard?id=topinambours)  [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=topinambours&metric=coverage)](https://sonarcloud.io/dashboard?id=topinambours)
 
 <p align="center">
   <a href="#presentation">Presentation</a> •
