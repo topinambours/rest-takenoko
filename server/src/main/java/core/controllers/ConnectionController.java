@@ -96,6 +96,11 @@ public class ConnectionController {
         return new ResponseContainer(game.gameEnded(), "");
     }
 
+    @GetMapping("/gameStarted")
+    public ResponseContainer gameStarted(){
+        return new ResponseContainer(game.isGameStarted(), "");
+    }
+
     /**
      * Permet d'enregistrer un joueur
      * @param client HTTPClient

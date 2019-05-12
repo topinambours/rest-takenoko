@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import takenoko.Plateau;
@@ -16,6 +18,7 @@ import takenoko.tuile.CoordAxial;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Objects;
 
 @Component
 @JsonIgnoreProperties(ignoreUnknown=true)
@@ -165,6 +168,20 @@ public class HTTPClient {
         this.id = id;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HTTPClient that = (HTTPClient) o;
+        return id == that.id &&
+                user_adress.equals(that.user_adress) &&
+                server_url.equals(that.server_url);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(user_adress, server_url, id);
+    }
 
     @Override
     public String toString() {
