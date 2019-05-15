@@ -65,7 +65,7 @@ public class PlateauController {
      *        }
      *
      */
-    @RequestMapping(value = "/plateau/")
+    @RequestMapping(value = "/plateau/",method = GET)
     public Plateau getPlateau(){
         return game.getPlateau();
     }
@@ -213,7 +213,7 @@ public class PlateauController {
      *       ]}
      *
      */
-    @RequestMapping(value = "/platea/tuile/{id}")
+    @RequestMapping(value = "/platea/tuile/{id}",method = GET)
     @ResponseBody
     public TuileContainer getTuileFromID(@PathVariable int id) throws TuileNotFoundException {
         return new TuileContainer(game.getPlateau().getTuileFromId(id));
@@ -244,7 +244,7 @@ public class PlateauController {
      *       ]}
      *
      */
-    @RequestMapping(value = "/platea/tuile/{id}/coord")
+    @RequestMapping(value = "/platea/tuile/{id}/coord",method = GET)
     @ResponseBody
     public CoordContainer getTuileCoordFromID(@PathVariable int id) throws TuileNotFoundException {
         return new CoordContainer(game.getPlateau().getTuileFormId(id).getKey());

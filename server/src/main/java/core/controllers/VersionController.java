@@ -8,6 +8,8 @@ import takenoko.Plateau;
 import takenoko.versionning.Action;
 import takenoko.versionning.VersionNotFoundException;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
 @RestController
 public class VersionController {
 
@@ -176,7 +178,7 @@ public class VersionController {
      * @apiSuccess String : Board json
      *
      */
-    @RequestMapping(value = "/version/{id}/plateau")
+    @RequestMapping(value = "/version/{id}/plateau",method = GET)
     public Plateau boardAtVersion(@PathVariable int id) throws VersionNotFoundException {
         Plateau plateau = new Plateau().plateau_depart();
 

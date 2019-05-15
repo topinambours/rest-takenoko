@@ -17,6 +17,8 @@ import takenoko.tuile.Tuile;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
 @RestController
 public class DeckController {
 
@@ -44,7 +46,7 @@ public class DeckController {
      *
      *
      */
-    @RequestMapping("/action/piocher")
+    @RequestMapping(value = "/action/piocher",method = GET)
     public TuileContainer req_pioche(
             @RequestParam(value = "playerId",
                     required = false,
