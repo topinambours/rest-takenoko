@@ -55,20 +55,45 @@ class TestDeploy(unittest.TestCase):
 
     #
     # Server must be disconnected after 30 seconds without clients
-    def test_server_timeout(self):
-        for i in range(2, 5):
-            server = self.drunner.start_server(8080, i)
+    def test_server_timeout_2(self):
+        server = self.drunner.start_server(8080, 2)
 
-            while not DockerRunner.check_connection(8080):
-                time.sleep(1)
-            time.sleep(10)
-            self.assertIn('Nouvelle partie pour {} joueurs instanciée.'.format(i), getlog(server))
+        while not DockerRunner.check_connection(8080):
+            time.sleep(1)
+        time.sleep(10)
+        self.assertIn('Nouvelle partie pour 2 joueurs instanciée.', getlog(server))
 
-            time.sleep(31)
-            log = getlog(server)
+        time.sleep(31)
+        log = getlog(server)
 
-            self.assertIn('No clients after 30 seconds, closing server app', log)
-            self.assertFalse(DockerRunner.check_connection(8080))
+        self.assertIn('No clients after 30 seconds, closing server app', log)
+        self.assertFalse(DockerRunner.check_connection(8080))
+
+    #
+    # Server must be disconnected after 30 seconds without clients
+    def test_server_timeout_3(self):
+        server = self.drunner.start_server(8080, 3)
+
+        while not DockerRunner.check_connection(8080):
+            time.sleep(1)
+        time.sleep(40)
+        self.assertIn('Nouvelle partie pour 3 joueurs instanciée.', getlog(server))
+
+        self.assertIn('No clients after 30 seconds, closing server app', getlog(server))
+        self.assertFalse(DockerRunner.check_connection(8080))
+
+    #
+    # Server must be disconnected after 30 seconds without clients
+    def test_server_timeout_4(self):
+        server = self.drunner.start_server(8080, 4)
+
+        while not DockerRunner.check_connection(8080):
+            time.sleep(1)
+        time.sleep(40)
+        self.assertIn('Nouvelle partie pour 4 joueurs instanciée.', getlog(server))
+
+        self.assertIn('No clients after 30 seconds, closing server app', getlog(server))
+        self.assertFalse(DockerRunner.check_connection(8080))
 
     #
     # Game does not start until there is the required number of users
@@ -77,11 +102,16 @@ class TestDeploy(unittest.TestCase):
 
         while not DockerRunner.check_connection(8080):
             time.sleep(1)
-        time.sleep(5)
+        time.sleep(10)
+
         self.assertIn('Nouvelle partie pour 2 joueurs instanciée.', getlog(server))
 
         client = self.drunner.start_client(8081, 8080, 1)
-        time.sleep(20)
+
+        while not DockerRunner.check_connection(8081) :
+            time.sleep(1)
+
+        time.sleep(10)
 
         self.assertIn("Le joueur 1@localhost:8081 c'est enregistré.", getlog(server))
 
@@ -103,26 +133,25 @@ class TestDeploy(unittest.TestCase):
 
         while not DockerRunner.check_connection(8080):
             time.sleep(1)
+        time.sleep(10)
 
         self.assertIn('Nouvelle partie pour 2 joueurs instanciée.', getlog(server))
 
         client = self.drunner.start_client(8081, 8080, 1)
         client2 = self.drunner.start_client(8082, 8080, 2)
-        time.sleep(20)
 
-        self.assertIn("Le joueur 1@localhost:8081 c'est enregistré.", getlog(server))
-        self.assertIn("Le joueur 2@localhost:8082 c'est enregistré.", getlog(server))
-        # game started
-        self.assertIn("C'est au tour du joueur", getlog(server))
         while False in [DockerRunner.check_connection(8081), DockerRunner.check_connection(8082)]:
             time.sleep(5)
 
-        time.sleep(10)
+        time.sleep(40)
+        # game started
+        self.assertIn("C'est au tour du joueur", getlog(server))
+        self.assertIn("Le joueur 1@localhost:8081 c'est enregistré.", getlog(server))
+        self.assertIn("Le joueur 2@localhost:8082 c'est enregistré.", getlog(server))
 
         self.assertIn("Notification de jouer reçu", getlog(client))
         self.assertIn("Notification de jouer reçu", getlog(client2))
 
-        time.sleep(10)
         # game Ended
         self.assertIn("GAME ENDED", getlog(server))
         self.assertIn("GAME ENDED", getlog(client))
