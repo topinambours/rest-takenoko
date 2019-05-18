@@ -68,7 +68,7 @@ jobs:
       language: generic
       install: false
       script:
-        - sudo docker build -t topinambours/takenoko:latest-testSuite ./dp -f ./dp/DockerfileTestSuite
+        - sudo docker build -t topinambours/takenoko:test-testSuite ./dp -f ./dp/DockerfileTestSuite
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker push topinambours/takenoko:test-testSuite
       name: "Test suite"
