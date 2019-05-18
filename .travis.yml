@@ -75,8 +75,10 @@ jobs:
 
     - stage : "Integration Tests"
       language: python
-      install: false
-      script: python3 integration-test/IntegrationTestRunner.py -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+      install: pip install -r dp/requirements.txt
+      script:
+        - cd integration-test
+        - python3 ./IntegrationTestRunner.py -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 
     - stage: "Deploy Tests (2 vcores)"
       language: generic
