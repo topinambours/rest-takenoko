@@ -61,7 +61,7 @@ class TestDeploy(unittest.TestCase):
 
             while not DockerRunner.check_connection(8080):
                 time.sleep(1)
-            time.sleep(5)
+            time.sleep(10)
             self.assertIn('Nouvelle partie pour {} joueurs instanciée.'.format(i), getlog(server))
 
             time.sleep(31)
@@ -121,9 +121,12 @@ class TestDeploy(unittest.TestCase):
 
         self.assertIn("Notification de jouer reçu", getlog(client))
         self.assertIn("Notification de jouer reçu", getlog(client2))
-        server.kill()
-        client.kill()
-        client2.kill()
+
+        time.sleep(10)
+        # game Ended
+        self.assertIn("GAME ENDED", getlog(server))
+        self.assertIn("GAME ENDED", getlog(client))
+        self.assertIn("GAME ENDED", getlog(client2))
 
     def test_client_connect_server_disconnected(self):
         client = self.drunner.start_client(8081, 8080, 1)
