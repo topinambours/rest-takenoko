@@ -21,6 +21,11 @@ public class ActionController {
 
     private static final Logger log = LoggerFactory.getLogger(ActionController.class);
 
+    @GetMapping("/ping")
+    public String ping(){
+        return "pong";
+    }
+
     @GetMapping("/closeApplication/{reason}")
     public ResponseContainer closeApplication(@PathVariable String reason){
         actionService.closeApplication(reason);

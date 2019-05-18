@@ -46,6 +46,7 @@ public class GameEngine {
     private int currentPlayerIndex;
 
     private boolean gameStarted;
+    private boolean gameEndedFlag;
 
     private List<Action> versionning; //TODO : add the actions into the action list
 
@@ -72,11 +73,12 @@ public class GameEngine {
         this.clients = new ArrayList<>();
         this.gameStarted = false;
         this.versionning = new ArrayList<>();
+        this.gameEndedFlag = false;
         log.info(String.format("Nouvelle partie pour %d joueurs instanciée.", gameSize));
     }
 
     public boolean gameEnded(){
-        return plateau.generateTuileMap().size() == 28;
+        return gameEndedFlag || plateau.generateTuileMap().size() == 28;
     }
 
     @Primary
@@ -156,6 +158,15 @@ public class GameEngine {
     public List<Action> getVersionning() {
         return versionning;
     }
+
+    public boolean isGameEndedFlag() {
+        return gameEndedFlag;
+    }
+
+    public void setGameEndedFlag(boolean gameEndedFlag) {
+        this.gameEndedFlag = gameEndedFlag;
+    }
+
 
     public boolean addVersion(Action action){
         boolean res = versionning.add(action);

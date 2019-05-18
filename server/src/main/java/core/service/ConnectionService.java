@@ -7,16 +7,61 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 
 import java.util.concurrent.CompletableFuture;
 
 @Service
+@EnableScheduling
 public class ConnectionService {
     @Autowired
     GameEngine game;
 
+    private int loopCount = 0;
+
     private static final Logger log = LoggerFactory.getLogger(ConnectionService.class);
+
+    @Scheduled(fixedDelay = 250)
+    public void pingUsers(){
+        if (game.getClients().size() == game.getGameSize() && loopCount > 60){
+            for (HTTPClient c : game.getClients()){
+                try {
+                c.self_request("/ping", String.class);
+                }
+                catch (ResourceAccessException e){
+                    game.getClients().remove(c);
+                    log.info(String.format("CLIENT %d DISCONNECTED", c.getId()));
+                }
+            }
+        }
+    }
+
+    @Scheduled(fixedDelay = 500)
+    public void checkConnectedUsers(){
+        if (!game.gameEnded()) {
+            // 30 seconds
+            if (loopCount >= 60 && game.getClients().isEmpty()) {
+                log.info("No clients after 30 seconds, closing server app");
+                System.exit(0);
+            }
+            if (!game.isGameEndedFlag()) {
+                if (game.getClients().size() != game.getGameSize() && loopCount >= 60) {
+                    log.info("Missing one or more clients, closing server");
+                    game.setGameEndedFlag(true);
+                }
+
+                if (game.isGameStarted() && game.getClients().size() != game.getGameSize()) {
+                    log.info("Missing one or more clients, closing server");
+                    game.setGameEndedFlag(true);
+                }
+            }
+        }
+
+        loopCount += 1;
+    }
 
     @Async("asyncExecutor")
     public CompletableFuture<ResponseContainer> registerNewClient(HTTPClient client){

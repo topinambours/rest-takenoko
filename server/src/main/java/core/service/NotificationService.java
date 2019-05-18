@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 
 import java.util.List;
 
@@ -33,12 +34,19 @@ public class NotificationService {
             log.info("GAME ENDED DISCONNECTING CLIENTS");
 
             List<HTTPClient> connectedClients = game.getClients();
-
             for (HTTPClient c : game.getClients()){
-                ResponseContainer e = c.self_request(String.format("/closeApplication/%s", "GAME ENDED"), ResponseContainer.class);
-                // response true if player receive the notification
-                if (e.response){
+                ResponseContainer e;
+                try {
+                    e = c.self_request(String.format("/closeApplication/%s", "GAME ENDED"), ResponseContainer.class);
+
+                    // response true if player receive the notification
+                    if (e.response) {
+                        connectedClients.remove(c);
+                    }
+                }
+                catch (ResourceAccessException ex){
                     connectedClients.remove(c);
+                    log.info(String.format("CLIENT %d DISCONNECTED", c.getId()));
                 }
             }
             if (connectedClients.isEmpty()){
