@@ -61,7 +61,7 @@ class TestDeploy(unittest.TestCase):
 
             while not DockerRunner.check_connection(8080):
                 time.sleep(1)
-
+            time.sleep(5)
             self.assertIn('Nouvelle partie pour {} joueurs instanciée.'.format(i), getlog(server))
 
             time.sleep(31)
@@ -77,7 +77,7 @@ class TestDeploy(unittest.TestCase):
 
         while not DockerRunner.check_connection(8080):
             time.sleep(1)
-
+        time.sleep(5)
         self.assertIn('Nouvelle partie pour 2 joueurs instanciée.', getlog(server))
 
         client = self.drunner.start_client(8081, 8080, 1)
@@ -116,6 +116,8 @@ class TestDeploy(unittest.TestCase):
         self.assertIn("C'est au tour du joueur", getlog(server))
         while False in [DockerRunner.check_connection(8081), DockerRunner.check_connection(8082)]:
             time.sleep(5)
+
+        time.sleep(10)
 
         self.assertIn("Notification de jouer reçu", getlog(client))
         self.assertIn("Notification de jouer reçu", getlog(client2))
