@@ -4,4 +4,6 @@ from util import wrapper
 
 if __name__ == '__main__':
     wrapper.wrapper.parse_args()
-    unittest.main(module=None, argv=sys.argv, verbosity=2)
+    res = unittest.main(module=None, argv=sys.argv, verbosity=2)
+
+    print(res.result.failures)

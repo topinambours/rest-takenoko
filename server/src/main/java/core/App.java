@@ -29,13 +29,16 @@ public class App {
 
         String APP_PORT = "8080";
         int GAME_SIZE = 2;
-
+        boolean testMode = false;
         if (args.length > 0){
             APP_PORT = args[0];
         }
 
         if (args.length > 1){
             GAME_SIZE = Integer.parseInt(args[1]);
+        }
+        if (args.length > 2){
+            testMode = Boolean.parseBoolean(args[2]);
         }
 
         SpringApplication app = new SpringApplication(App.class);
@@ -44,6 +47,7 @@ public class App {
 
         properties.put("server.port", APP_PORT);
         properties.put("game.size", GAME_SIZE);
+        properties.put("game.testMode", testMode);
 
         app.setDefaultProperties(properties);
         app.run(args);

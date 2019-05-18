@@ -16,15 +16,19 @@ class DockerRunner :
 
     def prepare_takenoko_images(self):
         print('\033[92mUPDATING IMAGES\033[0m')
-        self.pull_image('topinambours', 'takenoko', 'latest-server')
-        self.pull_image('topinambours', 'takenoko', 'latest-client')
+        self.pull_image('topinambours', 'takenoko', 'test-server')
+        self.pull_image('topinambours', 'takenoko', 'test-client')
         print('\033[92mALL IMAGES ARE UP TO DATE\033[0m')
 
-    def start_server(self, gameId, port, gameSize):
-        return self.client.containers.run("topinambours/takenoko:latest-server", "{} {}".format(port, gameSize), network='host', detach=True)
+    def start_server(self, port, gameSize):
+        return self.client.containers.run("topinambours/takenoko:test-server", "{} {}".format(port, gameSize), network='host', detach=True)
+
+    def start_server_no_timeout(self, port, gameSize):
+        return self.client.containers.run("topinambours/takenoko:test-server", "{} {} true".format(port, gameSize), network='host', detach=True)
+
 
     def start_client(self,port, serverPort, clientId):
-        return self.client.containers.run('topinambours/takenoko:latest-client', '{} http://localhost:{} {}'.format(port, serverPort, clientId))
+        return self.client.containers.run('topinambours/takenoko:test-client', '{} http://localhost:{} {}'.format(port, serverPort, clientId), network='host', detach=True)
 
 def check_connection(port):
     app = ['nc', '-vz', 'localhost', str(port)]

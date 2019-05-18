@@ -22,8 +22,8 @@ def pull_docker_image(repo,imageName, tag):
 
 def update_docker_images():
 	print('\033[92mUPDATING IMAGES\033[0m')
-	pull_docker_image('topinambours', 'takenoko', 'latest-server')
-	pull_docker_image('topinambours', 'takenoko', 'latest-client')
+	pull_docker_image('topinambours', 'takenoko', 'test-server')
+	pull_docker_image('topinambours', 'takenoko', 'test-client')
 	print('\033[92mALL IMAGES ARE UP TO DATE\033[0m')
 
 def generate_game_id(gameToRun):
@@ -56,12 +56,12 @@ def check_connection(port):
 
 def start_server(gameId, port, gameSize):
 	print('STARTING NEW GAME ID=',gameId, 'SIZE:',gameSize,'ON PORT:',port)
-	app = ['docker', 'run','--network', 'host', 'topinambours/takenoko:latest-server',str(port), str(gameSize)]
+	app = ['docker', 'run','--network', 'host', 'topinambours/takenoko:test-server',str(port), str(gameSize), 'true']
 	return Popen(app, stdout=DEVNULL, stderr=DEVNULL)
 
 def start_client(port, serverPort, clientId):
 	print('STARTING NEW CLIENT ID=',clientId, 'PORT:',port,'ON SERVER:','http://localhost:{}'.format(serverPort))
-	app = ['docker', 'run','--network', 'host', 'topinambours/takenoko:latest-client',str(port), 'http://localhost:{}'.format(serverPort), str(clientId)]
+	app = ['docker', 'run','--network', 'host', 'topinambours/takenoko:test-client',str(port), 'http://localhost:{}'.format(serverPort), str(clientId)]
 	return Popen(app, stdout=DEVNULL, stderr=DEVNULL)
 
 def start_sequential(gameToRun, ports):

@@ -41,7 +41,7 @@ public class ConnectionService {
 
     @Scheduled(fixedDelay = 500)
     public void checkConnectedUsers(){
-        if (!game.gameEnded()) {
+        if (!game.gameEnded() && !game.testMode) {
             // 30 seconds
             if (loopCount >= 60 && game.getClients().isEmpty()) {
                 log.info("No clients after 30 seconds, closing server app");
@@ -73,6 +73,7 @@ public class ConnectionService {
                     game.setGameStarted(true);
                 }
                 log.info(String.format("Le joueur %d@%s c'est enregistré.", client.getId(), client.getUser_adress()));
+                loopCount = 0;
                 return CompletableFuture.completedFuture(new ResponseContainer(true, "You joined the game"));
             }
             else{
@@ -108,8 +109,5 @@ public class ConnectionService {
             log.info(String.format("Le joueur %d notifie la fin de son tour alors que ce n'est pas son tour. Aucune modification apportée à l'état de la partie.", playerId));
             return CompletableFuture.completedFuture(new ResponseContainer(false, String.format("Player %d have to play, it is not your turn.", game.getClients().get(game.getCurrentPlayerIndex()).getId())));
         }
-
     }
-
-
 }
