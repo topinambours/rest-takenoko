@@ -57,14 +57,14 @@ def generate_game_id(gameToRun):
 
 def start_server(gameId, port, gameSize,waitToClose):
     print('STARTING NEW GAME ID=',gameId, 'SIZE:',gameSize,'ON PORT:',port,"\n")
-    app = ['docker', 'run','-it','--network', 'host',"-p",str(port) +":"+ str(port), 'topinambours/takenoko:test-server',str(port), str(gameSize), 'true']
+    app = ['docker', 'run','-it','--network', 'host',"-p",str(port) +":"+ str(port), 'topinambours/takenoko:latest-server',str(port), str(gameSize), 'true']
     if waitToClose == str(True):
         app.append('true')
     return Popen(app, stdout=sys.stdout, stderr=DEVNULL)
 
 def start_client(port, serverPort, clientId):
     print('STARTING NEW CLIENT ID=',clientId, 'PORT:',port,'ON SERVER:','http://localhost:{}'.format(serverPort),"\n")
-    app = ['docker', 'run','-it','--network', 'host', 'topinambours/takenoko:test-client',str(port), 'http://localhost:{}'.format(serverPort), str(clientId)]
+    app = ['docker', 'run','-it','--network', 'host', 'topinambours/takenoko:latest-client',str(port), 'http://localhost:{}'.format(serverPort), str(clientId)]
     return Popen(app, stdout=sys.stdout, stderr=DEVNULL)
 
 
