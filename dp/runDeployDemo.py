@@ -21,7 +21,7 @@ def pull_docker_image(repo,imageName, tag):
         sys.exit(1)
 
 def update_docker_images():
-    print('\033[92mUPDATING IMAGES\033[0m\n')
+    print('\033[92mUPDATING IMAGES\033[0m')
     pull_docker_image('topinambours', 'takenoko', 'latest-server')
     pull_docker_image('topinambours', 'takenoko', 'latest-client')
     print('\033[92mALL IMAGES ARE UP TO DATE\033[0m\n')
@@ -79,7 +79,7 @@ def start(gameToRun, ports):
         processes.append(start_server(e[0], ports[e[0]][0], e[1]))
         while not check_connection(port):
             time.sleep(1)
-        print("\033[92mGAME CREATED, CONNECTING CLIENTS\033[0m".format(e[0]),"\n")
+        print("\033[92mGAME CREATED, CONNECTING CLIENTS\033[0m".format(e[0]))
 
         for c_port in ports[e[0]][1]:
             processes.append(start_client(c_port, ports[e[0]][0], clientId))
