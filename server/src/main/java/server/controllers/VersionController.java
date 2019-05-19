@@ -1,7 +1,7 @@
-package core.controllers;
+package server.controllers;
 
 import communication.container.ActionContainer;
-import core.GameEngine;
+import server.GameEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import takenoko.Plateau;

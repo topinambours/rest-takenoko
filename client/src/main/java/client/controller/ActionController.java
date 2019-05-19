@@ -1,8 +1,8 @@
-package core.controller;
+package client.controller;
 
 import communication.container.ResponseContainer;
-import core.Joueur;
-import core.service.ActionService;
+import client.Joueur;
+import client.service.ActionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

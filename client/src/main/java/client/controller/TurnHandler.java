@@ -1,6 +1,6 @@
-package core.controller;
+package client.controller;
 
-import core.Joueur;
+import client.Joueur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.EnableScheduling;

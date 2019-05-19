@@ -1,7 +1,7 @@
-package core.controllers.exception;
+package server.controllers.exception;
 
 import communication.container.*;
-import core.GameEngine;
+import server.GameEngine;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,10 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException;
 import takenoko.irrigation.CoordIrrig;
 import takenoko.irrigation.Orient;

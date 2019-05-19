@@ -1,7 +1,7 @@
-package core.controllers.verification;
+package server.controllers.verification;
 
-import core.GameEngine;
-import core.controllers.exception.AuthentificationRequiredException;
+import server.GameEngine;
+import server.controllers.exception.AuthentificationRequiredException;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

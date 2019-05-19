@@ -1,21 +1,16 @@
-package core.controllers;
+package server.controllers;
 
 import communication.container.ResponseContainer;
 import communication.container.TuileContainer;
-import core.GameEngine;
-import core.controllers.exception.AuthentificationRequiredException;
-import core.controllers.verification.AuthentificationVerification;
-import core.takenoko.pioche.EmptyDeckException;
+import server.GameEngine;
+import server.controllers.exception.AuthentificationRequiredException;
+import server.controllers.verification.AuthentificationVerification;
+import server.takenoko.pioche.EmptyDeckException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import takenoko.tuile.Tuile;
-
-import javax.servlet.http.HttpServletRequest;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 

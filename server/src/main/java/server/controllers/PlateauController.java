@@ -1,10 +1,10 @@
-package core.controllers;
+package server.controllers;
 
 import communication.container.*;
-import core.GameEngine;
-import core.controllers.exception.AuthentificationRequiredException;
-import core.controllers.exception.IllegalArgumentException;
-import core.controllers.verification.AuthentificationVerification;
+import server.GameEngine;
+import server.controllers.exception.AuthentificationRequiredException;
+import server.controllers.exception.IllegalArgumentException;
+import server.controllers.verification.AuthentificationVerification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

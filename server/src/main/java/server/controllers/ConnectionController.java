@@ -1,10 +1,10 @@
-package core.controllers;
+package server.controllers;
 
 import communication.HTTPClient;
 import communication.container.ResponseContainer;
-import core.GameEngine;
-import core.service.ConnectionService;
-import core.service.NotificationService;
+import server.GameEngine;
+import server.service.ConnectionService;
+import server.service.NotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
