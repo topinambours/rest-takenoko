@@ -55,9 +55,11 @@ def generate_game_id(gameToRun):
             i+= 1
     return out
 
-def start_server(gameId, port, gameSize):
+def start_server(gameId, port, gameSize,waitToClose):
     print('STARTING NEW GAME ID=',gameId, 'SIZE:',gameSize,'ON PORT:',port,"\n")
     app = ['docker', 'run','-it','--network', 'host',"-p",str(port) +":"+ str(port), 'topinambours/takenoko:test-server',str(port), str(gameSize), 'true']
+    if waitToClose == str(True):
+        app.append('true')
     return Popen(app, stdout=sys.stdout, stderr=DEVNULL)
 
 def start_client(port, serverPort, clientId):
@@ -66,7 +68,7 @@ def start_client(port, serverPort, clientId):
     return Popen(app, stdout=sys.stdout, stderr=DEVNULL)
 
 
-def start(gameToRun, ports):
+def start(gameToRun, ports,waitToClose):
     # gameToRun 	-> [(0, 2), (1,3)]
     #		two games to run id=0:size=2 & id=1:size=3
     #
@@ -76,7 +78,7 @@ def start(gameToRun, ports):
         clientId = 0
         processes = []
         port = ports[e[0]][0]
-        processes.append(start_server(e[0], ports[e[0]][0], e[1]))
+        processes.append(start_server(e[0], ports[e[0]][0], e[1],waitToClose))
         while not check_connection(port):
             time.sleep(1)
         print("\033[92mGAME CREATED, CONNECTING CLIENTS\033[0m".format(e[0]))
@@ -106,6 +108,7 @@ if __name__ == '__main__' :
     parser.add_argument('-g',type=int,default=2, help='The size of the game to run')
     parser.add_argument('-u',type=str,default="", help='Docker username')
     parser.add_argument('-p',type=str,default="", help='Docker password')
+    parser.add_argument('-c','--waitToClose',default="True",type=str,help='Waiting to close at end game')
     args = parser.parse_args()
 
     gameToRun = {args.g:1}
@@ -119,7 +122,7 @@ if __name__ == '__main__' :
 
     update_docker_images()
 
-    start(GAMES, PORTS)
+    start(GAMES, PORTS,args.waitToClose)
 
 
 

@@ -48,6 +48,7 @@ public class GameEngine {
     private boolean gameStarted;
     private boolean gameEndedFlag;
     public boolean testMode;
+    public boolean waitToClose;
 
     private List<Action> versionning; //TODO : add the actions into the action list
 
@@ -67,7 +68,7 @@ public class GameEngine {
         this.gameStarted = gameStarted;
     }
 
-    public GameEngine(int gameSize, @Qualifier("piocheDepart") PiocheTuile piocheTuile, @Qualifier("plateauTakenoko")  Plateau plateau, boolean testMode){
+    public GameEngine(int gameSize, @Qualifier("piocheDepart") PiocheTuile piocheTuile, @Qualifier("plateauTakenoko")  Plateau plateau, boolean testMode, boolean waitToClose){
         this.gameSize = gameSize;
         this.piocheTuile = piocheTuile;
         this.plateau = plateau;
@@ -76,6 +77,7 @@ public class GameEngine {
         this.versionning = new ArrayList<>();
         this.gameEndedFlag = false;
         this.testMode = testMode;
+        this.waitToClose = waitToClose;
         log.info(String.format("Nouvelle partie pour %d joueurs instanciée.", gameSize));
     }
 
@@ -92,15 +94,18 @@ public class GameEngine {
 
         int gameSize;
         boolean testMode;
+        boolean waitToClose;
         try {
             gameSize = env.getProperty("game.size", Integer.class);
             testMode = env.getProperty("game.testMode", Boolean.class);
+            waitToClose = env.getProperty("game.waitToClose", Boolean.class);
         }catch (NullPointerException e){
             gameSize = 2;
             testMode = false;
+            waitToClose = false;
         }
 
-        return new GameEngine(gameSize, piocheTuile, plateau, testMode);
+        return new GameEngine(gameSize, piocheTuile, plateau, testMode,waitToClose);
     }
 
 

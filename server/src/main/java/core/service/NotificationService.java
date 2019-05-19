@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -29,7 +30,7 @@ public class NotificationService {
      * & Trigger the first turn call
      */
     @Scheduled(fixedDelay = 1000)
-    public void doNotify() throws InterruptedException {
+    public void doNotify() throws InterruptedException, IOException {
         if (game.gameEnded()){
             log.info("GAME ENDED DISCONNECTING CLIENTS");
 
@@ -51,7 +52,14 @@ public class NotificationService {
             }
             if (connectedClients.isEmpty()){
                 log.info("ALL CLIENTS DISCONNECTED");
-                System.exit(0);
+                if (game.waitToClose){
+                    log.info("WaitToClose mode ON : WAITING INPUT TO CLOSE SERVER");
+                    System.in.read();
+                    System.exit(0);
+                }else{
+                    System.exit(0);
+                }
+
             }
         }
         // Trigger the first notification of turn

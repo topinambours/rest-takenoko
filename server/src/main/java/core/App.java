@@ -30,6 +30,7 @@ public class App {
         String APP_PORT = "8080";
         int GAME_SIZE = 2;
         boolean testMode = false;
+        boolean waitToClose = false;
         if (args.length > 0){
             APP_PORT = args[0];
         }
@@ -41,6 +42,10 @@ public class App {
             testMode = Boolean.parseBoolean(args[2]);
         }
 
+        if (args.length > 3){
+            waitToClose = Boolean.parseBoolean(args[3]);
+        }
+
         SpringApplication app = new SpringApplication(App.class);
 
         Map<String, Object> properties = new Hashtable<>();
@@ -48,6 +53,7 @@ public class App {
         properties.put("server.port", APP_PORT);
         properties.put("game.size", GAME_SIZE);
         properties.put("game.testMode", testMode);
+        properties.put("game.waitToClose",waitToClose);
 
         app.setDefaultProperties(properties);
         app.run(args);
