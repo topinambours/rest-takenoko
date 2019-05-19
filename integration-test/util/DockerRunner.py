@@ -3,6 +3,8 @@
 
 from subprocess import Popen, PIPE
 import docker
+import time
+from docker import errors
 
 class DockerRunner :
 
@@ -13,6 +15,13 @@ class DockerRunner :
 
     def pull_image(self, repo, imageName, tag):
         self.client.images.pull('{}/{}:{}'.format(repo, imageName, tag))
+
+    def close_running_containers(self):
+        for container in self.client.containers.list(filters={'status': 'running'}) :
+            try:
+                container.kill()
+            except errors.APIError:
+                continue
 
     def prepare_takenoko_images(self):
         print('\033[92mUPDATING IMAGES\033[0m')
@@ -30,6 +39,11 @@ class DockerRunner :
     def start_client(self,port, serverPort, clientId):
         return self.client.containers.run('topinambours/takenoko:test-client', '{} http://localhost:{} {}'.format(port, serverPort, clientId), network='host', detach=True)
 
+
+def getlog(container):
+    return str(container.logs(), 'utf-8')
+
+
 def check_connection(port):
     app = ['nc', '-vz', 'localhost', str(port)]
     p = Popen(app, stdout=PIPE, stderr=PIPE)
@@ -41,3 +55,15 @@ def check_connection(port):
         return True
     else:
         return False
+
+
+def wait_for_port(port):
+    while not check_connection(port):
+        time.sleep(1)
+    time.sleep(5)
+
+
+def wait_for_ports(ports):
+    while False in [check_connection(port) for port in ports]:
+        time.sleep(5)
+    time.sleep(5)

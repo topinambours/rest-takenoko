@@ -1,5 +1,6 @@
 import sys
 import argparse
+from util import DockerRunner
 
 
 class UnitTestParser(object):
@@ -17,6 +18,7 @@ class UnitTestParser(object):
 
         # Now set the sys.argv to the unittest_args (leaving sys.argv[0] alone)
         sys.argv[1:] = args
+        self.args['dockerRunner'] = DockerRunner.DockerRunner(wrapper.args['u'], wrapper.args['p'])
 
 
 wrapper = UnitTestParser()
