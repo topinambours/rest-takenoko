@@ -1,8 +1,8 @@
 package stepsDef;
 
-import core.App;
-import core.Joueur;
-import core.controller.ActionController;
+import client.App;
+import client.Joueur;
+import client.controller.ActionController;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

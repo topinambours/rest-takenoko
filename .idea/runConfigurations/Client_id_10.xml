@@ -7,7 +7,7 @@
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
-    <option name="SPRING_BOOT_MAIN_CLASS" value="core.App" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="client.App" />
     <option name="HIDE_BANNER" value="true" />
     <option name="PROGRAM_PARAMETERS" value="8081 http://localhost:8080 10" />
     <option name="ALTERNATIVE_JRE_PATH" />

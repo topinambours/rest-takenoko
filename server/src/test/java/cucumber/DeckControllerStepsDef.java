@@ -1,10 +1,10 @@
 package cucumber;
 
 import communication.container.TuileContainer;
-import core.GameEngine;
-import core.controllers.DeckController;
-import core.controllers.exception.AuthentificationRequiredException;
-import core.takenoko.pioche.EmptyDeckException;
+import server.GameEngine;
+import server.controllers.DeckController;
+import server.controllers.exception.AuthentificationRequiredException;
+import server.takenoko.pioche.EmptyDeckException;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Ignore;

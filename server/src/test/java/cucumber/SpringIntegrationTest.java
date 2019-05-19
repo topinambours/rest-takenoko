@@ -1,8 +1,8 @@
 package cucumber;
 
-import core.App;
-import core.GameEngine;
-import core.controllers.ConnectionController;
+import server.App;
+import server.GameEngine;
+import server.controllers.ConnectionController;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

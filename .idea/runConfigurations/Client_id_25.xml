@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Client id=25" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <module name="client" />
-    <option name="SPRING_BOOT_MAIN_CLASS" value="core.App" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="client.App" />
     <option name="HIDE_BANNER" value="true" />
     <option name="PROGRAM_PARAMETERS" value="8082 http://localhost:8080 25" />
     <option name="ALTERNATIVE_JRE_PATH" />

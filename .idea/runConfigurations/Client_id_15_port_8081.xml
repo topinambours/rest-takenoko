@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Client id=15 port=8081" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <module name="client" />
-    <option name="SPRING_BOOT_MAIN_CLASS" value="core.App" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="client.App" />
     <option name="PROGRAM_PARAMETERS" value="8081 http://localhost:8080 15" />
     <option name="ALTERNATIVE_JRE_PATH" />
     <method v="2">
