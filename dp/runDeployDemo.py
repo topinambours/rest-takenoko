@@ -21,10 +21,10 @@ def pull_docker_image(repo,imageName, tag):
         sys.exit(1)
 
 def update_docker_images():
-    print('\033[92mUPDATING IMAGES\033[0m')
+    print('\033[92mUPDATING IMAGES\033[0m\n')
     pull_docker_image('topinambours', 'takenoko', 'latest-server')
     pull_docker_image('topinambours', 'takenoko', 'latest-client')
-    print('\033[92mALL IMAGES ARE UP TO DATE\033[0m')
+    print('\033[92mALL IMAGES ARE UP TO DATE\033[0m\n')
 
 
 def check_connection(port):
@@ -56,12 +56,12 @@ def generate_game_id(gameToRun):
     return out
 
 def start_server(gameId, port, gameSize):
-    print('STARTING NEW GAME ID=',gameId, 'SIZE:',gameSize,'ON PORT:',port)
+    print('STARTING NEW GAME ID=',gameId, 'SIZE:',gameSize,'ON PORT:',port,"\n")
     app = ['docker', 'run','-it','--network', 'host',"-p",str(port) +":"+ str(port), 'topinambours/takenoko:test-server',str(port), str(gameSize), 'true']
     return Popen(app, stdout=sys.stdout, stderr=DEVNULL)
 
 def start_client(port, serverPort, clientId):
-    print('STARTING NEW CLIENT ID=',clientId, 'PORT:',port,'ON SERVER:','http://localhost:{}'.format(serverPort))
+    print('STARTING NEW CLIENT ID=',clientId, 'PORT:',port,'ON SERVER:','http://localhost:{}'.format(serverPort),"\n")
     app = ['docker', 'run','-it','--network', 'host', 'topinambours/takenoko:test-client',str(port), 'http://localhost:{}'.format(serverPort), str(clientId)]
     return Popen(app, stdout=sys.stdout, stderr=DEVNULL)
 
@@ -79,7 +79,7 @@ def start(gameToRun, ports):
         processes.append(start_server(e[0], ports[e[0]][0], e[1]))
         while not check_connection(port):
             time.sleep(1)
-        print("\033[92mGAME ID={} CREATED, CONNECTING CLIENTS\033[0m".format(e[0]))
+        print("\033[92mGAME CREATED, CONNECTING CLIENTS\033[0m".format(e[0]),"\n")
 
         for c_port in ports[e[0]][1]:
             processes.append(start_client(c_port, ports[e[0]][0], clientId))
@@ -87,95 +87,14 @@ def start(gameToRun, ports):
             while not check_connection(c_port):
                 time.sleep(1)
 
-        print("\033[92mGAME ID={} STARTED, ALL {} CLIENTS CONNECTED\033[0m".format(e[0], len(ports[e[0]][1])))
+        print("\033[92mGAME STARTED, ALL {} CLIENTS CONNECTED\033[0m".format(e[0], len(ports[e[0]][1])),"\n")
 
         for p in processes :
             if p.poll() == None :
                 p.wait()
-        print('\033[92mALL {} PROCESSES TERMINATED\033[0m'.format(len(processes)))
-        codes = [p.poll() for p in processes]
-        for code in codes :
-            if code != 0 :
-                print('\033[91mTEST FAIL\033[0m')
-                sys.exit(-1)
-        print('\033[92m[PASS] GAME {}\033[0m'.format(e[0]))
-    print('\033[92mALL CLIENTS & GAMES CLOSED PROPERLY TEST PASS\033[0m')
-    sys.exit(0)
+        print('\033[92mALL {} PROCESSES TERMINATED\033[0m'.format(len(processes)),'\n')
 
-def start_all_servers_thread(gameToRun, ports,maxThread):
-    # gameToRun 	-> [(0, 2), (1,3)]
-    #		two games to run id=0:size=2 & id=1:size=3
-    #
-    # ports 	-> [(8080, [8081, 8082]), [(8083, [8084, 8085, 8086])]]
-    #		first member is the server port, rest list of clients ports indexed with gameId
-    processes = []
-
-    cpy = gameToRun
-    cpy_port = ports
-    while len(cpy) > 0 :
-        job = cpy[:maxThread]
-        portsJob = cpy_port[:maxThread]
-        cpy = cpy[maxThread:]
-        cpy_port = cpy_port[maxThread:]
-        for game in job :
-            processes.append(start_server(game[0], ports[game[0]][0], game[1]))
-        opened = 0
-        while True :
-            server_status = [check_connection(port[0]) for port in portsJob]
-            server_status_general = [check_connection(port[0]) for port in ports]
-            if not False in server_status :
-                print(server_status_general.count(True), '/' , len(gameToRun), "GAME CREATED")
-                break
-            time.sleep(2)
-    print("\033[92mALL GAME STARTED, CONNECTING CLIENTS\033[0m")
-    count = 0
-    AllClientPort = []
-    for l_port in ports:
-        for port in l_port[1]:
-            AllClientPort.append(port)
-    clientId = 0
-    for i in range(0, len(gameToRun)):
-        for clientPort in ports[i][1][:len(ports[i][1])-1]:
-            p = start_client(clientPort, ports[i][0], clientId)
-            clientId += 1
-            processes.append(p)
-
-        while True :
-            server_status = [check_connection(port) for port in ports[i][1][:len(ports[i][1])-1]]
-            if not False in server_status :
-                count += len(ports[i][1][:len(ports[i][1])-1])
-                print(count, '/' , len(AllClientPort), "CLIENT INSTANCIATED")
-                break
-            time.sleep(2)
-
-
-    # Second loop that add the final player at the game (game start)
-    for i in range(0, len(gameToRun)):
-        for clientPort in ports[i][1][len(ports[i][1])-1:]:
-            p = start_client(clientPort, ports[i][0], clientId)
-            clientId += 1
-            processes.append(p)
-
-        while True :
-            server_status = [check_connection(port) for port in ports[i][1][len(ports[i][1])-1:]]
-            if not False in server_status :
-                count += len(ports[i][1][len(ports[i][1])-1:])
-                print(count, '/' , len(AllClientPort), "CLIENT INSTANCIATED")
-                break
-            time.sleep(2)
-
-    print('\033[92mGAMES RUNNING\033[0m')
-    # Keep this at the end, python will wait for all subprocess to terminate
-    for p in processes :
-        if p.poll() == None :
-            p.wait()
-    print('\033[92mALL {} PROCESSES TERMINATED\033[0m'.format(len(processes)))
-    codes = [p.poll() for p in processes]
-    for e in codes :
-        if e != 0 :
-            print('\033[91mTEST FAIL\033[0m')
-            sys.exit(-1)
-    print('\033[92mALL CLIENTS & GAMES CLOSED PROPERLY TEST PASS\033[0m')
+    print('\033[92mEND OF DEMO\033[0m\n')
     sys.exit(0)
 
 
