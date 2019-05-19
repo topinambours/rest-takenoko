@@ -22,8 +22,8 @@ def pull_docker_image(repo,imageName, tag):
 
 def update_docker_images():
     print('\033[92mUPDATING IMAGES\033[0m')
-    pull_docker_image('topinambours', 'takenoko', 'test-server')
-    pull_docker_image('topinambours', 'takenoko', 'test-client')
+    pull_docker_image('topinambours', 'takenoko', 'latest-server')
+    pull_docker_image('topinambours', 'takenoko', 'latest-client')
     print('\033[92mALL IMAGES ARE UP TO DATE\033[0m')
 
 
