@@ -33,7 +33,7 @@ public class ConnectionService {
                 }
                 catch (ResourceAccessException e){
                     game.getClients().remove(c);
-                    log.info(String.format("CLIENT %d DISCONNECTED", c.getId()));
+                    log.info("CLIENT {} DISCONNECTED", c.getId());
                 }
             }
         }
@@ -72,7 +72,7 @@ public class ConnectionService {
                 if (game.getClients().size() == game.getGameSize()) {
                     game.setGameStarted(true);
                 }
-                log.info(String.format("Le joueur %d@%s c'est enregistré.", client.getId(), client.getUser_adress()));
+                log.info("Le joueur {}@{} c'est enregistré.", client.getId(), client.getUser_adress());
                 loopCount = 0;
                 return CompletableFuture.completedFuture(new ResponseContainer(true, "You joined the game"));
             }
@@ -81,7 +81,7 @@ public class ConnectionService {
             }
         }
         else{
-            log.info(String.format("Le joueur %d@%s tente de s'enregistrer", client.getId(), client.getUser_adress()));
+            log.info("Le joueur {}@{} tente de s'enregistrer", client.getId(), client.getUser_adress());
             return CompletableFuture.completedFuture(new ResponseContainer(false, "Game has started"));
         }
     }
@@ -91,11 +91,11 @@ public class ConnectionService {
         HTTPClient currentPlayer = game.getClients().get(game.getCurrentPlayerIndex());
 
         if (playerId == currentPlayer.getId()){
-            log.info(String.format("Le joueur %d a terminé son tour.", playerId));
+            log.info("Le joueur {} a terminé son tour.", playerId);
 
             game.setCurrentPlayerIndex((game.getCurrentPlayerIndex() + 1) % game.getGameSize());
             if (!game.gameEnded() && game.getClientsId().contains(playerId)) {
-                log.info(String.format("C'est au tour du joueur %d", game.getClients().get(game.getCurrentPlayerIndex()).getId()));
+                log.info("C'est au tour du joueur {}", game.getClients().get(game.getCurrentPlayerIndex()).getId());
                 int id_notify = game.getClients().get(game.getCurrentPlayerIndex()).getId();
                 for (HTTPClient c : game.getClients()){
                     if (c.getId() != playerId){
@@ -106,7 +106,7 @@ public class ConnectionService {
             return CompletableFuture.completedFuture(new ResponseContainer(true, String.format("Player %d have to play", game.getClients().get(game.getCurrentPlayerIndex()).getId())));
         }
         else{
-            log.info(String.format("Le joueur %d notifie la fin de son tour alors que ce n'est pas son tour. Aucune modification apportée à l'état de la partie.", playerId));
+            log.info("Le joueur {} notifie la fin de son tour alors que ce n'est pas son tour. Aucune modification apportée à l'état de la partie.", playerId);
             return CompletableFuture.completedFuture(new ResponseContainer(false, String.format("Player %d have to play, it is not your turn.", game.getClients().get(game.getCurrentPlayerIndex()).getId())));
         }
     }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -34,7 +35,7 @@ public class NotificationService {
         if (game.gameEnded()){
             log.info("GAME ENDED DISCONNECTING CLIENTS");
 
-            List<HTTPClient> connectedClients = game.getClients();
+            List<HTTPClient> connectedClients = new ArrayList<>(game.getClients());
             for (HTTPClient c : game.getClients()){
                 ResponseContainer e;
                 try {
@@ -47,7 +48,7 @@ public class NotificationService {
                 }
                 catch (ResourceAccessException ex){
                     connectedClients.remove(c);
-                    log.info(String.format("CLIENT %d DISCONNECTED", c.getId()));
+                    log.info("CLIENT {} DISCONNECTED", c.getId());
                 }
             }
             if (connectedClients.isEmpty()){
@@ -67,7 +68,7 @@ public class NotificationService {
             Thread.sleep(2500);
             firstPlayerTurn = false;
             int id_notify = game.getClients().get(game.getCurrentPlayerIndex()).getId();
-            log.info(String.format("C'est au tour du joueur %d", id_notify));
+            log.info("C'est au tour du joueur {}", id_notify);
             game.getClients().forEach(client ->
                     client.self_request(String.format("/notify/%d", id_notify), ResponseContainer.class));
         }

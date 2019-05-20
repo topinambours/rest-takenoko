@@ -22,18 +22,18 @@ public final class AuthentificationVerification {
     public static boolean verify(String requested,int playerID, String ip, Logger log) throws AuthentificationRequiredException {
         if (ip == null) return true; //Local testing dont have IP
         if(ip.equals("127.0.0.1")){
-            log.info(String.format("New request : %s from localhost",requested));
+            log.info("New request : {} from localhost",requested);
             return true;
         }else{
             if(playerID == -1){
-                log.warn(String.format("No authentificated access at %s from %s => Access Denied",requested,ip));
+                log.warn("No authentificated access at {} from {} => Access Denied",requested,ip);
                 throw new AuthentificationRequiredException();
             }else{
                 if (game.getClientsId().contains(playerID)){
-                    log.info(String.format("New request : %s from player %d (%s)",requested,playerID,ip));
+                    log.info("New request : {} from player {} ({})",requested,playerID,ip);
                     return true;
                 }else{
-                    log.warn(String.format("Invalid authentification access at %s from %s => Access Denied",requested,ip));
+                    log.warn("Invalid authentification access at {} from {} => Access Denied",requested,ip);
                     throw new AuthentificationRequiredException("Error : Invalid authentification");
                 }
 

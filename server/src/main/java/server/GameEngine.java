@@ -78,7 +78,7 @@ public class GameEngine {
         this.gameEndedFlag = false;
         this.testMode = testMode;
         this.waitToClose = waitToClose;
-        log.info(String.format("Nouvelle partie pour %d joueurs instanciée.", gameSize));
+        log.info("Nouvelle partie pour {} joueurs instanciée.", gameSize);
     }
 
     public boolean gameEnded(){

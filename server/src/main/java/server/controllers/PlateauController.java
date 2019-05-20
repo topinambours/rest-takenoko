@@ -148,10 +148,10 @@ public class PlateauController {
             game.addVersion(action);
             log.info("Nouvelle version : "+ action.toString());
 
-            log.info(String.format("Le joueur %d pose %s en %s",
+            log.info("Le joueur {} pose {} en {}",
                     playerId,
                     poseTuileContainer.getTuile().toString(),
-                    poseTuileContainer.getPos().toString()));
+                    poseTuileContainer.getPos().toString());
 
             return new ResponseContainer(true, "Tuile posée");
         }
@@ -489,7 +489,7 @@ public class PlateauController {
             throw new IllegalArgumentException("L'irrigation passée en paramètres n'est pas une irrigation légale");
         }
         if (res){
-            log.info(String.format("Le joueur %d pose une irrigation en %s", playerId, coordIrrig));
+            log.info("Le joueur {} pose une irrigation en {}", playerId, coordIrrig);
 
             Action action = new Action(game.getVersionning().size()+1,ActionType.ADDIRRIG,coordIrrig);
             game.addVersion(action);

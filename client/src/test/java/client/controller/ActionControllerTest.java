@@ -33,8 +33,22 @@ public class ActionControllerTest {
         assertEquals(new ResponseContainer(true, "Player 10 aware that he have to play."), resp);
 
         assertTrue(joueur.myTurn);
+    }
 
+    @Test
+    public void close_app_notification() {
+        ResponseContainer resp = this.restTemplate.getForObject("/closeApplication/test",  ResponseContainer.class);
 
+        // This is normaly send back to server
+        assertEquals(new ResponseContainer(true, String.format("Application of player %d will closed.", joueur.getId())), resp);
+    }
+
+    @Test
+    public void ping() {
+        String resp = this.restTemplate.getForObject("/ping",  String.class);
+
+        // This is normaly send back to server
+        assertEquals("pong", resp);
     }
 
     @Test

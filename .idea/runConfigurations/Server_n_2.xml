@@ -8,7 +8,7 @@
       </pattern>
     </extension>
     <option name="SPRING_BOOT_MAIN_CLASS" value="server.App" />
-    <option name="PROGRAM_PARAMETERS" value="8080 2 true" />
+    <option name="PROGRAM_PARAMETERS" value="8080 2" />
     <option name="ALTERNATIVE_JRE_PATH" />
     <method v="2">
       <option name="Make" enabled="true" />

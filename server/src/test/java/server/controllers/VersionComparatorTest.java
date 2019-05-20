@@ -3,6 +3,7 @@ package server.controllers;
 import communication.container.ActionContainer;
 import communication.container.PoseTuileContainer;
 import communication.container.ResponseContainer;
+import org.junit.Ignore;
 import server.GameEngine;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -69,6 +70,7 @@ public class VersionComparatorTest {
     }
 
     @Test
+    @Ignore
     public void randomTest(){
 
         assertEquals(true,restTemplate.postForObject("/action/poser-tuile/", new PoseTuileContainer(new CoordAxial(0, 1),new Tuile(-2, Couleur.VERT, Amenagement.NONE)), ResponseContainer.class).getResponse());
@@ -89,7 +91,7 @@ public class VersionComparatorTest {
 
 
 
-            assertEquals(true,restTemplate.postForObject("/action/poser-tuile/", new PoseTuileContainer(new CoordAxial(i,1),new Tuile(3001 + i, Couleur.ROSE, Amenagement.NONE)), ResponseContainer.class).getResponse());
+            assertTrue(restTemplate.postForObject("/action/poser-tuile/", new PoseTuileContainer(new CoordAxial(i,1),new Tuile(3001 + i, Couleur.ROSE, Amenagement.NONE)), ResponseContainer.class).getResponse());
             p = restTemplate.getForObject("/plateau/", Plateau.class);
 
             assertTrue(p.generateTuileMap().containsKey(new CoordAxial(i, 1)));

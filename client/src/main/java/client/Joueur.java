@@ -27,10 +27,6 @@ public class Joueur {
 
     private HTTPClient httpClient;
 
-    private final Logger logger = LoggerFactory.getLogger(Joueur.class);
-
-    private Tuile current_tuile;
-
     private Strategie strategie;
 
     private Plateau plateau;
@@ -51,10 +47,6 @@ public class Joueur {
 
     public int getLatestVersionId() {
         return latestVersionId;
-    }
-
-    public Tuile getCurrent_tuile() {
-        return current_tuile;
     }
 
     public Strategie getStrategie() {

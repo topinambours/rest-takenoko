@@ -52,10 +52,10 @@ public class DeckController {
 
         if (playerId == game.getCurrentPlayer().getId() && game.isGameStarted()) {
             TuileContainer out = new TuileContainer(game.getPiocheTuile().draw(3));
-            log.info(String.format("Le joueur %d a pioché %s", playerId, out));
+            log.info("Le joueur {} a pioché {}", playerId, out);
             return out;
         }else{
-            log.info(String.format("Le joueur %d veut piocher alors que ce n'est pas son tour", playerId));
+            log.info("Le joueur {} veut piocher alors que ce n'est pas son tour", playerId);
             return new TuileContainer();
         }
     }
@@ -96,7 +96,7 @@ public class DeckController {
         String ip = AuthentificationVerification.getRemoteAddress();
         AuthentificationVerification.verify("/action/rendre_tuiles/",playerId,ip,log);
 
-        log.info(String.format("Le joueur %d a rendu : %s", playerId, tuiles));
+        log.info("Le joueur {} a rendu : {}", playerId, tuiles);
         for (Tuile t : tuiles.getContent()){
             game.getPiocheTuile().insertBottom(t);
             log.info(t.toString() + " remise dans la pioche");
