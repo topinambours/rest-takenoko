@@ -31,7 +31,7 @@ jobs:
       script: mvn -pl server -Dtest=\!CucumberRunnerTest test
       name : "Server"
 
-    - stage: "Integration Tests"
+    - stage: "BDD Tests"
       install: mvn install -pl common -DskipTests=true -Dmaven.javadoc.skip=true -B -V
       name : "Common"
       script: mvn -pl common -Dtest=CucumberRunnerTest test
@@ -43,6 +43,80 @@ jobs:
       install: mvn install -pl server -DskipTests=true -Dmaven.javadoc.skip=true -B -V
       script: mvn -pl server -Dtest=CucumberRunnerTest test
       name : "Server"
+
+    - stage : "Generate and send Sonar report"
+      install: false
+      script : mvn clean package sonar:sonar
+
+    - stage : "Create Docker Tests images"
+      language: generic
+      install: false
+      name: "Server"
+      script :
+        - docker build -t topinambours/takenoko:test-server . -f ./dp/DockerfileServer
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push topinambours/takenoko:test-server
+    - # Same stage
+      language: generic
+      install: false
+      script:
+        - docker build -t topinambours/takenoko:test-client . -f ./dp/DockerfileClient
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push topinambours/takenoko:test-client
+      name: "Client"
+    - # Same stage
+      language: generic
+      install: false
+      script:
+        - sudo docker build -t topinambours/takenoko:test-testSuite ./dp -f ./dp/DockerfileTestSuite
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push topinambours/takenoko:test-testSuite
+      name: "Test suite"
+
+    - stage : "Integration Tests"
+      language: python
+      install: pip install -r dp/requirements.txt
+      script:
+        - cd integration-test
+        - python3 ./IntegrationTestRunner.py -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+
+    - stage: "Deploy Tests (2 vcores)"
+      language: generic
+      install: false
+      name: "5 sequential games run"
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker pull topinambours/takenoko:test-testSuite
+        - docker run -it --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:test-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode sequential -g2 3 -g3 1 -g4 1
+    - # Same stage
+      language: generic
+      install: false
+      name: "50 sequential games run"
+      if: branch = master
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker pull topinambours/takenoko:test-testSuite
+        - docker run -it --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:test-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode sequential -g2 20 -g3 15 -g4 15
+
+    - # Same stage
+      language: generic
+      install: false
+      name: "3 parallel games run (9 clients)"
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker pull topinambours/takenoko:test-testSuite
+        - docker run -it --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:test-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode parallel -g2 1 -g3 1 -g4 1
+
+    - # Same stage
+      language: generic
+      install: false
+      name: "10 parallel games run (18 clients)"
+      if: branch = master
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker pull topinambours/takenoko:test-testSuite
+        - docker run -it --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:test-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode parallel -g2 2 -g3 2 -g4 2
+
 
     - stage : "Deploy to DockerHub"
       language: generic
@@ -68,6 +142,15 @@ jobs:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker push topinambours/takenoko:latest-testSuite
       name: "Test suite"
+    - # Same stage
+      language: generic
+      install: false
+      script:
+        - sudo docker build -t topinambours/takenoko:demo ./dp -f ./dp/DockerfileDemo
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push topinambours/takenoko:demo
+      name: "Demo"
+
 
     - stage: "Release Deploy to DockerHub"
       language: generic
@@ -97,43 +180,3 @@ jobs:
         - sudo docker build -t topinambours/takenoko:"$TRAVIS_TAG"-testSuite ./dp -f ./dp/DockerfileTestSuite
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker push topinambours/takenoko:"$TRAVIS_TAG"-testSuite
-
-
-    - stage: "Deploy Tests (2 vcores)"
-      language: generic
-      install: false
-      name: "5 sequential games run"
-      if: branch = master
-      script:
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker pull topinambours/takenoko:latest-testSuite
-        - docker run -it --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode sequential -g2 3 -g3 1 -g4 1
-    - # Same stage
-      language: generic
-      install: false
-      name: "50 sequential games run"
-      if: branch = master
-      script:
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker pull topinambours/takenoko:latest-testSuite
-        - docker run -it --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode sequential -g2 20 -g3 15 -g4 15
-
-    - # Same stage
-      language: generic
-      install: false
-      name: "3 parallel games run (9 clients)"
-      if: branch = master
-      script:
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker pull topinambours/takenoko:latest-testSuite
-        - docker run -it --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode parallel -g2 1 -g3 1 -g4 1
-
-    - # Same stage
-      language: generic
-      install: false
-      name: "10 parallel games run (18 clients)"
-      if: branch = master
-      script:
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker pull topinambours/takenoko:latest-testSuite
-        - docker run -it --network host -v /var/run/docker.sock:/var/run/docker.sock topinambours/takenoko:latest-testSuite -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" --mode parallel -g2 2 -g3 2 -g4 2

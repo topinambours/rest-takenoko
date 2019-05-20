@@ -1,0 +1,9 @@
+# Docker in Docker image
+FROM docker:18-dind
+RUN apk update && apk add python3
+RUN python3 --version
+COPY ./runDeployDemo.py .
+WORKDIR .
+
+EXPOSE 8123
+ENTRYPOINT ["python3", "./runDeployDemo.py"]

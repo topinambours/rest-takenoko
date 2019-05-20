@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Server n=4" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <module name="server" />
-    <option name="SPRING_BOOT_MAIN_CLASS" value="core.App" />
-    <option name="PROGRAM_PARAMETERS" value="8080 4" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="server.App" />
+    <option name="PROGRAM_PARAMETERS" value="8080 4 true" />
     <option name="ALTERNATIVE_JRE_PATH" />
     <method v="2">
       <option name="Make" enabled="true" />

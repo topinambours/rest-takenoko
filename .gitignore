@@ -585,3 +585,13 @@ takenoko-rest/\.idea/
 
 node_modules/
 Package-lock.json
+
+integration-test/\.idea/
+
+integration-test/util/__pycache__/
+
+integration-test/__pycache__/
+
+integration-test/test_collection/__pycache__/
+
+*.pyc

@@ -2,6 +2,8 @@ package communication;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import communication.container.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
@@ -9,6 +11,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import takenoko.Plateau;
 import takenoko.irrigation.CoordIrrig;
@@ -16,6 +19,7 @@ import takenoko.tuile.CoordAxial;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Objects;
 
 @Component
 @JsonIgnoreProperties(ignoreUnknown=true)
@@ -30,7 +34,8 @@ public class HTTPClient {
 
     private int id;
 
-    //Logger log = LoggerFactory.getLogger(HTTPClient.class);
+    private static final Logger log = LoggerFactory.getLogger(HTTPClient.class);
+
     public HTTPClient(){
         this(-1, "foo", "foo", false);
     }
@@ -44,7 +49,13 @@ public class HTTPClient {
         this.user_adress = user_adress;
         this.server_url = server_url;
         if (autoRegistration) {
-            registerGame();
+            try {
+                registerGame();
+            }
+            catch (ResourceAccessException e){
+                log.info("SERVER DISCONNECTED");
+                System.exit(0);
+            }
         }
     }
 
@@ -165,6 +176,20 @@ public class HTTPClient {
         this.id = id;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HTTPClient that = (HTTPClient) o;
+        return id == that.id &&
+                user_adress.equals(that.user_adress) &&
+                server_url.equals(that.server_url);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(user_adress, server_url, id);
+    }
 
     @Override
     public String toString() {

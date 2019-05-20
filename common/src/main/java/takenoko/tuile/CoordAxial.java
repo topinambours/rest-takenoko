@@ -27,20 +27,8 @@ public class CoordAxial {
         return q;
     }
 
-    public void setQ(int q) {
-        this.q = q;
-    }
-
     public int getR() {
         return r;
-    }
-
-    /**
-     * Setter de R
-     * @param r la nouvelle valeur de r
-     */
-    public void setR(int r) {
-        this.r = r;
     }
 
     /**

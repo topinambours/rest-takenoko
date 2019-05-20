@@ -4,6 +4,7 @@ import takenoko.objectives.patterns.CoordCube;
 
 import java.util.List;
 
+
 public class CoordCudeContainer extends Container<CoordCube> {
     public CoordCudeContainer() {
         super();

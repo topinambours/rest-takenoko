@@ -10,10 +10,15 @@ Takenoko
 <h4 align="center">Un  <a href="http://jeuxstrategie1.free.fr/jeu_takenoko/regle.pdf" target="_blank">Takenoko</a> en Java avec une API rest</h4>
 
 <p align="center">
+<a href="https://sonarcloud.io/dashboard?id=topinambours%3Atopinambours-takenoko" target="_blank"><img src="https://sonarcloud.io/api/project_badges/quality_gate?project=topinambours%3Atopinambours-takenoko"></a>
+</p>
+
+<p align="center">
 <img src="https://travis-ci.com/uca-m1informatique-softeng/topinambours-takenoko.svg?token=ddDp96SuTBDWqbwuapYh&branch=master">
 <a href="https://cloud.docker.com/u/topinambours/repository/docker/topinambours/takenoko" target="_blank"><img src="https://img.shields.io/docker/automated/topinambours/takenoko.svg"></a>
 <a href="https://cloud.docker.com/u/topinambours/repository/docker/topinambours/takenoko" target="_blank"><img src="https://img.shields.io/docker/pulls/topinambours/takenoko.svg"></a>
-  
+<a href="https://sonarcloud.io/dashboard?id=topinambours%3Atopinambours-takenoko" target="_blank"><img src="https://sonarcloud.io/api/project_badges/measure?project=topinambours%3Atopinambours-takenoko&metric=coverage"></a>
+<a href="https://sonarcloud.io/dashboard?id=topinambours%3Atopinambours-takenoko" target="_blank"><img src="https://sonarcloud.io/api/project_badges/measure?project=topinambours%3Atopinambours-takenoko&metric=ncloc"></a>
 </p>
 
 <p align="center">

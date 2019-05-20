@@ -2,6 +2,8 @@ package takenoko.versionning;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 import takenoko.Couleur;
 import takenoko.Plateau;
 import takenoko.irrigation.CoordIrrig;
@@ -15,6 +17,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ActionTest {
     private Plateau plateau;
 

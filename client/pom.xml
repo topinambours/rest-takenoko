@@ -32,7 +32,7 @@
                             <goal>java</goal>
                         </goals>
                         <configuration>
-                            <mainClass>core.App</mainClass>
+                            <mainClass>client.App</mainClass>
                             <arguments>
                             </arguments>
                         </configuration>
