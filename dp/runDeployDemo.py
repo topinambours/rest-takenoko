@@ -106,8 +106,8 @@ if __name__ == '__main__' :
     parser = argparse.ArgumentParser()
     parser.add_argument('-sp', '--startingPort',default=8080, type=int, help='The port of the first instanciated game. If the first is instanciated with port 8080 and is of size 2, clients will have port 8081, 8082. The next game will get the port 8083.')
     parser.add_argument('-g',type=int,default=2, help='The size of the game to run')
-    parser.add_argument('-u',type=str,default="", help='Docker username')
-    parser.add_argument('-p',type=str,default="", help='Docker password')
+    parser.add_argument('-u',type=str,default="topinamboursdemo", help='Docker username')
+    parser.add_argument('-p',type=str,default="Y6TKdL24MnCWexlwXO", help='Docker password')
     parser.add_argument('-c','--waitToClose',default="True",type=str,help='Waiting to close at end game')
     args = parser.parse_args()
 
