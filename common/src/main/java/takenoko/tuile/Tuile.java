@@ -3,6 +3,9 @@ package takenoko.tuile;
 import communication.container.BambouContainer;
 import lombok.Data;
 import takenoko.Couleur;
+import takenoko.irrigation.CoordIrrig;
+
+import java.util.List;
 
 /**
  * Une tuile takenoko dispose d'une couleur, d'un aménagement ainsi qu'un nombre de bambou compris en 0 et 4
@@ -132,6 +135,31 @@ public class Tuile {
     }
 
 
+
+    public String generateDrawCodeIrrig(CoordAxial pos, List<CoordIrrig> coordIrrigs){
+        double x = (500 - 43.5) + 87.25 * pos.getQ() + pos.getR() * 43.5;
+        double y = (500 - 50) + 75.0 * pos.getR();
+
+        StringBuilder irrigationCode = new StringBuilder();
+        for (CoordIrrig c : coordIrrigs){
+            double y_pos;
+            if (c.getCoordAxial().equals(pos)){
+                switch (c.getO()){
+                    case S:
+                        y_pos = y + 75.0;
+                        irrigationCode.append("draw.line(43.5, 100, 0, 75).move("+x+", "+ y_pos + ").stroke({ color: '#d61313', width: 4, linecap: 'round' });"); break;
+                    case N:
+                        irrigationCode.append("draw.line(0, 25, 43.5, 0).move("+x+", "+y+").stroke({ color: '#d61313', width: 4, linecap: 'round' });"); break;
+                    case W:
+                        y_pos = y + 25;
+                        irrigationCode.append("draw.line(0, 75, 0, 25).move("+x+", "+y_pos+").stroke({ color: '#d61313', width: 4, linecap: 'round' });"); break;
+                    default: break;
+                }
+            }
+        }
+        return irrigationCode.toString();
+    }
+
     public String generateDrawCode(CoordAxial pos){
 
         String color = "black";
@@ -145,7 +173,8 @@ public class Tuile {
         double x = (500 - 43.5) + 87.25 * pos.getQ() + pos.getR() * 43.5;
         double y = (500 - 50) + 75.0 * pos.getR();
 
-        return "draw.polygon('43.5,0 87,25 87,75 43.5,100 0,75 0,25 43.5,0').fill('" + color + "').move("+x+", "+y+").stroke({ width: 1, color: 'black' });" +
+        return
+                "draw.polygon('43.5,0 87,25 87,75 43.5,100 0,75 0,25 43.5,0').fill('" + color + "').move("+x+", "+y+").stroke({ width: 1, color: 'black' });" +
                 "\ndraw.plain('"+pos.toString()+"').move("+(x + 25)+", "+(y+ 10)+");" +
                 "\ndraw.plain('Bambou :"+nbBambous+"').move("+(x )+", "+(y+ 43.5)+");" +
                 "\ndraw.plain('Irrig :"+ haveWater +"').move("+(x +10 )+", "+(y+ 65)+");";

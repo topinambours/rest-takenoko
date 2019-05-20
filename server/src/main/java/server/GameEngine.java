@@ -1,7 +1,6 @@
 package server;
 
 import communication.HTTPClient;
-import server.takenoko.pioche.PiocheTuile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import server.takenoko.pioche.PiocheTuile;
 import takenoko.Plateau;
 import takenoko.versionning.Action;
 
@@ -187,8 +187,11 @@ public class GameEngine {
     @Override
     public String toString() {
         StringBuilder out = new StringBuilder("GameEngine\n");
-        out.append("\t gameSize : ").append(gameSize).append("\n");
-        out.append("\tClients : ").append(clients.toString());
+        out.append("\tgameSize : ").append(gameSize).append("\n");
+        out.append("\tClients :\n");
+        for (HTTPClient client : getClients()){
+            out.append("\t\t").append(client.toString()).append("\n");
+        }
         return out.toString();
     }
 }
