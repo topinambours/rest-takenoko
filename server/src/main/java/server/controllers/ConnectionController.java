@@ -96,6 +96,27 @@ public class ConnectionController {
         return new ResponseContainer(game.gameEnded(), "");
     }
 
+    /**
+     * Get the status of the game
+     * @return boolean
+     *
+     * @api {get} /gameStarted gameStarted
+     * @apiVersion 0.7.0
+     * @apiDescription Get the status of the game
+     * @apiName gameStarted
+     * @apiGroup Server/ConnectionController
+     *
+     * @apiSuccess {Boolean} response The API success response.
+     * @apiSuccess {String} message The API message response.
+     *
+     * @apiSuccessExample Success-Response:
+     *       HTTP/1.1 200 OK
+     *       {
+     *         "response": "true",
+     *         "message": ""
+     *       }
+     *
+     */
     @GetMapping("/gameStarted")
     public ResponseContainer gameStarted(){
         return new ResponseContainer(game.isGameStarted(), "");
