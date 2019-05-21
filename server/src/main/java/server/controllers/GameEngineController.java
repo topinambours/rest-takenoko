@@ -13,6 +13,7 @@ import takenoko.versionning.Action;
 import takenoko.versionning.VersionNotFoundException;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 @Controller
 public class GameEngineController {
@@ -24,14 +25,15 @@ public class GameEngineController {
     GameEngine game;
 
     @GetMapping({"/{version_id}", "/"})
-    public String index(Model model, @PathVariable(required = false) int version_id){
+    public String index(Model model, @PathVariable(required = false) Optional<Integer> version_id){
+        int version = version_id.orElseGet(() -> game.getVersionning().size());
 
         StringBuilder tuileDrawCode = new StringBuilder();
 
         Plateau p = new Plateau().plateau_depart();
 
         try {
-            Action.applyAllAction(vc.getVersionFromTo(0,version_id).getContent(), p);
+            Action.applyAllAction(vc.getVersionFromTo(0,version).getContent(), p);
         } catch (VersionNotFoundException e) {
             p = game.getPlateau();
         }
