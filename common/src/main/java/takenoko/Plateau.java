@@ -11,7 +11,6 @@ import takenoko.tuile.CoordAxial;
 import takenoko.tuile.Tuile;
 import takenoko.tuile.TuileNotFoundException;
 
-import java.security.MessageDigest;
 import java.util.*;
 import java.util.stream.Collectors;
 

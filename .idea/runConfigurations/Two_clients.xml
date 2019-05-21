@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Two clients" type="CompoundRunConfigurationType">
-    <toRun name="Client id=10" type="SpringBootApplicationConfigurationType" />
-    <toRun name="Client id=25" type="SpringBootApplicationConfigurationType" />
+  <configuration default="false" name="Two clients" type="CompoundRunConfigurationType" factoryName="Compound Run Configuration">
+    <toRun type="SpringBootApplicationConfigurationType" name="Client id=10" />
+    <toRun type="SpringBootApplicationConfigurationType" name="Client id=25" />
     <method v="2" />
   </configuration>
 </component>
