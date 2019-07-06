@@ -46,7 +46,7 @@ jobs:
 
     - stage : "Generate and send Sonar report"
       install: false
-      script : mvn clean package sonar:sonar
+      script : echo "$SONAR_LOGIN" | mvn clean package sonar:sonar -Dsonar.login="$SONAR_LOGIN"
 
     - stage : "Create Docker Tests images"
       language: generic
