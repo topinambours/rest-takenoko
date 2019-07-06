@@ -16,8 +16,8 @@ Takenoko
 <a href="https://travis-ci.com/topinambours/rest-takenoko"><img src="https://travis-ci.com/topinambours/rest-takenoko.svg?branch=master"></a>
 <a href="https://cloud.docker.com/u/topinambours/repository/docker/topinambours/takenoko" target="_blank"><img src="https://img.shields.io/docker/automated/topinambours/takenoko.svg"></a>
 <a href="https://cloud.docker.com/u/topinambours/repository/docker/topinambours/takenoko" target="_blank"><img src="https://img.shields.io/docker/pulls/topinambours/takenoko.svg"></a>
-<a href="https://sonarcloud.io/dashboard?id=topinambours%3Atopinambours-takenoko" target="_blank"><img src="https://sonarcloud.io/api/project_badges/measure?project=topinambours%3Atopinambours-takenoko&metric=coverage"></a>
-<a href="https://sonarcloud.io/dashboard?id=topinambours%3Atopinambours-takenoko" target="_blank"><img src="https://sonarcloud.io/api/project_badges/measure?project=topinambours%3Atopinambours-takenoko&metric=ncloc"></a>
+<a href="https://sonarcloud.io/dashboard?id=topinambours_rest-takenoko" target="_blank"><img src="https://sonarcloud.io/api/project_badges/measure?project=topinambours_rest-takenoko&metric=coverage"></a>
+<a href="https://sonarcloud.io/dashboard?id=topinambours_rest-takenoko" target="_blank"><img src="https://sonarcloud.io/api/project_badges/measure?project=topinambours_rest-takenoko&metric=ncloc"></a>
 </p>
 
 <p align="center">
