@@ -43,7 +43,6 @@ Le projet consiste à réaliser en Java une version numérique du jeu takenoko c
 Version textuel n'étant pas destinée à être jouée par des êtres humains mais par des robots jouants de façon autonome.
 
 ## API
-**API Documentation :** https://docs.topinambours.xyz/rest-takenoko/
 
 API First conception : https://github.com/uca-m1informatique-softeng/topinambours-takenoko/blob/master/doc/etude.md
 
